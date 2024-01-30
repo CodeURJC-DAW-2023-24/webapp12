@@ -40,10 +40,9 @@ Relación: Un usuario puede hacer reservas en un hotel, y crear o consultar valo
 
 Usuario Anónimo: Puede ver las páginas de los hoteles y las reseñas. 
 
-Usuario Registrado: Puede reservar habitaciones en los hoteles y poner reseñas. Tener usuario dueño del hotel tener dos tipos de usuario registrado en el que el dueño  
+Usuario Registrado: Puede reservar habitaciones en los hoteles y poner reseñas.
 
-Usuario Administrador: Puede cambiar la información de los hoteles y eliminar reseñas. Añadir fechas en las que puede añadir algo 
-
+Usuario Administrador: Puede cambiar la información de los hoteles y eliminar reseñas.
  
 
 ### Imágenes 
