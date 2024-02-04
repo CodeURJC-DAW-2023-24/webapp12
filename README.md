@@ -1,8 +1,8 @@
 # webapp12
-### Nombre de la aplicación: YourHOmeTEL
+### App name: YourHOmeTEL
 
 ### Integrantes del equipo: 
-| Nombre                         | Correo                            | Usuario GitHub       |
+| Name | Email | GitHub user |
 |:------------------------------:|:---------------------------------:|:--------------------:|
 | Mario Recio Montero            | m.recio.2020@alumnos.urjc.es      | Mario-Recio          |
 | Sara Tuset Villoria            | s.tuset.2020@alumnos.urjc.es      | SaraTuset            |
@@ -11,83 +11,83 @@
 | Carlos Herman Andrés Andrés    | ch.andres.2020@alumos.urjc.es     | Carlos-Herman        |
 
 
-### Herramientas utilizadas (trello) 
+### Tools used (trello) 
 
 Link: https://trello.com/invite/g12daw/ATTI831eec52f3cf9323d36dd12dcf07b91c5373DA36 
 
 
 
-### Entidades
+### Entities
 
-- Usuario 
+- User 
 
 - Hotel 
 
-- Reserva 
+- Reservation 
 
-- Reseña
+- Review
 
 
-Relación: Un usuario puede hacer reservas en un hotel o gestionar un hotel, y crear, consultar o modificar reseñas sobre este. 
+Relationship: A user can make reservations in a hotel or manage a hotel, and create, consult or modify reviews about it. 
 
 ![ERDAW](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/d5d85d60-e309-45bb-b03b-396ecfa2e8f3)
 
-### Permisos
+### Permissions
 
-Usuario Anónimo: puede ver las páginas de los hoteles y las reseñas. 
+Anonymous User: Can view hotel pages and reviews. 
 
-Usuario Registrado: 
+Registered User: 
 
-- **Cliente**: puede reservar habitaciones, escribir reseñas y consultar su información personal.   
+- **Customer**: can book rooms, write reviews and view their personal information.   
 
-- **Gerente del hotel**: puede modificar la información de los hoteles que gestiona, y consultar distintas estadísticas y métricas de interés.  
+- **Hotel Manager**: can modify the information of the hotels he/she manages, and view different statistics and metrics of interest.   
 
-- **Administrador**: puede cambiar la información de los hoteles y eliminar reseñas.  También puede gestionar información relativa a los usuarios de la página, además de gestionar, verificar y validar los eventos de los usuarios. 
+- **Administrator**: can change hotel information and delete reviews.  He/she can also manage information related to the users of the site, as well as manage, verify and validate user events. 
 
-Todos los usuarios tendrán también la opción de iniciar sesión o registrar una cuenta. Para crear una cuenta de gestor de hotel, se deberá tener aprobación de la administración. 
+All users will also have the option to log in or register an account. To create a hotel manager account, you must have approval from the administration. 
  
 
-### Imágenes 
+### Images 
 
-Hotel: Foto del hotel y / o habitaciones 
+Hotel: Picture of the hotel and/or rooms. 
 
-Valoración: Es posible que el cliente ponga una foto en su valoración. 
+Rating: It is possible for the customer to put a photo in their rating. 
 
-Usuario registrado: Una foto de perfil para su avatar. 
-
- 
-
-### Gráficos
-
-**Para gerentes de hoteles**  
-
-- Puntuación de las valoraciones con el tiempo (gráfica de puntos unidos con líneas) 
-
-- Número de reservas a lo largo del tiempo (gráfica de barras) 
-
-**Para usuarios cliente**
-
- - Etiquetas más repetidas en las reservas (gráfica circular) 
-
- - Localizaciones más visitadas en las reservas (gráfica circular) 
-
- - Compañías más utilizadas para las reservas (gráfica circular) 
-
-**Para usuario administrador**
-
- - Número de nuevos usuarios y hoteles registrados en el tiempo (gráfica de puntos unidos con líneas) 
-
- - Número de usuarios activos cada día (gráfica de puntos unidos con líneas) 
+Registered user: A profile picture for your avatar. 
 
  
 
-### Tecnología complementaria
+### Graphics
 
-Integración con Google Maps para mostrar los hoteles en una cierta área, utilizando el mapa interactivo. 
+**For Hotel Managers** 
 
-Permitir imprimir un PDF con los detalles de la reserva 
+- Rating scores over time (dotted graph connected with lines) 
+
+- Number of bookings over time (bar graph) 
+
+**For customer users**
+
+ - Most repeated tags in bookings (pie chart) 
+
+ - Most visited locations in bookings (pie chart) 
+
+ - Most used companies for bookings (pie chart) 
+
+**For administrator users**
+
+ - Number of new users and hotels registered over time (dotted line graph) 
+
+ - Number of active users each day (dotted line graph) 
+
  
 
-### Algoritmo o consulta avanzada
+### Complementary technology
 
-Se utilizará un algoritmo de recomendación automática de hoteles, basado en las reservas previas de cada usuario, y sus valoraciones. Puede marcarse cada hotel con una serie de etiquetas, y recordar las elecciones preferidas del usuario para mostrarle sugerencias personalizadas. 
+Integration with Google Maps to show hotels in a certain area, using the interactive map. 
+
+Possibility to print a PDF with reservation details. 
+ 
+
+### Algorithm or advanced query
+
+An automatic hotel recommendation algorithm will be used, based on each user's previous bookings and ratings. Each hotel can be marked with a series of tags, and remember the user's preferred choices to show personalized suggestions. 
