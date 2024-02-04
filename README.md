@@ -1,7 +1,7 @@
 # webapp12
 ### App name: YourHOmeTEL
 
-### Integrantes del equipo: 
+### Team members 
 | Name | Email | GitHub user |
 |:------------------------------:|:---------------------------------:|:--------------------:|
 | Mario Recio Montero            | m.recio.2020@alumnos.urjc.es      | Mario-Recio          |
