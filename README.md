@@ -30,7 +30,7 @@ Link: https://trello.com/invite/g12daw/ATTI831eec52f3cf9323d36dd12dcf07b91c5373D
 
 Relación: Un usuario puede hacer reservas en un hotel o gestionar un hotel, y crear, consultar o modificar reseñas sobre este. 
 
-![ERDAW](https://trello.com/invite/b/iGxtvT4U/ATTI1b226cf2e0e223b41ba1def2e83dffe85B04FE01/tablero-principal)
+![ERDAW](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/d5d85d60-e309-45bb-b03b-396ecfa2e8f3)
 
 ### Permisos
 
