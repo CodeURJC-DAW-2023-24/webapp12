@@ -13,171 +13,335 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
     <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js'></script>
 
+    <link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../../../css/sb-admin-2.min.css" rel="stylesheet">
+
     <title>SB Admin 2 - 404</title>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row mt-4">
-            <div class="col-12 mb-3 mb-lg-5">
-                <div class="overflow-hidden card table-nowrap table-card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">My hotels</h5>
-                        <a href="#!" class="btn btn-light btn-sm">View All</a>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- User-->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-text mx-3">User Profile</div>
+            </a>
+
+            <!-- Manager-->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-text mx-3">Manager Profile</div>
+            </a>
+
+            <!-- Admin-->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-text mx-3">Admin Profile</div>
+            </a>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Personal Area
+            </div>
+
+            <!-- For all users -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="profileManager.html">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Personal Data</span>
+                </a>
+            </li>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Administration
+            </div>
+            <!--Cliente-->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>My reservations</span></a>
+            </li>
+                
+            <!--Managers-->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagementManager" aria-expanded="true"
+                    aria-controls="collapseManagementManager">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Management</span>
+                </a>
+                
+                <div id="collapseManagementManager" class="collapse" aria-labelledby="headingManagementManager" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="templates/Profile/ManagerPages/html/viewHotelsManager.html">My Hotels</a>
+                        <a class="collapse-item" href="templates/ProfileManagerPages/html/clientListManager.html">Client Tables</a>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table mb-0">
-                            <thead class="small text-uppercase bg-body text-muted">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Number of rooms</th>
-                                    <th>Location</th>
-                                    <th>Payment method</th>
-                                    <th>Last updated</th>
-                                    <th class="text-end">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="align-middle">
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div>
-                                                <div class="h6 mb-0 lh-1">Hotel 1</div>
+                </div>
+            </li>
+            <!--Admin-->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagementAdmin" aria-expanded="true"
+                    aria-controls="collapseManagementAdmin">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Management</span>
+                </a>
+                <div id="collapseManagementAdmin" class="collapse" aria-labelledby="headingManagementAdmin" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="utilities-color.html">Users</a> <!-- To edit and interact with them -->
+                        <a class="collapse-item" href="utilities-border.html">Hotel managers</a> <!-- To edit and interact with them -->
+                    </div>
+                </div>
+            </li>
+                
+            <!-- Nav Item - Collapse Tables -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTablesAdmin" aria-expanded="true"
+                    aria-controls="collapseTablesAdmin">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Tables</span>
+                </a>
+                <div id="collapseTablesAdmin" class="collapse" aria-labelledby="headingTablesAdmin" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="tables.html">User tables</a> <!-- Only visualization -->
+                        <a class="collapse-item" href="tables.html">Hotel tables</a> <!-- Only visualization -->
+                    </div>
+                </div>
+            </li>
+                
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+                
+            <div class="sidebar-heading">
+                Statistics
+            </div>
+                
+            <!-- Nav Item - Pages Collapse Menu -->
+            <!--Cliente-->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>User Charts</span>
+                </a>
+            </li>
+            <!--Manager-->
+            <li class="nav-item">
+                <a class="nav-link" href="/templates/Charts/chartsManager.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Hotel Charts</span>
+                </a>
+            </li>
+            <!--Admin-->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts" aria-expanded="true"
+                    aria-controls="collapseCharts">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Data Charts</span>
+                </a>
+                <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="utilities-color.html">User charts</a> <!-- Only for adinistrators -->
+                        <a class="collapse-item" href="utilities-border.html">Hotel charts</a> <!-- Gerente y admin -->
+                        <a class="collapse-item" href="index.html">General data charts</a> <!-- Only for adinistrators -->
+                    </div>
+                </div>
+            </li>
+                
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+                
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+                
+        </ul>
+        <!-- End of Sidebar -->
+
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-12 mb-3 mb-lg-5">
+                    <div class="overflow-hidden card table-nowrap table-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">My hotels</h5>
+                            <a href="#!" class="btn btn-light btn-sm">View All</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead class="small text-uppercase bg-body text-muted">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Number of rooms</th>
+                                        <th>Location</th>
+                                        <th>Payment method</th>
+                                        <th>Last updated</th>
+                                        <th class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="align-middle">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <div class="h6 mb-0 lh-1">Hotel 1</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>50</td>
-                                    <td> <span class="d-inline-block align-middle">Russia</span></td>
-                                    <td><span>Cash, Credit card</span></td>
-                                    <td>21 Sep, 2021</td>
-                                    <td class="text-end">
-                                        <div class="drodown">
-                                            <a data-bs-toggle="dropdown" href="#" class="btn p-1" aria-expanded="false">
-                                                <i class="fa fa-bars" aria-hidden="true"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a href="editHotel.html" class="dropdown-item">Edit information</a>
-                                                <a href="#!" class="dropdown-item">Delete hotel</a>
+                                        </td>
+                                        <td>50</td>
+                                        <td> <span class="d-inline-block align-middle">Russia</span></td>
+                                        <td><span>Cash, Credit card</span></td>
+                                        <td>21 Sep, 2021</td>
+                                        <td class="text-end">
+                                            <div class="drodown">
+                                                <a data-bs-toggle="dropdown" href="#" class="btn p-1" aria-expanded="false">
+                                                    <i class="fa fa-bars" aria-hidden="true"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a href="editHotel.html" class="dropdown-item">Edit information</a>
+                                                    <a href="#!" class="dropdown-item">Delete hotel</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="align-middle">
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div>
-                                                <div class="h6 mb-0 lh-1">Hotel 2</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="align-middle">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <div class="h6 mb-0 lh-1">Hotel 2</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>100</td>
-                                    <td> <span class="d-inline-block align-middle">Brazil</span></td>
-                                    <td><span>Cash, Credit card</span></td>
-                                    <td>21 Sep, 2021</td>
-                                    <td class="text-end">
-                                        <div class="drodown">
-                                            <a data-bs-toggle="dropdown" href="#" class="btn p-1">
-                                                <i class="fa fa-bars" aria-hidden="true"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a href="editHotel.html" class="dropdown-item">Edit information</a>
-                                                <a href="#!" class="dropdown-item">Delete hotel</a>
+                                        </td>
+                                        <td>100</td>
+                                        <td> <span class="d-inline-block align-middle">Brazil</span></td>
+                                        <td><span>Cash, Credit card</span></td>
+                                        <td>21 Sep, 2021</td>
+                                        <td class="text-end">
+                                            <div class="drodown">
+                                                <a data-bs-toggle="dropdown" href="#" class="btn p-1">
+                                                    <i class="fa fa-bars" aria-hidden="true"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a href="editHotel.html" class="dropdown-item">Edit information</a>
+                                                    <a href="#!" class="dropdown-item">Delete hotel</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="align-middle">
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div>
-                                                <div class="h6 mb-0 lh-1">Hotel 3</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="align-middle">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <div class="h6 mb-0 lh-1">Hotel 3</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>75</td>
-                                    <td>
-                                        <span class="d-inline-block align-middle">Poland</span>
-                                    </td>
-                                    <td><span>Credit card, Direct billing</span></td>
-                                    <td>12 June, 2021</td>
-                                    <td class="text-end">
-                                        <div class="drodown">
-                                            <a data-bs-toggle="dropdown" href="#" class="btn p-1">
-                                                <i class="fa fa-bars" aria-hidden="true"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a href="editHotel.html" class="dropdown-item">Edit information</a>
-                                                <a href="#!" class="dropdown-item">Delete hotel</a>
+                                        </td>
+                                        <td>75</td>
+                                        <td>
+                                            <span class="d-inline-block align-middle">Poland</span>
+                                        </td>
+                                        <td><span>Credit card, Direct billing</span></td>
+                                        <td>12 June, 2021</td>
+                                        <td class="text-end">
+                                            <div class="drodown">
+                                                <a data-bs-toggle="dropdown" href="#" class="btn p-1">
+                                                    <i class="fa fa-bars" aria-hidden="true"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a href="editHotel.html" class="dropdown-item">Edit information</a>
+                                                    <a href="#!" class="dropdown-item">Delete hotel</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="align-middle">
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div>
-                                                <div class="h6 mb-0 lh-1">Hotel 4</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="align-middle">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <div class="h6 mb-0 lh-1">Hotel 4</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>150</td>
-                                    <td>
-                                        <span class="d-inline-block align-middle">Kenya</span>
-                                    </td>
-                                    <td><span>Cash, Credit card</span></td>
-                                    <td>04 June, 2021</td>
-                                    <td class="text-end">
-                                        <div class="drodown">
-                                            <a data-bs-toggle="dropdown" href="#" class="btn p-1">
-                                                <i class="fa fa-bars" aria-hidden="true"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a href="editHotel.html" class="dropdown-item">Edit information</a>
-                                                <a href="#!" class="dropdown-item">Delete hotel</a>
+                                        </td>
+                                        <td>150</td>
+                                        <td>
+                                            <span class="d-inline-block align-middle">Kenya</span>
+                                        </td>
+                                        <td><span>Cash, Credit card</span></td>
+                                        <td>04 June, 2021</td>
+                                        <td class="text-end">
+                                            <div class="drodown">
+                                                <a data-bs-toggle="dropdown" href="#" class="btn p-1">
+                                                    <i class="fa fa-bars" aria-hidden="true"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a href="editHotel.html" class="dropdown-item">Edit information</a>
+                                                    <a href="#!" class="dropdown-item">Delete hotel</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="align-middle">
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div>
-                                                <div class="h6 mb-0 lh-1">Hotel 5</div>
+                                        </td>
+                                    </tr>
+                                    <tr class="align-middle">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <div class="h6 mb-0 lh-1">Hotel 5</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>60</td>
-                                    <td>
-                                        <span class="d-inline-block align-middle">Usa</span>
-                                    </td>
-                                    <td><span>Cash, Credit card, Direct billing</span></td>
-                                    <td>01 June, 2021</td>
-                                    <td class="text-end">
-                                        <div class="drodown">
-                                            <a data-bs-toggle="dropdown" href="#" class="btn p-1">
-                                                <i class="fa fa-bars" aria-hidden="true"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a href="editHotel.html" class="dropdown-item">Edit information</a>
-                                                <a href="#!" class="dropdown-item">Delete hotel</a>
+                                        </td>
+                                        <td>60</td>
+                                        <td>
+                                            <span class="d-inline-block align-middle">Usa</span>
+                                        </td>
+                                        <td><span>Cash, Credit card, Direct billing</span></td>
+                                        <td>01 June, 2021</td>
+                                        <td class="text-end">
+                                            <div class="drodown">
+                                                <a data-bs-toggle="dropdown" href="#" class="btn p-1">
+                                                    <i class="fa fa-bars" aria-hidden="true"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a href="editHotel.html" class="dropdown-item">Edit information</a>
+                                                    <a href="#!" class="dropdown-item">Delete hotel</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12 mb-3 mb-lg-5">
-                <a href="profileManager.html">
-                    <button class="btn btn-primary" type="button" onclick="">Go to profile</button>
-                </a>
+            <div class="row">
+                <div class="col-12 mb-3 mb-lg-5">
+                    <a href="profileManager.html">
+                        <button class="btn btn-primary" type="button" onclick="">Go to profile</button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </body>
+<!-- Bootstrap core JavaScript-->
+<script src="../../../vendor/jquery/jquery.min.js"></script>
+<script src="../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+<!-- Core plugin JavaScript-->
+<script src="../../../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="../../../js/sb-admin-2.min.js"></script>
 </html>
