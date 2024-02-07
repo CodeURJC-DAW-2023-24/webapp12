@@ -7,16 +7,170 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <!--Estilos del SidyBar-->
+    <link href="css/all.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
-    <link rel="stylesheet" href="../css/managerStyles.css">
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="css/managerStyles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.2.96/css/materialdesignicons.min.css" integrity="sha512-LX0YV/MWBEn2dwXCYgQHrpa9HJkwB+S+bnBpifSOTO1No27TqNMKYoAn6ff2FBh03THAzAiiCwQ+aPX+/Qt/Ow==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css'>
     <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js'></script>
 
-    <title>SB Admin 2 - 404</title>
+    <title>Manager Profile</title>
 </head>
 
 <body>
+    <!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- User-->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-text mx-3">User Profile</div>
+        </a>
+
+        <!-- Manager-->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-text mx-3">Manager Profile</div>
+        </a>
+
+        <!-- Admin-->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-text mx-3">Admin Profile</div>
+        </a>
+
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Personal Area
+        </div>
+
+        <!-- For all users -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Personal Data</span>
+            </a>
+        </li>
+
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Administration
+        </div>
+        <!--Cliente-->
+        <li class="nav-item">
+            <a class="nav-link" href="charts.html">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>My reservations</span></a>
+        </li>
+            
+        <!--Managers-->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagementManager" aria-expanded="true"
+                aria-controls="collapseManagementManager">
+                <i class="fas fa-fw fa-wrench"></i>
+                <span>Management</span>
+            </a>
+            
+            <div id="collapseManagementManager" class="collapse" aria-labelledby="headingManagementManager" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="templates/Profile/ManagerPages/html/viewHotelsManager.html">My Hotels</a>
+                    <a class="collapse-item" href="templates/ProfileManagerPages/html/clientListManager.html">Client Tables</a>
+                </div>
+            </div>
+        </li>
+        <!--Admin-->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagementAdmin" aria-expanded="true"
+                aria-controls="collapseManagementAdmin">
+                <i class="fas fa-fw fa-wrench"></i>
+                <span>Management</span>
+            </a>
+            <div id="collapseManagementAdmin" class="collapse" aria-labelledby="headingManagementAdmin" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="utilities-color.html">Users</a> <!-- To edit and interact with them -->
+                    <a class="collapse-item" href="utilities-border.html">Hotel managers</a> <!-- To edit and interact with them -->
+                </div>
+            </div>
+        </li>
+            
+        <!-- Nav Item - Collapse Tables -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTablesAdmin" aria-expanded="true"
+                aria-controls="collapseTablesAdmin">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Tables</span>
+            </a>
+            <div id="collapseTablesAdmin" class="collapse" aria-labelledby="headingTablesAdmin" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="tables.html">User tables</a> <!-- Only visualization -->
+                    <a class="collapse-item" href="tables.html">Hotel tables</a> <!-- Only visualization -->
+                </div>
+            </div>
+        </li>
+            
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+            
+        <div class="sidebar-heading">
+            Statistics
+        </div>
+            
+        <!-- Nav Item - Pages Collapse Menu -->
+        <!--Cliente-->
+        <li class="nav-item">
+            <a class="nav-link" href="charts.html">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>User Charts</span>
+            </a>
+        </li>
+        <!--Manager-->
+        <li class="nav-item">
+            <a class="nav-link" href="/templates/Charts/chartsManager.html">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Hotel Charts</span>
+            </a>
+        </li>
+        <!--Admin-->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts" aria-expanded="true"
+                aria-controls="collapseCharts">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Data Charts</span>
+            </a>
+            <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="utilities-color.html">User charts</a> <!-- Only for adinistrators -->
+                    <a class="collapse-item" href="utilities-border.html">Hotel charts</a> <!-- Gerente y admin -->
+                    <a class="collapse-item" href="index.html">General data charts</a> <!-- Only for adinistrators -->
+                </div>
+            </div>
+        </li>
+            
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+            
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+            
+    </ul>
     <div class="container">
         <div class="row">
             <div class="col-xl-8">
@@ -58,12 +212,6 @@
                                                 <span class="d-none d-sm-block">Edit profile</span>
                                             </a>
                                         </li><!-- end li -->
-                                        <li class="nav-item" role="presentation">
-                                            <a class="nav-link px-4" href="../../../404.html">
-                                                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                                                <span class="d-none d-sm-block">Go back</span>
-                                            </a>
-                                        </li><!-- end li -->
                                     </ul><!-- end ul -->
                                 </div>
                             </div><!-- end col -->
@@ -102,7 +250,7 @@
 
                                                     <div class="dropdown-menu dropdown-menu-end">
                                                         <a class="dropdown-item" href="editHotel.html">Edit</a>
-                                                        <a class="dropdown-item" href="">View on web</a>
+                                                        <a class="dropdown-item" href="rooms-single.html">View on web</a>
                                                         <a class="dropdown-item" href="viewHotelsManager.html">More info</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item delete-item"
@@ -471,5 +619,17 @@
             </div><!-- end col -->
         </div>
     </div>
+    <!-- End of Sidebar -->
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.bundle.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="js/jquery.easing.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.js"></script>
 </body>
 </html>
