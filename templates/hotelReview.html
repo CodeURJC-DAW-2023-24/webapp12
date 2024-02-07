@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+
+  <title>reviews with comments - Bootdey.com</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/review.css" rel="stylesheet">
+
+  <!-- Sidebar styles -->
+  <!--PON ESTO EN EL HEAD PARA INCLUIR LOS ESTILOS DEL SIDEBAR.PUEDE QUE TENGAS QUE CAMBIAR EL DIRECTORIO-->
+  <link href="vendor\fontawesome-free\css\all.min.css" rel="stylesheet" type="text/css">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="css\sb-admin-2.min.css" rel="stylesheet">
+  <!-- End of sidebar styles -->
+
+</head>
+
+<body>
+  <header>
+    <h1>Header</h1>
+    <pre>
+      Comentarios:
+      Deberíamos permitir respuestas entre las reseñas?
+      Primero las reseñas y luego los datos generales o al revés?
+      Darle color a las reseñas en función de la nota?
+      Poder ordenar por puntuación, tiempo
+      Poder dar "like" a reseñas?
+      Poner de qué país viene una reseña? (Por mi parte no, un poco overkill)
+    </pre>
+  </header>
+  <!--COPIA ESTO JUSTO DEBAJO DEL BODY, Y CIERRA EL DIV DEL WRAPPER JUSTO ANTES QUE EL BODY-->
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- User-->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-text mx-3">User Profile</div>
+      </a>
+
+      <!-- Manager-->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-text mx-3">Manager Profile</div>
+      </a>
+
+      <!-- Admin-->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-text mx-3">Admin Profile</div>
+      </a>
+
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Personal Area
+      </div>
+
+      <!-- For all users -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Personal Data</span>
+        </a>
+      </li>
+
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Administration
+      </div>
+      <!--Cliente-->
+      <li class="nav-item">
+        <a class="nav-link" href="charts.html">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>My reservations</span></a>
+      </li>
+
+      <!--Managers-->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagementManager"
+          aria-expanded="true" aria-controls="collapseManagementManager">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Management</span>
+        </a>
+
+        <div id="collapseManagementManager" class="collapse" aria-labelledby="headingManagementManager"
+          data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="templates/Profile/ManagerPages/html/viewHotelsManager.html">My Hotels</a>
+            <a class="collapse-item" href="templates/ProfileManagerPages/html/clientListManager.html">Client Tables</a>
+          </div>
+        </div>
+      </li>
+      <!--Admin-->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagementAdmin"
+          aria-expanded="true" aria-controls="collapseManagementAdmin">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Management</span>
+        </a>
+        <div id="collapseManagementAdmin" class="collapse" aria-labelledby="headingManagementAdmin"
+          data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="utilities-color.html">Users</a> <!-- To edit and interact with them -->
+            <a class="collapse-item" href="utilities-border.html">Hotel managers</a>
+            <!-- To edit and interact with them -->
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Collapse Tables -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTablesAdmin"
+          aria-expanded="true" aria-controls="collapseTablesAdmin">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Tables</span>
+        </a>
+        <div id="collapseTablesAdmin" class="collapse" aria-labelledby="headingTablesAdmin"
+          data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="tables.html">User tables</a> <!-- Only visualization -->
+            <a class="collapse-item" href="tables.html">Hotel tables</a> <!-- Only visualization -->
+          </div>
+        </div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <div class="sidebar-heading">
+        Statistics
+      </div>
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <!--Cliente-->
+      <li class="nav-item">
+        <a class="nav-link" href="charts.html">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>User Charts</span>
+        </a>
+      </li>
+      <!--Manager-->
+      <li class="nav-item">
+        <a class="nav-link" href="/templates/Charts/chartsManager.html">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Hotel Charts</span>
+        </a>
+      </li>
+      <!--Admin-->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts" aria-expanded="true"
+          aria-controls="collapseCharts">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Data Charts</span>
+        </a>
+        <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="utilities-color.html">User charts</a> <!-- Only for adinistrators -->
+            <a class="collapse-item" href="utilities-border.html">Hotel charts</a> <!-- Gerente y admin -->
+            <a class="collapse-item" href="index.html">General data charts</a> <!-- Only for adinistrators -->
+          </div>
+        </div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+
+    <main>
+      <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" class="button">Go back to the hotel
+        main
+        page (WIP)</a>
+      <div class="container">
+        <div id="reviews" class="review-section">
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <h4 class="m-0">37 Reviews</h4>
+            <select class="custom-select custom-select-sm border-0 shadow-sm ml-2 select2-hidden-accessible"
+              data-select2-id="1" tabindex="-1" aria-hidden="true">
+              <option data-select2-id="3">Most Relevant</option>
+              <option>Most Recent</option>
+            </select>
+            <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2"
+              style="width: 188px;">
+              <span class="selection">
+                <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true"
+                  aria-expanded="false" tabindex="0" aria-labelledby="select2-qd66-container">
+                  <span class="select2-selection__rendered" id="select2-qd66-container" role="textbox"
+                    aria-readonly="true" title="Most Relevant">Most Relevant</span>
+                  <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
+                </span>
+              </span>
+              <span class="dropdown-wrapper" aria-hidden="true"></span>
+            </span>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <table class="stars-counters">
+                <tbody>
+                  <tr class>
+                    <td>
+                      <span>
+                        <button
+                          class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">5
+                          Stars</button>
+                      </span>
+                    </td>
+                    <td class="progress-bar-container">
+                      <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                        <div class="fit-progressbar-background">
+                          <span class="progress-fill" style="width: 97.2973%;"></span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="star-num">(36)</td>
+                  </tr>
+                  <tr class>
+                    <td>
+                      <span>
+                        <button
+                          class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">5
+                          Stars</button>
+                      </span>
+                    </td>
+                    <td class="progress-bar-container">
+                      <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                        <div class="fit-progressbar-background">
+                          <span class="progress-fill" style="width: 2.2973%;"></span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="star-num">(2)</td>
+                  </tr>
+                  <tr class>
+                    <td>
+                      <span>
+                        <button
+                          class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">5
+                          Stars</button>
+                      </span>
+                    </td>
+                    <td class="progress-bar-container">
+                      <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                        <div class="fit-progressbar-background">
+                          <span class="progress-fill" style="width: 0;"></span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="star-num">(0)</td>
+                  </tr>
+                  <tr class>
+                    <td>
+                      <span>
+                        <button
+                          class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">5
+                          Stars</button>
+                      </span>
+                    </td>
+                    <td class="progress-bar-container">
+                      <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                        <div class="fit-progressbar-background">
+                          <span class="progress-fill" style="width: 0;"></span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="star-num">(0)</td>
+                  </tr>
+                  <tr class>
+                    <td>
+                      <span>
+                        <button
+                          class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">5
+                          Stars</button>
+                      </span>
+                    </td>
+                    <td class="progress-bar-container">
+                      <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                        <div class="fit-progressbar-background">
+                          <span class="progress-fill" style="width: 0;"></span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="star-num">(0)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-6">
+              <div class="ranking">
+                <h6 class="text-display-7">Rating Breakdown</h6>
+                <ul>
+                  <li>
+                    Seller communication level<span>5<span class="review-star rate-10 show-one"></span></span>
+                  </li>
+                  <li>
+                    Recommend to a friend<span>5<span class="review-star rate-10 show-one"></span></span>
+                  </li>
+                  <li>
+                    Service as described<span>4.9<span class="review-star rate-10 show-one"></span></span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- List of all the reviews -->
+        <div class="review-list">
+          <ul>
+            <!-- Here begins a review -->
+            <li>
+              <!-- Here is the div for the original post, having image, name, valoration and comment -->
+              <div class="d-flex">
+                <div class="left">
+                  <!-- Profile image -->
+                  <span>
+                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="profile-pict-img img-fluid"
+                      alt />
+                  </span>
+                </div>
+                <div class="right">
+                  <!-- Poster's name -->
+                  <h4>
+                    A random poster
+                    <span class="gig-rating text-body-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15" height="15">
+                        <path fill="currentColor"
+                          d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
+                        </path>
+                      </svg>
+                      <!-- Rating -->
+                      3.2
+                    </span>
+                  </h4>
+
+
+                  <!-- Esto se pone o no ? -->
+
+                  <!-- Country of origin with flag -->
+                  <div class="country d-flex align-items-center">
+                    <span>
+                      <img class="country-flag img-fluid" src="https://bootdey.com/img/Content/avatar/avatar6.png" />
+                    </span>
+                    <div class="country-name font-accent">India</div>
+                  </div>
+
+
+
+
+                  <!-- Comment -->
+                  <div class="review-description">
+                    <p>
+                      It took a long time to get the reservations done, and when we did
+                      get there we also had to wait to be attended. The rest of the experience was quite enjoyable.
+                    </p>
+                  </div>
+                  <!-- Time passed since posting -->
+                  <span class="publish py-3 d-inline-block w-100">Published 4 weeks ago</span>
+
+
+
+                  <!-- Esto se pone o no ? -->
+                  <!-- A comment can have post commenting on it-->
+                  <div class="response-item mt-4 d-flex">
+                    <div class="left">
+                      <span>
+                        <!-- Answerer's profile image -->
+                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="profile-pict-img img-fluid"
+                          alt />
+                      </span>
+                    </div>
+                    <div class="right">
+                      <!-- Answerer's name -->
+                      <h4>
+                        First answerer
+                        <span class="gig-rating text-body-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15" height="15">
+                            <path fill="currentColor"
+                              d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
+                            </path>
+                          </svg>
+                          <!-- Answerer's rating -->
+                          4.4
+                        </span>
+                      </h4>
+                      <div class="country d-flex align-items-center">
+                        <span>
+                          <img class="country-flag img-fluid"
+                            src="https://bootdey.com/img/Content/avatar/avatar3.png" />
+                        </span>
+                        <div class="country-name font-accent">India</div>
+                      </div>
+                      <div class="review-description">
+                        <p>
+                          Kind of the same happened to us, but it's because we are an elderly couple attended
+                          don't really get along with computers. Nice time at the hotel though!
+                        </p>
+                      </div>
+                      <!-- Time passed since posting -->
+                      <span class="publish py-3 d-inline-block w-100">Published 4 weeks ago</span>
+                    </div>
+                  </div>
+
+
+
+
+
+
+
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex">
+                <!-- Here begins a review -->
+                <div class="left">
+                  <span>
+                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="profile-pict-img img-fluid"
+                      alt />
+                  </span>
+                </div>
+                <div class="right">
+                  <h4>
+                    Original poster 2
+                    <span class="gig-rating text-body-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15" height="15">
+                        <path fill="currentColor"
+                          d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
+                        </path>
+                      </svg>
+                      5.0
+                    </span>
+                  </h4>
+                  <div class="country d-flex align-items-center">
+                    <span>
+                      <img class="country-flag img-fluid" src="https://bootdey.com/img/Content/avatar/avatar6.png" />
+                    </span>
+                    <div class="country-name font-accent">India</div>
+                  </div>
+                  <div class="review-description">
+                    <p>
+                      Everything was perfect, really good staff and place! 5 stars!!
+                    </p>
+                  </div>
+                  <span class="publish py-3 d-inline-block w-100">Published 6 weeks ago</span>
+
+                  <div class="response-item mt-4 d-flex">
+                    <div class="left">
+                      <span>
+                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="profile-pict-img img-fluid"
+                          alt />
+                      </span>
+                    </div>
+                    <div class="right">
+                      <h4>
+                        Holder of truth
+                        <span class="gig-rating text-body-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15" height="15">
+                            <path fill="currentColor"
+                              d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
+                            </path>
+                          </svg>
+                          0.0
+                        </span>
+                      </h4>
+                      <div class="country d-flex align-items-center">
+                        <span>
+                          <img class="country-flag img-fluid"
+                            src="https://bootdey.com/img/Content/avatar/avatar3.png" />
+                        </span>
+                        <div class="country-name font-accent">India</div>
+                      </div>
+                      <div class="review-description">
+                        <p>
+                          Noooooooooo, how can u say dat? U are promoting slavery and nature destruction,
+                          u should go to jail aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                        </p>
+                      </div>
+                      <span class="publish py-3 d-inline-block w-100">Published 4 weeks ago</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+
+    </main>
+  </div><!-- End of wrapper -->
+  <footer class="sticky-footer bg-white">
+    <h1>Footer</h1>
+    <div class="container my-auto">
+      <div class="copyright text-center my-auto">
+        <span>Copyright &copy; yourHOmeTEL 2024</span>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- General scripts -->
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript"></script>
+
+  <!-- Sidebar scripts -->
+  <!--COPIA ESTO JUSTO DEBAJO DEL BODY.PUEDE QUE TENGAS QUE CAMBIAR EL DIRECTORIO.PUEDE QUE NO HAYA QUE PONERLO, PERO POR SI ACASO-->
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+  <!-- End of sidebar scripts -->
+
+</body>
+
+</html>
