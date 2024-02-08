@@ -7,16 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!--Estilos del SidyBar-->
-    <link href="css/all.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles sidebar-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom fonts-->
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.css" rel="stylesheet">
-
-
+    <!--Custom styles-->
     <link rel="stylesheet" href="css/managerStyles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.2.96/css/materialdesignicons.min.css" integrity="sha512-LX0YV/MWBEn2dwXCYgQHrpa9HJkwB+S+bnBpifSOTO1No27TqNMKYoAn6ff2FBh03THAzAiiCwQ+aPX+/Qt/Ow==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css'>
@@ -27,601 +28,614 @@
 
 <body>
     <!-- Page Wrapper -->
-<div id="wrapper">
+    <div id="wrapper">
 
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-        <!-- User-->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-            <div class="sidebar-brand-text mx-3">User Profile</div>
-        </a>
-
-        <!-- Manager-->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-            <div class="sidebar-brand-text mx-3">Manager Profile</div>
-        </a>
-
-        <!-- Admin-->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-            <div class="sidebar-brand-text mx-3">Admin Profile</div>
-        </a>
-
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Personal Area
-        </div>
-
-        <!-- For all users -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Personal Data</span>
+            <!-- User-->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-text mx-3">User Profile</div>
             </a>
-        </li>
 
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Administration
-        </div>
-        <!--Cliente-->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>My reservations</span></a>
-        </li>
-            
-        <!--Managers-->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagementManager" aria-expanded="true"
-                aria-controls="collapseManagementManager">
-                <i class="fas fa-fw fa-wrench"></i>
-                <span>Management</span>
+            <!-- Manager-->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-text mx-3">Manager Profile</div>
             </a>
-            
-            <div id="collapseManagementManager" class="collapse" aria-labelledby="headingManagementManager" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="templates/Profile/ManagerPages/html/viewHotelsManager.html">My Hotels</a>
-                    <a class="collapse-item" href="templates/ProfileManagerPages/html/clientListManager.html">Client Tables</a>
-                </div>
+
+            <!-- Admin-->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-text mx-3">Admin Profile</div>
+            </a>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Personal Area
             </div>
-        </li>
-        <!--Admin-->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagementAdmin" aria-expanded="true"
-                aria-controls="collapseManagementAdmin">
-                <i class="fas fa-fw fa-wrench"></i>
-                <span>Management</span>
-            </a>
-            <div id="collapseManagementAdmin" class="collapse" aria-labelledby="headingManagementAdmin" data-parent="#accordionSidebar">
+
+            <!-- For all users -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Personal Data</span>
+                </a>
+            </li>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Administration
+            </div>
+            <!--Cliente-->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>My reservations</span></a>
+            </li>
+                
+            <!--Managers-->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagementManager" aria-expanded="true"
+                    aria-controls="collapseManagementManager">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Management</span>
+                </a>
+                
+                <div id="collapseManagementManager" class="collapse" aria-labelledby="headingManagementManager" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="utilities-color.html">Users</a> <!-- To edit and interact with them -->
-                    <a class="collapse-item" href="utilities-border.html">Hotel managers</a> <!-- To edit and interact with them -->
+                        <a class="collapse-item" href="viewHotelsManager.html">My Hotels</a>
+                        <a class="collapse-item" href="clientListManager.html">Client Tables</a>
+                    </div>
                 </div>
-            </div>
-        </li>
-            
-        <!-- Nav Item - Collapse Tables -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTablesAdmin" aria-expanded="true"
-                aria-controls="collapseTablesAdmin">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Tables</span>
-            </a>
-            <div id="collapseTablesAdmin" class="collapse" aria-labelledby="headingTablesAdmin" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="tables.html">User tables</a> <!-- Only visualization -->
-                    <a class="collapse-item" href="tables.html">Hotel tables</a> <!-- Only visualization -->
+            </li>
+            <!--Admin-->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagementAdmin" aria-expanded="true"
+                    aria-controls="collapseManagementAdmin">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Management</span>
+                </a>
+                <div id="collapseManagementAdmin" class="collapse" aria-labelledby="headingManagementAdmin" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="utilities-color.html">Users</a> <!-- To edit and interact with them -->
+                        <a class="collapse-item" href="utilities-border.html">Hotel managers</a> <!-- To edit and interact with them -->
+                    </div>
                 </div>
-            </div>
-        </li>
-            
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-            
-        <div class="sidebar-heading">
-            Statistics
-        </div>
-            
-        <!-- Nav Item - Pages Collapse Menu -->
-        <!--Cliente-->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>User Charts</span>
-            </a>
-        </li>
-        <!--Manager-->
-        <li class="nav-item">
-            <a class="nav-link" href="/templates/Charts/chartsManager.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Hotel Charts</span>
-            </a>
-        </li>
-        <!--Admin-->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts" aria-expanded="true"
-                aria-controls="collapseCharts">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Data Charts</span>
-            </a>
-            <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="utilities-color.html">User charts</a> <!-- Only for adinistrators -->
-                    <a class="collapse-item" href="utilities-border.html">Hotel charts</a> <!-- Gerente y admin -->
-                    <a class="collapse-item" href="index.html">General data charts</a> <!-- Only for adinistrators -->
+            </li>
+                
+            <!-- Nav Item - Collapse Tables -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTablesAdmin" aria-expanded="true"
+                    aria-controls="collapseTablesAdmin">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Tables</span>
+                </a>
+                <div id="collapseTablesAdmin" class="collapse" aria-labelledby="headingTablesAdmin" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="tables.html">User tables</a> <!-- Only visualization -->
+                        <a class="collapse-item" href="tables.html">Hotel tables</a> <!-- Only visualization -->
+                    </div>
                 </div>
+            </li>
+                
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+                
+            <div class="sidebar-heading">
+                Statistics
             </div>
-        </li>
-            
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
-            
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-            
-    </ul>
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-8">
-                <div class="card mt-4">
-                    <div class="card-body pb-0">
-                        <div class="row align-items-center">
-                            <div class="col-md-3">
-                                <div class="text-center border-end">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                                        class="img-fluid avatar-xxl rounded-circle" alt="">
-                                    <h4 class="text-primary font-size-20 mt-3 mb-2">Jansh Wells</h4>
-                                    <h5 class="text-muted font-size-13 mb-0 p-1">Nombre organizacion</h5>
-                                </div>
-                            </div><!-- end col -->
-                            <div class="col-md-9">
-                                <div class="ms-3">
-                                    <div>
-                                        <h4 class="card-title mb-2">Biography</h4>
-                                        <p class="mb-0 text-muted">Descripcion of manager/company</p>
-                                    </div>
-                                    <div class="row my-4">
-                                        <div class="col-md-12">
+                
+            <!-- Nav Item - Pages Collapse Menu -->
+            <!--Cliente-->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>User Charts</span>
+                </a>
+            </li>
+            <!--Manager-->
+            <li class="nav-item">
+                <a class="nav-link" href="/templates/Charts/chartsManager.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Hotel Charts</span>
+                </a>
+            </li>
+            <!--Admin-->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts" aria-expanded="true"
+                    aria-controls="collapseCharts">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Data Charts</span>
+                </a>
+                <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="utilities-color.html">User charts</a> <!-- Only for adinistrators -->
+                        <a class="collapse-item" href="utilities-border.html">Hotel charts</a> <!-- Gerente y admin -->
+                        <a class="collapse-item" href="index.html">General data charts</a> <!-- Only for adinistrators -->
+                    </div>
+                </div>
+            </li>
+                
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+                
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        <!--End sidebar-->      
+        </ul>
+        
+        <!-- Content Wrapper -->
+        <div class="container">
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div class="row">
+                    <div class="col-xl-8">
+                        <div class="card mt-4">
+                            <div class="card-body pb-0">
+                                <div class="row align-items-center">
+                                    <div class="col-md-3">
+                                        <div class="text-center border-end">
+                                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                                class="img-fluid avatar-xxl rounded-circle" alt="">
+                                            <h4 class="text-primary font-size-20 mt-3 mb-2">Jansh Wells</h4>
+                                            <h5 class="text-muted font-size-13 mb-0 p-1">Nombre organizacion</h5>
+                                        </div>
+                                    </div><!-- end col -->
+                                    <div class="col-md-9">
+                                        <div class="ms-3">
                                             <div>
-                                                <p class="text-muted mb-2 fw-medium"><i
-                                                        class="mdi mdi-email-outline me-2"></i>Janshwells@probic.com
-                                                </p>
-                                                <p class="text-muted fw-medium mb-0"><i
-                                                        class="mdi mdi-phone-in-talk-outline me-2"></i>418-955-4703
-                                                </p>
+                                                <h4 class="card-title mb-2">Biography</h4>
+                                                <p class="mb-0 text-muted">Descripcion of manager/company</p>
                                             </div>
+                                            <div class="row my-4">
+                                                <div class="col-md-12">
+                                                    <div>
+                                                        <p class="text-muted mb-2 fw-medium"><i
+                                                                class="mdi mdi-email-outline me-2"></i>Janshwells@probic.com
+                                                        </p>
+                                                        <p class="text-muted fw-medium mb-0"><i
+                                                                class="mdi mdi-phone-in-talk-outline me-2"></i>418-955-4703
+                                                        </p>
+                                                    </div>
+                                                </div><!-- end col -->
+                                            </div><!-- end row -->
+
+                                            <ul class="nav nav-tabs nav-tabs-custom border-bottom-0 mt-3 nav-justfied"
+                                                role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <a class="nav-link px-4" href="editProfileManager.html">
+                                                        <span class="d-block d-sm-none"><i class="mdi mdi-menu-open"></i></span>
+                                                        <span class="d-none d-sm-block">Edit profile</span>
+                                                    </a>
+                                                </li><!-- end li -->
+                                            </ul><!-- end ul -->
+                                        </div>
+                                    </div><!-- end col -->
+                                </div><!-- end row -->
+                            </div><!-- end card body -->
+                        </div><!-- end card -->
+
+                        <div class="card">
+                            <div class="tab-content p-4">
+                                <div class="tab-pane active show" id="projects-tab" role="tabpanel">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-1">
+                                            <h4 class="card-title mb-4">Your managed hotels</h4>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" id="all-projects">
+                                        <div class="col-md-6" id="project-items-1">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="d-flex mb-3">
+                                                        <div class="flex-grow-1 align-items-start">
+                                                            <div>
+                                                                <h6 class="mb-0 text-muted">
+                                                                    <i
+                                                                        class="mdi mdi-circle-medium text-danger fs-3 align-middle"></i>
+                                                                    <span class="team-date">21 Jun, 2021</span>
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="dropdown ms-2">
+                                                            <a href="#" class="dropdown-toggle font-size-16 text-muted"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                            </a>
+
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="editHotel.html">Edit</a>
+                                                                <a class="dropdown-item" href="rooms-single.html">View on web</a>
+                                                                <a class="dropdown-item" href="viewHotelsManager.html">More info</a>
+                                                                <div class="dropdown-divider"></div>
+                                                                <a class="dropdown-item delete-item"
+                                                                    onclick="deleteProjects('project-items-1')"
+                                                                    data-id="project-items-1" href="javascript: void(0);">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4">
+                                                        <h5 class="mb-1 font-size-17 team-title">Hotel 1</h5>
+                                                        <p class="text-muted mb-0 team-description">Location here</p>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <div class="avatar-group float-start flex-grow-1 task-assigne">
+                                                            <div class="avatar-group-item">
+                                                                <a href="javascript: void(0);" class="d-inline-block"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    value="member-6" aria-label="Terrell Soto"
+                                                                    data-bs-original-title="Terrell Soto">
+                                                                    <!--<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="rounded-circle avatar-sm">-->
+                                                                </a>
+                                                            </div>
+                                                            <div class="avatar-group-item">
+                                                                <a href="javascript: void(0);" class="d-inline-block"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    value="member-1" aria-label="Ruhi Shah"
+                                                                    data-bs-original-title="Ruhi Shah">
+                                                                    <!--<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="rounded-circle avatar-sm">-->
+                                                                </a>
+                                                            </div>
+                                                            <div class="avatar-group-item">
+                                                                <a href="javascript: void(0);" class="d-block"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    value="member-15" data-bs-original-title="Denny Silva">
+                                                                </a>
+                                                            </div>
+                                                        </div><!-- end avatar group -->
+                                                        <div class="align-self-end">
+                                                            <span class="badge badge-soft-danger p-2 team-status">Less than 30%
+                                                                occupation</span>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- end cardbody -->
+                                            </div><!-- end card -->
+                                        </div><!-- end col -->
+
+                                        <div class="col-md-6" id="project-items-2">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="d-flex mb-3">
+                                                        <div class="flex-grow-1 align-items-start">
+                                                            <div>
+                                                                <h6 class="mb-0 text-muted">
+                                                                    <i
+                                                                        class="mdi mdi-circle-medium text-success fs-3 align-middle"></i>
+                                                                    <span class="team-date">13 Aug, 2021</span>
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="dropdown ms-2">
+                                                            <a href="#" class="dropdown-toggle font-size-16 text-muted"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="editHotel.html">Edit</a>
+                                                                <a class="dropdown-item" href="">View on web</a>
+                                                                <a class="dropdown-item" href="viewHotelsManager.html">More info</a>
+                                                                <div class="dropdown-divider"></div>
+                                                                <a class="dropdown-item delete-item"
+                                                                    onclick="deleteProjects('project-items-1')"
+                                                                    data-id="project-items-1" href="javascript: void(0);">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4">
+                                                        <h5 class="mb-1 font-size-17 team-title">Hotel 2</h5>
+                                                        <p class="text-muted mb-0 team-description">Location here</p>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <div class="avatar-group float-start flex-grow-1 task-assigne">
+                                                            <div class="avatar-group-item">
+                                                                <a href="javascript: void(0);" class="d-inline-block"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    value="member-10" aria-label="Kelly Osborn"
+                                                                    data-bs-original-title="Kelly Osborn">
+                                                                    <!--<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="rounded-circle avatar-sm">-->
+                                                                </a>
+                                                            </div>
+                                                            <div class="avatar-group-item">
+                                                                <a href="javascript: void(0);" class="d-inline-block"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    value="member-2" aria-label="John Page"
+                                                                    data-bs-original-title="John Page">
+                                                                    <!--<img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="rounded-circle avatar-sm">-->
+                                                                </a>
+                                                            </div>
+                                                        </div><!-- end avatar group -->
+                                                        <div class="align-self-end">
+                                                            <span class="badge badge-soft-success p-2 team-status">More than 70%
+                                                                occupation</span>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- end cad-body -->
+                                            </div><!-- end card -->
+                                        </div><!-- end col -->
+
+                                        <div class="col-md-6" id="project-items-3">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="d-flex mb-3">
+                                                        <div class="flex-grow-1 align-items-start">
+                                                            <div>
+                                                                <h6 class="mb-0 text-muted">
+                                                                    <i
+                                                                        class="mdi mdi-circle-medium text-warning fs-3 align-middle"></i>
+                                                                    <span class="team-date">08 Sep, 2021</span>
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="dropdown ms-2">
+                                                            <a href="#" class="dropdown-toggle font-size-16 text-muted"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                            </a>
+
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="editHotel.html">Edit</a>
+                                                                <a class="dropdown-item" href="">View on web</a>
+                                                                <a class="dropdown-item" href="viewHotelsManager.html">More info</a>
+                                                                <div class="dropdown-divider"></div>
+                                                                <a class="dropdown-item delete-item"
+                                                                    onclick="deleteProjects('project-items-1')"
+                                                                    data-id="project-items-1" href="javascript: void(0);">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4">
+                                                        <h5 class="mb-1 font-size-17 team-title">Hotel 3</h5>
+                                                        <p class="text-muted mb-0 team-description">Location here</p>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <div class="avatar-group float-start flex-grow-1 task-assigne">
+                                                            <div class="avatar-group-item">
+                                                                <a href="javascript: void(0);" class="d-inline-block"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    value="member-3" aria-label="Judy Newland"
+                                                                    data-bs-original-title="Judy Newland">
+                                                                    <!--<img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" class="rounded-circle avatar-sm">-->
+                                                                </a>
+                                                            </div>
+                                                            <div class="avatar-group-item">
+                                                                <a href="javascript: void(0);" class="d-inline-block"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    value="member-5" aria-label="Jeffery Legette"
+                                                                    data-bs-original-title="Jeffery Legette">
+                                                                    <!--<img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="" class="rounded-circle avatar-sm">-->
+                                                                </a>
+                                                            </div>
+                                                            <div class="avatar-group-item">
+                                                                <a href="javascript: void(0);" class="d-inline-block"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    value="member-6" aria-label="Jose Rosborough"
+                                                                    data-bs-original-title="Jose Rosborough">
+                                                                    <!--<img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="" class="rounded-circle avatar-sm">-->
+                                                                </a>
+                                                            </div>
+                                                        </div><!-- end avatar group -->
+                                                        <div class="align-self-end">
+                                                            <span class="badge badge-soft-warning p-2 team-status">Around 30-70%
+                                                                occupation</span>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- end card-body -->
+                                            </div><!-- end card -->
+                                        </div><!-- end col -->
+
+                                        <div class="col-md-6" id="project-items-4">
+                                            <div class="card ">
+                                                <div class="card-body">
+                                                    <div class="d-flex mb-3">
+                                                        <div class="flex-grow-1 align-items-start">
+                                                            <div>
+                                                                <h6 class="mb-0 text-muted">
+                                                                    <i
+                                                                        class="mdi mdi-circle-medium text-danger fs-3 align-middle"></i>
+                                                                    <span class="team-date">20 Sep, 2021</span>
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="dropdown ms-2">
+                                                            <a href="#" class="dropdown-toggle font-size-16 text-muted"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                            </a>
+
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="editHotel.html">Edit</a>ç
+                                                                <a class="dropdown-item" href="">View on web</a>
+                                                                <a class="dropdown-item" href="viewHotelsManager.html">More info</a>
+                                                                <div class="dropdown-divider"></div>
+                                                                <a class="dropdown-item delete-item"
+                                                                    onclick="deleteProjects('project-items-1')"
+                                                                    data-id="project-items-1" href="javascript: void(0);">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4">
+                                                        <h5 class="mb-1 font-size-17 team-title">Hotel 4</h5>
+                                                        <p class="text-muted mb-0 team-description">Location here</p>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <div class="avatar-group float-start flex-grow-1 task-assigne">
+                                                            <div class="avatar-group-item">
+                                                                <a href="javascript: void(0);" class="d-inline-block"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    value="member-10" aria-label="Jansh Wells"
+                                                                    data-bs-original-title="Jansh Wells">
+                                                                    <!--<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="rounded-circle avatar-sm">-->
+                                                                </a>
+                                                            </div>
+                                                        </div><!-- end avatar group -->
+                                                        <div class="align-self-end">
+                                                            <span class="badge badge-soft-danger p-2 team-status">Less than 30%
+                                                                occupation</span>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- end card-body -->
+                                            </div><!-- end card -->
+                                        </div><!-- end col -->
+
+                                        <div class="col-md-6" id="project-items-5">
+                                            <div class="card mb-lg-0">
+                                                <div class="card-body">
+                                                    <div class="d-flex mb-3">
+                                                        <div class="flex-grow-1 align-items-start">
+                                                            <div>
+                                                                <h6 class="mb-0 text-muted">
+                                                                    <i
+                                                                        class="mdi mdi-circle-medium text-success fs-3 align-middle"></i>
+                                                                    <span class="team-date">12 April, 2021</span>
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="dropdown ms-2">
+                                                            <a href="#" class="dropdown-toggle font-size-16 text-muted"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" href="editHotel.html">Edit</a>
+                                                                <a class="dropdown-item" href="">View on web</a>
+                                                                <a class="dropdown-item" href="viewHotelsManager.html">More info</a>
+                                                                <div class="dropdown-divider"></div>
+                                                                <a class="dropdown-item delete-item"
+                                                                    onclick="deleteProjects('project-items-1')"
+                                                                    data-id="project-items-1" href="javascript: void(0);">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4">
+                                                        <h5 class="mb-1 font-size-17 team-title">Hotel 5</h5>
+                                                        <p class="text-muted mb-0 team-description">Location here</p>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <div class="avatar-group float-start flex-grow-1 task-assigne">
+                                                            <div class="avatar-group-item">
+                                                                <a href="javascript: void(0);" class="d-inline-block"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    value="member-1" aria-label="Ruhi Luft"
+                                                                    data-bs-original-title="Ruhi Luft">
+                                                                    <!--<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="rounded-circle avatar-sm">-->
+                                                                </a>
+                                                            </div>
+                                                            <div class="avatar-group-item">
+                                                                <a href="javascript: void(0);" class="d-inline-block"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    value="member-5" aria-label="Elias Hardage"
+                                                                    data-bs-original-title="Elias Hardage">
+                                                                    <!--<img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="" class="rounded-circle avatar-sm">-->
+                                                                </a>
+                                                            </div>
+                                                            <div class="avatar-group-item">
+                                                                <a href="javascript: void(0);" class="d-inline-block"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    value="member-10" aria-label="Jansh Wells"
+                                                                    data-bs-original-title="Jansh Wells">
+                                                                    <!--<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="rounded-circle avatar-sm">-->
+                                                                </a>
+                                                            </div>
+                                                        </div><!-- end avatar group -->
+                                                        <div class="align-self-end">
+                                                            <span class="badge badge-soft-success p-2 team-status">More than than
+                                                                70% occupation</span>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- end card body -->
+                                            </div><!-- end card -->
                                         </div><!-- end col -->
                                     </div><!-- end row -->
-
-                                    <ul class="nav nav-tabs nav-tabs-custom border-bottom-0 mt-3 nav-justfied"
-                                        role="tablist">
-                                        <li class="nav-item" role="presentation">
-                                            <a class="nav-link px-4" href="editProfileManager.html">
-                                                <span class="d-block d-sm-none"><i class="mdi mdi-menu-open"></i></span>
-                                                <span class="d-none d-sm-block">Edit profile</span>
-                                            </a>
-                                        </li><!-- end li -->
-                                    </ul><!-- end ul -->
-                                </div>
-                            </div><!-- end col -->
-                        </div><!-- end row -->
-                    </div><!-- end card body -->
-                </div><!-- end card -->
-
-                <div class="card">
-                    <div class="tab-content p-4">
-                        <div class="tab-pane active show" id="projects-tab" role="tabpanel">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-1">
-                                    <h4 class="card-title mb-4">Your managed hotels</h4>
-                                </div>
+                                </div><!-- end tab pane -->
                             </div>
+                        </div><!-- end card -->
+                    </div><!-- end col -->
 
-                            <div class="row" id="all-projects">
-                                <div class="col-md-6" id="project-items-1">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="d-flex mb-3">
-                                                <div class="flex-grow-1 align-items-start">
-                                                    <div>
-                                                        <h6 class="mb-0 text-muted">
-                                                            <i
-                                                                class="mdi mdi-circle-medium text-danger fs-3 align-middle"></i>
-                                                            <span class="team-date">21 Jun, 2021</span>
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                                <div class="dropdown ms-2">
-                                                    <a href="#" class="dropdown-toggle font-size-16 text-muted"
-                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                    </a>
+                    <div class="col-xl-4">
+                        <div class="card mt-4">
+                            <div class="card-body">
+                                <div class="pb-2">
+                                    <h4 class="card-title mb-3">About</h4>
+                                    <p>Strong points and reasons to book hotels with us</p>
+                                    <ul class="ps-3 mb-0">
+                                        <li>Reason 1</li>
+                                        <li>Reason 2</li>
+                                    </ul>
+                                    <!-- end ul -->
+                                </div>
+                                <hr>
+                                <div class="pt-2">
+                                    <h4 class="card-title mb-4">Our hotels fall on these categories</h4>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <span class="badge badge-soft-secondary p-2">Category 1</span>
+                                        <span class="badge badge-soft-secondary p-2">Category 2</span>
+                                        <span class="badge badge-soft-secondary p-2">Category 3</span>
+                                        <span class="badge badge-soft-secondary p-2">Category 4</span>
+                                        <span class="badge badge-soft-secondary p-2">Category 5</span>
+                                    </div>
+                                </div>
+                            </div><!-- end cardbody -->
+                        </div><!-- end card -->
 
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <a class="dropdown-item" href="editHotel.html">Edit</a>
-                                                        <a class="dropdown-item" href="rooms-single.html">View on web</a>
-                                                        <a class="dropdown-item" href="viewHotelsManager.html">More info</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item delete-item"
-                                                            onclick="deleteProjects('project-items-1')"
-                                                            data-id="project-items-1" href="javascript: void(0);">Delete</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="mb-4">
-                                                <h5 class="mb-1 font-size-17 team-title">Hotel 1</h5>
-                                                <p class="text-muted mb-0 team-description">Location here</p>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div class="avatar-group float-start flex-grow-1 task-assigne">
-                                                    <div class="avatar-group-item">
-                                                        <a href="javascript: void(0);" class="d-inline-block"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            value="member-6" aria-label="Terrell Soto"
-                                                            data-bs-original-title="Terrell Soto">
-                                                            <!--<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="rounded-circle avatar-sm">-->
-                                                        </a>
-                                                    </div>
-                                                    <div class="avatar-group-item">
-                                                        <a href="javascript: void(0);" class="d-inline-block"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            value="member-1" aria-label="Ruhi Shah"
-                                                            data-bs-original-title="Ruhi Shah">
-                                                            <!--<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="rounded-circle avatar-sm">-->
-                                                        </a>
-                                                    </div>
-                                                    <div class="avatar-group-item">
-                                                        <a href="javascript: void(0);" class="d-block"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            value="member-15" data-bs-original-title="Denny Silva">
-                                                        </a>
-                                                    </div>
-                                                </div><!-- end avatar group -->
-                                                <div class="align-self-end">
-                                                    <span class="badge badge-soft-danger p-2 team-status">Less than 30%
-                                                        occupation</span>
-                                                </div>
-                                            </div>
-                                        </div><!-- end cardbody -->
-                                    </div><!-- end card -->
-                                </div><!-- end col -->
-
-                                <div class="col-md-6" id="project-items-2">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="d-flex mb-3">
-                                                <div class="flex-grow-1 align-items-start">
-                                                    <div>
-                                                        <h6 class="mb-0 text-muted">
-                                                            <i
-                                                                class="mdi mdi-circle-medium text-success fs-3 align-middle"></i>
-                                                            <span class="team-date">13 Aug, 2021</span>
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                                <div class="dropdown ms-2">
-                                                    <a href="#" class="dropdown-toggle font-size-16 text-muted"
-                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <a class="dropdown-item" href="editHotel.html">Edit</a>
-                                                        <a class="dropdown-item" href="">View on web</a>
-                                                        <a class="dropdown-item" href="viewHotelsManager.html">More info</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item delete-item"
-                                                            onclick="deleteProjects('project-items-1')"
-                                                            data-id="project-items-1" href="javascript: void(0);">Delete</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="mb-4">
-                                                <h5 class="mb-1 font-size-17 team-title">Hotel 2</h5>
-                                                <p class="text-muted mb-0 team-description">Location here</p>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div class="avatar-group float-start flex-grow-1 task-assigne">
-                                                    <div class="avatar-group-item">
-                                                        <a href="javascript: void(0);" class="d-inline-block"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            value="member-10" aria-label="Kelly Osborn"
-                                                            data-bs-original-title="Kelly Osborn">
-                                                            <!--<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="rounded-circle avatar-sm">-->
-                                                        </a>
-                                                    </div>
-                                                    <div class="avatar-group-item">
-                                                        <a href="javascript: void(0);" class="d-inline-block"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            value="member-2" aria-label="John Page"
-                                                            data-bs-original-title="John Page">
-                                                            <!--<img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="rounded-circle avatar-sm">-->
-                                                        </a>
-                                                    </div>
-                                                </div><!-- end avatar group -->
-                                                <div class="align-self-end">
-                                                    <span class="badge badge-soft-success p-2 team-status">More than 70%
-                                                        occupation</span>
-                                                </div>
-                                            </div>
-                                        </div><!-- end cad-body -->
-                                    </div><!-- end card -->
-                                </div><!-- end col -->
-
-                                <div class="col-md-6" id="project-items-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="d-flex mb-3">
-                                                <div class="flex-grow-1 align-items-start">
-                                                    <div>
-                                                        <h6 class="mb-0 text-muted">
-                                                            <i
-                                                                class="mdi mdi-circle-medium text-warning fs-3 align-middle"></i>
-                                                            <span class="team-date">08 Sep, 2021</span>
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                                <div class="dropdown ms-2">
-                                                    <a href="#" class="dropdown-toggle font-size-16 text-muted"
-                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                    </a>
-
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <a class="dropdown-item" href="editHotel.html">Edit</a>
-                                                        <a class="dropdown-item" href="">View on web</a>
-                                                        <a class="dropdown-item" href="viewHotelsManager.html">More info</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item delete-item"
-                                                            onclick="deleteProjects('project-items-1')"
-                                                            data-id="project-items-1" href="javascript: void(0);">Delete</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="mb-4">
-                                                <h5 class="mb-1 font-size-17 team-title">Hotel 3</h5>
-                                                <p class="text-muted mb-0 team-description">Location here</p>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div class="avatar-group float-start flex-grow-1 task-assigne">
-                                                    <div class="avatar-group-item">
-                                                        <a href="javascript: void(0);" class="d-inline-block"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            value="member-3" aria-label="Judy Newland"
-                                                            data-bs-original-title="Judy Newland">
-                                                            <!--<img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" class="rounded-circle avatar-sm">-->
-                                                        </a>
-                                                    </div>
-                                                    <div class="avatar-group-item">
-                                                        <a href="javascript: void(0);" class="d-inline-block"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            value="member-5" aria-label="Jeffery Legette"
-                                                            data-bs-original-title="Jeffery Legette">
-                                                            <!--<img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="" class="rounded-circle avatar-sm">-->
-                                                        </a>
-                                                    </div>
-                                                    <div class="avatar-group-item">
-                                                        <a href="javascript: void(0);" class="d-inline-block"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            value="member-6" aria-label="Jose Rosborough"
-                                                            data-bs-original-title="Jose Rosborough">
-                                                            <!--<img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="" class="rounded-circle avatar-sm">-->
-                                                        </a>
-                                                    </div>
-                                                </div><!-- end avatar group -->
-                                                <div class="align-self-end">
-                                                    <span class="badge badge-soft-warning p-2 team-status">Around 30-70%
-                                                        occupation</span>
-                                                </div>
-                                            </div>
-                                        </div><!-- end card-body -->
-                                    </div><!-- end card -->
-                                </div><!-- end col -->
-
-                                <div class="col-md-6" id="project-items-4">
-                                    <div class="card ">
-                                        <div class="card-body">
-                                            <div class="d-flex mb-3">
-                                                <div class="flex-grow-1 align-items-start">
-                                                    <div>
-                                                        <h6 class="mb-0 text-muted">
-                                                            <i
-                                                                class="mdi mdi-circle-medium text-danger fs-3 align-middle"></i>
-                                                            <span class="team-date">20 Sep, 2021</span>
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                                <div class="dropdown ms-2">
-                                                    <a href="#" class="dropdown-toggle font-size-16 text-muted"
-                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                    </a>
-
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <a class="dropdown-item" href="editHotel.html">Edit</a>ç
-                                                        <a class="dropdown-item" href="">View on web</a>
-                                                        <a class="dropdown-item" href="viewHotelsManager.html">More info</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item delete-item"
-                                                            onclick="deleteProjects('project-items-1')"
-                                                            data-id="project-items-1" href="javascript: void(0);">Delete</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="mb-4">
-                                                <h5 class="mb-1 font-size-17 team-title">Hotel 4</h5>
-                                                <p class="text-muted mb-0 team-description">Location here</p>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div class="avatar-group float-start flex-grow-1 task-assigne">
-                                                    <div class="avatar-group-item">
-                                                        <a href="javascript: void(0);" class="d-inline-block"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            value="member-10" aria-label="Jansh Wells"
-                                                            data-bs-original-title="Jansh Wells">
-                                                            <!--<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="rounded-circle avatar-sm">-->
-                                                        </a>
-                                                    </div>
-                                                </div><!-- end avatar group -->
-                                                <div class="align-self-end">
-                                                    <span class="badge badge-soft-danger p-2 team-status">Less than 30%
-                                                        occupation</span>
-                                                </div>
-                                            </div>
-                                        </div><!-- end card-body -->
-                                    </div><!-- end card -->
-                                </div><!-- end col -->
-
-                                <div class="col-md-6" id="project-items-5">
-                                    <div class="card mb-lg-0">
-                                        <div class="card-body">
-                                            <div class="d-flex mb-3">
-                                                <div class="flex-grow-1 align-items-start">
-                                                    <div>
-                                                        <h6 class="mb-0 text-muted">
-                                                            <i
-                                                                class="mdi mdi-circle-medium text-success fs-3 align-middle"></i>
-                                                            <span class="team-date">12 April, 2021</span>
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                                <div class="dropdown ms-2">
-                                                    <a href="#" class="dropdown-toggle font-size-16 text-muted"
-                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                        <a class="dropdown-item" href="editHotel.html">Edit</a>
-                                                        <a class="dropdown-item" href="">View on web</a>
-                                                        <a class="dropdown-item" href="viewHotelsManager.html">More info</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item delete-item"
-                                                            onclick="deleteProjects('project-items-1')"
-                                                            data-id="project-items-1" href="javascript: void(0);">Delete</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="mb-4">
-                                                <h5 class="mb-1 font-size-17 team-title">Hotel 5</h5>
-                                                <p class="text-muted mb-0 team-description">Location here</p>
-                                            </div>
-                                            <div class="d-flex">
-                                                <div class="avatar-group float-start flex-grow-1 task-assigne">
-                                                    <div class="avatar-group-item">
-                                                        <a href="javascript: void(0);" class="d-inline-block"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            value="member-1" aria-label="Ruhi Luft"
-                                                            data-bs-original-title="Ruhi Luft">
-                                                            <!--<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="rounded-circle avatar-sm">-->
-                                                        </a>
-                                                    </div>
-                                                    <div class="avatar-group-item">
-                                                        <a href="javascript: void(0);" class="d-inline-block"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            value="member-5" aria-label="Elias Hardage"
-                                                            data-bs-original-title="Elias Hardage">
-                                                            <!--<img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="" class="rounded-circle avatar-sm">-->
-                                                        </a>
-                                                    </div>
-                                                    <div class="avatar-group-item">
-                                                        <a href="javascript: void(0);" class="d-inline-block"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            value="member-10" aria-label="Jansh Wells"
-                                                            data-bs-original-title="Jansh Wells">
-                                                            <!--<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="rounded-circle avatar-sm">-->
-                                                        </a>
-                                                    </div>
-                                                </div><!-- end avatar group -->
-                                                <div class="align-self-end">
-                                                    <span class="badge badge-soft-success p-2 team-status">More than than
-                                                        70% occupation</span>
-                                                </div>
-                                            </div>
-                                        </div><!-- end card body -->
-                                    </div><!-- end card -->
-                                </div><!-- end col -->
-                            </div><!-- end row -->
-                        </div><!-- end tab pane -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div>
+                                    <h4 class="card-title mb-4">Personal Details</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">Name</th>
+                                                    <td>Jansh Wells</td>
+                                                </tr><!-- end tr -->
+                                                <tr>
+                                                    <th scope="row">Location</th>
+                                                    <td>California, United States</td>
+                                                </tr><!-- end tr -->
+                                                <tr>
+                                                    <th scope="row">Language</th>
+                                                    <td>English</td>
+                                                </tr><!-- end tr -->
+                                                <tr>
+                                                    <th scope="row">Website</th>
+                                                    <td>abc12@probic.com</td>
+                                                </tr><!-- end tr -->
+                                            </tbody><!-- end tbody -->
+                                        </table><!-- end table -->
+                                    </div>
+                                </div>
+                            </div><!-- end card body -->
+                        </div><!-- end card -->
+                    </div><!-- end col -->
+                </div>
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; yourHOmeTEL 2024</span>
+                        </div>
                     </div>
-                </div><!-- end card -->
-            </div><!-- end col -->
-
-            <div class="col-xl-4">
-                <div class="card mt-4">
-                    <div class="card-body">
-                        <div class="pb-2">
-                            <h4 class="card-title mb-3">About</h4>
-                            <p>Strong points and reasons to book hotels with us</p>
-                            <ul class="ps-3 mb-0">
-                                <li>Reason 1</li>
-                                <li>Reason 2</li>
-                            </ul>
-                            <!-- end ul -->
-                        </div>
-                        <hr>
-                        <div class="pt-2">
-                            <h4 class="card-title mb-4">Our hotels fall on these categories</h4>
-                            <div class="d-flex gap-2 flex-wrap">
-                                <span class="badge badge-soft-secondary p-2">Category 1</span>
-                                <span class="badge badge-soft-secondary p-2">Category 2</span>
-                                <span class="badge badge-soft-secondary p-2">Category 3</span>
-                                <span class="badge badge-soft-secondary p-2">Category 4</span>
-                                <span class="badge badge-soft-secondary p-2">Category 5</span>
-                            </div>
-                        </div>
-                    </div><!-- end cardbody -->
-                </div><!-- end card -->
-
-                <div class="card">
-                    <div class="card-body">
-                        <div>
-                            <h4 class="card-title mb-4">Personal Details</h4>
-                            <div class="table-responsive">
-                                <table class="table table-bordered mb-0">
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">Name</th>
-                                            <td>Jansh Wells</td>
-                                        </tr><!-- end tr -->
-                                        <tr>
-                                            <th scope="row">Location</th>
-                                            <td>California, United States</td>
-                                        </tr><!-- end tr -->
-                                        <tr>
-                                            <th scope="row">Language</th>
-                                            <td>English</td>
-                                        </tr><!-- end tr -->
-                                        <tr>
-                                            <th scope="row">Website</th>
-                                            <td>abc12@probic.com</td>
-                                        </tr><!-- end tr -->
-                                    </tbody><!-- end tbody -->
-                                </table><!-- end table -->
-                            </div>
-                        </div>
-                    </div><!-- end card body -->
-                </div><!-- end card -->
-            </div><!-- end col -->
+                </footer>
+            </div>
+            <!-- End of Wrapper -->
         </div>
+                  
     </div>
-    <!-- End of Sidebar -->
-    </div>
-
+    
+</body>
     <!-- Bootstrap core JavaScript-->
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.bundle.js"></script>
@@ -631,5 +645,4 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.js"></script>
-</body>
 </html>
