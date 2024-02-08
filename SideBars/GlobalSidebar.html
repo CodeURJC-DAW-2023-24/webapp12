@@ -1,4 +1,3 @@
-<!--PON ESTO EN EL HEAD PARA INCLUIR LOS ESTILOS DEL SIDEBAR.PUEDE QUE TENGAS QUE CAMBIAR EL DIRECTORIO-->
 
 <!-- Custom styles sidebar-->
 <link href="css/all.css" rel="stylesheet" type="text/css">
@@ -12,6 +11,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css'>
 <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js'></script>
+
+<!-- Custom fonts-->
+<link
+href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+rel="stylesheet">
 
 
 <!--COPIA ESTO JUSTO DEBAJO DEL BODY, Y CIERRA EL DIV DEL WRAPPER JUSTO ANTES QUE EL BODY (TENDRAS QUE CAMBIARLO). EL WRAPPER ABARCA HASTA EL FIN DEL BODY-->
@@ -70,18 +74,9 @@
             
         <!--Managers-->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagementManager" aria-expanded="true"
-                aria-controls="collapseManagementManager">
-                <i class="fas fa-fw fa-wrench"></i>
-                <span>Management</span>
-            </a>
-            
-            <div id="collapseManagementManager" class="collapse" aria-labelledby="headingManagementManager" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="viewHotelsManager.html">My Hotels</a>
-                    <a class="collapse-item" href="clientListManager.html">Client Tables</a>
-                </div>
-            </div>
+            <a class="nav-link" href="viewHotelsManager.html">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>My Hotels</span></a>
         </li>
         <!--Admin-->
         <li class="nav-item">
@@ -98,21 +93,6 @@
             </div>
         </li>
             
-        <!-- Nav Item - Collapse Tables -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTablesAdmin" aria-expanded="true"
-                aria-controls="collapseTablesAdmin">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Tables</span>
-            </a>
-            <div id="collapseTablesAdmin" class="collapse" aria-labelledby="headingTablesAdmin" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="tables.html">User tables</a> <!-- Only visualization -->
-                    <a class="collapse-item" href="tables.html">Hotel tables</a> <!-- Only visualization -->
-                </div>
-            </div>
-        </li>
-            
         <!-- Divider -->
         <hr class="sidebar-divider">
             
@@ -121,7 +101,7 @@
         </div>
             
         <!-- Nav Item - Pages Collapse Menu -->
-        <!--Cliente-->
+        <!--Admin-->
         <li class="nav-item">
             <a class="nav-link" href="charts.html">
                 <i class="fas fa-fw fa-chart-area"></i>
@@ -134,23 +114,7 @@
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Hotel Charts</span>
             </a>
-        </li>
-        <!--Admin-->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts" aria-expanded="true"
-                aria-controls="collapseCharts">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Data Charts</span>
-            </a>
-            <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="utilities-color.html">User charts</a> <!-- Only for adinistrators -->
-                    <a class="collapse-item" href="utilities-border.html">Hotel charts</a> <!-- Gerente y admin -->
-                    <a class="collapse-item" href="index.html">General data charts</a> <!-- Only for adinistrators -->
-                </div>
-            </div>
-        </li>
-            
+        </li>        
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
             
@@ -158,7 +122,7 @@
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
-            
+    <!-- End of Sidebar -->
     </ul>
     <!-- End of Sidebar -->
 </div>
