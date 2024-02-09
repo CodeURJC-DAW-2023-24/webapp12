@@ -57,6 +57,16 @@ body {
     border-bottom-color: #0061f2;
 }
 
+.btn-primary-review {
+    width: 12rem;
+    color: #fff;
+    background-color: #4e73df;
+    border-color: #4e73df;
+    box-shadow: 0 0 0 0.2rem rgba(31, 83, 238, 0.662);
+    margin-left: 12px;
+    margin-bottom: 10px;
+}
+
 .nav-borders .nav-link {
     color: #69707a;
     border-bottom-width: 0.125rem;
