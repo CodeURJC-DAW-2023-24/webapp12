@@ -2363,6 +2363,23 @@ fieldset:disabled a.btn {
   border-color: #4e73df;
 }
 
+.btn-primary-accept{
+  width: 4rem;
+  color: #fff;
+  background-color: #33e822;
+  border-color: #33e822;
+  box-shadow: 0 0 0 0.2rem rgba(46, 232, 21, 0.662);
+  margin-bottom: 1rem;
+}
+
+.btn-primary-deny{
+  width: 4rem;
+  color: #fff;
+  background-color: #d62929;
+  border-color: #d62929;
+  box-shadow: 0 0 0 0.2rem rgba(224, 18, 18, 0.581);
+}
+
 .btn-primary:hover {
   color: #fff;
   background-color: #2e59d9;
