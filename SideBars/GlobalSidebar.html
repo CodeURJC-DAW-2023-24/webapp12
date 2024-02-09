@@ -21,7 +21,6 @@ rel="stylesheet">
 <!--COPIA ESTO JUSTO DEBAJO DEL BODY, Y CIERRA EL DIV DEL WRAPPER JUSTO ANTES QUE EL BODY (TENDRAS QUE CAMBIARLO). EL WRAPPER ABARCA HASTA EL FIN DEL BODY-->
 <!-- Page Wrapper -->
 <div id="wrapper">
-
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -80,17 +79,9 @@ rel="stylesheet">
         </li>
         <!--Admin-->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagementAdmin" aria-expanded="true"
-                aria-controls="collapseManagementAdmin">
-                <i class="fas fa-fw fa-wrench"></i>
-                <span>Management</span>
-            </a>
-            <div id="collapseManagementAdmin" class="collapse" aria-labelledby="headingManagementAdmin" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="utilities-color.html">Users</a> <!-- To edit and interact with them -->
-                    <a class="collapse-item" href="utilities-border.html">Hotel managers</a> <!-- To edit and interact with them -->
-                </div>
-            </div>
+            <a class="nav-link" href="clientListManager.html">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Hotel Managers</span></a>
         </li>
             
         <!-- Divider -->
@@ -100,28 +91,28 @@ rel="stylesheet">
             Statistics
         </div>
             
-        <!-- Nav Item - Pages Collapse Menu -->
-        <!--Admin-->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>User Charts</span>
-            </a>
-        </li>
-        <!--Manager-->
-        <li class="nav-item">
-            <a class="nav-link" href="chartsManager.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Hotel Charts</span>
-            </a>
-        </li>        
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
-            
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
+    <!-- Nav Item - Pages Collapse Menu -->
+    <!--Admin-->
+    <li class="nav-item">
+        <a class="nav-link" href="userCharts.html">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>User Charts</span>
+        </a>
+    </li>
+    <!--Manager-->
+    <li class="nav-item">
+        <a class="nav-link" href="chartsAdmin.html">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Hotel Charts</span>
+        </a>
+    </li>        
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+        
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
     <!-- End of Sidebar -->
     </ul>
     <!-- End of Sidebar -->

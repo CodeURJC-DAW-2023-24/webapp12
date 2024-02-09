@@ -9,10 +9,18 @@
     <meta name="author" content="">
 
     <!-- Custom styles sidebar-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="css/all.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">   
     <link href="css/sb-admin-2.css" rel="stylesheet">
 
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom styles-->
+    <link rel='stylesheet' href="css/clientListManagerStyles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css'>
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js'></script>
+
     <!-- Custom fonts-->
     <link
     href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -21,10 +29,9 @@
     <!-- Custom styles-->
     <link rel="stylesheet" href="css/managerStyles.css" />
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
     <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js'></script>
 
-    <title>SB Admin 2 - 404</title>
+    <title>Hotels Manager</title>
 </head>
 
 <body>
@@ -60,7 +67,7 @@
 
             <!-- For all users -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="profileManager.html">
+                <a class="nav-link collapsed" href="profile.html">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Personal Data</span>
                 </a>
@@ -76,54 +83,22 @@
             </div>
             <!--Cliente-->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="clientReservation.html">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>My reservations</span></a>
             </li>
                 
             <!--Managers-->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagementManager" aria-expanded="true"
-                    aria-controls="collapseManagementManager">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Management</span>
-                </a>
-                
-                <div id="collapseManagementManager" class="collapse" aria-labelledby="headingManagementManager" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="templates/Profile/ManagerPages/html/viewHotelsManager.html">My Hotels</a>
-                        <a class="collapse-item" href="templates/ProfileManagerPages/html/clientListManager.html">Client Tables</a>
-                    </div>
-                </div>
+                <a class="nav-link" href="viewHotelsManager.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>My Hotels</span></a>
             </li>
             <!--Admin-->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseManagementAdmin" aria-expanded="true"
-                    aria-controls="collapseManagementAdmin">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Management</span>
-                </a>
-                <div id="collapseManagementAdmin" class="collapse" aria-labelledby="headingManagementAdmin" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="utilities-color.html">Users</a> <!-- To edit and interact with them -->
-                        <a class="collapse-item" href="utilities-border.html">Hotel managers</a> <!-- To edit and interact with them -->
-                    </div>
-                </div>
-            </li>
-                
-            <!-- Nav Item - Collapse Tables -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTablesAdmin" aria-expanded="true"
-                    aria-controls="collapseTablesAdmin">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span>
-                </a>
-                <div id="collapseTablesAdmin" class="collapse" aria-labelledby="headingTablesAdmin" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="tables.html">User tables</a> <!-- Only visualization -->
-                        <a class="collapse-item" href="tables.html">Hotel tables</a> <!-- Only visualization -->
-                    </div>
-                </div>
+                <a class="nav-link" href="clientListManager.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Hotel Managers</span></a>
             </li>
                 
             <!-- Divider -->
@@ -133,45 +108,29 @@
                 Statistics
             </div>
                 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <!--Cliente-->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>User Charts</span>
-                </a>
-            </li>
-            <!--Manager-->
-            <li class="nav-item">
-                <a class="nav-link" href="/templates/Charts/chartsManager.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Hotel Charts</span>
-                </a>
-            </li>
-            <!--Admin-->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts" aria-expanded="true"
-                    aria-controls="collapseCharts">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Data Charts</span>
-                </a>
-                <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="utilities-color.html">User charts</a> <!-- Only for adinistrators -->
-                        <a class="collapse-item" href="utilities-border.html">Hotel charts</a> <!-- Gerente y admin -->
-                        <a class="collapse-item" href="index.html">General data charts</a> <!-- Only for adinistrators -->
-                    </div>
-                </div>
-            </li>
-                
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-                
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-                
+        <!-- Nav Item - Pages Collapse Menu -->
+        <!--Admin-->
+        <li class="nav-item">
+            <a class="nav-link" href="userCharts.html">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>User Charts</span>
+            </a>
+        </li>
+        <!--Manager-->
+        <li class="nav-item">
+            <a class="nav-link" href="chartsAdmin.html">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Hotel Charts</span>
+            </a>
+        </li>        
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+            
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+        <!-- End of Sidebar -->
         </ul>
         <!-- End of Sidebar -->
 
@@ -216,6 +175,8 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-end">
                                                         <a href="editHotel.html" class="dropdown-item">Edit information</a>
+                                                        <a href="clientListManager.html" class="dropdown-item">Clients</a>
+                                                        <a href="chartsManager.html" class="dropdown-item">Hotel Charts</a>
                                                         <a href="#!" class="dropdown-item">Delete hotel</a>
                                                     </div>
                                                 </div>
@@ -240,6 +201,8 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-end">
                                                         <a href="editHotel.html" class="dropdown-item">Edit information</a>
+                                                        <a href="clientListManager.html" class="dropdown-item">Clients</a>
+                                                        <a href="chartsManager.html" class="dropdown-item">Hotel Charts</a>
                                                         <a href="#!" class="dropdown-item">Delete hotel</a>
                                                     </div>
                                                 </div>
@@ -266,6 +229,8 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-end">
                                                         <a href="editHotel.html" class="dropdown-item">Edit information</a>
+                                                        <a href="clientListManager.html" class="dropdown-item">Clients</a>
+                                                        <a href="chartsManager.html" class="dropdown-item">Hotel Charts</a>
                                                         <a href="#!" class="dropdown-item">Delete hotel</a>
                                                     </div>
                                                 </div>
@@ -292,6 +257,8 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-end">
                                                         <a href="editHotel.html" class="dropdown-item">Edit information</a>
+                                                        <a href="clientListManager.html" class="dropdown-item">Clients</a>
+                                                        <a href="chartsManager.html" class="dropdown-item">Hotel Charts</a>
                                                         <a href="#!" class="dropdown-item">Delete hotel</a>
                                                     </div>
                                                 </div>
@@ -318,6 +285,8 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-end">
                                                         <a href="editHotel.html" class="dropdown-item">Edit information</a>
+                                                        <a href="clientListManager.html" class="dropdown-item">Clients</a>
+                                                        <a href="chartsManager.html" class="dropdown-item">Hotel Charts</a>
                                                         <a href="#!" class="dropdown-item">Delete hotel</a>
                                                     </div>
                                                 </div>
@@ -339,14 +308,15 @@
             </div>
         </div>
     </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.bundle.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="js/jquery.easing.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.js"></script>
 </body>
-<!-- Bootstrap core JavaScript-->
-<script src="../../../vendor/jquery/jquery.min.js"></script>
-<script src="../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="../../../vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="../../../js/sb-admin-2.min.js"></script>
 </html>
