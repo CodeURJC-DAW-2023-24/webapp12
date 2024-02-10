@@ -94,12 +94,20 @@
       </li>
       <!--Admin-->
       <li class="nav-item">
-        <a class="nav-link" href="clientListManager.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Hotel Managers</span></a>
-      </li>
-    
-      <!-- Divider -->
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts"
+                aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Hotel managment</span>
+        </a>
+        <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts"
+                data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="managerList.html">View managers</a>
+                <a class="collapse-item" href="hotelValidation.html">Validate new hotels</a>
+            </div>
+        </div>
+    </li>
+    <!-- Divider -->
       <hr class="sidebar-divider">
     
       <div class="sidebar-heading">
@@ -109,18 +117,18 @@
       <!-- Nav Item - Pages Collapse Menu -->
       <!--Admin-->
       <li class="nav-item">
-        <a class="nav-link" href="userCharts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>User Charts</span>
+        <a class="nav-link" href="chartsAdmin.html">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>User Charts</span>
         </a>
       </li>
       <!--Manager-->
       <li class="nav-item">
-        <a class="nav-link" href="chartsAdmin.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Hotel Charts</span>
-        </a>
-      </li>
+          <a class="nav-link" href="chartsManager.html">
+              <i class="fas fa-fw fa-chart-area"></i>
+              <span>Hotel Charts</span>
+          </a>
+      </li>        
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
     

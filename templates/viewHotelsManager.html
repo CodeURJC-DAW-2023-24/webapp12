@@ -39,101 +39,107 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- User-->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-text mx-3">User Profile</div>
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    
+        <!-- User-->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+          <div class="sidebar-brand-text mx-3">User Profile</div>
+        </a>
+      
+        <!-- Manager-->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+          <div class="sidebar-brand-text mx-3">Manager Profile</div>
+        </a>
+      
+        <!-- Admin-->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+          <div class="sidebar-brand-text mx-3">Admin Profile</div>
+        </a>
+      
+      
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+      
+        <!-- Heading -->
+        <div class="sidebar-heading">
+          Personal Area
+        </div>
+      
+        <!-- For all users -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="profile.html">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Personal Data</span>
+          </a>
+        </li>
+      
+      
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+      
+        <!-- Heading -->
+        <div class="sidebar-heading">
+          Administration
+        </div>
+        <!--Cliente-->
+        <li class="nav-item">
+          <a class="nav-link" href="clientReservation.html">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>My reservations</span></a>
+        </li>
+      
+        <!--Managers-->
+        <li class="nav-item">
+          <a class="nav-link" href="viewHotelsManager.html">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>My Hotels</span></a>
+        </li>
+        <!--Admin-->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts"
+                  aria-expanded="true" aria-controls="collapsePages">
+              <i class="fas fa-fw fa-chart-area"></i>
+              <span>Hotel managment</span>
+          </a>
+          <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts"
+                  data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                  <a class="collapse-item" href="managerList.html">View managers</a>
+                  <a class="collapse-item" href="hotelValidation.html">Validate new hotels</a>
+              </div>
+          </div>
+      </li>
+      <!-- Divider -->
+        <hr class="sidebar-divider">
+      
+        <div class="sidebar-heading">
+          Statistics
+        </div>
+      
+        <!-- Nav Item - Pages Collapse Menu -->
+        <!--Admin-->
+        <li class="nav-item">
+          <a class="nav-link" href="chartsAdmin.html">
+              <i class="fas fa-fw fa-chart-area"></i>
+              <span>User Charts</span>
+          </a>
+        </li>
+        <!--Manager-->
+        <li class="nav-item">
+            <a class="nav-link" href="chartsManager.html">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Hotel Charts</span>
             </a>
-
-            <!-- Manager-->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-text mx-3">Manager Profile</div>
-            </a>
-
-            <!-- Admin-->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-text mx-3">Admin Profile</div>
-            </a>
-
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Personal Area
-            </div>
-
-            <!-- For all users -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="profile.html">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Personal Data</span>
-                </a>
-            </li>
-
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Administration
-            </div>
-            <!--Cliente-->
-            <li class="nav-item">
-                <a class="nav-link" href="clientReservation.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>My reservations</span></a>
-            </li>
-                
-            <!--Managers-->
-            <!--Admin-->
-            <li class="nav-item">
-                <a class="nav-link" href="chartsAdmin.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>User Charts</span>
-                </a>
-            </li>
-            <!--Manager-->
-            <li class="nav-item">
-                <a class="nav-link" href="chartsManager.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Hotel Charts</span>
-                </a>
-            </li>        
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-                
-            <div class="sidebar-heading">
-                Statistics
-            </div>
-                
-            <!-- Nav Item - Pages Collapse Menu -->
-            <!--Admin-->
-            <li class="nav-item">
-                <a class="nav-link" href="userCharts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>User Charts</span>
-                </a>
-            </li>
-            <!--Manager-->
-            <li class="nav-item">
-                <a class="nav-link" href="chartsAdmin.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Hotel Charts</span>
-                </a>
-            </li>        
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-                
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-            <!-- End of Sidebar -->
-        </ul>
+        </li>        
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+      
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+          <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+        <!-- End of Sidebar -->
+      </ul>
         <!-- End of Sidebar -->
 
         <div class="container">
