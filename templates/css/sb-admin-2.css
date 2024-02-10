@@ -3218,6 +3218,20 @@ input[type="button"].btn-block {
   border: 0;
 }
 
+
+.dropdown-item-danger {
+  display: block;
+  width: 100%;
+  padding: 0.25rem 1rem;
+  clear: both;
+  font-weight: 400;
+  color: #ed452fc6;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+}
+
 .dropdown-item:hover, .dropdown-item:focus {
   color: #2e2f37;
   text-decoration: none;
@@ -10491,6 +10505,14 @@ a:focus {
 
 .sidebar hr.sidebar-divider {
   margin: 0 1rem 1rem;
+}
+
+.sidebar hr.sidebar-divider {
+  margin: 0 1rem 1rem;
+}
+
+hr.collapse-divider {
+  margin: 0 3px 3px;
 }
 
 .sidebar .sidebar-heading {
