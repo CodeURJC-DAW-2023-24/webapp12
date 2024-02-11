@@ -210,3 +210,5 @@ An automatic hotel recommendation algorithm will be used, based on each user's p
 
 
 ### Pages diagram
+
+![alt text](DIAGRAMA.jpg)
