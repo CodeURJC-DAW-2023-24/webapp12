@@ -209,8 +209,9 @@ An automatic hotel recommendation algorithm will be used, based on each user's p
 ![charts admin](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/117302443/f3bb5ac3-65ee-4b2c-bdf2-5a1f1e2f5a5d)
 
 
-### Pages diagram
+### Diagram Navigation
 
-![diagrama](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/123741250/3aadddda-712e-4c1d-a44a-598fb01f2d6e)
+![Diaagrama final](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/123741250/9bc5616e-a5e2-4492-87d5-3c8f806c5ad3)
+
 
 
