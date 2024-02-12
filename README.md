@@ -1,4 +1,4 @@
-# webapp12
+![Final](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/123741250/9462f9ab-8908-4dbf-ba75-6aa01d588fe0)# webapp12
 
 ## Table of contents
 - Phase 0
@@ -210,8 +210,9 @@ An automatic hotel recommendation algorithm will be used, based on each user's p
 
 
 ### Diagram Navigation
+![Final](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/123741250/13f95e0b-1883-4fb3-bb92-1f54bc84a9bd)
 
-![Diaagrama final](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/123741250/9bc5616e-a5e2-4492-87d5-3c8f806c5ad3)
+
 
 
 
