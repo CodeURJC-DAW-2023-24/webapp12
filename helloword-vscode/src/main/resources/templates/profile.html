@@ -1,0 +1,211 @@
+{{>header}}
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- User-->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-text mx-3">User Profile</div>
+            </a>
+
+            <!-- Manager-->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-text mx-3">Manager Profile</div>
+            </a>
+
+            <!-- Admin-->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-text mx-3">Admin Profile</div>
+            </a>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Personal Area
+            </div>
+
+            <!-- For all users -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="profile.html">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Personal Data</span>
+                </a>
+            </li>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Administration
+            </div>
+            <!--Cliente-->
+            <li class="nav-item">
+                <a class="nav-link" href="clientReservation.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>My reservations</span></a>
+            </li>
+
+            <!--Managers-->
+            <li class="nav-item">
+                <a class="nav-link" href="viewHotelsManager.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>My Hotels</span></a>
+            </li>
+            <!--Admin-->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Hotel managment</span>
+                </a>
+                <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="managerList.html">View managers</a>
+                        <a class="collapse-item" href="hotelValidation.html">Validate new hotels</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <div class="sidebar-heading">
+                Statistics
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <!--Admin-->
+            <li class="nav-item">
+                <a class="nav-link" href="chartsAdmin.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>User Charts</span>
+                </a>
+            </li>
+            <!--Manager-->
+            <li class="nav-item">
+                <a class="nav-link" href="chartsManager.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Hotel Charts</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <div class="sidebar-heading">
+                Main page
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Return to main page</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+            <!-- End of Sidebar -->
+        </ul>
+        <!-- Content Wrapper -->
+        <div class="container">
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div class="row">
+                    <div class="col-xl-2"></div>
+                    <div class="col-xl-7">
+                        <div class="card mt-4">
+                            <div class="card-body pb-0">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="text-center border-end">
+                                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                                class="img-fluid avatar-xxl rounded-circle" alt="">
+                                            <h4 class="text-primary font-size-20 mt-3 mb-2">Jansh Wells (nickname)</h4>
+                                            <h5 class="text-muted font-size-13 mb-0 p-1">Nombre organizacion</h5>
+                                        </div>
+                                    </div><!-- end col -->
+                                    <div class="col-md-8">
+                                        <div class="ms-3">
+                                            <div>
+                                                <h4 class="card-title mb-2">Biography</h4>
+                                                <p class="mb-0 text-muted">Descripcion of manager/company</p>
+                                            </div>
+                                            <div class="row my-4">
+                                                <div class="col-md-12">
+                                                    <div>
+                                                        <p class="text-muted mb-2 fw-medium"><i
+                                                                class="mdi mdi-email-outline me-2"></i>Janshwells@probic.com
+                                                        </p>
+                                                        <p class="text-muted fw-medium mb-0"><i
+                                                                class="mdi mdi-phone-in-talk-outline me-2"></i>418-955-4703
+                                                        </p>
+                                                    </div>
+                                                </div><!-- end col -->
+                                            </div><!-- end row -->
+
+                                            <ul class="nav nav-tabs nav-tabs-custom border-bottom-0 mt-3 nav-justfied"
+                                                role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <a class="nav-link px-4" href="editProfile.html">
+                                                        <span class="d-block d-sm-none"><i
+                                                                class="mdi mdi-menu-open"></i></span>
+                                                        <span class="d-none d-sm-block">Edit profile</span>
+                                                    </a>
+                                                </li><!-- end li -->
+                                            </ul><!-- end ul -->
+                                        </div>
+                                    </div><!-- end col -->
+                                </div><!-- end row -->
+                            </div><!-- end card body -->
+                        </div><!-- end card -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div>
+                                    <h4 class="card-title mb-4">Personal Details</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">Name</th>
+                                                    <td>Jansh Wells</td>
+                                                </tr><!-- end tr -->
+                                                <tr>
+                                                    <th scope="row">Location</th>
+                                                    <td>California, United States</td>
+                                                </tr><!-- end tr -->
+                                                <tr>
+                                                    <th scope="row">Language</th>
+                                                    <td>English</td>
+                                                </tr><!-- end tr -->
+                                                <tr>
+                                                    <th scope="row">Phone number</th>
+                                                    <td>123456789</td>
+                                                </tr><!-- end tr -->
+                                                <tr>
+                                                    <th scope="row">Email</th>
+                                                    <td>example@email.com</td>
+                                                </tr><!-- end tr -->
+                                            </tbody><!-- end tbody -->
+                                        </table><!-- end table -->
+                                    </div>
+                                </div>
+                            </div><!-- end card body -->
+                        </div><!-- end card -->
+                    </div><!-- end col -->
+                </div>
+            </div>
+            <!-- End of Wrapper -->
+        </div>
+    </div>
+
+{{>footer}}
