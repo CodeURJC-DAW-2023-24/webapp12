@@ -14,14 +14,12 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idHotel;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idUser;
+    private Long idReview;
 
 
-
+    @Nullable
+    @ManyToOne
+    private Hotel hotel;
 
     @Nullable
     @ManyToOne
@@ -30,13 +28,16 @@ public class Review {
     private int score;
     private String comment;
     private Date date;
-    public Review(Long idHotel, Long idUser, int score, String comment, Date date) {
-        this.idHotel = idHotel;
-        this.idUser = idUser;
+    
+    public Review(Long idReview, Hotel hotel, User user, int score, String comment, Date date) {
+        this.idReview = idReview;
+        this.hotel = hotel;
+        this.user = user;
         this.score = score;
         this.comment = comment;
         this.date = date;
     }
+    
 
 
     

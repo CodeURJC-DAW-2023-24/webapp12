@@ -1,7 +1,9 @@
 package es.codeurjc.yourHOmeTEL.model;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.GeneratedValue;
@@ -13,25 +15,23 @@ import jakarta.persistence.OneToMany;
 
 public class Reservation {
 
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private User idUser;
-
+   
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private User idHotel;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private User idRoom;
+    private User idReservation;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Date date;
 
+    @Nullable
+    @ManyToOne
+    private Hotel hotel;
+
+    @Nullable
+    @ManyToMany
+    private List<Room> rooms = new ArrayList<>();
 
     @Nullable
     @ManyToOne
@@ -41,14 +41,18 @@ public class Reservation {
     private int numPeople;
 
 
-
-    public Reservation(User idUser, User idHotel, User idRoom, Date date, int numPeople) {
-        this.idUser = idUser;
-        this.idHotel = idHotel;
-        this.idRoom = idRoom;
+    public Reservation(User idReservation, Date date, Hotel hotel, List<Room> rooms, User user, int numPeople) {
+        this.idReservation = idReservation;
         this.date = date;
+        this.hotel = hotel;
+        this.rooms = rooms;
+        this.user = user;
         this.numPeople = numPeople;
     }
+
+
+
+    
 
 
 

@@ -27,20 +27,23 @@ public class User {
 
     @Nullable
     @OneToMany
-    private List<Reservation> Reservation = new ArrayList<>();
+    private List<Reservation> reservation = new ArrayList<>();
 
     @Nullable
     @OneToMany
-    private List<Review> Reviews = new ArrayList<>();
+    private List<Review> reviews = new ArrayList<>();
 
-
+    @Nullable
+    @OneToMany
+    private List<Hotel> hotels = new ArrayList<>();
 
     private String rol;
     private String nick;
     private String pass;
-
+   
     public User(Long id, String name, String bio, String location, String language, String phone, String email,
-            Blob profileImg, String rol, String nick, String pass) {
+            Blob profileImg, List<Reservation> reservation, List<Review> reviews, List<Hotel> hotels, String rol,
+            String nick, String pass) {
         this.id = id;
         this.name = name;
         this.bio = bio;
@@ -49,8 +52,13 @@ public class User {
         this.phone = phone;
         this.email = email;
         this.profileImg = profileImg;
+        this.reservation = reservation;
+        this.reviews = reviews;
+        this.hotels = hotels;
         this.rol = rol;
         this.nick = nick;
         this.pass = pass;
     }
+
+    
 }
