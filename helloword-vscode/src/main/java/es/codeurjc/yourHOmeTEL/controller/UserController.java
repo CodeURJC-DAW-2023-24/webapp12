@@ -1,4 +1,4 @@
-package es.codeurjc.hellowordvscode.controller;
+package es.codeurjc.yourHOmeTEL.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,4 +1,4 @@
-package es.codeurjc.hellowordvscode;
+package es.codeurjc.aplication;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
