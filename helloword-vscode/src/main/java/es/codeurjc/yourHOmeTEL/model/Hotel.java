@@ -17,8 +17,12 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Hotel {
+
    
-   
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long idReview; 
+    
     private String name;
 
     private String description;

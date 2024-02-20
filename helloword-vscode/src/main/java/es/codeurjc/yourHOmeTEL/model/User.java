@@ -40,15 +40,15 @@ public class User {
 
     private String pass;
 
-    
+    @Nullable
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservation;
 
-    
+    @Nullable
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;
 
-    
+    @Nullable
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Hotel> hotels;
 
