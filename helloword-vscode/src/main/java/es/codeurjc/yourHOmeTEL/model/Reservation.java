@@ -1,18 +1,14 @@
 package es.codeurjc.yourHOmeTEL.model;
 
-import java.sql.Blob;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 
 
 @Entity
