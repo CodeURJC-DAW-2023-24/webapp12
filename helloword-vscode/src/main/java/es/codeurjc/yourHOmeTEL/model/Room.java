@@ -8,36 +8,94 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.micrometer.common.lang.Nullable;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
+@Entity
 public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Nullable
+    private int numBeds;
+
+    private int maxClients;
+
+    
     @ManyToOne
     private Hotel hotel;
 
-    @Nullable
-    @ManyToMany
-    private List<Reservation> reservations = new ArrayList<>();
-
-    private Long numBeds;
-    private Long maxClients;
     
-    public Room(Long id, Hotel hotel, List<Reservation> reservations, Long numBeds, Long maxClients) {
+    @ManyToMany(mappedBy = "rooms")
+    private List<Reservation> reservations;
+
+
+    public Room(Long id, int numBeds, int maxClients, Hotel hotel, List<Reservation> reservations) {
         this.id = id;
-        this.hotel = hotel;
-        this.reservations = reservations;
         this.numBeds = numBeds;
         this.maxClients = maxClients;
+        this.hotel = hotel;
+        this.reservations = reservations;
     }
+
+
+    public Long getId() {
+        return id;
+    }
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+    public int getNumBeds() {
+        return numBeds;
+    }
+
+
+    public void setNumBeds(int numBeds) {
+        this.numBeds = numBeds;
+    }
+
+
+    public int getMaxClients() {
+        return maxClients;
+    }
+
+
+    public void setMaxClients(int maxClients) {
+        this.maxClients = maxClients;
+    }
+
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+
+    
+
 
     
 

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class UserController {
 
 	@GetMapping("/profile")
-	public String greeting(Model model) {
+	public String Profile (Model model) {
 
 		return "profile";
 	}
