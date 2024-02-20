@@ -53,10 +53,10 @@ public class User {
     private List<Hotel> hotels;
 
 
-    public User(Long id, String name, String bio, String location, String language, String phone, String email,
-            Blob profileImg,  List<String> rols, String nick, String pass, List<Reservation> reservation, List<Review> reviews,
+    public User( String name, String bio, String location, String language, String phone, String email,
+            Blob profileImg,  String nick, String pass,List<String> rols, List<Reservation> reservation, List<Review> reviews,
             List<Hotel> hotels) {
-        this.id = id;
+        
         this.name = name;
         this.bio = bio;
         this.location = location;
