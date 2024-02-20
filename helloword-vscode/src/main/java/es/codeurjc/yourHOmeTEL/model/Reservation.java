@@ -22,7 +22,7 @@ public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private User idReservation;
+    private Long idReservation;
 
 
     private Date date;
@@ -42,7 +42,7 @@ public class Reservation {
     private User user;
 
 
-    public Reservation(User idReservation, Date date, int numPeople, Hotel hotel, List<Room> rooms, User user) {
+    public Reservation(Long idReservation, Date date, int numPeople, Hotel hotel, List<Room> rooms, User user) {
         this.idReservation = idReservation;
         this.date = date;
         this.numPeople = numPeople;
@@ -52,12 +52,12 @@ public class Reservation {
     }
 
 
-    public User getIdReservation() {
+    public Long getIdReservation() {
         return idReservation;
     }
 
 
-    public void setIdReservation(User idReservation) {
+    public void setIdReservation(Long idReservation) {
         this.idReservation = idReservation;
     }
 
