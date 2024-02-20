@@ -2,10 +2,10 @@ package es.codeurjc.yourHOmeTEL.model;
 
 import java.sql.Blob;
 import java.sql.Date;
-import java.util.ArrayList;
+
 import java.util.List;
 
-import io.micrometer.common.lang.Nullable;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

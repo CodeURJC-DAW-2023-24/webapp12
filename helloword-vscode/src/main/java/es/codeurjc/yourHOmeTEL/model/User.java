@@ -1,7 +1,7 @@
 package es.codeurjc.yourHOmeTEL.model;
 
 import java.sql.Blob;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import io.micrometer.common.lang.Nullable;
@@ -40,16 +40,16 @@ public class User {
 
     private String pass;
 
-    @Nullable
+    
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservation;
 
-    @Nullable
+    
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;
 
-    @Nullable
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    
+    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Hotel> hotels;
 
 
