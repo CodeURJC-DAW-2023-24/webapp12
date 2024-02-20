@@ -1,18 +1,14 @@
 package es.codeurjc.yourHOmeTEL.model;
 
-import java.sql.Blob;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 
 
 @Entity
@@ -22,7 +18,7 @@ public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private User idReservation;
+    private Long idReservation;
 
 
     private Date date;
@@ -42,7 +38,7 @@ public class Reservation {
     private User user;
 
 
-    public Reservation(User idReservation, Date date, int numPeople, Hotel hotel, List<Room> rooms, User user) {
+    public Reservation(Long idReservation, Date date, int numPeople, Hotel hotel, List<Room> rooms, User user) {
         this.idReservation = idReservation;
         this.date = date;
         this.numPeople = numPeople;
@@ -52,12 +48,12 @@ public class Reservation {
     }
 
 
-    public User getIdReservation() {
+    public Long getIdReservation() {
         return idReservation;
     }
 
 
-    public void setIdReservation(User idReservation) {
+    public void setIdReservation(Long idReservation) {
         this.idReservation = idReservation;
     }
 

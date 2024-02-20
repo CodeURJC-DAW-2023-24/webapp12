@@ -3,8 +3,6 @@ package es.codeurjc.yourHOmeTEL.model;
 
 
 import java.sql.Date;
-
-import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
