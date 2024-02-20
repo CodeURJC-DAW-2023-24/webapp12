@@ -5,11 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import es.codeurjc.yourHOmeTEL.model.User;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -19,11 +22,19 @@ public class UserController {
 	private UserRepository repository;
 
 
-	@GetMapping("/profile")
+	@GetMapping("/profile{id}")
 	
-	public String profile(Model model) {
-		List <User> user = repository.findByName("Jack");
-		model.addAttribute("name", );
+	public String profile(Model model, @PathVariable Long id) {
+		Optional <User> optionalUser = repository.findById(id);
+
+		if (optionalUser.isPresent()){
+			User user = (User) optionalUser;
+
+			
+
+		}
+		
+		model.addAttribute("name", names);
 
 
 		return "profile";
