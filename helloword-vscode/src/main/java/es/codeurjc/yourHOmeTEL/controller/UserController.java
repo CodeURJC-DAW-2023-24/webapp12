@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+
 @Controller
 public class UserController {
 
@@ -17,4 +18,8 @@ public class UserController {
 		return "login";
 	}
 
+	@GetMapping("/loginerror")
+	public String loginError(Model model) {
+		return "loginError";
+	}
 }

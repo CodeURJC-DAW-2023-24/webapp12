@@ -11322,3 +11322,8 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+
+#logout{
+  background-color: #be2617;
+  border-color: #be2617;
+}

@@ -37,12 +37,12 @@ public class User {
     @OneToMany
     private List<Hotel> hotels = new ArrayList<>();
 
-    private String rol;
+    private List<String> rols;
     private String nick;
     private String pass;
    
     public User(Long id, String name, String bio, String location, String language, String phone, String email,
-            Blob profileImg, List<Reservation> reservation, List<Review> reviews, List<Hotel> hotels, String rol,
+            Blob profileImg, List<Reservation> reservation, List<Review> reviews, List<Hotel> hotels, List<String> rols,
             String nick, String pass) {
         this.id = id;
         this.name = name;
@@ -55,10 +55,12 @@ public class User {
         this.reservation = reservation;
         this.reviews = reviews;
         this.hotels = hotels;
-        this.rol = rol;
+        this.rols = rols;
         this.nick = nick;
         this.pass = pass;
     }
 
-    
+    public List<String> getRols(){
+        return this.rols;
+    }   
 }
