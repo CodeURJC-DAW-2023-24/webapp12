@@ -1,4 +1,3 @@
-![Final](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/123741250/9462f9ab-8908-4dbf-ba75-6aa01d588fe0)# webapp12
 
 ## Table of contents
 - Phase 0
