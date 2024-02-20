@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import es.codeurjc.yourHOmeTEL.model.User;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
+import es.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,27 +17,21 @@ import java.util.Optional;
 
 
 @Controller
-public class UserController {
+public class UserController{
 
 	@Autowired
-	private UserRepository repository;
+	private UserService userService;
 
 
 	@GetMapping("/profile{id}")
 	
 	public String profile(Model model, @PathVariable Long id) {
-		Optional <User> optionalUser = repository.findById(id);
+		Optional <User> optionalUser = userService.findById(id);
 
 		if (optionalUser.isPresent()){
-			User user = (User) optionalUser;
-
-			
+			model.addAttribute("name", optionalUser.get().getName());
 
 		}
-		
-		model.addAttribute("name", names);
-
-
 		return "profile";
 	}
 

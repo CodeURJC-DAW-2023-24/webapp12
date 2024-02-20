@@ -1,6 +1,7 @@
 package es.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Sort;
@@ -15,8 +16,8 @@ public class UserService implements GeneralService<User> {
     private UserRepository repository;
 
 
-    public List <User> findById(Long id){
-        return null;
+    public Optional <User> findById(Long id){
+        return repository.findById(id);
 
     }
 
@@ -27,10 +28,10 @@ public class UserService implements GeneralService<User> {
     public void delete(User go){
 
     }
-    public List <User> findAll(){
+    public Optional <User> findAll(){
         return null;
     }
-    public List <User> findAll(Sort sort){
+    public Optional <User> findAll(Sort sort){
         return null;
     }
     public Boolean exist (Long id){
