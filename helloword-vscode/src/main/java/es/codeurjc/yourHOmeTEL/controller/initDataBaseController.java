@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 
 import org.springframework.stereotype.Controller;
 
-import es.codeurjc.yourHOmeTEL.model.User;
+import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 
 
@@ -19,7 +19,7 @@ public class initDataBaseController implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        repository.save(new User("Jack", "Bio", "loc", "lan", "phone",
+        repository.save(new UserE("Jack", "Bio", "loc", "lan", "phone",
         "mail", "org", null, "hola", "adios", null, null, null, null));
     }
 }

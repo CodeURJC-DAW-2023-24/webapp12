@@ -30,14 +30,14 @@ public class Review {
 
     
     @ManyToOne
-    private User user;
+    private UserE user;
 
     public Review(){
         
     }
 
 
-    public Review(Long idReview, int score, String comment, Date date, Hotel hotel, User user) {
+    public Review(Long idReview, int score, String comment, Date date, Hotel hotel, UserE user) {
         this.idReview = idReview;
         this.score = score;
         this.comment = comment;
@@ -97,12 +97,12 @@ public class Review {
     }
 
 
-    public User getUser() {
+    public UserE getUser() {
         return user;
     }
 
 
-    public void setUser(User user) {
+    public void setUser(UserE user) {
         this.user = user;
     }
 

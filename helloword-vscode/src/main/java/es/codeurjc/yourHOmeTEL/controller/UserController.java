@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import es.codeurjc.yourHOmeTEL.model.User;
+import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.service.UserService;
 
 import java.util.Optional;
@@ -23,7 +23,7 @@ public class UserController{
 	@GetMapping("/profile{id}")
 	
 	public String profile(Model model, @PathVariable Long id) {
-		Optional <User> optionalUser = userService.findById(id);
+		Optional <UserE> optionalUser = userService.findById(id);
 
 		if (optionalUser.isPresent()){
 			model.addAttribute("user", optionalUser.get().getName());

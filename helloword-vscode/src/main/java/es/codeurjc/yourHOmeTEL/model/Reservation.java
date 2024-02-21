@@ -39,10 +39,10 @@ public class Reservation {
 
  
     @ManyToOne
-    private User user;
+    private UserE user;
 
 
-    public Reservation(Long idReservation, Date date, int numPeople, Hotel hotel, List<Room> rooms, User user) {
+    public Reservation(Long idReservation, Date date, int numPeople, Hotel hotel, List<Room> rooms, UserE user) {
         this.idReservation = idReservation;
         this.date = date;
         this.numPeople = numPeople;
@@ -102,12 +102,12 @@ public class Reservation {
     }
 
 
-    public User getUser() {
+    public UserE getUser() {
         return user;
     }
 
 
-    public void setUser(User user) {
+    public void setUser(UserE user) {
         this.user = user;
     }
 

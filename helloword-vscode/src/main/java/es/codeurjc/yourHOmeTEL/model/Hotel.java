@@ -37,7 +37,7 @@ public class Hotel {
 
   
     @ManyToOne
-    private User manager;
+    private UserE manager;
 
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -53,7 +53,7 @@ public class Hotel {
 
 
     public Hotel(String name, String description, String location, int numRooms, Blob imageHotel, Date updateDate,
-            User manager, List<Room> rooms, List<Reservation> reservation, List<Review> reviews) {
+            UserE manager, List<Room> rooms, List<Reservation> reservation, List<Review> reviews) {
         this.name = name;
         this.description = description;
         this.location = location;
@@ -127,12 +127,12 @@ public class Hotel {
     }
 
 
-    public User getManager() {
+    public UserE getManager() {
         return manager;
     }
 
 
-    public void setManager(User manager) {
+    public void setManager(UserE manager) {
         this.manager = manager;
     }
 

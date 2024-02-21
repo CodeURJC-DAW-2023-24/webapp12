@@ -6,31 +6,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Sort;
 import org.springframework.stereotype.Service;
 
-import es.codeurjc.yourHOmeTEL.model.User;
+import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 
 @Service
-public class UserService implements GeneralService<User> {
+public class UserService implements GeneralService<UserE> {
     @Autowired
     private UserRepository repository;
 
 
-    public Optional <User> findById(Long id){
+    public Optional <UserE> findById(Long id){
         return repository.findById(id);
 
     }
 
-    public void save(User go){
+    public void save(UserE go){
         
     }
 
-    public void delete(User go){
+    public void delete(UserE go){
 
     }
-    public Optional <User> findAll(){
+    public Optional <UserE> findAll(){
         return null;
     }
-    public Optional <User> findAll(Sort sort){
+    public Optional <UserE> findAll(Sort sort){
         return null;
     }
     public Boolean exist (Long id){

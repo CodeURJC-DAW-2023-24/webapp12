@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import es.codeurjc.yourHOmeTEL.model.User;
+import es.codeurjc.yourHOmeTEL.model.UserE;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<UserE, Long> {
 
-    List<User> findByName(String name);
-    List<User> findByPhone(String phone);
-    List<User> findLocationByName(String name);
+    List<UserE> findByName(String name);
+    List<UserE> findByPhone(String phone);
+    List<UserE> findLocationByName(String name);
 
 }

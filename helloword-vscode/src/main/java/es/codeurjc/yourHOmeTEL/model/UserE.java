@@ -14,7 +14,7 @@ import jakarta.persistence.OneToMany;
 
 
 @Entity
-public class User {
+public class UserE {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -56,7 +56,7 @@ public class User {
     private List<Hotel> hotels;
 
 
-    public User( String name, String bio, String location, String language, String phone, String email, String organizacion,
+    public UserE( String name, String bio, String location, String language, String phone, String email, String organizacion,
             Blob profileImg,  String nick, String pass,List<String> rols, List<Reservation> reservation, List<Review> reviews,
             List<Hotel> hotels) {
         
