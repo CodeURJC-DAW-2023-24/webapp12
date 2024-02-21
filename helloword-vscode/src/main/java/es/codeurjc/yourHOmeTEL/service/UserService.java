@@ -54,6 +54,10 @@ public class UserService implements GeneralService<UserE> {
         return null;
     }
 
+    public Optional <UserE> findFirstByName(String name) {
+        return repository.findFirstByName(name);
+    }
+    
     public List<UserE> findByName(String name){
         return repository.findByName(name);
     }
