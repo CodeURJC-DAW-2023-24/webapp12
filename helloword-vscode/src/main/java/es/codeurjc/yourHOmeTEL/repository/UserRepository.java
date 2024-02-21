@@ -12,7 +12,7 @@ public interface UserRepository extends JpaRepository<UserE, Long> {
     UserE findByNick(String nick);
     Optional <UserE> findFirstByName(String name);
     List <UserE> findByName(String name);
-    List<UserE> findByPhone(String phone);
-    List<UserE> findLocationByName(String name);
+    List <UserE> findByPhone(String phone);
+    List <UserE> findLocationByName(String name);
 
 }
