@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Optional;
 
@@ -20,10 +21,11 @@ public class UserController{
 	private UserService userService;
 
 
-	@GetMapping("/profile{id}")
+	@GetMapping("/profile")
 	
-	public String profile(Model model, @PathVariable Long id) {
-		Optional <UserE> optionalUser = userService.findById(id);
+	public String profile(Model model,  HttpServletRequest request) {
+		String name = request.getUserPrincipal().getName();
+		Optional <UserE> optionalUser = userService.findByName(name);
 
 		if (optionalUser.isPresent()){
 			model.addAttribute("user", optionalUser.get().getName());
