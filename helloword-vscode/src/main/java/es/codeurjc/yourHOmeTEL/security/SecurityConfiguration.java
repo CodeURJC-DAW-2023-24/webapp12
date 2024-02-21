@@ -1,5 +1,6 @@
 package es.codeurjc.yourHOmeTEL.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -13,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import es.codeurjc.yourHOmeTEL.service.RepositoryUserDetailsService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
@@ -22,24 +25,15 @@ public class SecurityConfiguration {
 		return new BCryptPasswordEncoder();
 	}
 
+	 @Autowired
+	public RepositoryUserDetailsService userDetailService;
+
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-
-		authProvider.setUserDetailsService(userDetailsService());
+		authProvider.setUserDetailsService(userDetailService);
 		authProvider.setPasswordEncoder(passwordEncoder());
-
 		return authProvider;
-	}
-
-	@Bean
-	public InMemoryUserDetailsManager userDetailsService() {
-		UserDetails user = User.builder()
-				.username("user")
-				.password(passwordEncoder().encode("pass"))
-				.roles("USER")
-				.build();
-		return new InMemoryUserDetailsManager(user);
 	}
 
 	@Bean

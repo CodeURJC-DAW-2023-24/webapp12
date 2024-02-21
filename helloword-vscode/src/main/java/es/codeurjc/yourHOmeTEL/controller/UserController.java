@@ -25,7 +25,7 @@ public class UserController{
 
 
 	@GetMapping("/profile")
-	
+
 	public String profile(Model model,  HttpServletRequest request) {
 		String name = request.getUserPrincipal().getName();
 		UserE foundUser =  userService.findFirstByName(name).orElseThrow(); //need to transform the throw into 404 error. Page 25 database
