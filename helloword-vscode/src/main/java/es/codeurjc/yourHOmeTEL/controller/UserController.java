@@ -8,11 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import es.codeurjc.yourHOmeTEL.model.User;
-import es.codeurjc.yourHOmeTEL.repository.UserRepository;
-import es.service.UserService;
+import es.codeurjc.yourHOmeTEL.service.UserService;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -29,8 +26,7 @@ public class UserController{
 		Optional <User> optionalUser = userService.findById(id);
 
 		if (optionalUser.isPresent()){
-			model.addAttribute("name", optionalUser.get().getName());
-
+			model.addAttribute("user", optionalUser.get().getName());
 		}
 		return "profile";
 	}

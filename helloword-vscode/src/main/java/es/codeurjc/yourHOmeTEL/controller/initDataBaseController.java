@@ -8,7 +8,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 
 import es.codeurjc.yourHOmeTEL.model.User;
-import es.codeurjc.yourHOmeTEL.repository.CustomerRepository;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 
 
@@ -21,6 +20,6 @@ public class initDataBaseController implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         repository.save(new User("Jack", "Bio", "loc", "lan", "phone",
-        "mail", null, "hola", "adios", null, null, null,null));
+        "mail", "org", null, "hola", "adios", null, null, null, null));
     }
 }

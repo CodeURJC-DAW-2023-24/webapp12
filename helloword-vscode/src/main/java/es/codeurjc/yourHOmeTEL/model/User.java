@@ -34,6 +34,9 @@ public class User {
 
     private Blob profileImg;
 
+    private String organizacion;
+
+
     private List<String> rols;
 
     private String nick;
@@ -53,7 +56,7 @@ public class User {
     private List<Hotel> hotels;
 
 
-    public User( String name, String bio, String location, String language, String phone, String email,
+    public User( String name, String bio, String location, String language, String phone, String email, String organizacion,
             Blob profileImg,  String nick, String pass,List<String> rols, List<Reservation> reservation, List<Review> reviews,
             List<Hotel> hotels) {
         
@@ -143,6 +146,15 @@ public class User {
     }
 
 
+    public String getOrganizacion() {
+        return organizacion;
+    }
+
+
+    public void setOrganizacion(String organizacion) {
+        this.organizacion = organizacion;
+    }
+    
     public Blob getProfileImg() {
         return profileImg;
     }
@@ -151,10 +163,6 @@ public class User {
     public void setProfileImg(Blob profileImg) {
         this.profileImg = profileImg;
     }
-
-
-
-
 
 
     public String getNick() {
