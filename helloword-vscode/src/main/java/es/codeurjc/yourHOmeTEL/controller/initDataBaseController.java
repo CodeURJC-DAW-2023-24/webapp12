@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
 import es.codeurjc.yourHOmeTEL.model.UserE;
@@ -19,8 +18,7 @@ public class initDataBaseController{
 
      @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
     @PostConstruct
     private void initDatabase() {
 
@@ -28,8 +26,8 @@ public class initDataBaseController{
         roles.add("USER");
 
         userRepository.save(new UserE("Jack", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "User",  passwordEncoder.encode("pass"), roles, null, null, null));
+        "mail", "org", null, "User", "pass", roles, null, null, null));
         userRepository.save(new UserE("Jack", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "admin",  passwordEncoder.encode("admin"), roles, null, null, null));
+        "mail", "org", null, "admin",  "admin", roles, null, null, null));
     }
 }
