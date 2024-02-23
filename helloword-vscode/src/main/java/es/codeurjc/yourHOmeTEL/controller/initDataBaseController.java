@@ -22,12 +22,16 @@ public class initDataBaseController{
     @PostConstruct
     private void initDatabase() {
 
-        List<String> roles = new ArrayList();
-        roles.add("USER");
+        List<String> rolesUser = new ArrayList();
+        rolesUser.add("USER");
+        rolesUser.add("CLIENT");
+        List<String> rolesAdmin = new ArrayList();
+        rolesAdmin.add("USER");
+        rolesAdmin.add("ADMIN");
 
-        userRepository.save(new UserE("Jack", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "User", "pass", roles, null, null, null));
-        userRepository.save(new UserE("Jack", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "admin",  "admin", roles, null, null, null));
+        userRepository.save(new UserE("Jack", "Wells", "Bio", "loc", "lan", "phone",
+        "mail", "org", null, "user", "pass", rolesUser, null, null, null));
+        userRepository.save(new UserE("Jack", "Wells", "Bio", "loc", "lan", "phone",
+        "mail", "org", null, "admin",  "admin", rolesAdmin, null, null, null));
     }
 }
