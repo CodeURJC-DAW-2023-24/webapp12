@@ -98,6 +98,15 @@ public class UserE {
         this.name = name;
     }
 
+    public String getLastname() {
+        return lastname;
+    }
+
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
 
     public String getBio() {
         return bio;

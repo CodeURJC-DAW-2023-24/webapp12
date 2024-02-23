@@ -25,13 +25,18 @@ public class initDataBaseController{
         List<String> rolesUser = new ArrayList();
         rolesUser.add("USER");
         rolesUser.add("CLIENT");
+        List<String> rolesManager = new ArrayList();
+        rolesUser.add("USER");
+        rolesUser.add("MANAGER");
         List<String> rolesAdmin = new ArrayList();
         rolesAdmin.add("USER");
         rolesAdmin.add("ADMIN");
 
-        userRepository.save(new UserE("Jack", "Wells", "Bio", "loc", "lan", "phone",
+        userRepository.save(new UserE("Jack1", "Wells1", "Bio", "loc", "lan", "phone",
         "mail", "org", null, "user", "pass", rolesUser, null, null, null));
-        userRepository.save(new UserE("Jack", "Wells", "Bio", "loc", "lan", "phone",
+        userRepository.save(new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
+        "mail", "org", null, "manager",  "admin", rolesManager, null, null, null));
+        userRepository.save(new UserE("Jack3", "Wells3", "Bio", "loc", "lan", "phone",
         "mail", "org", null, "admin",  "admin", rolesAdmin, null, null, null));
     }
 }
