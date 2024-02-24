@@ -48,13 +48,12 @@
                       </div>
                       <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                         <div class="text-center text-sm-left mb-2 mb-sm-0">
-                          <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">Winter wind</h4>
+                          <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{hotelName}}</h4>
                         </div>
                         <div class="text-center text-sm-right">
                           <a href="https://es.wikipedia.org/wiki/Cadena_hotelera"><span
-                              class="badge badge-secondary">Who is
-                              this hotel's owner</span></a>
-                          <div class="text-muted"><small>Hotel uploaded on 09 Dec 2017</small></div>
+                              class="badge badge-secondary">{{managerName}}</span></a>
+                          <div class="text-muted"><small>Hotel uploaded on {{date}}</small></div>
                         </div>
                       </div>
                     </div>
@@ -66,28 +65,26 @@
               </div>
             </div>
           </div>
+
+          
+          
           <div id="reviews" class="review-section">
             <div class="d-flex align-items-center justify-content-between mb-4">
               <h4 class="m-0">37 Reviews</h4>
-              <select class="custom-select custom-select-sm border-0 shadow-sm ml-2 select2-hidden-accessible"
-                data-select2-id="1" tabindex="-1" aria-hidden="true">
-                <option data-select2-id="3">Most Relevant</option>
-                <option>Most Recent</option>
-              </select>
               <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2"
                 style="width: 188px;">
                 <span class="selection">
                   <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true"
                     aria-expanded="false" tabindex="0" aria-labelledby="select2-qd66-container">
                     <span class="select2-selection__rendered" id="select2-qd66-container" role="textbox"
-                      aria-readonly="true" title="Most Relevant">Most Relevant</span>
+                      aria-readonly="true" title="Most Relevant">Most recent</span>
                     <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
                   </span>
                 </span>
                 <span class="dropdown-wrapper" aria-hidden="true"></span>
               </span>
             </div>
-            <div class="row">
+            
               <div class="col-md-6">
                 <table class="stars-counters">
                   <tbody>
@@ -179,27 +176,63 @@
                   </tbody>
                 </table>
               </div>
-              <div class="col-md-6">
-                <div class="ranking">
-                  <h6 class="text-display-7">Rating Breakdown</h6>
-                  <ul>
-                    <li>
-                      Seller communication level<span>5<span class="review-star rate-10 show-one"></span></span>
-                    </li>
-                    <li>
-                      Recommend to a friend<span>5<span class="review-star rate-10 show-one"></span></span>
-                    </li>
-                    <li>
-                      Service as described<span>4.9<span class="review-star rate-10 show-one"></span></span>
-                    </li>
-                  </ul>
+              
+            
+          </div>
+
+          <!-- Review form for the user -->
+          <div class="form-content">
+            <h2>Leave your review!</h2>
+            <div>
+              <form action="/posthotelReview/{{hotelName}}" class="bg-white p-5 contact-form">
+                <!-- PENDIENTE El nombre es necesario? Debería tenerlo ya el programa-->
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" placeholder="Keith Evans">
                 </div>
-              </div>
+                <div class="form-group">
+                  <label for="rating">Rating</label>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15" height="15">
+                    <path fill=""
+                      d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
+                    </path>
+                  </svg>
+                  <div class="rating">
+                    <input type="radio" id="star0" name="rating" value="0">
+                    <label for="star0">0</label>
+                    <input type="radio" id="star1" name="rating" value="5">
+                    <label for="star1">1</label>
+                    <input type="radio" id="star2" name="rating" value="4">
+                    <label for="star2">2</label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3">3</label>
+                    <input type="radio" id="star4" name="rating" value="2">
+                    <label for="star4">4</label>
+                    <input type="radio" id="star5" name="rating" value="1">
+                    <label for="star5">5</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="comment">Comment (optional)</label>
+                  <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Everything was so nice, a wonderful experience!"></textarea>
+                </div>
+                <div class="form-group">
+                  <input type="submit" value="Send review!" class="btn btn-primary py-3 px-5">
+                </div>
+              </form>
+
+            </div>
+
+            <div class="col-md-6 d-flex">
+              <div id="map" class="bg-white"></div>
             </div>
           </div>
+
           <!-- List of all the reviews -->
           <div class="review-list">
             <ul>
+              {{#reviews}}
+              <!-- PENDIENTE enlazar a los mostachos los atributos adecuados-->
               <!-- Here begins a review -->
               <li>
                 <!-- Here is the div for the original post, having image, name, valoration and comment -->
@@ -207,14 +240,14 @@
                   <div class="left">
                     <!-- Profile image -->
                     <span>
-                      <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="profile-pict-img img-fluid"
-                        alt />
+                      <img src="{{user.profileImage}}" class="profile-pict-img img-fluid"
+                        alt="userProfileImage"/>
                     </span>
                   </div>
                   <div class="right">
                     <!-- Poster's name -->
                     <h4>
-                      A random poster
+                      {{UserName}}
                       <span class="gig-rating text-body-2">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15" height="15">
                           <path fill="currentColor"
@@ -222,60 +255,27 @@
                           </path>
                         </svg>
                         <!-- Rating -->
-                        3.2
+                        {{userRating}}
                       </span>
                     </h4>
 
                     <!-- Comment -->
                     <div class="review-description">
                       <p>
-                        It took a long time to get the reservations done, and when we did
-                        get there we also had to wait to be attended. The rest of the experience was quite enjoyable.
+                        {{userReviewDescription}}
                       </p>
                     </div>
                     <!-- Time passed since posting -->
-                    <span class="publish py-3 d-inline-block w-100">Published 4 weeks ago</span>
+                    <span class="publish py-3 d-inline-block w-100">{{review.Date}}</span>
 
 
                   </div>
                 </div>
               </li>
-              <li>
-                <div class="d-flex">
-                  <!-- Here begins a review -->
-                  <div class="left">
-                    <span>
-                      <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="profile-pict-img img-fluid"
-                        alt />
-                    </span>
-                  </div>
-                  <div class="right">
-                    <h4>
-                      Original poster 2
-                      <span class="gig-rating text-body-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15" height="15">
-                          <path fill="currentColor"
-                            d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
-                          </path>
-                        </svg>
-                        5.0
-                      </span>
-                    </h4>
-                    <div class="country d-flex align-items-center">
-                      <span>
-                        <img class="country-flag img-fluid" src="https://bootdey.com/img/Content/avatar/avatar6.png" />
-                      </span>
-                      <div class="country-name font-accent">India</div>
-                    </div>
-                    <div class="review-description">
-                      <p>
-                        Everything was perfect, really good staff and place! 5 stars!!
-                      </p>
-                    </div>
-                    <span class="publish py-3 d-inline-block w-100">Published 6 weeks ago</span>
-                  </div>
-                </div>
-              </li>
+              {{/reviews}}
+              {{^reviews}}
+              <h2>No reviews for this hotel so far</h2>
+              {{/reviews}}
             </ul>
           </div>
         </div>

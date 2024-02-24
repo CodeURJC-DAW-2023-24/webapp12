@@ -170,6 +170,6 @@ public class Hotel {
         this.reviews = reviews;
     }
 
-    
+    //PENDIENTE añadir métodos sobre las reseñas, como la media de reseñas, y ordenarlas
 
 }
