@@ -19,6 +19,7 @@ import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
 import es.codeurjc.yourHOmeTEL.repository.ReservationRepository;
 import es.codeurjc.yourHOmeTEL.repository.ReviewRepository;
+import es.codeurjc.yourHOmeTEL.repository.RoomRepository;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 
@@ -37,6 +38,9 @@ public class initDataBaseService{
 
     @Autowired
     private HotelRepository hotelRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
 
     @Autowired
 	private PasswordEncoder passwordEncoder;
@@ -71,13 +75,22 @@ public class initDataBaseService{
         "mail", "org", null, "admin",  passwordEncoder.encode("admin"), rolesAdmin, lReservations, lReviews, lHotels); 
         userRepository.save(admin);
     
-        //init hotels
-        
+        //init hotels       
+        //creaate 1 room and add it to room list
         Room room = new Room(3,7,null,lReservations);
-        List <Room> rooms = new ArrayList<>();
-        Hotel hotel = new Hotel("Hotel1","desc","location",80, null, manager, rooms,lReservations,lReviews);
+        ArrayList <Room> rooms = new ArrayList<>();
+        rooms.add(room);
+        
+        //create hotel with room list
+        Hotel hotel = new Hotel("Hotel1","desc","location",80, null, manager, rooms, lReservations,lReviews);
    
-   
+        //add hotel to room
+        hotel.getRooms().get(0).setHotel(hotel);
+
+        //save
+        /*hotelRepository.save(hotel);
+        roomRepository.save(room);*/
+
     }
 
 }
