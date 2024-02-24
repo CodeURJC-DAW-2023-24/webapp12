@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Room {
@@ -26,11 +27,7 @@ public class Room {
     private int maxClients;
 
     
-    @ManyToOne
-    private Hotel hotel;
-
-    
-    @ManyToMany(mappedBy = "rooms")
+    @OneToMany(mappedBy = "room")
     private ArrayList<Reservation> reservations;
 
 
@@ -38,10 +35,9 @@ public class Room {
         
     }
 
-    public Room(int numBeds, int maxClients, Hotel hotel, ArrayList<Reservation> reservations) {
+    public Room(int numBeds, int maxClients, ArrayList<Reservation> reservations) {
         this.numBeds = numBeds;
         this.maxClients = maxClients;
-        this.hotel = hotel;
         this.reservations = reservations;
     }
 
@@ -73,16 +69,6 @@ public class Room {
 
     public void setMaxClients(int maxClients) {
         this.maxClients = maxClients;
-    }
-
-
-    public Hotel getHotel() {
-        return hotel;
-    }
-
-
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
     }
 
 

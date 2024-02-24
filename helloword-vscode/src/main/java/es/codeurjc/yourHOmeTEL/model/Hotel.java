@@ -33,12 +33,11 @@ public class Hotel {
 
     private Blob imageHotel;
 
-  
+
     @ManyToOne
     private UserE manager;
 
-    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
+    @OneToMany
     private ArrayList<Room> rooms;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)

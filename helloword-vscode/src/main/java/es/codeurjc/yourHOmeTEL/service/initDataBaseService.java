@@ -74,11 +74,13 @@ public class initDataBaseService{
         UserE admin = new UserE("Jack3", "Wells3", "Bio", "loc", "lan", "phone",
         "mail", "org", null, "admin",  passwordEncoder.encode("admin"), rolesAdmin, lReservations, lReviews, lHotels); 
         userRepository.save(admin);
-    
+            
+        
         //init hotels       
-        //creaate 1 room and add it to room list
-        Room room = new Room(3,7,null,lReservations);
-        ArrayList <Room> rooms = new ArrayList<>();
+        //create 1 room and add it to room list
+        Room room = new Room();
+        roomRepository.save(room);
+        /*ArrayList <Room> rooms = new ArrayList<>();
         rooms.add(room);
         
         //create hotel with room list

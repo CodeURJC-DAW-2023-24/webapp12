@@ -34,8 +34,8 @@ public class Reservation {
     private Hotel hotel;
 
     
-    @ManyToMany
-    private ArrayList<Room> rooms;
+    @ManyToOne
+    private Room room;
 
  
     @ManyToOne
@@ -46,11 +46,11 @@ public class Reservation {
         
     }
     
-    public Reservation(LocalDate date, int numPeople, Hotel hotel, ArrayList<Room> rooms, UserE user) {
+    public Reservation(LocalDate date, int numPeople, Hotel hotel, Room room, UserE user) {
         this.date = date;
         this.numPeople = numPeople;
         this.hotel = hotel;
-        this.rooms = rooms;
+        this.room = room;
         this.user = user;
     }
 
@@ -95,13 +95,13 @@ public class Reservation {
     }
 
 
-    public List<Room> getRooms() {
-        return rooms;
+    public Room getRooms() {
+        return room;
     }
 
 
-    public void setRooms(ArrayList<Room> rooms) {
-        this.rooms = rooms;
+    public void setRooms(Room room) {
+        this.room = room;
     }
 
 
