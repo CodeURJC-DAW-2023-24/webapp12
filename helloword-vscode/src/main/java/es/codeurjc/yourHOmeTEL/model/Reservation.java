@@ -2,7 +2,7 @@ package es.codeurjc.yourHOmeTEL.model;
 
 import java.sql.Blob;
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import io.micrometer.common.lang.Nullable;
@@ -25,7 +25,7 @@ public class Reservation {
     private Long idReservation;
 
 
-    private Date date;
+    private LocalDate date;
 
     private int numPeople;
 
@@ -35,7 +35,7 @@ public class Reservation {
 
     
     @ManyToMany
-    private List<Room> rooms;
+    private ArrayList<Room> rooms;
 
  
     @ManyToOne
@@ -46,7 +46,7 @@ public class Reservation {
         
     }
     
-    public Reservation(Date date, int numPeople, Hotel hotel, List<Room> rooms, UserE user) {
+    public Reservation(LocalDate date, int numPeople, Hotel hotel, ArrayList<Room> rooms, UserE user) {
         this.date = date;
         this.numPeople = numPeople;
         this.hotel = hotel;
@@ -65,12 +65,12 @@ public class Reservation {
     }
 
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -100,7 +100,7 @@ public class Reservation {
     }
 
 
-    public void setRooms(List<Room> rooms) {
+    public void setRooms(ArrayList<Room> rooms) {
         this.rooms = rooms;
     }
 

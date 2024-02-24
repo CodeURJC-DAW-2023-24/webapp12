@@ -55,22 +55,27 @@ public class initDataBaseService{
         rolesAdmin.add("ADMIN");
 
         //default entities
-        List<Reservation> lReservations = new ArrayList<>();
-        List<Review> lReviews = new ArrayList<>();
-        List<Hotel> lHotels = new ArrayList<>();
+        ArrayList<Reservation> lReservations = new ArrayList<>();
+        ArrayList<Review> lReviews = new ArrayList<>();
+        ArrayList<Hotel> lHotels = new ArrayList<>();
         
+        UserE cliente =new UserE("Jack1", "Wells1", "Bio", "loc", "lan", "phone",
+        "mail", "org", null, "user", passwordEncoder.encode("pass"), rolesUser, lReservations, lReviews, lHotels);            
+        userRepository.save(cliente);
+        
+        UserE manager = new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
+        "mail", "org", null, "manager",  passwordEncoder.encode("manager"), rolesManager, lReservations, lReviews, lHotels);     
+        userRepository.save(manager);
 
-        userRepository.save(new UserE("Jack1", "Wells1", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "user", passwordEncoder.encode("pass"), rolesUser, lReservations, lReviews, lHotels));
-        userRepository.save(new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "manager",  passwordEncoder.encode("manager"), rolesManager, lReservations, lReviews, lHotels));
-        userRepository.save(new UserE("Jack3", "Wells3", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "admin",  passwordEncoder.encode("admin"), rolesAdmin, lReservations, lReviews, lHotels));
+        UserE admin = new UserE("Jack3", "Wells3", "Bio", "loc", "lan", "phone",
+        "mail", "org", null, "admin",  passwordEncoder.encode("admin"), rolesAdmin, lReservations, lReviews, lHotels); 
+        userRepository.save(admin);
     
         //init hotels
         
-        /*Room room = new Room(3,7,null,lReservations);
-        Hotel hotel = new Hotel("Hotel1","desc","location",80, null, )*/
+        Room room = new Room(3,7,null,lReservations);
+        List <Room> rooms = new ArrayList<>();
+        Hotel hotel = new Hotel("Hotel1","desc","location",80, null, manager, rooms,lReservations,lReviews);
    
    
     }

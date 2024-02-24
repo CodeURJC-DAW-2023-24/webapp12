@@ -1,8 +1,7 @@
 package es.codeurjc.yourHOmeTEL.model;
 
 import java.sql.Blob;
-import java.util.Date;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -34,37 +33,34 @@ public class Hotel {
 
     private Blob imageHotel;
 
-    private Date updateDate;
-
   
     @ManyToOne
     private UserE manager;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Room> rooms;
+    private ArrayList<Room> rooms;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Reservation> reservation;
+    private ArrayList<Reservation> reservation;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Review> reviews;
+    private ArrayList<Review> reviews;
 
 
     public Hotel(){
         
     }    
     
-    public Hotel(String name, String description, String location, int numRooms, Blob imageHotel, Date updateDate,
-            UserE manager, List<Room> rooms, List<Reservation> reservation, List<Review> reviews) {
+    public Hotel(String name, String description, String location, int numRooms, Blob imageHotel,
+            UserE manager, ArrayList<Room> rooms, ArrayList<Reservation> reservation, ArrayList<Review> reviews) {
         this.name = name;
         this.description = description;
         this.location = location;
         this.numRooms = numRooms;
         this.imageHotel = imageHotel;
-        this.updateDate = updateDate;
         this.manager = manager;
         this.rooms = rooms;
         this.reservation = reservation;
@@ -122,16 +118,6 @@ public class Hotel {
     }
 
 
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
-
-
     public UserE getManager() {
         return manager;
     }
@@ -147,7 +133,7 @@ public class Hotel {
     }
 
 
-    public void setRooms(List<Room> rooms) {
+    public void setRooms(ArrayList<Room> rooms) {
         this.rooms = rooms;
     }
 
@@ -157,7 +143,7 @@ public class Hotel {
     }
 
 
-    public void setReservation(List<Reservation> reservation) {
+    public void setReservation(ArrayList<Reservation> reservation) {
         this.reservation = reservation;
     }
 
@@ -167,7 +153,7 @@ public class Hotel {
     }
 
 
-    public void setReviews(List<Review> reviews) {
+    public void setReviews(ArrayList<Review> reviews) {
         this.reviews = reviews;
     }
 

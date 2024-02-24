@@ -4,6 +4,7 @@ package es.codeurjc.yourHOmeTEL.model;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -30,14 +31,14 @@ public class Room {
 
     
     @ManyToMany(mappedBy = "rooms")
-    private List<Reservation> reservations;
+    private ArrayList<Reservation> reservations;
 
 
     public Room(){
         
     }
 
-    public Room(int numBeds, int maxClients, Hotel hotel, List<Reservation> reservations) {
+    public Room(int numBeds, int maxClients, Hotel hotel, ArrayList<Reservation> reservations) {
         this.numBeds = numBeds;
         this.maxClients = maxClients;
         this.hotel = hotel;
@@ -90,7 +91,7 @@ public class Room {
     }
 
 
-    public void setReservations(List<Reservation> reservations) {
+    public void setReservations(ArrayList<Reservation> reservations) {
         this.reservations = reservations;
     }
 
