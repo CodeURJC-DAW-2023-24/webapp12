@@ -44,4 +44,12 @@ public class DefaultController {
          }
          return isClient;
     }
+    @ModelAttribute("isUser")
+    public Boolean isUser(HttpServletRequest request){
+        boolean isUser= false;
+        if (request.isUserInRole("USER")){
+            isUser = true;         
+         }
+         return isUser;
+    }
 }

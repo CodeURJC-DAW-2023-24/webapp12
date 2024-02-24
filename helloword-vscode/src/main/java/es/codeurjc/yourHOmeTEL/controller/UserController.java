@@ -24,7 +24,22 @@ public class UserController{
 	private UserRepository userRepository;
 	
 
+	@GetMapping("/index")
+	public String index(Model model,  HttpServletRequest request) {
 
+		return "index";
+
+	}
+
+	@GetMapping("/editprofile")
+	public String editprofile(Model model,  HttpServletRequest request) {
+		String nick = request.getUserPrincipal().getName();
+		UserE foundUser =  userRepository.findByNick(nick); //need to transform the throw into 404 error. Page 25 database
+		model.addAttribute("user", foundUser);
+		return "editprofile";
+
+	}
+	
 	@GetMapping("/profile")
 	public String profile(Model model,  HttpServletRequest request) {
 		String nick = request.getUserPrincipal().getName();

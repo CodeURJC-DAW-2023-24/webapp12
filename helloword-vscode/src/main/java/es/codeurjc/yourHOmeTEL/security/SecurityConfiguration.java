@@ -48,8 +48,10 @@ public class SecurityConfiguration {
                 .requestMatchers("/fonts/**").permitAll()
                 .requestMatchers("/images/**").permitAll()
                 .requestMatchers("/img/**").permitAll()
+                .requestMatchers("/index").permitAll()
                 // PRIVATE PAGES
                 .requestMatchers("/profile").hasAnyRole("USER")
+                .requestMatchers("/editprofile").hasAnyRole("USER")
             )
             .formLogin(formLogin -> formLogin
                 .loginPage("/login")
