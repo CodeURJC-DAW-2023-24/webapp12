@@ -1,7 +1,6 @@
 package es.codeurjc.yourHOmeTEL.controller;
 
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +12,6 @@ import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Optional;
 
 
 @Controller
@@ -31,18 +27,28 @@ public class UserController{
 
 	@GetMapping("/profile")
 	public String profile(Model model,  HttpServletRequest request) {
-		String name = request.getUserPrincipal().getName();
-		UserE foundUser =  userRepository.findByNick(name); //need to transform the throw into 404 error. Page 25 database
-		model.addAttribute("name", foundUser.getName());
-		return "profile";
-		
+		String nick = request.getUserPrincipal().getName();
+		UserE foundUser =  userRepository.findByNick(nick); //need to transform the throw into 404 error. Page 25 database
+		model.addAttribute("user", foundUser);
 
-		/*if (request.isUserInRole("ADMIN"))
-		return "Admin";
-		else if (request.isUserInRole("CLIENT"))
-			return "Client";
-		else
-			return "Manager";}*/
+		boolean isAdmin = false;
+		boolean isManager = false;
+		boolean isClient = false;
+
+		if (request.isUserInRole("ADMIN"))
+			isAdmin = true;
+		model.addAttribute("isAdmin", isAdmin);
+
+		if (request.isUserInRole("CLIENT"))
+			isClient = true;	
+		model.addAttribute("isClient", isClient);
+		
+		if (request.isUserInRole("MANAGER"))
+			isManager = false;
+		model.addAttribute("isManager", isManager);
+
+		return "profile";
+
 }
 
 
