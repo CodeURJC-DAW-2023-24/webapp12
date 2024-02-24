@@ -50,10 +50,59 @@ public class UserController{
 
 	}
 
-	@GetMapping("/register")
+	@GetMapping("/edithotel")
+	public String edithotel(Model model,  HttpServletRequest request) {
+
+		return "edithotel";
+
+	}
+
+	@GetMapping("/hotelinformation")
+	public String hotelinformation(Model model,  HttpServletRequest request) {
+
+		return "hotelinformation";
+
+	}
+
+	@GetMapping("/clientlist")
+	public String clientlist(Model model,  HttpServletRequest request) {
+
+		return "clientlist";
+
+	}
+
+	@GetMapping("/managerlist")
+	public String managerlist(Model model,  HttpServletRequest request) {
+
+		return "managerlist";
+
+	}
+	
+	@GetMapping("/clientreservation")
 	public String register(Model model,  HttpServletRequest request) {
 
-		return "register";
+		return "clientreservation";
+
+	}
+
+	@GetMapping("/viewhotelsmanager")
+	public String viewhotelsmanager(Model model,  HttpServletRequest request) {
+
+		return "viewhotelsmanager";
+
+	}
+	
+	@GetMapping("/hotelreview")
+	public String hotelreview(Model model,  HttpServletRequest request) {
+
+		return "hotelreview";
+
+	}
+
+	@GetMapping("/resevations")
+	public String reservations(Model model,  HttpServletRequest request) {
+
+		return "reservations";
 
 	}
 

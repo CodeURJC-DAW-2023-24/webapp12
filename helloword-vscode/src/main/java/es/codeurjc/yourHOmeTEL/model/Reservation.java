@@ -46,8 +46,7 @@ public class Reservation {
         
     }
     
-    public Reservation(Long idReservation, Date date, int numPeople, Hotel hotel, List<Room> rooms, UserE user) {
-        this.idReservation = idReservation;
+    public Reservation(Date date, int numPeople, Hotel hotel, List<Room> rooms, UserE user) {
         this.date = date;
         this.numPeople = numPeople;
         this.hotel = hotel;

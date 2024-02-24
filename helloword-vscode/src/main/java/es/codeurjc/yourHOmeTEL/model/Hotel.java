@@ -1,10 +1,11 @@
 package es.codeurjc.yourHOmeTEL.model;
 
 import java.sql.Blob;
-import java.sql.Date;
+import java.util.Date;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -39,14 +40,11 @@ public class Hotel {
     @ManyToOne
     private UserE manager;
 
-
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Room> rooms;
 
-
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservation;
-
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;

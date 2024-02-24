@@ -2,7 +2,7 @@ package es.codeurjc.yourHOmeTEL.model;
 
 
 
-import java.sql.Date;
+import java.util.Date;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,8 +37,7 @@ public class Review {
     }
 
 
-    public Review(Long idReview, int score, String comment, Date date, Hotel hotel, UserE user) {
-        this.idReview = idReview;
+    public Review(int score, String comment, Date date, Hotel hotel, UserE user) {
         this.score = score;
         this.comment = comment;
         this.date = date;

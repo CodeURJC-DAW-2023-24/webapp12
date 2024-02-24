@@ -6,7 +6,6 @@ package es.codeurjc.yourHOmeTEL.model;
 
 import java.util.List;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -38,8 +37,7 @@ public class Room {
         
     }
 
-    public Room(Long id, int numBeds, int maxClients, Hotel hotel, List<Reservation> reservations) {
-        this.id = id;
+    public Room(int numBeds, int maxClients, Hotel hotel, List<Reservation> reservations) {
         this.numBeds = numBeds;
         this.maxClients = maxClients;
         this.hotel = hotel;
