@@ -30,23 +30,6 @@ public class UserController{
 		String nick = request.getUserPrincipal().getName();
 		UserE foundUser =  userRepository.findByNick(nick); //need to transform the throw into 404 error. Page 25 database
 		model.addAttribute("user", foundUser);
-
-		boolean isAdmin = false;
-		boolean isManager = false;
-		boolean isClient = false;
-
-		if (request.isUserInRole("ADMIN"))
-			isAdmin = true;
-		model.addAttribute("isAdmin", isAdmin);
-
-		if (request.isUserInRole("CLIENT"))
-			isClient = true;	
-		model.addAttribute("isClient", isClient);
-		
-		if (request.isUserInRole("MANAGER"))
-			isManager = false;
-		model.addAttribute("isManager", isManager);
-
 		return "profile";
 
 }

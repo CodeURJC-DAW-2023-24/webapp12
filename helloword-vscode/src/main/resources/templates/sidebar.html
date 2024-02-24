@@ -32,24 +32,28 @@
             Administration
         </div>
         <!--Cliente-->
+        {{#isClient}}
         <li class="nav-item">
             <a class="nav-link" href="clientReservation.html">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>My reservations</span></a>
         </li>
-
+        {{/isClient}}
         <!--Managers-->
+        {{#isManager}}
         <li class="nav-item">
             <a class="nav-link" href="viewHotelsManager.html">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>My Hotels</span></a>
         </li>
+        {{/isManager}}
         <!--Admin-->
+        {{#isAdmin}}
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts"
                 aria-expanded="true" aria-controls="collapsePages">
                 <i class="fas fa-fw fa-chart-area"></i>
-                <span>Hotel managment</span>
+                <span>Management</span>
             </a>
             <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts"
                 data-parent="#accordionSidebar">
@@ -74,13 +78,16 @@
                 <span>User Charts</span>
             </a>
         </li>
+        {{/isAdmin}}
         <!--Manager-->
+        {{#isManager}}
         <li class="nav-item">
             <a class="nav-link" href="chartsManager.html">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Hotel Charts</span>
             </a>
         </li>
+        {{/isManager}}
 
         <!-- Divider -->
         <hr class="sidebar-divider">
