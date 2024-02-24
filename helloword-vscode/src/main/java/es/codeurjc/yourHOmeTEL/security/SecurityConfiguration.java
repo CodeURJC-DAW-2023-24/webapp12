@@ -60,7 +60,10 @@ public class SecurityConfiguration {
                 .requestMatchers("/edithotel").hasAnyRole("MANAGER")
                 .requestMatchers("/viewhotelsmanager").hasAnyRole("MANAGER")
                 .requestMatchers("/clientlist").hasAnyRole("MANAGER")
+                .requestMatchers("/chartsmanager").hasAnyRole("MANAGER")
                 .requestMatchers("/managerlist").hasAnyRole("ADMIN")
+                .requestMatchers("/chartsadmin").hasAnyRole("ADMIN")
+                .requestMatchers("/hotelvalidation").hasAnyRole("ADMIN")
             )
             .formLogin(formLogin -> formLogin
                 .loginPage("/login")

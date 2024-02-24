@@ -2,7 +2,7 @@ package es.codeurjc.yourHOmeTEL.model;
 
 
 
-import java.util.Date;
+import java.time.LocalDate;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,7 +23,7 @@ public class Review {
 
     private String comment;
 
-    private Date date;
+    private LocalDate date;
 
     @ManyToOne
     private Hotel hotel;
@@ -37,7 +37,7 @@ public class Review {
     }
 
 
-    public Review(int score, String comment, Date date, Hotel hotel, UserE user) {
+    public Review(int score, String comment, LocalDate date, Hotel hotel, UserE user) {
         this.score = score;
         this.comment = comment;
         this.date = date;
@@ -76,12 +76,12 @@ public class Review {
     }
 
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

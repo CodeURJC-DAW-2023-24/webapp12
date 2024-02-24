@@ -71,6 +71,13 @@ public class UserController{
 
 	}
 
+	@GetMapping("/chartsmanager")
+	public String chartsmanager(Model model,  HttpServletRequest request) {
+
+		return "chartsmanager";
+
+	}
+	
 	@GetMapping("/managerlist")
 	public String managerlist(Model model,  HttpServletRequest request) {
 
@@ -106,6 +113,21 @@ public class UserController{
 
 	}
 
+	//admin
+	@GetMapping("/chartsadmin")
+	public String chartsadmin(Model model,  HttpServletRequest request) {
+
+		return "chartsadmin";
+
+	}
+
+	@GetMapping("/hotelvalidation")
+	public String hotelvalidation(Model model,  HttpServletRequest request) {
+
+		return "hotelvalidation";
+
+	}
+	
 	@PostMapping("/replaceprofile")
 	public String replaceprofile (Model model,  HttpServletRequest request, @RequestParam  String nick,
 	@RequestParam  String name, @RequestParam  String lastname, @RequestParam  String location, @RequestParam  String org, 
