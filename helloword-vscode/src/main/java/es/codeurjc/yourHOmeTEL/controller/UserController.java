@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import es.codeurjc.yourHOmeTEL.model.UserE;
+import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -21,6 +22,9 @@ public class UserController{
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private UserRepository userRepository;
 	
 
 
@@ -28,7 +32,7 @@ public class UserController{
 
 	public String profile(Model model,  HttpServletRequest request) {
 		String name = request.getUserPrincipal().getName();
-		UserE foundUser =  userService.findFirstByName(name).orElseThrow(); //need to transform the throw into 404 error. Page 25 database
+		UserE foundUser =  userRepository.findByNick(name); //need to transform the throw into 404 error. Page 25 database
 
 		model.addAttribute("user", foundUser);
 

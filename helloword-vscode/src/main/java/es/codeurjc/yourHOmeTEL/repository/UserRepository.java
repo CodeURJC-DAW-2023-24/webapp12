@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import es.codeurjc.yourHOmeTEL.model.UserE;
 
+@Repository
 public interface UserRepository extends JpaRepository<UserE, Long> {
 
     UserE findByNick(String nick);
