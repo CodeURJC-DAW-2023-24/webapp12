@@ -12,7 +12,7 @@ import es.codeurjc.yourHOmeTEL.model.UserE;
 @Repository
 public interface UserRepository extends JpaRepository<UserE, Long> {
 
-    UserE findByNick(String nick);
+    Optional <UserE> findByNick(String nick);
     Optional <UserE> findFirstByName(String name);    
     Optional <UserE> findByName(String name);
     List <UserE> findByPhone(String phone);

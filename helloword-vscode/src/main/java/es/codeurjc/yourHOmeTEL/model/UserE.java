@@ -61,6 +61,21 @@ public class UserE {
     public UserE(){
         
     }
+
+    public UserE( String name, String lastname, String bio, String location, String language, String phone, String email, String organizacion,
+         String nick, String pass, List<String> rols) {
+        
+        this.name = name;
+        this.lastname = lastname;
+        this.bio = bio;
+        this.location = location;
+        this.language = language;
+        this.phone = phone;
+        this.email = email;
+        this.organizacion = organizacion;
+        this.rols = rols;
+        this.nick = nick;
+    }
     
     public UserE( String name, String lastname, String bio, String location, String language, String phone, String email, String organizacion,
             Blob profileImg,  String nick, String pass,List<String> rols, List<Reservation> reservation, List<Review> reviews,
@@ -73,6 +88,7 @@ public class UserE {
         this.language = language;
         this.phone = phone;
         this.email = email;
+        this.organizacion = organizacion;
         this.profileImg = profileImg;
         this.rols = rols;
         this.nick = nick;

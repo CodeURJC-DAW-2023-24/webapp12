@@ -23,7 +23,7 @@ public class UserSecurityService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    UserE user = userRepository.findByNick(username);
+    UserE user = userRepository.findByNick(username).orElseThrow();
     List<GrantedAuthority> roles = new ArrayList<>();
     for (String role : user.getRols()) {
       roles.add(new SimpleGrantedAuthority("ROLE_" + role));

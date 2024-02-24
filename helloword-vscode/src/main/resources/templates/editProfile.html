@@ -21,15 +21,7 @@
 <body>
     {{>sidebar}}
         <div class="container-xl px-4 mt-4">
-            <div id="content-wrapper" class="d-flex flex-column">
-                <!-- Account page navigation-->
-                <nav class="nav nav-borders">
-                    <a class="nav-link ms-0" href="profileManager.html" target="__blank">Go back</a>
-                    <a class="nav-link active ms-0" href="https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details" target="__blank">Profile</a>
-                    <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-billing-page" target="__blank">Billing</a>
-                    <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-security-page" target="__blank">Security</a>
-                    <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-edit-notifications-page"  target="__blank">Notifications</a>
-                </nav>
+            <div id="content-wrapper" class="d-flex flex-column">             
                 <hr class="mt-0 mb-4">
                 <div class="row">
                     <div class="col-xl-4">
@@ -51,23 +43,23 @@
                         <div class="card mb-4">
                             <div class="card-header">Account Details</div>
                             <div class="card-body">
-                                <form>
+                                <form method='post' action="replaceprofile">
                                     <!-- Form Group (username)-->
                                     <div class="mb-3">
                                         <label class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
-                                        <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="username">
+                                        <input class="form-control" id="inputUsername" type="text" name ="nick" placeholder="Enter your nick" value={{user.nick}}>
                                     </div>
                                     <!-- Form Row-->
                                     <div class="row gx-3 mb-3">
                                         <!-- Form Group (first name)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputFirstName">First name</label>
-                                            <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="Name">
+                                            <input class="form-control" id="inputFirstName" type="text" name = "name" placeholder="Enter your first name" value={{user.name}}>
                                         </div>
                                         <!-- Form Group (last name)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputLastName">Last name</label>
-                                            <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="Last Name">
+                                            <input class="form-control" id="inputLastName" type="text" name ="lastname" placeholder="Enter your last name" value={{user.lastname}}>
                                         </div>
                                     </div>
                                     <!-- Form Row        -->
@@ -75,35 +67,33 @@
                                         <!-- Form Group (location)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputLocation">Location</label>
-                                            <input class="form-control" id="inputLocation" type="text" placeholder="Enter your location" value="Location">
+                                            <input class="form-control" id="inputLocation" type="text" name ="location" placeholder="Enter your location" value={{user.location}}>
                                         </div>
                                         <!-- Form Group (organization)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputLocation">Organization</label>
-                                            <input class="form-control" id="inputLocation" type="text" placeholder="Enter your organization" value="Organization">
+                                            <input class="form-control" id="inputLocation" type="text" name ="org" placeholder="Enter your organization" value="{{user.organizacion}}">
                                         </div>
                                         <!-- Form Group (organization name)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputOrgName">Language</label>
-                                            <input class="form-control" id="inputOrgName" type="text" placeholder="Enter known languages" value="English">
+                                            <input class="form-control" id="inputOrgName" type="text" name ="language" placeholder="Enter known languages" value={{user.language}}>
                                         </div>                                     
                                     </div>
                                     <div class="row gx-3 mb-3">
                                         <!-- Form Group (phone number)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputPhone">Phone number</label>
-                                                <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="555-123-4567">
+                                                <input class="form-control" id="inputPhone" type="text" name ="phone" placeholder="Enter your phone number" value={{user.phone}}>
                                         </div>   
                                         <!-- Form Group (email address)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                                            <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value="name@example.com">
+                                            <input class="form-control" id="inputEmailAddress" type="txt" name ="mail" placeholder="Enter your email address" value={{user.email}}>
                                         </div>                                     
                                     </div>
                                     <!-- Save changes button-->
-                                    <a href="profile.html">
-                                        <button class="btn btn-primary" type="button" onclick="viewHotelsManager.html">Save changes</button>
-                                    </a>
+                                    <input class="form-control"  type="submit"  value="Guardar">
                                 </form>
                             </div>
                         </div>

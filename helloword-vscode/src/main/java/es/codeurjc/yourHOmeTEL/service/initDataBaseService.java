@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.yourHOmeTEL.security.SecurityConfiguration;
+import es.codeurjc.yourHOmeTEL.model.Hotel;
+import es.codeurjc.yourHOmeTEL.model.Reservation;
+import es.codeurjc.yourHOmeTEL.model.Review;
 import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
@@ -27,21 +30,25 @@ public class initDataBaseService{
     @PostConstruct
     private void initDatabase() {
 
-        List<String> rolesUser = new ArrayList();
+        List<String> rolesUser = new ArrayList<>();
         rolesUser.add("USER");
         rolesUser.add("CLIENT");
-        List<String> rolesManager = new ArrayList();
+        List<String> rolesManager = new ArrayList<>();
         rolesManager.add("USER");
         rolesManager.add("MANAGER");
-        List<String> rolesAdmin = new ArrayList();
+        List<String> rolesAdmin = new ArrayList<>();
         rolesAdmin.add("USER");
         rolesAdmin.add("ADMIN");
 
+        List<Reservation> lReservations = new ArrayList<>();
+        List<Review> lReviews = new ArrayList<>();
+        List<Hotel> lHotels = new ArrayList<>();
+
         userRepository.save(new UserE("Jack1", "Wells1", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "user", passwordEncoder.encode("pass"), rolesUser, null, null, null));
+        "mail", "org", null, "user", passwordEncoder.encode("pass"), rolesUser, lReservations, lReviews, lHotels));
         userRepository.save(new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "manager",  passwordEncoder.encode("manager"), rolesManager, null, null, null));
+        "mail", "org", null, "manager",  passwordEncoder.encode("manager"), rolesManager, lReservations, lReviews, lHotels));
         userRepository.save(new UserE("Jack3", "Wells3", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "admin",  passwordEncoder.encode("admin"), rolesAdmin, null, null, null));
+        "mail", "org", null, "admin",  passwordEncoder.encode("admin"), rolesAdmin, lReservations, lReviews, lHotels));
     }
 }
