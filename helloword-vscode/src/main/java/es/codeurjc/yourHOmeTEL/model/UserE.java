@@ -58,6 +58,10 @@ public class UserE {
     private List<Hotel> hotels;
 
 
+    public UserE(){
+        
+    }
+    
     public UserE( String name, String lastname, String bio, String location, String language, String phone, String email, String organizacion,
             Blob profileImg,  String nick, String pass,List<String> rols, List<Reservation> reservation, List<Review> reviews,
             List<Hotel> hotels) {

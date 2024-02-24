@@ -34,6 +34,10 @@ public class Room {
     private List<Reservation> reservations;
 
 
+    public Room(){
+        
+    }
+
     public Room(Long id, int numBeds, int maxClients, Hotel hotel, List<Reservation> reservations) {
         this.id = id;
         this.numBeds = numBeds;

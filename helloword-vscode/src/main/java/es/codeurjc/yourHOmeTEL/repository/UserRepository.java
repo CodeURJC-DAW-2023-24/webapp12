@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
 
 import es.codeurjc.yourHOmeTEL.model.UserE;
 
@@ -12,8 +13,8 @@ import es.codeurjc.yourHOmeTEL.model.UserE;
 public interface UserRepository extends JpaRepository<UserE, Long> {
 
     UserE findByNick(String nick);
-    Optional <UserE> findFirstByName(String name);
-    List <UserE> findByName(String name);
+    Optional <UserE> findFirstByName(String name);    
+    Optional <UserE> findByName(String name);
     List <UserE> findByPhone(String phone);
     List <UserE> findLocationByName(String name);
 

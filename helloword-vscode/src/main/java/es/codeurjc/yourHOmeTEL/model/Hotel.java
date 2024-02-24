@@ -52,6 +52,10 @@ public class Hotel {
     private List<Review> reviews;
 
 
+    public Hotel(){
+        
+    }    
+    
     public Hotel(String name, String description, String location, int numRooms, Blob imageHotel, Date updateDate,
             UserE manager, List<Room> rooms, List<Reservation> reservation, List<Review> reviews) {
         this.name = name;

@@ -1,7 +1,7 @@
 package es.codeurjc.yourHOmeTEL.controller;
 
 
-import org.hibernate.mapping.List;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +13,7 @@ import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -29,15 +30,21 @@ public class UserController{
 
 
 	@GetMapping("/profile")
-
 	public String profile(Model model,  HttpServletRequest request) {
 		String name = request.getUserPrincipal().getName();
 		UserE foundUser =  userRepository.findByNick(name); //need to transform the throw into 404 error. Page 25 database
-
-		model.addAttribute("user", foundUser);
-
+		model.addAttribute("name", foundUser.getName());
 		return "profile";
-	}
+		
+
+		/*if (request.isUserInRole("ADMIN"))
+		return "Admin";
+		else if (request.isUserInRole("CLIENT"))
+			return "Client";
+		else
+			return "Manager";}*/
+}
+
 
 	@GetMapping("/login")
 	public String login(Model model) {

@@ -13,6 +13,7 @@ import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 
 @Service
 public class UserService implements GeneralService<UserE> {
+    
     @Autowired
     private UserRepository repository;
 
@@ -58,7 +59,7 @@ public class UserService implements GeneralService<UserE> {
         return repository.findFirstByName(name);
     }
     
-    public List<UserE> findByName(String name){
+    public Optional <UserE> findByName(String name){
         return repository.findByName(name);
     }
 
