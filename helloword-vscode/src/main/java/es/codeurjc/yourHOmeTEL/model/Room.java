@@ -26,7 +26,8 @@ public class Room {
 
     private int maxClients;
 
-    
+    private float coste;
+
     @OneToMany(mappedBy = "room")
     private ArrayList<Reservation> reservations;
 
@@ -35,9 +36,10 @@ public class Room {
         
     }
 
-    public Room(int numBeds, int maxClients, ArrayList<Reservation> reservations) {
+    public Room(int numBeds, int maxClients, float costee, ArrayList<Reservation> reservations) {
         this.numBeds = numBeds;
         this.maxClients = maxClients;
+        this.coste = coste;
         this.reservations = reservations;
     }
 
@@ -69,6 +71,14 @@ public class Room {
 
     public void setMaxClients(int maxClients) {
         this.maxClients = maxClients;
+    }
+
+    public float getCoste() {
+        return coste;
+    }
+
+    public void setCoste(float coste) {
+        this.coste = coste;
     }
 
 

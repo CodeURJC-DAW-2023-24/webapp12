@@ -36,8 +36,6 @@
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item"><a href="index" class="nav-link">Home</a></li>
-	          <li class="nav-item"><a href="about" class="nav-link">About Us</a></li>
-	          <li class="nav-item"><a href="contact" class="nav-link">Contact</a></li>
             {{^isUser}}
             <li class="nav-item"><a href="login" class="nav-link">Log In</a></li>
             {{/isUser}}
@@ -89,26 +87,6 @@
                   <div class="col-md d-flex py-md-4">
                     <div class="form-group align-self-stretch d-flex align-items-end">
                       <div class="wrap align-self-stretch py-3 px-4">
-                        <label for="#">Room</label>
-                        <div class="form-field">
-                          <div class="select-wrap">
-                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                            <select name="" id="" class="form-control">
-                              <option value="">Suite</option>
-                              <option value="">Family Room</option>
-                              <option value="">Deluxe Room</option>
-                              <option value="">Classic Room</option>
-                              <option value="">Superior Room</option>
-                              <option value="">Luxury Room</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md d-flex py-md-4">
-                    <div class="form-group align-self-stretch d-flex align-items-end">
-                      <div class="wrap align-self-stretch py-3 px-4">
                         <label for="#">Guests</label>
                         <div class="form-field">
                           <div class="select-wrap">
@@ -126,11 +104,16 @@
                       </div>
                     </div>
                   </div>
+                  {{#isClient}}
                   <div class="col-md d-flex">
                     <div class="form-group d-flex align-self-stretch">
-                      <a href="#" class="btn btn-primary py-5 py-md-3 px-4 align-self-stretch d-block"><span>Check Availability <small>Best Price Guaranteed!</small></span></a>
+                        <div class="btn-group align-top">
+                          <button class="btn btn-primary py-5 py-md-3 px-4 align-self-stretch d-block" type="button" data-toggle="modal" data-target="#hotel-info-modal">Book this room</button>
+                        </div>
+                      </a>
                     </div>
                   </div>
+                  {{/isClient}}
                 </div>
               </form>
             </div>
@@ -138,6 +121,98 @@
         </div>
       </section>
 
+      <!-- Hotel more info -->
+      <div class="modal fade" role="dialog" tabindex="-1" id="hotel-info-modal">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Reservation info</h5>
+              <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="py-1">             
+                  <div class="row">
+                    <div class="col">
+                      <div class="row">
+                        <div class="col ml-4">
+                          <div class="form-group">
+                            <p>Hotel: </p>
+                            <p id="nameHotel"> Hotel name</p>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="form-group">
+                            <p>Location: </p>
+                            <p id="location">Country, city</p>
+                          </div>
+                        </div>
+                        <div class="col mr-4">
+                          <div class="form-group">
+                            <p>Contact: </p>
+                            <p id="hotelContact"> Hotel email and social media</p>
+                          </div>
+                        </div>
+                      </div>                     
+                      <div class="row">
+                        <div class="col mb-3 ml-4">
+                          <div class="form-group">
+                            <p>Price: </p>
+                            <p id="roomsAmount">Precio </p>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="form-group">
+                            <p>Fecha</p>
+                            <p id="hotelManager"> Fecha entrada</p>
+                          </div>
+                        </div>
+                        <div class="col mr-4">
+                          <div class="form-group">
+                            <p>Fecha</p>
+                            <p id="hotelManager"> Fecha salida</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col mb-3 ml-4">
+                          <div class="form-group">
+                            <p>Number of beds</p>
+                            <p id="reservations"> Number </p>
+                          </div>                           
+                        </div>
+                        <div class="col">
+                          <div class="form-group">
+                            <p>Maximum capacity</p>
+                            <p id="reservations"> Number </p>
+                          </div>
+                        </div>
+                        <div class="col mr-4">
+                        </div>                      
+                      </div>
+                      <div class="row">
+                        <div class="col mb-3 ml-4">                        
+                        </div>
+                        <div class="col">
+                          <div class="form-group">
+                            <form action = "confirmReservation" method="post">                                        
+                              <input type="submit" value="Confirm reservartion" class="btn btn-primary btn-user btn-block"/>
+                          </form>
+                          </div>
+                        </div>
+                        <div class="col mr-4">
+                        </div>                      
+                      </div>
+                    </div>
+                  </div>                
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
       <div class="container">
         <div class="row">
           <div class="col-lg-8">

@@ -57,19 +57,14 @@ public class UserController{
 
 	}
 
-	@GetMapping("/chartsmanager")
-	public String chartsmanager(Model model,  HttpServletRequest request) {
+	
+	@GetMapping("/resevations")
+	public String reservations(Model model,  HttpServletRequest request) {
 
-		return "chartsmanager";
+		return "reservations";
 
 	}
 	
-	@GetMapping("/managerlist")
-	public String managerlist(Model model,  HttpServletRequest request) {
-
-		return "managerlist";
-
-	}
 	
 	@GetMapping("/clientreservation")
 	public String clientreservation(Model model,  HttpServletRequest request) {
@@ -78,6 +73,7 @@ public class UserController{
 
 	}
 
+	//MANAGER CONTROLLERS
 	@GetMapping("/viewhotelsmanager")
 	public String viewhotelsmanager(Model model,  HttpServletRequest request) {
 
@@ -85,14 +81,16 @@ public class UserController{
 
 	}
 
-	@GetMapping("/resevations")
-	public String reservations(Model model,  HttpServletRequest request) {
+	@GetMapping("/chartsmanager")
+	public String chartsmanager(Model model,  HttpServletRequest request) {
 
-		return "reservations";
+		return "chartsmanager";
 
 	}
 
-	//admin
+	
+
+	//ADMIN CONTROLLERS
 	@GetMapping("/chartsadmin")
 	public String chartsadmin(Model model,  HttpServletRequest request) {
 
@@ -104,6 +102,13 @@ public class UserController{
 	public String hotelvalidation(Model model,  HttpServletRequest request) {
 
 		return "hotelvalidation";
+
+	}
+
+	@GetMapping("/managerlist")
+	public String managerlist(Model model,  HttpServletRequest request) {
+
+		return "managerlist";
 
 	}
 	

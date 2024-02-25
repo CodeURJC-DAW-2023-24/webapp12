@@ -5,29 +5,25 @@
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
-
-	      <div class="sidebar-box mt-3">
-          <form action="#" class="search-form">
-            <div class="form-group">
-              <span class="icon ion-ios-search"></span>
-              <input type="text" class="form-control" placeholder="Search...">
+        <ul class="navbar-nav ml-auto">
+          <div class="collapse navbar-collapse" id="ftco-nav">
+            <div class="sidebar-box mt-3">
+              <form action="#" class="search-form">
+                <div class="form-group">
+                  <span class="icon ion-ios-search"></span>
+                  <input type="text" class="form-control" placeholder="Search...">
+                </div>
+              </form>
             </div>
-          </form>
-        </div>
-
-        <div class="collapse navbar-collapse" id="ftco-nav">
-	        <ul class="navbar-nav ml-auto">
-            <li class="nav-item active"><a href="index" class="nav-link">Home</a></li>
-	          <li class="nav-item"><a href="about" class="nav-link">About Us</a></li>
-	          <li class="nav-item"><a href="contact" class="nav-link">Contact</a></li>
-            {{^isUser}}
-            <li class="nav-item"><a href="login" class="nav-link">Log In</a></li>
-            {{/isUser}}
-            {{#isUser}}
-            <li class="nav-item"><a href="profile" class="nav-link">Profile</a></li>
-            {{/isUser}}
-	        </ul>
-	      </div>
+          </div>
+          <li class="nav-item active"><a href="index" class="nav-link">Home</a></li>
+          {{^isUser}}
+          <li class="nav-item"><a href="login" class="nav-link">Log In</a></li>
+          {{/isUser}}
+          {{#isUser}}
+          <li class="nav-item"><a href="profile" class="nav-link">Profile</a></li>
+          {{/isUser}}
+	      </ul>
 	    </div>
 	  </nav>
     <!-- END nav -->
@@ -53,12 +49,11 @@
               <a href="blog-single.html" class="block-20 rounded" style="background-image: url('images/hotel1.jpg');">
               </a>
               <div class="text mt-3">
-              	<div class="meta mb-2">
-                  <div><a href="#">Oct. 23, 2022</a></div>
-                </div>
-                <h3 class="heading"><a href="#">Hotel Marina Azure</a></h3>
+                <h3 class="heading"><a href="hotelinformation">Hotel Marina Azure</a></h3>
                 <p>A coastal getaway where luxury meets seaside charm. With panoramic views and exceptional cuisine, Marina Azure Hotel offers a relaxed and elegant experience.</p>
+                {{#isClient}}
                 <a href="hotelinformation" class="btn btn-secondary rounded">Book now</a>
+                {{/isClient}}
                 <a href="hotelreview" class="btn btn-secondary rounded">Reviews</a>
 
               </div>
@@ -69,12 +64,11 @@
               <a href="blog-single.html" class="block-20 rounded" style="background-image: url('images/hotel2.jpg');">
               </a>
               <div class="text mt-3">
-              	<div class="meta mb-2">
-                  <div><a href="#">Oct. 30, 2023</a></div>
-                </div>
-                <h3 class="heading"><a href="#">Metropolitan Palace Hotel</a></h3>
+                <h3 class="heading"><a href="hotelinformation">Metropolitan Palace Hotel</a></h3>
                 <p>An urban oasis where classic elegance meets contemporary luxury. With spacious rooms, exquisite cuisine, and a prime location, Metropolitan Palace Hotel.</p>
+                {{#isClient}}
                 <a href="hotelinformation" class="btn btn-secondary rounded">Book now</a>
+                {{/isClient}}
                 <a href="hotelreview" class="btn btn-secondary rounded">Reviews</a>
               </div>
             </div>
@@ -84,12 +78,11 @@
               <a href="blog-single.html" class="block-20 rounded" style="background-image: url('images/hotel3.jpg');">
               </a>
               <div class="text mt-3">
-              	<div class="meta mb-2">
-                  <div><a href="#">Oct. 19, 2020</a></div>
-                </div>
-                <h3 class="heading"><a href="#">Serenity Alpine Lodge</a></h3>
+                <h3 class="heading"><a href="hotelinformation">Serenity Alpine Lodge</a></h3>
                 <p>An exclusive mountain retreat where tranquility and nature merge. With breathtaking views and a relaxing atmosphere, Serenity Alpine Lodge is a sanctuary of alpine peace.</p>
+                {{#isClient}}
                 <a href="hotelinformation" class="btn btn-secondary rounded">Book now</a>
+                {{/isClient}}
                 <a href="hotelreview" class="btn btn-secondary rounded">Reviews</a>
               </div>
             </div>
@@ -101,11 +94,12 @@
               </a>
               <div class="text mt-3">
               	<div class="meta mb-2">
-                  <div><a href="#">Oct. 24, 2023</a></div>
                 </div>
-                <h3 class="heading"><a href="#">Imperial Heritage Hotel</a></h3>
+                <h3 class="heading"><a href="hotelinformation">Imperial Heritage Hotel</a></h3>
                 <p>A historic palace transformed into a luxury haven of distinction. With sumptuous rooms and exquisite cuisine, Imperial Heritage Hotel is a journey to the grandeur of bygone eras.</p>
+                {{#isClient}}
                 <a href="hotelinformation" class="btn btn-secondary rounded">Book now</a>
+                {{/isClient}}
                 <a href="hotelreview" class="btn btn-secondary rounded">Reviews</a>
               </div>
             </div>
@@ -115,12 +109,11 @@
               <a href="blog-single.html" class="block-20 rounded" style="background-image: url('images/hortel5.jpg');">
               </a>
               <div class="text mt-3">
-              	<div class="meta mb-2">
-                  <div><a href="#">Oct. 26, 2021</a></div>
-                </div>
-                <h3 class="heading"><a href="#">Palms of Paradise Resort</a></h3>
+                <h3 class="heading"><a href="hotelinformation">Palms of Paradise Resort</a></h3>
                 <p>A luxurious tropical retreat where serenity and indulgence meet. With oceanfront villas and vibrant culinary experiences, Palms of Paradise Resort is a tropical paradise come to life.</p>
+                {{#isClient}}
                 <a href="hotelinformation" class="btn btn-secondary rounded">Book now</a>
+                {{/isClient}}
                 <a href="hotelreview" class="btn btn-secondary rounded">Reviews</a>
               </div>
             </div>
@@ -130,12 +123,11 @@
               <a href="blog-single.html" class="block-20 rounded" style="background-image: url('images/hotel6.jpg');">
               </a>
               <div class="text mt-3">
-              	<div class="meta mb-2">
-                  <div><a href="#">Oct. 23, 2022</a></div>
-                </div>
-                <h3 class="heading"><a href="#">Costa Dorada Hotel</a></h3>
+                <h3 class="heading"><a href="hotelinformation">Costa Dorada Hotel</a></h3>
                 <p> An elegant coastal destination in the heart of the Mediterranean. With sea-view rooms and exceptional Mediterranean cuisine, Costa Dorada Hotel is a celebration of Mediterranean charm.</p>
+                {{#isClient}}
                 <a href="hotelinformation" class="btn btn-secondary rounded">Book now</a>
+                {{/isClient}}
                 <a href="hotelrieview" class="btn btn-secondary rounded">Reviews</a>
               </div>
             </div>
