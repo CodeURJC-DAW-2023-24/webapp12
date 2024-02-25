@@ -169,4 +169,9 @@ public class UserController{
 		return "loginError";
 	}
 
+	@GetMapping("/register")
+	public String register(Model model) {
+		return "register";
+	}
+
 }
