@@ -50,13 +50,15 @@ public class SecurityConfiguration {
                 .requestMatchers("/img/**").permitAll()
                 .requestMatchers("/index").permitAll()
                 .requestMatchers("/register").permitAll()
+                .requestMatchers("/hotelinformation").permitAll()
+                .requestMatchers("/nickTaken").permitAll()
+                .requestMatchers("/error").permitAll()
                 
                 // PRIVATE PAGES
                 .requestMatchers("/profile").hasAnyRole("USER")
                 .requestMatchers("/editprofile").hasAnyRole("USER")
-                .requestMatchers("/clientreservation").hasAnyRole("USER")
-                .requestMatchers("/hotelinformation").hasAnyRole("USER")
-                .requestMatchers("/hotelreview").hasAnyRole("USER")
+                .requestMatchers("/clientreservation").hasAnyRole("CLIENT")
+                .requestMatchers("/hotelreview").hasAnyRole("CLIENT")
                 .requestMatchers("/edithotel").hasAnyRole("MANAGER")
                 .requestMatchers("/viewhotelsmanager").hasAnyRole("MANAGER")
                 .requestMatchers("/clientlist").hasAnyRole("MANAGER")

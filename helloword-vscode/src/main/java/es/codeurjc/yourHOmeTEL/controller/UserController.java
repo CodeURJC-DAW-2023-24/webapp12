@@ -4,10 +4,12 @@ package es.codeurjc.yourHOmeTEL.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+import java.io.IOException;
 import java.sql.Date;
 
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -170,8 +172,32 @@ public class UserController{
 	}
 
 	@GetMapping("/register")
-	public String register(Model model) {
+	public String registerClient(Model model) {
 		return "register";
+	}
+
+	@PostMapping("/register")
+	public String registerClient(Model model, UserE user, Integer type){
+		if (!userService.existNick(user.getNick())) {
+			user.setPass(passwordEncoder.encode(user.getPass()));
+			List<String> rols = new ArrayList<>();
+			rols.add("USER");
+			if (type == 0)
+				rols.add("CLIENT");
+			else
+				rols.add("MANAGER");
+			user.setRols(rols);
+
+			userRepository.save(user);
+			return "redirect:/login";
+		} else {
+			return "redirect:/nickTaken";
+		}
+	}
+	
+	@GetMapping("/nickTaken")
+	public String takenUserName(Model model, HttpServletRequest request) {
+		return "nickTaken";
 	}
 
 }

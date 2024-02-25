@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -70,5 +71,14 @@ public class UserService implements GeneralService<UserE> {
     public List<UserE> findLocationByName (String name){
         return repository.findLocationByName(name);
     }
+
+    public Optional <UserE> findByNick(String nick){
+        return repository.findByNick(nick);
+    }
+
+    public boolean existNick(String nick) {
+		Optional<UserE> user = findByNick(nick);
+		return user.isPresent();
+	}
     
 }

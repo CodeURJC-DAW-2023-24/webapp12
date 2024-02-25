@@ -67,6 +67,14 @@ public class UserE {
         
     }
 
+    public UserE(String nick, String name, String lastname, String email, String pass){
+        this.nick = nick;
+        this.name = name;
+        this.lastname = lastname;
+        this.email = email;
+        this.pass = pass;
+    }
+
     /*public UserE( String name, String lastname, String bio, String location, String language, String phone, String email, String organizacion,
          String nick, String pass, List<String> rols) {
         
@@ -254,4 +262,8 @@ public class UserE {
     public List<String> getRols(){
         return this.rols;
     }   
+
+    public void setRols(List<String> rols){
+        this.rols = rols;
+    }
 }
