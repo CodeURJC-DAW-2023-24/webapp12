@@ -72,7 +72,7 @@ public class UserController{
 	}
 	
 	@GetMapping("/clientreservation")
-	public String register(Model model,  HttpServletRequest request) {
+	public String clientreservation(Model model,  HttpServletRequest request) {
 
 		return "clientreservation";
 
