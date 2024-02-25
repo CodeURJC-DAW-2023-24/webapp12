@@ -28,14 +28,12 @@ public class Review {
     @ManyToOne
     private Hotel hotel;
 
-    
     @ManyToOne
     private UserE user;
 
     public Review(){
         
     }
-
 
     public Review(int score, String comment, LocalDate date, Hotel hotel, UserE user) {
         this.score = score;

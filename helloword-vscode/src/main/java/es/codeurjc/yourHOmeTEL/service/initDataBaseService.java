@@ -1,6 +1,8 @@
 package es.codeurjc.yourHOmeTEL.service;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,41 +61,56 @@ public class initDataBaseService{
         rolesAdmin.add("ADMIN");
 
         //default entities
-        ArrayList<Reservation> lReservations = new ArrayList<>();
-        ArrayList<Review> lReviews = new ArrayList<>();
-        ArrayList<Hotel> lHotels = new ArrayList<>();
         
-        UserE cliente =new UserE("Jack1", "Wells1", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "user", passwordEncoder.encode("pass"), rolesUser, lReservations, lReviews, lHotels);            
-        userRepository.save(cliente);
+
+        //init users
+        UserE client =new UserE("Jack1", "Wells1", "Bio", "loc", "lan", "phone",
+        "mail", "org", null, "user", passwordEncoder.encode("pass"), rolesUser, new ArrayList<>(), new ArrayList<>(), null);            
         
         UserE manager = new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "manager",  passwordEncoder.encode("manager"), rolesManager, lReservations, lReviews, lHotels);     
-        userRepository.save(manager);
+        "mail", "org", null, "manager",  passwordEncoder.encode("manager"), rolesManager, null, null,  new ArrayList<>());     
 
         UserE admin = new UserE("Jack3", "Wells3", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "admin",  passwordEncoder.encode("admin"), rolesAdmin, lReservations, lReviews, lHotels); 
-        userRepository.save(admin);
-            
+        "mail", "org", null, "admin",  passwordEncoder.encode("admin"), rolesAdmin, null, null, null); 
         
-        //init hotels       
-        //create 1 room and add it to room list
-        Room room = new Room();
-        roomRepository.save(room);
-        /*ArrayList <Room> rooms = new ArrayList<>();
-        rooms.add(room);
-        
-        //create hotel with room list
-        Hotel hotel = new Hotel("Hotel1","desc","location",80, null, manager, rooms, lReservations,lReviews);
-   
+        //init rooms
+        Room room1 = new Room(2, 2, 200F, new ArrayList<>(), null);
+        Room room2 = new Room(2, 2, 200F, new ArrayList<>(), null);
+
+
+        //init hoteles
+        Hotel hotel1 = new Hotel("Hotel1", "hotel de plata", "loc1", 2, null, manager, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+
+        hotel1.getRooms().add(room1);
+        hotel1.getRooms().add(room2);
+
         //add hotel to room
-        hotel.getRooms().get(0).setHotel(hotel);
+        room1.setHotel(hotel1);
+        room2.setHotel(hotel1);
+
+        //init review
+        Review review1 = new Review(4, "Hola", null, hotel1, client);
+        
+        //add review
+        //hotel1.getReviews().add(review1);
+        //client.getReviews().add(review1);
+
+        //reservation
+        Reservation reservation1 = new Reservation(null, 2, hotel1, room1, client);
+
+        //client.getReservation().add(reservation1);
+        //hotel1.getReservation().add(reservation1);
+        //room1.getReservations().add(reservation1);
 
         //save
-        /*hotelRepository.save(hotel);
-        roomRepository.save(room);*/
-
+        userRepository.save(client);
+        userRepository.save(manager);
+        userRepository.save(admin);
+        hotelRepository.save(hotel1);
+        roomRepository.save(room1);
+        roomRepository.save(room2);
+        reviewRepository.save(review1);
+        reservationRepository.save(reservation1);
     }
-
 }
 

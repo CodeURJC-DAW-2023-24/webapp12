@@ -67,7 +67,7 @@ public class UserE {
         
     }
 
-    public UserE( String name, String lastname, String bio, String location, String language, String phone, String email, String organizacion,
+    /*public UserE( String name, String lastname, String bio, String location, String language, String phone, String email, String organizacion,
          String nick, String pass, List<String> rols) {
         
         this.name = name;
@@ -80,7 +80,7 @@ public class UserE {
         this.organizacion = organizacion;
         this.rols = rols;
         this.nick = nick;
-    }
+    }*/
     
     public UserE( String name, String lastname, String bio, String location, String language, String phone, String email, String organizacion,
             Blob profileImg,  String nick, String pass,List<String> rols, List<Reservation> reservation, List<Review> reviews,

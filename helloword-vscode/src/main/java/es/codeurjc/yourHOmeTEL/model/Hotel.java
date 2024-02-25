@@ -21,7 +21,7 @@ public class Hotel {
    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idReview; 
+    private Long idHotel; 
     
     private String name;
 
@@ -37,16 +37,17 @@ public class Hotel {
     @ManyToOne
     private UserE manager;
 
-    @OneToMany
-    private ArrayList<Room> rooms;
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Room> rooms;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private ArrayList<Reservation> reservation;
+    private List<Reservation> reservation;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private ArrayList<Review> reviews;
+    private List<Review> reviews;
 
 
     public Hotel(){
@@ -54,7 +55,7 @@ public class Hotel {
     }    
     
     public Hotel(String name, String description, String location, int numRooms, Blob imageHotel,
-            UserE manager, ArrayList<Room> rooms, ArrayList<Reservation> reservation, ArrayList<Review> reviews) {
+            UserE manager, List<Room> rooms, List<Reservation> reservation, List<Review> reviews) {
         this.name = name;
         this.description = description;
         this.location = location;
@@ -132,7 +133,7 @@ public class Hotel {
     }
 
 
-    public void setRooms(ArrayList<Room> rooms) {
+    public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
     }
 
@@ -142,7 +143,7 @@ public class Hotel {
     }
 
 
-    public void setReservation(ArrayList<Reservation> reservation) {
+    public void setReservation(List<Reservation> reservation) {
         this.reservation = reservation;
     }
 
@@ -152,7 +153,7 @@ public class Hotel {
     }
 
 
-    public void setReviews(ArrayList<Review> reviews) {
+    public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
 

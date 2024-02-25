@@ -26,21 +26,25 @@ public class Room {
 
     private int maxClients;
 
-    private float coste;
+    private float cost;
 
     @OneToMany(mappedBy = "room")
-    private ArrayList<Reservation> reservations;
+    private List<Reservation> reservations;
+
+    @ManyToOne
+    private Hotel hotel;
 
 
     public Room(){
         
     }
 
-    public Room(int numBeds, int maxClients, float costee, ArrayList<Reservation> reservations) {
+    public Room(int numBeds, int maxClients, float cost, List<Reservation> reservations, Hotel hotel) {
         this.numBeds = numBeds;
         this.maxClients = maxClients;
-        this.coste = coste;
+        this.cost = cost;
         this.reservations = reservations;
+        this.hotel = hotel;
     }
 
 
@@ -73,12 +77,12 @@ public class Room {
         this.maxClients = maxClients;
     }
 
-    public float getCoste() {
-        return coste;
+    public float getcost() {
+        return cost;
     }
 
-    public void setCoste(float coste) {
-        this.coste = coste;
+    public void setcost(float cost) {
+        this.cost = cost;
     }
 
 
@@ -87,15 +91,16 @@ public class Room {
     }
 
 
-    public void setReservations(ArrayList<Reservation> reservations) {
+    public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
     }
 
 
-    
+    public Hotel getHotel() {
+        return hotel;
+    }
 
-
-    
-
-    
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
 }
