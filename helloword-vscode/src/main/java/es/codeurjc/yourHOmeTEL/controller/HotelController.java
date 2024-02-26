@@ -22,6 +22,7 @@ import es.codeurjc.yourHOmeTEL.model.Hotel;
 import es.codeurjc.yourHOmeTEL.model.Reservation;
 import es.codeurjc.yourHOmeTEL.model.Review;
 import es.codeurjc.yourHOmeTEL.model.UserE;
+import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.UserService;
 import jakarta.persistence.ManyToOne;
@@ -31,6 +32,9 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class HotelController {
+
+	@Autowired
+	HotelRepository hotelRepository;
     
     @GetMapping("/edithotel")
 	public String edithotel(Model model,  HttpServletRequest request) {
@@ -40,15 +44,17 @@ public class HotelController {
 	}
 
     
-    @GetMapping("/hotelinformation")
-	public String hotelinformation(Model model,  HttpServletRequest request) {
+    @GetMapping("/hotelinformation/{id}")
+	public String hotelinformation(Model model,  HttpServletRequest request, @PathVariable Long id) {
+		Hotel hotel = hotelRepository.findById(id).orElseThrow();
+		model.addAttribute("hotel", hotel);
 
 		return "hotelinformation";
 
 	}
 
-    @GetMapping("/hotelreview")
-	public String hotelreview(Model model,  HttpServletRequest request) {
+    @GetMapping("/hotelreview/{id}")
+	public String hotelreview(Model model,  HttpServletRequest request, @PathVariable Long id) {
 
 		return "hotelreview";
 

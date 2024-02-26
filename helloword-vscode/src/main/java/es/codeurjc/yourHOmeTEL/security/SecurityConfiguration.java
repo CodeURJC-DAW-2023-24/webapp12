@@ -50,7 +50,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/img/**").permitAll()
                 .requestMatchers("/index").permitAll()
                 .requestMatchers("/register").permitAll()
-                .requestMatchers("/hotelinformation").permitAll()
+                .requestMatchers("/hotelinformation/**").permitAll()
                 .requestMatchers("/nickTaken").permitAll()
                 .requestMatchers("/error").permitAll()
                 .requestMatchers("/hotelreview").permitAll()

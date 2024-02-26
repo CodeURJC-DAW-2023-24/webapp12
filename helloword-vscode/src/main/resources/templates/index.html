@@ -47,15 +47,15 @@
           {{#hotels}}
           <div class="col-md-4 d-flex ftco-animate">
             <div class="blog-entry align-self-stretch">
-              <a href="hotelinformation/{{id}}" class="block-20 rounded" style="background-image: url('images/hotel1.jpg');">
+              <a class="block-20 rounded" style="background-image: url('images/hotel1.jpg');">
               </a>
               <div class="text mt-3">
-                <h3 class="heading"><a href="hotelinformation">{{name}}</a></h3>
+                <h3 class="heading">{{name}}</h3>
                 <p>{{description}}</p>
                 {{#isClient}}
-                <a href="hotelinformation" class="btn btn-secondary rounded">Book now</a>
+                <a href="hotelinformation/{{idHotel}}" class="btn btn-secondary rounded">Book now</a>
                 {{/isClient}}
-                <a href="hotelreview" class="btn btn-secondary rounded">Reviews</a>
+                <a href="hotelreview/{{idHotel}}" class="btn btn-secondary rounded">Reviews</a>
               </div>
             </div>
           </div>
