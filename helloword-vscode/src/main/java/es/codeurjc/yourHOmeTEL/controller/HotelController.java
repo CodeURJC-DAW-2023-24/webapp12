@@ -57,8 +57,8 @@ public class HotelController {
 
 	}
 
-    @GetMapping("/hotelreview/{id}")
-	public String hotelreview(Model model,  HttpServletRequest request, @PathVariable Long id) {
+    @GetMapping("/hotelreview")
+	public String hotelreview(Model model,  HttpServletRequest request) {
 
 		return "hotelreview";
 
