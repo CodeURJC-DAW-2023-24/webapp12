@@ -22,7 +22,7 @@ public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idReservation;
+    private Long id;
 
 
     private LocalDate date;
@@ -56,12 +56,12 @@ public class Reservation {
 
 
     public Long getIdReservation() {
-        return idReservation;
+        return id;
     }
 
 
-    public void setIdReservation(Long idReservation) {
-        this.idReservation = idReservation;
+    public void setIdReservation(Long id) {
+        this.id = id;
     }
 
 

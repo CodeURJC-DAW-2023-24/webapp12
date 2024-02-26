@@ -16,7 +16,7 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idReview;
+    private Long id;
     
 
     private int score;
@@ -45,12 +45,12 @@ public class Review {
 
 
     public Long getIdReview() {
-        return idReview;
+        return id;
     }
 
 
-    public void setIdReview(Long idReview) {
-        this.idReview = idReview;
+    public void setIdReview(Long id) {
+        this.id = id;
     }
 
 

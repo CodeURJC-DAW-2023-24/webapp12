@@ -22,8 +22,6 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private int numBeds;
-
     private int maxClients;
 
     private float cost;
@@ -39,8 +37,7 @@ public class Room {
         
     }
 
-    public Room(int numBeds, int maxClients, float cost, List<Reservation> reservations, Hotel hotel) {
-        this.numBeds = numBeds;
+    public Room(int maxClients, float cost, List<Reservation> reservations, Hotel hotel) {
         this.maxClients = maxClients;
         this.cost = cost;
         this.reservations = reservations;
@@ -55,16 +52,6 @@ public class Room {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-
-    public int getNumBeds() {
-        return numBeds;
-    }
-
-
-    public void setNumBeds(int numBeds) {
-        this.numBeds = numBeds;
     }
 
 

@@ -65,52 +65,78 @@ public class initDataBaseService{
 
         //init users
         UserE client =new UserE("Jack1", "Wells1", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "user", passwordEncoder.encode("pass"), rolesUser, new ArrayList<>(), new ArrayList<>(), null);            
+        "mail", "org", null, "user", passwordEncoder.encode("pass"), rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());            
         
         UserE manager = new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "manager",  passwordEncoder.encode("manager"), rolesManager, null, null,  new ArrayList<>());     
+        "mail", "org", null, "manager",  passwordEncoder.encode("manager"), rolesManager, new ArrayList<>(), new ArrayList<>(),  new ArrayList<>());     
 
         UserE admin = new UserE("Jack3", "Wells3", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "admin",  passwordEncoder.encode("admin"), rolesAdmin, null, null, null); 
+        "mail", "org", null, "admin",  passwordEncoder.encode("admin"), rolesAdmin, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()); 
         
+        userRepository.save(manager);
+        userRepository.save(client);
+        userRepository.save(admin); 
+
         //init rooms
-        Room room1 = new Room(2, 2, 200F, new ArrayList<>(), null);
-        Room room2 = new Room(2, 2, 200F, new ArrayList<>(), null);
+        Room room1 = new Room(2, 200F, new ArrayList<>(), null);
+        Room room2 = new Room(2, 200F, new ArrayList<>(), null);
+
+        roomRepository.save(room1);
+        roomRepository.save(room2);
 
 
         //init hoteles
         Hotel hotel1 = new Hotel("Hotel1", "hotel de plata", "loc1", 2, null, manager, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
-        hotel1.getRooms().add(room1);
-        hotel1.getRooms().add(room2);
+        hotelRepository.save(hotel1); 
 
-        //add hotel to room
-        room1.setHotel(hotel1);
-        room2.setHotel(hotel1);
+        //add hotel to manager
+        manager.getHotels().add(hotel1);
 
-        //init review
-        Review review1 = new Review(4, "Hola", null, hotel1, client);
-        
-        //add review
-        //hotel1.getReviews().add(review1);
-        //client.getReviews().add(review1);
-
-        //reservation
-        Reservation reservation1 = new Reservation(null, 2, hotel1, room1, client);
-
-        //client.getReservation().add(reservation1);
-        //hotel1.getReservation().add(reservation1);
-        //room1.getReservations().add(reservation1);
-
-        //save
-        userRepository.save(client);
         userRepository.save(manager);
-        userRepository.save(admin);
-        hotelRepository.save(hotel1);
+
+        //add hotel to rooms
+        room1.setHotel(hotel1);
+        room1.setHotel(hotel1);
+
         roomRepository.save(room1);
         roomRepository.save(room2);
+        
+        //init review
+        Review review1 = new Review(4, "Hola", null, hotel1, client);
+
         reviewRepository.save(review1);
+
+        //add review to hotel
+        hotel1.getReviews().add(review1);
+
+        hotelRepository.save(hotel1);
+
+        //add review to client
+        client.getReviews().add(review1);
+
+        userRepository.save(client);
+
+        //init reservation
+        Reservation reservation1 = new Reservation(null, 2, hotel1, room1, client);
+
         reservationRepository.save(reservation1);
+
+        //add reservation to hotel
+        hotel1.getReservation().add(reservation1);
+
+        hotelRepository.save(hotel1);
+
+        //add reservation to room
+        room1.getReservations().add(reservation1);
+
+        roomRepository.save(room1);
+
+        //add reservation to client
+        client.getReservation().add(reservation1);
+
+        userRepository.save(client);
+
     }
 }
 

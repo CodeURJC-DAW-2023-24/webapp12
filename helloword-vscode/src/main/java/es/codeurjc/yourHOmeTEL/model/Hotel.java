@@ -21,7 +21,7 @@ public class Hotel {
    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idHotel; 
+    private Long id; 
     
     private String name;
 

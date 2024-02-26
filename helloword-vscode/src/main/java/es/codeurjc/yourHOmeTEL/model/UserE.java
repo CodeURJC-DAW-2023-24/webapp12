@@ -57,7 +57,7 @@ public class UserE {
     @JsonIgnore
     private List<Review> reviews;
 
-    
+
     @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Hotel> hotels;

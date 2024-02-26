@@ -40,7 +40,7 @@ public class SecurityConfiguration {
         http.authenticationProvider(authenticationProvider());
         http
             .authorizeHttpRequests(authorize -> authorize
-                // PUBLIC PAGES
+                //public pages
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/loginerror").permitAll()
                 .requestMatchers("/css/**").permitAll()
@@ -53,16 +53,24 @@ public class SecurityConfiguration {
                 .requestMatchers("/hotelinformation").permitAll()
                 .requestMatchers("/nickTaken").permitAll()
                 .requestMatchers("/error").permitAll()
+                .requestMatchers("/hotelreview").permitAll()
                 
-                // PRIVATE PAGES
+                //User pages
                 .requestMatchers("/profile").hasAnyRole("USER")
                 .requestMatchers("/editprofile").hasAnyRole("USER")
+
+                //Client pages
                 .requestMatchers("/clientreservation").hasAnyRole("CLIENT")
                 .requestMatchers("/hotelreview").hasAnyRole("CLIENT")
+
+                //Manager pages
                 .requestMatchers("/edithotel").hasAnyRole("MANAGER")
                 .requestMatchers("/viewhotelsmanager").hasAnyRole("MANAGER")
                 .requestMatchers("/clientlist").hasAnyRole("MANAGER")
                 .requestMatchers("/chartsmanager").hasAnyRole("MANAGER")
+                .requestMatchers("/addHotel").hasAnyRole("MANAGER")
+
+                //Admin pages
                 .requestMatchers("/managerlist").hasAnyRole("ADMIN")
                 .requestMatchers("/chartsadmin").hasAnyRole("ADMIN")
                 .requestMatchers("/hotelvalidation").hasAnyRole("ADMIN")
