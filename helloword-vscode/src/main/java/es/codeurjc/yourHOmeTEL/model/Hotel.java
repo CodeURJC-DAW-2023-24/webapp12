@@ -53,6 +53,12 @@ public class Hotel {
     public Hotel(){
         
     }    
+
+    public Hotel(String name, String location, String description){
+        this.name = name;
+        this.location = location;
+        this.description = description;
+    } 
     
     public Hotel(String name, String description, String location, int numRooms, Blob imageHotel,
             UserE manager, List<Room> rooms, List<Reservation> reservation, List<Review> reviews) {

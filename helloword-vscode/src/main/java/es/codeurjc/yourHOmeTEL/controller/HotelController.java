@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import es.codeurjc.yourHOmeTEL.model.Hotel;
 import es.codeurjc.yourHOmeTEL.model.Reservation;
 import es.codeurjc.yourHOmeTEL.model.Review;
+import es.codeurjc.yourHOmeTEL.model.Room;
 import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
@@ -32,6 +33,9 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class HotelController {
+
+	@Autowired
+	UserRepository userRepository;
 
 	@Autowired
 	HotelRepository hotelRepository;
@@ -101,5 +105,45 @@ public class HotelController {
 
 		//PENDIENTE deberíamos obtener los datos de las reseñas para mostrar aquí
 		return "hotelReview";
+	}
+
+
+	@GetMapping("/addHotel")
+	public String addHotel(Model model,  HttpServletRequest request) {
+		Optional <UserE> user = userRepository.findByNick(request.getUserPrincipal().getName());
+		if (user.isPresent()){
+			model.addAttribute("name", user.get().getName());
+			return "addHotel";
+		}
+		else
+			return "redirect:/login";
+ 
+	}
+
+	@PostMapping("/addHotel")
+	public String addHotelPost(HttpServletRequest request, Hotel newHotel, Integer room1, Integer cost1, Integer room2, Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4) {
+		//Falta añadir lo de las fotos
+		UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+
+		newHotel.setManager(user);
+		newHotel.setRooms(new ArrayList<>());
+		newHotel.setReservation(new ArrayList<>());
+		newHotel.setReviews(new ArrayList<>());
+		newHotel.setNumRooms(room1 + room2 + room3 + room4);
+
+		for(int i = 0; i < room1; i++){
+			newHotel.getRooms().add(new Room(1, cost1, new ArrayList<>(), newHotel));
+		}
+		for(int i = 0; i < room2; i++){
+			newHotel.getRooms().add(new Room(2, cost2, new ArrayList<>(), newHotel));
+		}
+		for(int i = 0; i < room3; i++){
+			newHotel.getRooms().add(new Room(3, cost3, new ArrayList<>(), newHotel));
+		}
+		for(int i = 0; i < room4; i++){
+			newHotel.getRooms().add(new Room(4, cost4, new ArrayList<>(), newHotel));
+		}
+		hotelRepository.save(newHotel);
+		return "redirect:/viewhotelsmanager";
 	}
 }
