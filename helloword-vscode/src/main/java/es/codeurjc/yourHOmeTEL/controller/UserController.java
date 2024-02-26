@@ -30,6 +30,8 @@ import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.UserService;
 import jakarta.persistence.ManyToOne;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -154,14 +156,53 @@ public class UserController{
 
 	}
 	
-	@GetMapping("/editprofile")
-	public String editprofile(Model model,  HttpServletRequest request) {
-		String nick = request.getUserPrincipal().getName();
-		UserE foundUser = userRepository.findByNick(nick).orElseThrow(); //need to transform the throw into 404 error. Page 25 database
+	@GetMapping("/editprofile/{id}")
+	public String editProfile(Model model, @PathVariable Long id ) {
+		
+		UserE foundUser = userRepository.findById(id).orElseThrow(); //need to transform the throw into 404 error. Page 25 database
 		model.addAttribute("user", foundUser);
 		return "editprofile";
 
 	}
+
+	
+	@PostMapping("/editprofile/{id}")
+	public String editProfile(Model model, @PathVariable Long id,		
+	@RequestParam String nick,
+	@RequestParam	String name,
+	@RequestParam	String lastname,
+	@RequestParam	String location,
+	@RequestParam	String org,
+	@RequestParam	String language,
+	@RequestParam	String phone,
+	@RequestParam	String mail) {
+		//TODO: process POST request
+		
+		UserE foundUser = userRepository.findById(id).orElseThrow();
+		
+
+		foundUser.setNick(nick);
+		foundUser.setName(name);
+		foundUser.setLocation(location);
+		foundUser.setOrganizacion(org);
+		foundUser.setLanguage(language);
+		foundUser.setPhone(phone);
+		foundUser.setEmail(mail);
+
+		userRepository.save(foundUser);
+		
+		model.addAttribute("user", foundUser);
+
+		return "redirect:/profile" ;
+
+		//no se cambia el nick por el tema de la seguridad 
+
+		
+	}
+	
+
+
+
 	
 	@GetMapping("/profile")
 	public String profile(Model model,  HttpServletRequest request) {

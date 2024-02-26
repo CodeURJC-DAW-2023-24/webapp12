@@ -43,17 +43,18 @@
                         <div class="card mb-4">
                             <div class="card-header">Account Details</div>
                             <div class="card-body">
-                                <form method='post' action="replaceprofile">
+
+                                <form method='post' action="{{user.id}}">
                                     <!-- Form Group (username)-->
                                     <div class="mb-3">
-                                        <label class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
+                                        <label class="small mb-1" for="inputUsername">Nick</label>
                                         <input class="form-control" id="inputUsername" type="text" name ="nick" placeholder="Enter your nick" value={{user.nick}}>
                                     </div>
                                     <!-- Form Row-->
                                     <div class="row gx-3 mb-3">
                                         <!-- Form Group (first name)-->
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="inputFirstName">First name</label>
+                                            <label class="small mb-1" for="inputFirstName">Name</label>
                                             <input class="form-control" id="inputFirstName" type="text" name = "name" placeholder="Enter your first name" value={{user.name}}>
                                         </div>
                                         <!-- Form Group (last name)-->

@@ -56,7 +56,7 @@ public class SecurityConfiguration {
                 
                 //User pages
                 .requestMatchers("/profile").hasAnyRole("USER")
-                .requestMatchers("/editprofile").hasAnyRole("USER")
+                .requestMatchers("/editprofile/**").hasAnyRole("USER")
                 .requestMatchers("/hotelinformation/**").hasAnyRole("USER")
 
                 //Client pages

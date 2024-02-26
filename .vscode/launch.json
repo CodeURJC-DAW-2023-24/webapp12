@@ -2,6 +2,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "HellowordVscodeApplication",
+      "request": "launch",
+      "mainClass": "es.codeurjc.yourHOmeTEL.HellowordVscodeApplication",
+      "projectName": "yourHOmeTEL"
+    },
+    {
+      "type": "java",
       "name": "Spring Boot-HellowordVscodeApplication<helloword-vscode>",
       "request": "launch",
       "cwd": "${workspaceFolder}",
