@@ -25,6 +25,7 @@ import es.codeurjc.yourHOmeTEL.model.Hotel;
 import es.codeurjc.yourHOmeTEL.model.Reservation;
 import es.codeurjc.yourHOmeTEL.model.Review;
 import es.codeurjc.yourHOmeTEL.model.UserE;
+import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.UserService;
 import jakarta.persistence.ManyToOne;
@@ -42,12 +43,23 @@ public class UserController{
 	private UserRepository userRepository;
 
 	@Autowired
+	private HotelRepository hotelRepository;
+
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 
 	@GetMapping("/index")
 	public String index(Model model,  HttpServletRequest request) {
+		List <Hotel> hotels= new ArrayList<>();
+		for (Long i = 1L; i<=1L; i++){	
+			Hotel hotel = hotelRepository.findById(i).orElseThrow();
+			hotels.add(hotel);
+		}
+		model.addAttribute("hotels", hotels);
 
+		
+		
 		return "index";
 
 	}
