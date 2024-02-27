@@ -25,7 +25,9 @@ public class Reservation {
     private Long id;
 
 
-    private LocalDate date;
+    private LocalDate checkIn;
+
+    private LocalDate checkOut;
 
     private int numPeople;
 
@@ -46,8 +48,9 @@ public class Reservation {
         
     }
     
-    public Reservation(LocalDate date, int numPeople, Hotel hotel, Room room, UserE user) {
-        this.date = date;
+    public Reservation(LocalDate checkIn, LocalDate checkOut, int numPeople, Hotel hotel, Room room, UserE user) {
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
         this.numPeople = numPeople;
         this.hotel = hotel;
         this.room = room;
@@ -63,17 +66,6 @@ public class Reservation {
     public void setIdReservation(Long id) {
         this.id = id;
     }
-
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
 
     public int getNumPeople() {
         return numPeople;
@@ -114,6 +106,22 @@ public class Reservation {
         this.user = user;
     }
 
+    public LocalDate getCheckIn() {
+        return checkIn;
+    }
 
+
+    public void setCheckIn(LocalDate checkIn) {
+        this.checkIn = checkIn;
+    }
+
+    public LocalDate getCheckOut() {
+        return checkOut;
+    }
+
+
+    public void setCheckOut(LocalDate checkOut) {
+        this.checkOut = checkOut;
+    }
 
 }

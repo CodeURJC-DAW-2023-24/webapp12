@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.UserService;
+import es.codeurjc.yourHOmeTEL.service.ReservationService;
 import jakarta.persistence.ManyToOne;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,6 +51,9 @@ public class UserController{
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private ReservationService reservationService;
 	
 
 	@GetMapping("/index")
@@ -74,12 +79,17 @@ public class UserController{
 	}
 
 	
-	@GetMapping("/resevations")
-	public String reservations(Model model,  HttpServletRequest request) {
-
-		return "reservations";
-
+	@PostMapping("/addReservation/{id}")
+	public String addReservation(@PathVariable Long id, HttpServletRequest request, String checkIn, String checkOut, Integer numPeople) {
+		//Hay que mirar como hacer lo de las rooms
+		UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		Hotel hotel = hotelRepository.findById(id).orElseThrow();
+		LocalDate checkInDate = reservationService.toLocalDate(checkIn);
+		LocalDate checkOutDate = reservationService.toLocalDate(checkOut);
+		Reservation newRe = new Reservation(checkInDate,checkOutDate, numPeople, hotel, hotel.getRooms().getFirst(), user);
+		return "redirect:/clientreservations";
 	}
+	
 	
 	
 	@GetMapping("/clientreservation")

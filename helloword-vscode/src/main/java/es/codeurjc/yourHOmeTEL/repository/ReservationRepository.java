@@ -12,6 +12,5 @@ import es.codeurjc.yourHOmeTEL.model.Reservation;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     List<Reservation> findByUser_Name(String name);
-    List<Reservation> findByDate(Date date);
     List<Reservation> findByHotel_Name(String name);
 }

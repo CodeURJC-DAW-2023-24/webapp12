@@ -37,19 +37,19 @@
         </div>
       </div>
     </div>
-
     <section class="ftco-section">
       <section class="ftco-booking ftco-section ftco-no-pt ftco-no-pb">
         <div class="container">
           <div class="row no-gutters">
             <div class="col-lg-12">
-              <form action="#" class="booking-form aside-stretch">
+              {{#isClient}}
+              <form method="post" action="/addReservation/{{hotel.id}}" class="form booking-form aside-stretch">
                 <div class="row">
                   <div class="col-md d-flex py-md-4">
                     <div class="form-group align-self-stretch d-flex align-items-end">
                       <div class="wrap align-self-stretch py-3 px-4">
                         <label for="#">Check-in Date</label>
-                        <input type="text" class="form-control checkin_date" placeholder="Check-in date">
+                        <input type="text" class="form-control checkin_date" placeholder="Check-in date" name="checkIn">
                       </div>
                     </div>
                   </div>
@@ -57,7 +57,7 @@
                     <div class="form-group align-self-stretch d-flex align-items-end">
                       <div class="wrap align-self-stretch py-3 px-4">
                         <label for="#">Check-out Date</label>
-                        <input type="text" class="form-control checkout_date" placeholder="Check-out date">
+                        <input type="text" class="form-control checkout_date" placeholder="Check-out date" name="checkOut">
                       </div>
                     </div>
                   </div>
@@ -68,32 +68,29 @@
                         <div class="form-field">
                           <div class="select-wrap">
                             <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                            <select name="" id="" class="form-control">
-                              <option value="">1 Adult</option>
-                              <option value="">2 Adult</option>
-                              <option value="">3 Adult</option>
-                              <option value="">4 Adult</option>
-                              <option value="">5 Adult</option>
-                              <option value="">6 Adult</option>
+                            <select name="numPeople" class="form-control">
+                              <option value=1>1 Adult</option>
+                              <option value=2>2 Adult</option>
+                              <option value=3>3 Adult</option>
+                              <option value=4>4 Adult</option>
                             </select>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  {{#isClient}}
                   <div class="col-md d-flex">
                     <div class="form-group d-flex align-self-stretch">
                         <div class="btn-group align-top">
-                          <button class="btn btn-primary py-5 py-md-3 px-4 align-self-stretch d-block" type="button" data-toggle="modal" data-target="#hotel-info-modal">Book this room</button>
+                          <button class="btn btn-primary py-5 py-md-3 px-4 align-self-stretch d-block" type="submit">Book this room</button>
                           <input type="hidden" name="_csrf" value="{{token}}"/>
                         </div>
                       </a>
                     </div>
                   </div>
-                  {{/isClient}}
                 </div>
               </form>
+              {{/isClient}}
             </div>
           </div>
         </div>
