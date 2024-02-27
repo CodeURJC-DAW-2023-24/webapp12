@@ -31,6 +31,11 @@ public class Hotel {
 
     private int numRooms;
 
+    private float rating;
+    //añadir rating y cambiar la base de datos
+
+
+
     private Blob imageHotel;
 
 
@@ -60,12 +65,13 @@ public class Hotel {
         this.description = description;
     } 
     
-    public Hotel(String name, String description, String location, int numRooms, Blob imageHotel,
+    public Hotel(String name, String description, String location, int numRooms,float rating, Blob imageHotel,
             UserE manager, List<Room> rooms, List<Reservation> reservation, List<Review> reviews) {
         this.name = name;
         this.description = description;
         this.location = location;
         this.numRooms = numRooms;
+        this.rating = rating;
         this.imageHotel = imageHotel;
         this.manager = manager;
         this.rooms = rooms;
@@ -162,6 +168,16 @@ public class Hotel {
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
+
+
+    public float getrating() {
+        return rating;
+    }
+
+    public void setrating(float rating) {
+        rating = rating;
+    }
+
 
     //PENDIENTE añadir métodos sobre las reseñas, como la media de reseñas, y ordenarlas
 

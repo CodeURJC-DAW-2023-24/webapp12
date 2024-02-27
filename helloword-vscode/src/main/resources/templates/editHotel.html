@@ -71,22 +71,22 @@
                       </ul>
                       <div class="tab-content pt-3">
                         <div class="tab-pane active">
-                          <form class="form" novalidate="">
+                          <form method = "post" action="{{hotel.id}}"></form>
                             <div class="row">
                               <div class="col">
                                 <div class="row">
                                   <div class="col">
                                     <div class="form-group">
                                       <label>Hotel name</label>
-                                      <input class="form-control" type="text" name="name" placeholder="Current hotel name"
-                                        value="Current hotel name">
+                                      <input class="form-control" type="text" name="name" placeholder="type your hotel name"
+                                        value={{hotel.name}}>
                                     </div>
                                   </div>
                                   <div class="col">
                                     <div class="form-group">
                                       <label>Number of rooms</label>
-                                      <input class="form-control" type="text" name="username"
-                                        placeholder="Current number of rooms" value="Current number of rooms">
+                                      <input class="form-control" type="text" name="NumRooms"
+                                        placeholder="Current number of rooms" value={{hotel.NumRooms}}>
                                     </div>
                                   </div>
                                 </div>
@@ -94,7 +94,7 @@
                                   <div class="col">
                                     <div class="form-group">
                                       <label>Location</label>
-                                      <input class="form-control" type="text" name="location" placeholder="Current location">
+                                      <input class="form-control" type="text" name="location" placeholder="Current location"  value={{hotel.location}}>
                                     </div>
                                   </div>
                                 </div>
@@ -102,7 +102,7 @@
                                   <div class="col mb-3">
                                     <div class="form-group">
                                       <label>Hotel description</label>
-                                      <textarea class="form-control" rows="5" name="description"placeholder="Current description"></textarea>
+                                      <textarea class="form-control" rows="5" name="description"placeholder="Current description"  value={{hotel.description}}></textarea>
                                     </div>
                                   </div>
                                 </div>

@@ -40,11 +40,36 @@ public class HotelController {
 	@Autowired
 	HotelRepository hotelRepository;
     
-    @GetMapping("/edithotel")
-	public String edithotel(Model model,  HttpServletRequest request) {
+	@GetMapping("/edithotel/{id}")
+	public String edithotel(Model model, @PathVariable Long id ) {
+		
+		UserE hotel = userRepository.findById(id).orElseThrow(); 
+		model.addAttribute("hotel", hotel);
+		return "editHotel";
 
-		return "edithotel";
+	}
 
+	@PostMapping("/edithotel/{id}")
+	public String edithotel(Model model, @PathVariable Long id,
+
+	@RequestParam	String name,
+	@RequestParam	int numRooms,
+	@RequestParam	String location,
+	@RequestParam	String description){
+
+		Hotel hotel = hotelRepository.findById(id).orElseThrow();
+
+		hotel.setName(name);
+		hotel.setNumRooms(numRooms);
+		hotel.setLocation(location);
+		hotel.setDescription(description);
+
+		hotelRepository.save(hotel);
+
+		model.addAttribute("hotel", hotel);
+
+		return "redirect:/viewHotelsManager";
+	
 	}
 
     
