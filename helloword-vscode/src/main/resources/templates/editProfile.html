@@ -1,8 +1,8 @@
 {{>header}}
 
     <!-- Custom styles sidebar-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Custom fonts-->
     <link
@@ -10,7 +10,7 @@
         rel="stylesheet">
 
     <!-- Custom styles-->
-    <link rel="stylesheet" href="css/managerStyles.css">
+    <link rel="stylesheet" href="/css/managerStyles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.2.96/css/materialdesignicons.min.css" integrity="sha512-LX0YV/MWBEn2dwXCYgQHrpa9HJkwB+S+bnBpifSOTO1No27TqNMKYoAn6ff2FBh03THAzAiiCwQ+aPX+/Qt/Ow==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css'>
     <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js'></script>
@@ -46,10 +46,6 @@
 
                                 <form method='post' action="{{user.id}}">
                                     <!-- Form Group (username)-->
-                                    <div class="mb-3">
-                                        <label class="small mb-1" for="inputUsername">Nick</label>
-                                        <input class="form-control" id="inputUsername" type="text" name ="nick" placeholder="Enter your nick" value={{user.nick}}>
-                                    </div>
                                     <!-- Form Row-->
                                     <div class="row gx-3 mb-3">
                                         <!-- Form Group (first name)-->

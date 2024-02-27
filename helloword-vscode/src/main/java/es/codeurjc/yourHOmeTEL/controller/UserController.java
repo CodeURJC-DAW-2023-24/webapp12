@@ -168,7 +168,7 @@ public class UserController{
 	
 	@PostMapping("/editprofile/{id}")
 	public String editProfile(Model model, @PathVariable Long id,		
-	@RequestParam String nick,
+	
 	@RequestParam	String name,
 	@RequestParam	String lastname,
 	@RequestParam	String location,
@@ -181,7 +181,7 @@ public class UserController{
 		UserE foundUser = userRepository.findById(id).orElseThrow();
 		
 
-		foundUser.setNick(nick);
+		
 		foundUser.setName(name);
 		foundUser.setLocation(location);
 		foundUser.setOrganizacion(org);
@@ -205,10 +205,13 @@ public class UserController{
 
 	
 	@GetMapping("/profile")
-	public String profile(Model model,  HttpServletRequest request) {
-		String nick = request.getUserPrincipal().getName();
-		UserE foundUser =  userRepository.findByNick(nick).orElseThrow(); //need to transform the throw into 404 error. Page 25 database
-		model.addAttribute("user", foundUser);
+	public String profile(Model model,HttpServletRequest request) {
+		
+
+		String usernick = request.getUserPrincipal().getName();
+		UserE currentUser =  userRepository.findByNick(usernick).orElseThrow();
+		model.addAttribute("user", currentUser);
+
 		return "profile";
 
 }
