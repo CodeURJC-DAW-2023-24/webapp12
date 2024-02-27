@@ -66,7 +66,6 @@ public class SecurityConfiguration {
                 //Manager pages
                 .requestMatchers("/edithotel/**").hasAnyRole("MANAGER")
                 .requestMatchers("/viewhotelsmanager").hasAnyRole("MANAGER")
-                .requestMatchers("/deleteHotel/**").hasAnyRole("MANAGER")
                 .requestMatchers("/clientlist").hasAnyRole("MANAGER")
                 .requestMatchers("/chartsmanager").hasAnyRole("MANAGER")
                 .requestMatchers("/addHotel").hasAnyRole("MANAGER")
