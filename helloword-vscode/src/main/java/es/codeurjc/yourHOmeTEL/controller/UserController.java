@@ -97,6 +97,16 @@ public class UserController{
 
 	}
 
+	@GetMapping("/testChart")
+	public String testChart(Model model) {
+
+		List<Integer> info = new ArrayList<>();
+		model.addAttribute("info", info);
+		
+		return "testChart";
+
+	}
+
 	@GetMapping("/chartsmanager")
 	public String chartsmanager(Model model,  HttpServletRequest request) {
 
