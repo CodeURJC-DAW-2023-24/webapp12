@@ -110,12 +110,12 @@ public class Hotel {
     }
 
 
-    public int getNumRooms() {
+    public int getnumRooms() {
         return numRooms;
     }
 
 
-    public void setNumRooms(int numRooms) {
+    public void setnumRooms(int numRooms) {
         this.numRooms = numRooms;
     }
 

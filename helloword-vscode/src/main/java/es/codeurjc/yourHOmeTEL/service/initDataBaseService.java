@@ -88,16 +88,23 @@ public class initDataBaseService{
         //init hoteles
         Hotel hotel1 = new Hotel("Hotel1", "hotel de plata", "loc1", 2,0F, null, manager, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
+        Hotel hotel2 = new Hotel("Hotel2", "hotel ", "loc2",0,0F, null, manager, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        
         hotelRepository.save(hotel1); 
+        hotelRepository.save(hotel2); 
 
         //add hotel to manager
         manager.getHotels().add(hotel1);
+        manager.getHotels().add(hotel2);
 
         userRepository.save(manager);
+        
 
         //add hotel to rooms
         room1.setHotel(hotel1);
-        room1.setHotel(hotel1);
+        room1.setHotel(hotel1);//mirar el tema de las habitaciones del hotel ya que se supone que el hotel no tiene habitaciones
+        
+
 
         roomRepository.save(room1);
         roomRepository.save(room2);
