@@ -66,10 +66,8 @@ public class initDataBaseService{
         //init users
         UserE client =new UserE("Jack1", "Wells1", "Bio", "loc", "lan", "phone",
         "mail", "org", null, "user", passwordEncoder.encode("pass"), rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());            
-        
         UserE manager = new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
         "mail", "org", null, "manager",  passwordEncoder.encode("manager"), rolesManager, new ArrayList<>(), new ArrayList<>(),  new ArrayList<>());     
-
         UserE admin = new UserE("Jack3", "Wells3", "Bio", "loc", "lan", "phone",
         "mail", "org", null, "admin",  passwordEncoder.encode("admin"), rolesAdmin, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()); 
         
@@ -80,15 +78,18 @@ public class initDataBaseService{
         //init rooms
         Room room1 = new Room(2, 200F, new ArrayList<>(), null);
         Room room2 = new Room(2, 200F, new ArrayList<>(), null);
+        Room room3 = new Room(2, 200F, new ArrayList<>(), null);
+        Room room4 = new Room(2, 200F, new ArrayList<>(), null);
 
         roomRepository.save(room1);
         roomRepository.save(room2);
+        roomRepository.save(room3);
+        roomRepository.save(room4);
 
 
         //init hoteles
-        Hotel hotel1 = new Hotel("Hotel1", "hotel de plata", "loc1", 2,0F, null, manager, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-
-        Hotel hotel2 = new Hotel("Hotel2", "hotel ", "loc2",0,0F, null, manager, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        Hotel hotel1 = new Hotel("Hotel1", "hotel de plata", "loc1",0F, null, manager, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        Hotel hotel2 = new Hotel("Hotel2", "hotel ", "loc2",0F, null, manager, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         
         hotelRepository.save(hotel1); 
         hotelRepository.save(hotel2); 
@@ -99,12 +100,17 @@ public class initDataBaseService{
 
         userRepository.save(manager);
         
+        //add rooms to hotel
+        hotel1.getRooms().add(room1);
+        hotel1.getRooms().add(room2);
+        hotel2.getRooms().add(room3);
+        hotel2.getRooms().add(room4);
 
         //add hotel to rooms
         room1.setHotel(hotel1);
-        room1.setHotel(hotel1);//mirar el tema de las habitaciones del hotel ya que se supone que el hotel no tiene habitaciones
-        
-
+        room2.setHotel(hotel1);
+        room3.setHotel(hotel2);
+        room4.setHotel(hotel2);
 
         roomRepository.save(room1);
         roomRepository.save(room2);
@@ -143,7 +149,6 @@ public class initDataBaseService{
         client.getReservation().add(reservation1);
 
         userRepository.save(client);
-
     }
 }
 
