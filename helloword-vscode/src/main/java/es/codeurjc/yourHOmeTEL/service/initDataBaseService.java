@@ -86,9 +86,9 @@ public class initDataBaseService{
 
 
         //init hoteles
-        Hotel hotel1 = new Hotel("Hotel1", "hotel de plata", "loc1", 2,0F, null, manager, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        Hotel hotel1 = new Hotel("Hotel1", "hotel de plata", "loc1",0F, null, manager, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
-        Hotel hotel2 = new Hotel("Hotel2", "hotel ", "loc2",0,0F, null, manager, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        Hotel hotel2 = new Hotel("Hotel2", "hotel ", "loc2",0F, null, manager, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         
         hotelRepository.save(hotel1); 
         hotelRepository.save(hotel2); 
