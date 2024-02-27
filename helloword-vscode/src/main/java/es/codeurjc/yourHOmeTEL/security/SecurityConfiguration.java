@@ -69,6 +69,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/clientlist").hasAnyRole("MANAGER")
                 .requestMatchers("/chartsmanager").hasAnyRole("MANAGER")
                 .requestMatchers("/addHotel").hasAnyRole("MANAGER")
+                .requestMatchers("/testChart/**").hasAnyRole("MANAGER")
 
                 //Admin pages
                 .requestMatchers("/managerlist").hasAnyRole("ADMIN")
