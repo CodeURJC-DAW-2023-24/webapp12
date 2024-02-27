@@ -190,7 +190,8 @@ public class UserController{
 	@RequestParam	String org,
 	@RequestParam	String language,
 	@RequestParam	String phone,
-	@RequestParam	String mail) {
+	@RequestParam	String mail,
+	@RequestParam	String bio) {
 		//TODO: process POST request
 		
 		UserE foundUser = userRepository.findById(id).orElseThrow();
@@ -203,6 +204,7 @@ public class UserController{
 		foundUser.setLanguage(language);
 		foundUser.setPhone(phone);
 		foundUser.setEmail(mail);
+		foundUser.setBio(bio);
 
 		userRepository.save(foundUser);
 		
