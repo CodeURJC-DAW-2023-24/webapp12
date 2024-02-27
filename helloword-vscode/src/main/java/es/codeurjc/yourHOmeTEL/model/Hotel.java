@@ -29,6 +29,8 @@ public class Hotel {
 
     private String location;
 
+    private int numRooms;
+
     private float rating;
     //añadir rating y cambiar la base de datos
 
@@ -63,11 +65,12 @@ public class Hotel {
         this.description = description;
     } 
     
-    public Hotel(String name, String description, String location,float rating, Blob imageHotel,
+    public Hotel(String name, String description, String location, int numRooms,float rating, Blob imageHotel,
             UserE manager, List<Room> rooms, List<Reservation> reservation, List<Review> reviews) {
         this.name = name;
         this.description = description;
         this.location = location;
+        this.numRooms = numRooms;
         this.rating = rating;
         this.imageHotel = imageHotel;
         this.manager = manager;
@@ -108,8 +111,14 @@ public class Hotel {
 
 
     public int getnumRooms() {
-        return this.rooms.size();
+        return numRooms;
     }
+
+
+    public void setnumRooms(int numRooms) {
+        this.numRooms = numRooms;
+    }
+
 
     public Blob getImageHotel() {
         return imageHotel;
