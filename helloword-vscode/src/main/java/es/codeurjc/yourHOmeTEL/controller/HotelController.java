@@ -72,6 +72,19 @@ public class HotelController {
 	
 	}
 
+	@GetMapping("/deleteHotel/{id}")
+	public String deleteHotel(Model model, @PathVariable Long id) {
+
+		Optional <Hotel> hotel = hotelRepository.findById(id); 
+		if (hotel.isPresent()) {
+			hotelRepository.deleteById(id);
+		}
+
+		return "redirect:/viewhotelsmanager";
+	}
+
+
+
     
     @GetMapping("/hotelinformation/{id}")
 	public String hotelinformation(Model model,  HttpServletRequest request, @PathVariable Long id) {
