@@ -107,7 +107,7 @@ public class UserController{
 		UserE currentManager =  userRepository.findByNick(managernick).orElseThrow();
 
 		model.addAttribute("hotels", currentManager.getHotels());
-
+		
 		return "viewhotelsmanager";
 
 	}
