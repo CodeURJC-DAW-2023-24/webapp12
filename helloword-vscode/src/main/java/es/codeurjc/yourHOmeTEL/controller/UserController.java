@@ -91,7 +91,12 @@ public class UserController{
 
 	//MANAGER CONTROLLERS
 	@GetMapping("/viewhotelsmanager")
-	public String viewhotelsmanager(Model model,  HttpServletRequest request) {
+	public String viewhotelsmanager(Model model,HttpServletRequest request) {
+
+		String managernick = request.getUserPrincipal().getName();
+		UserE currentManager =  userRepository.findByNick(managernick).orElseThrow();
+
+		model.addAttribute("hotels", currentManager.getHotels());
 
 		return "viewhotelsmanager";
 

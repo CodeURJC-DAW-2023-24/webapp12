@@ -43,7 +43,7 @@ public class HotelController {
 	@GetMapping("/edithotel/{id}")
 	public String edithotel(Model model, @PathVariable Long id ) {
 		
-		UserE hotel = userRepository.findById(id).orElseThrow(); 
+		Hotel hotel = hotelRepository.findById(id).orElseThrow(); 
 		model.addAttribute("hotel", hotel);
 		return "editHotel";
 
@@ -60,7 +60,7 @@ public class HotelController {
 		Hotel hotel = hotelRepository.findById(id).orElseThrow();
 
 		hotel.setName(name);
-		hotel.setNumRooms(numRooms);
+		hotel.setnumRooms(numRooms);
 		hotel.setLocation(location);
 		hotel.setDescription(description);
 
@@ -68,7 +68,7 @@ public class HotelController {
 
 		model.addAttribute("hotel", hotel);
 
-		return "redirect:/viewHotelsManager";
+		return "redirect:/viewhotelsmanager";
 	
 	}
 
@@ -154,7 +154,7 @@ public class HotelController {
 		newHotel.setRooms(new ArrayList<>());
 		newHotel.setReservation(new ArrayList<>());
 		newHotel.setReviews(new ArrayList<>());
-		newHotel.setNumRooms(room1 + room2 + room3 + room4);
+		newHotel.setnumRooms(room1 + room2 + room3 + room4);
 
 		for(int i = 0; i < room1; i++){
 			newHotel.getRooms().add(new Room(1, cost1, new ArrayList<>(), newHotel));
