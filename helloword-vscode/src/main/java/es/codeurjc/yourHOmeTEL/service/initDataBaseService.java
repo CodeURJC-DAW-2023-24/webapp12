@@ -131,7 +131,7 @@ public class initDataBaseService{
         userRepository.save(client);
 
         //init reservation
-        Reservation reservation1 = new Reservation(null, 2, hotel1, room1, client);
+        Reservation reservation1 = new Reservation(null, null, 2, hotel1, room1, client);
 
         reservationRepository.save(reservation1);
 

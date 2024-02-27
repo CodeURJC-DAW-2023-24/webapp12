@@ -53,15 +53,17 @@ public class SecurityConfiguration {
                 .requestMatchers("/nickTaken").permitAll()
                 .requestMatchers("/error").permitAll()
                 .requestMatchers("/hotelreview").permitAll()
+                .requestMatchers("/hotelinformation/**").permitAll()
                 
                 //User pages
                 .requestMatchers("/profile/**").hasAnyRole("USER")
                 .requestMatchers("/editprofile/**").hasAnyRole("USER")
-                .requestMatchers("/hotelinformation/**").hasAnyRole("USER")
+                
 
                 //Client pages
                 .requestMatchers("/clientreservation").hasAnyRole("CLIENT")
                 .requestMatchers("/hotelreview").hasAnyRole("CLIENT")
+                .requestMatchers("/addReservation/**").hasAnyRole("CLIENT")
 
                 //Manager pages
                 .requestMatchers("/edithotel/**").hasAnyRole("MANAGER")
