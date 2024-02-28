@@ -2,6 +2,7 @@ package es.codeurjc.yourHOmeTEL.service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,12 +126,21 @@ public class initDataBaseService{
         userRepository.save(client);
 
         //init reservation
-        Reservation reservation1 = new Reservation(null, null, 2, hotel1, room1, client);
+        //date creation
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minus(Period.ofDays(1));
+        LocalDate tomorrow = today.plus(Period.ofDays(1));
+        LocalDate dayAfterTomorrow = today.plus(Period.ofDays(2));
+
+        Reservation reservation1 = new Reservation(today, tomorrow, 2, hotel1, room1, client);
+        Reservation reservation2 = new Reservation(tomorrow, dayAfterTomorrow, 2, hotel1, room1, client);
 
         reservationRepository.save(reservation1);
+        reservationRepository.save(reservation2);
 
         //add reservation to hotel
-        hotel1.getReservation().add(reservation1);
+        hotel1.getReservations().add(reservation1);
+        hotel1.getReservations().add(reservation2);
 
         hotelRepository.save(hotel1);
 
