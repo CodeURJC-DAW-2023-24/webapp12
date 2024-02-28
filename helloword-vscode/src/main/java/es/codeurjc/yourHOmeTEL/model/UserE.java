@@ -40,6 +40,8 @@ public class UserE {
 
     private String organizacion;
 
+    private Boolean validado;
+
 
     private List<String> rols;
 
@@ -91,7 +93,7 @@ public class UserE {
     }*/
     
     public UserE( String name, String lastname, String bio, String location, String language, String phone, String email, String organizacion,
-            Blob profileImg,  String nick, String pass,List<String> rols, List<Reservation> reservation, List<Review> reviews,
+            Blob profileImg,  String nick, String pass, Boolean validado,List<String> rols, List<Reservation> reservation, List<Review> reviews,
             List<Hotel> hotels) {
         
         this.name = name;
@@ -106,6 +108,7 @@ public class UserE {
         this.rols = rols;
         this.nick = nick;
         this.pass = pass;
+        this.validado = validado;
         this.reservation = reservation;
         this.reviews = reviews;
         this.hotels = hotels;
@@ -227,6 +230,14 @@ public class UserE {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public Boolean getValidado() {
+        return validado;
+    }
+
+    public void setValidado(Boolean validado) {
+        this.validado = validado;
     }
 
 
