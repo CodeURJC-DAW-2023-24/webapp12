@@ -108,7 +108,7 @@ public class UserController{
 
 	//MANAGER CONTROLLERS
 	@GetMapping("/viewhotelsmanager")
-	public String viewhotelsmanager(Model model,HttpServletRequest request) {
+	public String viewHotelsManager(Model model,HttpServletRequest request) {
 
 		String managernick = request.getUserPrincipal().getName();
 		UserE currentManager =  userRepository.findByNick(managernick).orElseThrow();
@@ -130,7 +130,7 @@ public class UserController{
 	}
 
 	@GetMapping("/chartsmanager")
-	public String chartsmanager(Model model,  HttpServletRequest request) {
+	public String chartsManager(Model model,  HttpServletRequest request) {
 
 		return "chartsmanager";
 
@@ -139,21 +139,27 @@ public class UserController{
 
 	//ADMIN CONTROLLERS
 	@GetMapping("/chartsadmin")
-	public String chartsadmin(Model model,  HttpServletRequest request) {
+	public String chartsAdmin(Model model,  HttpServletRequest request) {
 
 		return "chartsadmin";
 
 	}
 
-	@GetMapping("/hotelvalidation")
-	public String hotelvalidation(Model model,  HttpServletRequest request) {
+	@GetMapping("/managervalidation")
+	public String managerValidation(Model model,  HttpServletRequest request) {
+		List <UserE> unvalidatedManagersList = new ArrayList<>();
+		unvalidatedManagersList = userRepository.findByValidated(false);
 
-		return "hotelvalidation";
+		if (unvalidatedManagersList!=null){
+			model.addAttribute("unvalidatedManagers", unvalidatedManagersList);
+			
+		}			
+		return "managervalidation";
 
 	}
 
 	@GetMapping("/managerlist")
-	public String managerlist(Model model,  HttpServletRequest request) {
+	public String managerList(Model model,  HttpServletRequest request) {
 
 		return "managerlist";
 
@@ -187,7 +193,7 @@ public class UserController{
 		
 		foundUser.setName(name);
 		foundUser.setLocation(location);
-		foundUser.setOrganizacion(org);
+		foundUser.setOrganization(org);
 		foundUser.setLanguage(language);
 		foundUser.setPhone(phone);
 		foundUser.setEmail(mail);

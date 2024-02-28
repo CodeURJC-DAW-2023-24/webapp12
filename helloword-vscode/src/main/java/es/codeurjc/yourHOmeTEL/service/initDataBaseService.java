@@ -29,7 +29,7 @@ import jakarta.annotation.PostConstruct;
 
 
 @Service
-public class initDataBaseService{
+public class InitDataBaseService{
 
     @Autowired
     private UserRepository userRepository;
@@ -67,13 +67,13 @@ public class initDataBaseService{
 
         //init users
         UserE client =new UserE("Jack1", "Wells1", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "user", passwordEncoder.encode("pass"), false, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());            
+        "mail", "org", null, "user", passwordEncoder.encode("pass"), null, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());            
         
         UserE manager = new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
         "mail", "org", null, "manager",  passwordEncoder.encode("manager"), false, rolesManager, new ArrayList<>(), new ArrayList<>(),  new ArrayList<>());     
 
         UserE admin = new UserE("Jack3", "Wells3", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "admin",  passwordEncoder.encode("admin"), false, rolesAdmin, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()); 
+        "mail", "org", null, "admin",  passwordEncoder.encode("admin"), null, rolesAdmin, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()); 
         
         userRepository.save(manager);
         userRepository.save(client);
@@ -111,6 +111,12 @@ public class initDataBaseService{
         roomRepository.save(room1);
         roomRepository.save(room2);
         
+        //date creation
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minus(Period.ofDays(1));
+        LocalDate tomorrow = today.plus(Period.ofDays(1));
+        LocalDate dayAfterTomorrow = today.plus(Period.ofDays(2));
+        
         //init review
         Review review1 = new Review(4, "Hola", null, hotel1, client);
 
@@ -127,11 +133,7 @@ public class initDataBaseService{
         userRepository.save(client);
 
         //init reservation
-        //date creation
-        LocalDate today = LocalDate.now();
-        LocalDate yesterday = today.minus(Period.ofDays(1));
-        LocalDate tomorrow = today.plus(Period.ofDays(1));
-        LocalDate dayAfterTomorrow = today.plus(Period.ofDays(2));
+        
 
         Reservation reservation1 = new Reservation(LocalDate.of(2024, 2, 27), LocalDate.of(2024, 3, 1), 2, hotel1, room1, client);
         Reservation reservation2 = new Reservation(LocalDate.of(2024, 3, 4), LocalDate.of(2024, 3, 6), 2, hotel1, room1, client);

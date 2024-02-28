@@ -15,6 +15,8 @@ public interface UserRepository extends JpaRepository<UserE, Long> {
     Optional <UserE> findByNick(String nick);
     Optional <UserE> findFirstByName(String name);    
     Optional <UserE> findByName(String name);
+    List <UserE> findByValidated(Boolean validated);
+
     List <UserE> findByPhone(String phone);
     List <UserE> findLocationByName(String name);
 

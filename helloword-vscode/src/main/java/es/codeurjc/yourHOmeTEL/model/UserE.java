@@ -38,9 +38,9 @@ public class UserE {
 
     private Blob profileImg;
 
-    private String organizacion;
+    private String organization;
 
-    private Boolean validado;
+    private Boolean validated;
 
 
     private List<String> rols;
@@ -77,7 +77,7 @@ public class UserE {
         this.pass = pass;
     }
 
-    /*public UserE( String name, String lastname, String bio, String location, String language, String phone, String email, String organizacion,
+    /*public UserE( String name, String lastname, String bio, String location, String language, String phone, String email, String organization,
          String nick, String pass, List<String> rols) {
         
         this.name = name;
@@ -87,13 +87,13 @@ public class UserE {
         this.language = language;
         this.phone = phone;
         this.email = email;
-        this.organizacion = organizacion;
+        this.organization = organization;
         this.rols = rols;
         this.nick = nick;
     }*/
     
-    public UserE( String name, String lastname, String bio, String location, String language, String phone, String email, String organizacion,
-            Blob profileImg,  String nick, String pass, Boolean validado,List<String> rols, List<Reservation> reservation, List<Review> reviews,
+    public UserE( String name, String lastname, String bio, String location, String language, String phone, String email, String organization,
+            Blob profileImg,  String nick, String pass, Boolean validated,List<String> rols, List<Reservation> reservation, List<Review> reviews,
             List<Hotel> hotels) {
         
         this.name = name;
@@ -103,12 +103,12 @@ public class UserE {
         this.language = language;
         this.phone = phone;
         this.email = email;
-        this.organizacion = organizacion;
+        this.organization = organization;
         this.profileImg = profileImg;
         this.rols = rols;
         this.nick = nick;
         this.pass = pass;
-        this.validado = validado;
+        this.validated = validated;
         this.reservation = reservation;
         this.reviews = reviews;
         this.hotels = hotels;
@@ -194,13 +194,13 @@ public class UserE {
     }
 
 
-    public String getOrganizacion() {
-        return organizacion;
+    public String getOrganization() {
+        return organization;
     }
 
 
-    public void setOrganizacion(String organizacion) {
-        this.organizacion = organizacion;
+    public void setOrganization(String organization) {
+        this.organization = organization;
     }
     
     public Blob getProfileImg() {
@@ -232,12 +232,12 @@ public class UserE {
         this.pass = pass;
     }
 
-    public Boolean getValidado() {
-        return validado;
+    public Boolean getvalidated() {
+        return validated;
     }
 
-    public void setValidado(Boolean validado) {
-        this.validado = validado;
+    public void setvalidated(Boolean validated) {
+        this.validated = validated;
     }
 
 

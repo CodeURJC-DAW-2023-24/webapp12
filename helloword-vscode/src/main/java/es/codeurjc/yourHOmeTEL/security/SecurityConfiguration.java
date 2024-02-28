@@ -73,11 +73,11 @@ public class SecurityConfiguration {
                 .requestMatchers("/chartsmanager").hasAnyRole("MANAGER")
                 .requestMatchers("/addHotel").hasAnyRole("MANAGER")
                 .requestMatchers("/testChart/**").hasAnyRole("MANAGER")
-
                 //Admin pages
                 .requestMatchers("/managerlist").hasAnyRole("ADMIN")
                 .requestMatchers("/chartsadmin").hasAnyRole("ADMIN")
-                .requestMatchers("/hotelvalidation").hasAnyRole("ADMIN")
+                .requestMatchers("/managervalidation").hasAnyRole("ADMIN")
+                
             )
             .formLogin(formLogin -> formLogin
                 .loginPage("/login")

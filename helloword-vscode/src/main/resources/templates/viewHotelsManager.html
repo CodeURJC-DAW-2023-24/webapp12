@@ -42,7 +42,7 @@
                             <table class="table" style="margin-bottom: 120px;">
                                 <thead class="small text-uppercase bg-body text-muted">
                                     <tr>
-                                        <th>Name</th>
+                                        <th >Name</th>
                                         <th>Location</th>
                                         <th>Rating score</th>
                                         <th class="text-end">Action</th>
@@ -51,15 +51,9 @@
                                 <tbody>
                                     {{#hotels}}
                                     <tr class="align-middle">
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div>
-                                                    <div class="h6 mb-0 lh-1">{{name}}</div>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        <td><span class="d-inline-block align-middle">{{name}}</span></td>
                                         <td> <span class="d-inline-block align-middle">{{location}}</span></td>
-                                        <td><span>{{rating}}</span></td>
+                                        <td><span class="d-inline-block align-middle">{{rating}}</span></td>
                                         <td class="text-end">
                                             <div class="drodown">
                                                 <a data-bs-toggle="dropdown" href="#" class="btn p-1"
@@ -77,8 +71,6 @@
                                         </td>
                                     </tr>
                                     {{/hotels}}
-
-
                                 </tbody>
                             </table>
                         </div>
