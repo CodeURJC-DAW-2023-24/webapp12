@@ -25,6 +25,7 @@ import es.codeurjc.yourHOmeTEL.model.Room;
 import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
+import es.codeurjc.yourHOmeTEL.service.HotelService;
 import es.codeurjc.yourHOmeTEL.service.UserService;
 import jakarta.persistence.ManyToOne;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,6 +37,9 @@ public class HotelController {
 
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	HotelService hotelService;
 
 	@Autowired
 	HotelRepository hotelRepository;
@@ -164,7 +168,7 @@ public class HotelController {
 
 		newHotel.setManager(user);
 		newHotel.setRooms(new ArrayList<>());
-		newHotel.setReservation(new ArrayList<>());
+		newHotel.setReservations(new ArrayList<>());
 		newHotel.setReviews(new ArrayList<>());
 
 		for(int i = 0; i < room1; i++){
@@ -181,5 +185,17 @@ public class HotelController {
 		}
 		hotelRepository.save(newHotel);
 		return "redirect:/viewhotelsmanager";
+	}
+
+	@GetMapping("/clientlist/{id}")
+	public String clientlist(Model model,  HttpServletRequest request, @PathVariable Long id) {
+		Hotel hotel = hotelRepository.findById(id).orElseThrow();
+		List <UserE> validClients = new ArrayList<>();
+		validClients = hotelService.getValidClients(hotel);
+		
+		model.addAttribute("clients", validClients);
+
+		return "clientlist";
+
 	}
 }

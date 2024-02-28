@@ -70,14 +70,6 @@ public class UserController{
 		return "index";
 
 	}
-
-	@GetMapping("/clientlist")
-	public String clientlist(Model model,  HttpServletRequest request) {
-
-		return "clientlist";
-
-	}
-
 	
 	@PostMapping("/addReservation/{id}")
 	public String addReservation(@PathVariable Long id, HttpServletRequest request, String checkIn, String checkOut, Integer numPeople) {
