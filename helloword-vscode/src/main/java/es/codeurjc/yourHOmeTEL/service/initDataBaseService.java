@@ -103,7 +103,7 @@ public class initDataBaseService{
 
         //add hotel to rooms
         room1.setHotel(hotel1);
-        room1.setHotel(hotel1);//mirar el tema de las habitaciones del hotel ya que se supone que el hotel no tiene habitaciones
+        room2.setHotel(hotel1);//mirar el tema de las habitaciones del hotel ya que se supone que el hotel no tiene habitaciones
         
 
 
