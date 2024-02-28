@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.cglib.core.Local;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -103,7 +104,7 @@ public class initDataBaseService{
 
         //add hotel to rooms
         room1.setHotel(hotel1);
-        room1.setHotel(hotel1);//mirar el tema de las habitaciones del hotel ya que se supone que el hotel no tiene habitaciones
+        room2.setHotel(hotel1);//mirar el tema de las habitaciones del hotel ya que se supone que el hotel no tiene habitaciones
         
 
 
@@ -132,8 +133,8 @@ public class initDataBaseService{
         LocalDate tomorrow = today.plus(Period.ofDays(1));
         LocalDate dayAfterTomorrow = today.plus(Period.ofDays(2));
 
-        Reservation reservation1 = new Reservation(today, tomorrow, 2, hotel1, room1, client);
-        Reservation reservation2 = new Reservation(tomorrow, dayAfterTomorrow, 2, hotel1, room1, client);
+        Reservation reservation1 = new Reservation(LocalDate.of(2024, 2, 27), LocalDate.of(2024, 3, 1), 2, hotel1, room1, client);
+        Reservation reservation2 = new Reservation(LocalDate.of(2024, 3, 4), LocalDate.of(2024, 3, 6), 2, hotel1, room1, client);
 
         reservationRepository.save(reservation1);
         reservationRepository.save(reservation2);

@@ -164,7 +164,7 @@ public class HotelController {
 
 		newHotel.setManager(user);
 		newHotel.setRooms(new ArrayList<>());
-		newHotel.setReservation(new ArrayList<>());
+		newHotel.setReservations(new ArrayList<>());
 		newHotel.setReviews(new ArrayList<>());
 
 		for(int i = 0; i < room1; i++){

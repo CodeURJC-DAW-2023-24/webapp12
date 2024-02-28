@@ -25,10 +25,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import es.codeurjc.yourHOmeTEL.model.Hotel;
 import es.codeurjc.yourHOmeTEL.model.Reservation;
 import es.codeurjc.yourHOmeTEL.model.Review;
+import es.codeurjc.yourHOmeTEL.model.Room;
 import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
+import es.codeurjc.yourHOmeTEL.repository.ReservationRepository;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.UserService;
+import es.codeurjc.yourHOmeTEL.service.HotelService;
 import es.codeurjc.yourHOmeTEL.service.ReservationService;
 import jakarta.persistence.ManyToOne;
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,6 +50,9 @@ public class UserController{
 	private UserRepository userRepository;
 
 	@Autowired
+	private HotelService hotelService;
+
+	@Autowired
 	private HotelRepository hotelRepository;
 
 	@Autowired
@@ -54,6 +60,9 @@ public class UserController{
 
 	@Autowired
 	private ReservationService reservationService;
+
+	@Autowired
+	private ReservationRepository reservationRepository;
 	
 
 	@GetMapping("/index")
@@ -80,14 +89,20 @@ public class UserController{
 
 	
 	@PostMapping("/addReservation/{id}")
-	public String addReservation(@PathVariable Long id, HttpServletRequest request, String checkIn, String checkOut, Integer numPeople) {
-		//Hay que mirar como hacer lo de las rooms
-		UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		Hotel hotel = hotelRepository.findById(id).orElseThrow();
+	public String addReservation(Model model, @PathVariable Long id, HttpServletRequest request, String checkIn, String checkOut, Integer numPeople) {
 		LocalDate checkInDate = reservationService.toLocalDate(checkIn);
 		LocalDate checkOutDate = reservationService.toLocalDate(checkOut);
-		Reservation newRe = new Reservation(checkInDate,checkOutDate, numPeople, hotel, hotel.getRooms().getFirst(), user);
-		return "redirect:/clientreservations";
+		Room room = hotelService.checkRooms(id, checkInDate, checkOutDate);
+		if (room != null){
+			UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			Hotel hotel = hotelRepository.findById(id).orElseThrow();
+			Reservation newRe = new Reservation(checkInDate,checkOutDate, numPeople, hotel, room, user);
+			reservationRepository.save(newRe);
+			return "redirect:/clientreservations";
+		}
+		else
+		//Crear una pagina que muestre el error de que no hay habitaciones disponibles en esas fechas.
+			return "redirect:/notRooms";
 	}
 	
 	

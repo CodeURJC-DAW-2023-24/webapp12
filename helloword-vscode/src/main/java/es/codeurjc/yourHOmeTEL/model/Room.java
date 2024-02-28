@@ -4,6 +4,7 @@ package es.codeurjc.yourHOmeTEL.model;
 
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,5 +90,19 @@ public class Room {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
+    }
+
+    public boolean available(LocalDate checkIn, LocalDate checkOut) {
+        Boolean available = true;
+        int i = 0;
+        while(i < this.reservations.size() && available){
+            if (checkIn.isAfter(this.reservations.get(i).getCheckIn()) && checkIn.isBefore(this.reservations.get(i).getCheckOut()))
+                available = false;
+            else if (checkOut.isAfter(this.reservations.get(i).getCheckIn()) && checkOut.isBefore(this.reservations.get(i).getCheckOut()))
+                available = false;
+            else
+                i++;
+        }
+        return available;
     }
 }

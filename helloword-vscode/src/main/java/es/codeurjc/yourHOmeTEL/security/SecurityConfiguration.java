@@ -61,7 +61,7 @@ public class SecurityConfiguration {
                 
 
                 //Client pages
-                .requestMatchers("/clientreservation").hasAnyRole("CLIENT")
+                .requestMatchers("/clientreservation/**").hasAnyRole("CLIENT")
                 .requestMatchers("/hotelreview").hasAnyRole("CLIENT")
                 .requestMatchers("/addReservation/**").hasAnyRole("CLIENT")
 
