@@ -46,7 +46,7 @@ public class Hotel {
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Reservation> reservation;
+    private List<Reservation> reservations;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
@@ -64,7 +64,7 @@ public class Hotel {
     } 
     
     public Hotel(String name, String description, String location, float rating, Blob imageHotel,
-            UserE manager, List<Room> rooms, List<Reservation> reservation, List<Review> reviews) {
+            UserE manager, List<Room> rooms, List<Reservation> reservations, List<Review> reviews) {
         this.name = name;
         this.description = description;
         this.location = location;
@@ -72,7 +72,7 @@ public class Hotel {
         this.imageHotel = imageHotel;
         this.manager = manager;
         this.rooms = rooms;
-        this.reservation = reservation;
+        this.reservations = reservations;
         this.reviews = reviews;
     }
 
@@ -141,13 +141,13 @@ public class Hotel {
     }
 
 
-    public List<Reservation> getReservation() {
-        return reservation;
+    public List<Reservation> getReservations() {
+        return reservations;
     }
 
 
-    public void setReservation(List<Reservation> reservation) {
-        this.reservation = reservation;
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
 
