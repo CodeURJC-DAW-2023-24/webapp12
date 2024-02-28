@@ -79,14 +79,6 @@ public class UserController{
 		return "index";
 
 	}
-
-	@GetMapping("/clientlist")
-	public String clientlist(Model model,  HttpServletRequest request) {
-
-		return "clientlist";
-
-	}
-
 	
 	@PostMapping("/addReservation/{id}")
 	public String addReservation(Model model, @PathVariable Long id, HttpServletRequest request, String checkIn, String checkOut, Integer numPeople) {
@@ -144,7 +136,6 @@ public class UserController{
 
 	}
 
-	
 
 	//ADMIN CONTROLLERS
 	@GetMapping("/chartsadmin")
@@ -168,33 +159,6 @@ public class UserController{
 
 	}
 	
-	@PostMapping("/replaceprofile")
-	public String replaceprofile (Model model,  HttpServletRequest request, @RequestParam  String nick,
-	@RequestParam  String name, @RequestParam  String lastname, @RequestParam  String location, @RequestParam  String org, 
-	@RequestParam  String language, @RequestParam  String phone , @RequestParam  String mail) {
-
-		String usernick = request.getUserPrincipal().getName();
-		UserE currentUser =  userRepository.findByNick(usernick).orElseThrow(); //need to transform the throw into 404 error. Page 25 database
-				
-		if (currentUser!= null){
-			List<Reservation> lReservations = new ArrayList<>();
-        	List<Review> lReviews = new ArrayList<>();
-        	List<Hotel> lHotels = new ArrayList<>();
-			UserE newUser = new UserE(name, lastname, "Bio", location, language, phone,
-        	mail, org, null, nick, passwordEncoder.encode("admin"), currentUser.getRols(), lReservations, lReviews, lHotels);
-
-			newUser.setId(currentUser.getId());
-			userRepository.save(newUser);
-		}
-			return "editprofile";
-			
-			/*return ResponseEntity.ok(foundUser);
-		
-		}else {
-			return ResponseEntity.notFound().build();
-		}*/
-
-	}
 	
 	@GetMapping("/editprofile/{id}")
 	public String editProfile(Model model, @PathVariable Long id ) {
@@ -206,7 +170,7 @@ public class UserController{
 	}
 
 	
-	@PostMapping("/editprofile/{id}")
+	@PostMapping("/editprofile/replace/{id}")
 	public String editProfile(Model model, @PathVariable Long id,		
 	
 	@RequestParam	String name,
@@ -220,8 +184,6 @@ public class UserController{
 		//TODO: process POST request
 		
 		UserE foundUser = userRepository.findById(id).orElseThrow();
-		
-
 		
 		foundUser.setName(name);
 		foundUser.setLocation(location);

@@ -53,7 +53,11 @@ public class UserService implements GeneralService<UserE> {
 
     @Override
     public Boolean exist (Long id){
-        return null;
+        Optional <UserE> user = repository.findById(id);
+        if (user.isPresent())
+            return true;
+        else
+            return false;
     }
 
     public Optional <UserE> findFirstByName(String name) {
