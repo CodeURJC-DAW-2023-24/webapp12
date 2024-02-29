@@ -136,6 +136,18 @@ public class UserController{
 
 	}
 
+	@PostMapping("/application")
+	public String managerApplication(Model model,  HttpServletRequest request) {
+
+		String nick = request.getUserPrincipal().getName();
+		UserE manager = userRepository.findByNick(nick).orElseThrow();
+		manager.setRejected(false);
+		userRepository.save(manager);
+		model.addAttribute("user", manager);
+		return "profile";
+
+	}
+
 
 	//ADMIN CONTROLLERS
 	@GetMapping("/chartsadmin")
@@ -146,17 +158,44 @@ public class UserController{
 	}
 
 	@GetMapping("/managervalidation")
-	public String managerValidation(Model model,  HttpServletRequest request) {
+	public String managerValidation(Model model) {
 		List <UserE> unvalidatedManagersList = new ArrayList<>();
-		unvalidatedManagersList = userRepository.findByValidated(false);
+		unvalidatedManagersList = userRepository.findByValidatedAndRejected(false, false);
 
 		if (unvalidatedManagersList!=null){
-			model.addAttribute("unvalidatedManagers", unvalidatedManagersList);
-			
-		}			
+			model.addAttribute("unvalidatedManagers", unvalidatedManagersList);		
+		}	
+
 		return "managervalidation";
+	}
+
+	@PostMapping("/rejection/{id}")
+	public String rejectManager(Model model, @PathVariable Long id) {
+		UserE manager = userRepository.findById(id).orElseThrow();
+		
+		if (manager!=null){
+			manager.setRejected(true);
+			manager.setvalidated(false);
+			userRepository.save(manager);			
+		}			
+		return "redirect:/managervalidation";
 
 	}
+
+	@PostMapping("/acceptance/{id}")
+	public String acceptManager(Model model,  @PathVariable Long id) {
+		UserE manager = userRepository.findById(id).orElseThrow();
+		
+		if (manager!=null){
+			manager.setRejected(false);
+			manager.setvalidated(true);
+			userRepository.save(manager);			
+		}			
+		return "redirect:/managervalidation";
+
+	}
+
+
 
 	@GetMapping("/managerlist")
 	public String managerList(Model model,  HttpServletRequest request) {

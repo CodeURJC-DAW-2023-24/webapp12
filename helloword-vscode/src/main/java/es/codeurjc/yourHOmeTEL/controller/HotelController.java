@@ -145,6 +145,7 @@ public class HotelController {
 	public String hotelReview(Model model, @PathVariable String hotelName){
 
 		//PENDIENTE deberíamos obtener los datos de las reseñas para mostrar aquí
+		//Mario: por que lo haces con hotel name y no id?
 		return "hotelReview";
 	}
 

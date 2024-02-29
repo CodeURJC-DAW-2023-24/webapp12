@@ -67,13 +67,13 @@ public class InitDataBaseService{
 
         //init users
         UserE client =new UserE("Jack1", "Wells1", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "user", passwordEncoder.encode("pass"), null, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());            
+        "mail", "org", null, "user", passwordEncoder.encode("pass"), null, null, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());            
         
         UserE manager = new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "manager",  passwordEncoder.encode("manager"), false, rolesManager, new ArrayList<>(), new ArrayList<>(),  new ArrayList<>());     
+        "mail", "org", null, "manager",  passwordEncoder.encode("manager"), false, false, rolesManager, new ArrayList<>(), new ArrayList<>(),  new ArrayList<>());     
 
         UserE admin = new UserE("Jack3", "Wells3", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "admin",  passwordEncoder.encode("admin"), null, rolesAdmin, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()); 
+        "mail", "org", null, "admin",  passwordEncoder.encode("admin"), null, null, rolesAdmin, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()); 
         
         userRepository.save(manager);
         userRepository.save(client);

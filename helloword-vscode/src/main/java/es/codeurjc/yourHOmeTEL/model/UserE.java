@@ -42,6 +42,8 @@ public class UserE {
 
     private Boolean validated;
 
+    private Boolean rejected;
+
 
     private List<String> rols;
 
@@ -93,7 +95,7 @@ public class UserE {
     }*/
     
     public UserE( String name, String lastname, String bio, String location, String language, String phone, String email, String organization,
-            Blob profileImg,  String nick, String pass, Boolean validated,List<String> rols, List<Reservation> reservation, List<Review> reviews,
+            Blob profileImg,  String nick, String pass, Boolean validated, Boolean rejected, List<String> rols, List<Reservation> reservation, List<Review> reviews,
             List<Hotel> hotels) {
         
         this.name = name;
@@ -109,6 +111,7 @@ public class UserE {
         this.nick = nick;
         this.pass = pass;
         this.validated = validated;
+        this.rejected= rejected;
         this.reservation = reservation;
         this.reviews = reviews;
         this.hotels = hotels;
@@ -238,6 +241,14 @@ public class UserE {
 
     public void setvalidated(Boolean validated) {
         this.validated = validated;
+    }
+
+    public Boolean getRejected() {
+        return rejected;
+    }
+
+    public void setRejected(Boolean rejected) {
+        this.rejected = rejected;
     }
 
 
