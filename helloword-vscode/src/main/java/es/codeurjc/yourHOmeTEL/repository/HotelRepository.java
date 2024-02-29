@@ -13,4 +13,5 @@ public interface HotelRepository extends JpaRepository<Hotel, Long> {
     List<Hotel> findByName(String name);
     List<Hotel> findByLocation(String location);
     List<Hotel> findTop6ByManager_Validated(Boolean validated);
+    List<Hotel> findTop6ByName(String searchValue);
 }

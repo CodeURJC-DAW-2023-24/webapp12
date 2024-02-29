@@ -10,12 +10,13 @@
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
         <ul class="navbar-nav ml-auto">
+          <!--Search bar-->
           <div class="collapse navbar-collapse" id="ftco-nav">
             <div class="sidebar-box mt-3">
-              <form action="#" class="search-form">
+              <form method="get" action="/indexsearch" class="search-form">
                 <div class="form-group">
-                  <span class="icon ion-ios-search"></span>
-                  <input type="text" class="form-control" placeholder="Search...">
+                  <input type="search" class="form-control" placeholder="Type..." name="searchValue">
+                  <button class="icon ion-ios-search" type="submit">
                   <input type="hidden" name="_csrf" value="{{token}}"/>
                 </div>
               </form>
@@ -60,7 +61,10 @@
                 {{#isClient}}
                 <a href="/hotelinformation/{{id}}" class="btn btn-secondary rounded">Book now</a>
                 {{/isClient}}
-                <a href="/hotelreview" class="btn btn-secondary rounded">Reviews</a>
+                {{^isClient}}
+                <a href="/hotelinformation/{{id}}" class="btn btn-secondary rounded">View information</a>
+                {{/isClient}}
+                <a href="/hotelreview/{{id}}" class="btn btn-secondary rounded">Reviews</a>
               </div>
             </div>
           </div>

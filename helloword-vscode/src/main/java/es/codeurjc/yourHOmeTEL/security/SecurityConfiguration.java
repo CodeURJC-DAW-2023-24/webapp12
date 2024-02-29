@@ -52,8 +52,9 @@ public class SecurityConfiguration {
                 .requestMatchers("/register").permitAll()
                 .requestMatchers("/nickTaken").permitAll()
                 .requestMatchers("/error").permitAll()
-                .requestMatchers("/hotelreview").permitAll()
+                .requestMatchers("/hotelreview/**").permitAll()
                 .requestMatchers("/hotelinformation/**").permitAll()
+                .requestMatchers("indexsearch").permitAll()
                 
                 //User pages
                 .requestMatchers("/profile/**").hasAnyRole("USER")

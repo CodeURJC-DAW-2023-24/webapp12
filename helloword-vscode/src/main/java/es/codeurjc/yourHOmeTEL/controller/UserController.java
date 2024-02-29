@@ -65,6 +65,7 @@ public class UserController{
 	private ReservationRepository reservationRepository;
 	
 
+	//ALL CONTROLLERS
 	@GetMapping("/index")
 	public String index(Model model,  HttpServletRequest request) {
 		List<Hotel> hotels = hotelRepository.findTop6ByManager_Validated(true);
@@ -77,7 +78,16 @@ public class UserController{
 		return "index";
 
 	}
+
+	@GetMapping("/indexsearch")
+	public String indexSearch(Model model,  @RequestParam String searchValue) {
+		List<Hotel> hotels = hotelRepository.findTop6ByName(searchValue);
+		model.addAttribute("hotels", hotels);		
+		return "index";
+
+	}
 	
+	//CLIENT CONTROLLERS
 	@PostMapping("/addReservation/{id}")
 	public String addReservation(Model model, @PathVariable Long id, HttpServletRequest request, String checkIn, String checkOut, Integer numPeople) {
 		LocalDate checkInDate = reservationService.toLocalDate(checkIn);

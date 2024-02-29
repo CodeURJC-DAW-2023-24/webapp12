@@ -11333,12 +11333,14 @@ body.sidebar-toggled footer.sticky-footer {
   border-color: #20c9a6;
 }
 
+
 .text-validated{
   color: #1cc88a;
 }
 
 .content-border{
-  border-style:solid !important;
+  border-style:solid;
   border-color: #000;
   border-radius: 1px;
 }
+
