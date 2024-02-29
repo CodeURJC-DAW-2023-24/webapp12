@@ -21,12 +21,12 @@
               </form>
             </div>
           </div>
-          <li class="nav-item active"><a href="index" class="nav-link">Home</a></li>
+          <li class="nav-item active"><a href="/index" class="nav-link font-size-20">Home</a></li>
           {{^isUser}}
-          <li class="nav-item"><a href="login" class="nav-link">Log In</a></li>
+          <li class="nav-item"><a href="/login" class="nav-link font-size-20">Log In</a></li>
           {{/isUser}}
           {{#isUser}}
-          <li class="nav-item"><a href="profile" class="nav-link">Profile</a></li>
+          <li class="nav-item"><a href="/profile" class="nav-link font-size-15">Profile</a></li>
           {{/isUser}}
 	      </ul>
 	    </div>
@@ -58,9 +58,9 @@
                 <h3 class="heading">{{name}}</h3>
                 <p>{{description}}</p>
                 {{#isClient}}
-                <a href="hotelinformation/{{id}}" class="btn btn-secondary rounded">Book now</a>
+                <a href="/hotelinformation/{{id}}" class="btn btn-secondary rounded">Book now</a>
                 {{/isClient}}
-                <a href="hotelreview" class="btn btn-secondary rounded">Reviews</a>
+                <a href="/hotelreview" class="btn btn-secondary rounded">Reviews</a>
               </div>
             </div>
           </div>

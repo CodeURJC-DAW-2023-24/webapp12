@@ -87,14 +87,13 @@ public class HotelController {
 	}
 
 
-
-    
     @GetMapping("/hotelinformation/{id}")
 	public String hotelinformation(Model model,  HttpServletRequest request, @PathVariable Long id) {
 		Hotel hotel = hotelRepository.findById(id).orElseThrow();
 		model.addAttribute("hotel", hotel);
+		model.addAttribute("numRooms", hotel.getNumRooms());
 
-		return "hotelinformation";
+		return "/hotelinformation";
 
 	}
 

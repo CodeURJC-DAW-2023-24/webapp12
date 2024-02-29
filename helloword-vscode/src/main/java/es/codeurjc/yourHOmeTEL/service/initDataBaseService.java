@@ -69,13 +69,17 @@ public class InitDataBaseService{
         UserE client =new UserE("Jack1", "Wells1", "Bio", "loc", "lan", "phone",
         "mail", "org", null, "user", passwordEncoder.encode("pass"), null, null, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());            
         
-        UserE manager = new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "manager",  passwordEncoder.encode("manager"), false, false, rolesManager, new ArrayList<>(), new ArrayList<>(),  new ArrayList<>());     
+        UserE manager1 = new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
+        "mail", "org", null, "manager",  passwordEncoder.encode("manager"), true, false, rolesManager, new ArrayList<>(), new ArrayList<>(),  new ArrayList<>()); 
+        
+        UserE manager2 = new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
+        "mail", "org", null, "manager",  passwordEncoder.encode("manager"), false, false, rolesManager, new ArrayList<>(), new ArrayList<>(),  new ArrayList<>());         
 
         UserE admin = new UserE("Jack3", "Wells3", "Bio", "loc", "lan", "phone",
         "mail", "org", null, "admin",  passwordEncoder.encode("admin"), null, null, rolesAdmin, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()); 
         
-        userRepository.save(manager);
+        userRepository.save(manager1);
+        userRepository.save(manager2);
         userRepository.save(client);
         userRepository.save(admin); 
 
@@ -88,18 +92,19 @@ public class InitDataBaseService{
 
 
         //init hoteles
-        Hotel hotel1 = new Hotel("Hotel1", "hotel de plata", "loc1",0F, null, manager, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        Hotel hotel1 = new Hotel("Hotel1", "hotel de plata", "loc1",0F, null, manager1, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
-        Hotel hotel2 = new Hotel("Hotel2", "hotel ", "loc2",0F, null, manager, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        Hotel hotel2 = new Hotel("Hotel2", "hotel ", "loc2",0F, null, manager2, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         
         hotelRepository.save(hotel1); 
         hotelRepository.save(hotel2); 
 
         //add hotel to manager
-        manager.getHotels().add(hotel1);
-        manager.getHotels().add(hotel2);
+        manager1.getHotels().add(hotel1);
+        manager2.getHotels().add(hotel2);
 
-        userRepository.save(manager);
+        userRepository.save(manager1);
+        userRepository.save(manager2);
         
 
         //add hotel to rooms

@@ -83,7 +83,7 @@ public class HotelService implements GeneralService<Hotel> {
         List <Room> rooms = hotel.getRooms();
         Boolean roomLocated = false;
         Room room = null;
-        while ((i < hotel.getnumRooms()) && !(roomLocated)){
+        while ((i < hotel.getNumRooms()) && !(roomLocated)){
             if (rooms.get(i).available(checkIn, checkOut)){
                 room = rooms.get(i);
                 roomLocated = true;

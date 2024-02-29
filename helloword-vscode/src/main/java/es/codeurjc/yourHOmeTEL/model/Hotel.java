@@ -107,7 +107,7 @@ public class Hotel {
     }
 
 
-    public int getnumRooms() {
+    public int getNumRooms() {
         return this.rooms.size();
     }
 
