@@ -67,11 +67,9 @@ public class UserController{
 
 	@GetMapping("/index")
 	public String index(Model model,  HttpServletRequest request) {
-		List <Hotel> hotels= new ArrayList<>();
-		for (Long i = 1L; i<=1L; i++){	
-			Hotel hotel = hotelRepository.findById(i).orElseThrow();
-			hotels.add(hotel);
-		}
+		List<Hotel> hotels = hotelRepository.findTop6ByManager_Validated(true);
+
+
 		model.addAttribute("hotels", hotels);
 
 		
