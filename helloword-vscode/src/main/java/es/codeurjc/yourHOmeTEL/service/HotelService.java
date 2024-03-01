@@ -77,16 +77,18 @@ public class HotelService implements GeneralService<Hotel> {
         return validClients;
     }
 
-    public Room checkRooms(Long id, LocalDate checkIn, LocalDate checkOut) {
+    public Room checkRooms(Long id, LocalDate checkIn, LocalDate checkOut, Integer numPeople) {
         Hotel hotel = this.findById(id).orElseThrow();
         Integer i = 0;
         List <Room> rooms = hotel.getRooms();
         Boolean roomLocated = false;
         Room room = null;
         while ((i < hotel.getNumRooms()) && !(roomLocated)){
-            if (rooms.get(i).available(checkIn, checkOut)){
-                room = rooms.get(i);
-                roomLocated = true;
+            if(rooms.get(i).getMaxClients() == numPeople){
+                if (rooms.get(i).available(checkIn, checkOut)){
+                    room = rooms.get(i);
+                    roomLocated = true;
+                }
             }
             else
                 i++;

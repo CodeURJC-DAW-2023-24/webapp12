@@ -111,7 +111,7 @@ public class UserController{
 	public String addReservation(Model model, @PathVariable Long id, HttpServletRequest request, String checkIn, String checkOut, Integer numPeople) {
 		LocalDate checkInDate = reservationService.toLocalDate(checkIn);
 		LocalDate checkOutDate = reservationService.toLocalDate(checkOut);
-		Room room = hotelService.checkRooms(id, checkInDate, checkOutDate);
+		Room room = hotelService.checkRooms(id, checkInDate, checkOutDate, numPeople);
 		if (room != null){
 			UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			Hotel hotel = hotelRepository.findById(id).orElseThrow();
@@ -120,11 +120,10 @@ public class UserController{
 			return "redirect:/clientreservations";
 		}
 		else
-		//Crear una pagina que muestre el error de que no hay habitaciones disponibles en esas fechas.
-			return "redirect:/notRooms{id}";
+			return "redirect:/notRooms";
 	}
 
-	@GetMapping("/notRooms{id}")
+	@GetMapping("/notRooms")
 	public String notRooms(Model model) {	
 		return "notRooms";
 	}
@@ -133,7 +132,9 @@ public class UserController{
 	
 	@GetMapping("/clientreservation")
 	public String clientreservation(Model model,  HttpServletRequest request) {
+		UserE currentClient =  userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 
+		model.addAttribute("reservations", currentClient.getReservations());
 		return "ClientReservation";
 
 	}
