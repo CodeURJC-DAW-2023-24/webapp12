@@ -107,7 +107,7 @@ public class UserController{
 	}
 
 	@GetMapping("/returnmainpage")
-	public String notFoundError(Model model, HttpServletRequest request) {	
+	public String returnmainpage(Model model, HttpServletRequest request) {	
 		return "redirect:/index";
 
 	}
