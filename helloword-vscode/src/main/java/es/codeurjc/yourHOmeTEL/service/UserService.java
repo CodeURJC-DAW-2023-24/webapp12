@@ -91,13 +91,15 @@ public class UserService implements GeneralService<UserE> {
 		Optional<UserE> user = findByNick(nick);
 		return user.isPresent();
 	}
-    public List<Hotel> findRecomendedHotels(int numHotels, List<Reservation> userReservations){
+    public List<Hotel> findRecomendedHotels(int numHotels, List<Reservation> userReservations, UserE targetUser){
         List<UserE> recomendedUsers = new ArrayList<>();
         List<Hotel> recomendedHotels = new ArrayList<>();
 
         for (Reservation reservation: userReservations){
             Hotel reservedHotel = reservation.getHotel();
             recomendedUsers = userRepository.findByHotelInReservations(reservedHotel);
+            if(recomendedUsers.contains(targetUser)) //removes self from recommendations
+                recomendedUsers.remove(targetUser);
             for(UserE recommendedUser: recomendedUsers){
                 for (Reservation recommendedUserReservation: recommendedUser.getReservations()){
                     Hotel recommendedHotel = recommendedUserReservation.getHotel();

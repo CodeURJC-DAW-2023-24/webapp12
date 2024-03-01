@@ -68,29 +68,29 @@ public class UserController{
 	//ALL CONTROLLERS
 
 	
-	@GetMapping("/index")
+	/*@GetMapping("/index")
 	public String index(Model model,  HttpServletRequest request) {
 		List<Hotel> recomendedHotels = hotelRepository.findTop6ByManager_Validated(true);
 			
 		model.addAttribute("hotels", recomendedHotels);
 		return "index";
 
-	}
+	}*/
 
 	//ADVANCED RECOMMENDATION ALGORITHM DONT DELETE
-	/*@GetMapping("/index")
+	@GetMapping("/index")
 	public String index(Model model,  HttpServletRequest request) {
 		String nick = request.getUserPrincipal().getName();
 		UserE user = userRepository.findByNick(nick).orElseThrow();
 
 		List <Reservation> userReservations = user.getReservations();
-		List<Hotel> recomendedHotels = userService.findRecomendedHotels(6, userReservations);
+		List<Hotel> recomendedHotels = userService.findRecomendedHotels(6, userReservations, user);
 				
 		model.addAttribute("hotels", recomendedHotels);
 
 		return "index";
 
-	}*/
+	}
 
 	@GetMapping("/indexsearch")
 	public String indexSearch(Model model,  @RequestParam String searchValue) {
