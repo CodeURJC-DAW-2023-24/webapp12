@@ -52,10 +52,13 @@ public class SecurityConfiguration {
                 .requestMatchers("/register").permitAll()
                 .requestMatchers("/nickTaken").permitAll()
                 .requestMatchers("/error").permitAll()
+                .requestMatchers("/notfounderror/**").permitAll()
                 .requestMatchers("/hotelreview/**").permitAll()
                 .requestMatchers("/hotelinformation/**").permitAll()
                 .requestMatchers("indexsearch").permitAll()
                 .requestMatchers("/notRooms/**").permitAll()
+                .requestMatchers("/indexsearch").permitAll()
+                .requestMatchers("/returnmainpage").permitAll()
                 
                 //User pages
                 .requestMatchers("/profile/**").hasAnyRole("USER")

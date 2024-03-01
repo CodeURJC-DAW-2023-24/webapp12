@@ -29,34 +29,23 @@ public class DefaultController {
 
     @ModelAttribute("isAdmin")
     public Boolean isAdmin(HttpServletRequest request){
-        boolean isAdmin = false;
-        if (request.isUserInRole("ADMIN")){
-            isAdmin = true;
-         }
-         return isAdmin;
+         return request.isUserInRole("ADMIN");
     }
     @ModelAttribute("isManager")
     public Boolean isManager(HttpServletRequest request){
-        boolean isManager = false;
-        if (request.isUserInRole("MANAGER")){
-            isManager= true;
-         }
-         return isManager;
+         return request.isUserInRole("MANAGER");
     }
     @ModelAttribute("isClient")
     public Boolean isClient(HttpServletRequest request){
-        boolean isClient= false;
-        if (request.isUserInRole("CLIENT")){
-            isClient = true;         
-         }
-         return isClient;
+         return request.isUserInRole("CLIENT");
     }
     @ModelAttribute("isUser")
     public Boolean isUser(HttpServletRequest request){
-        boolean isUser= false;
-        if (request.isUserInRole("USER")){
-            isUser = true;         
-         }
-         return isUser;
+         return request.isUserInRole("USER");
+    }
+
+    @ModelAttribute("path")
+    public String getPath(HttpServletRequest request){
+         return request.getServletPath();
     }
 }
