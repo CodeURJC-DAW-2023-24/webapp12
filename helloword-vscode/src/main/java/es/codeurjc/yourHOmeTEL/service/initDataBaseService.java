@@ -29,7 +29,7 @@ import jakarta.annotation.PostConstruct;
 
 
 @Service
-public class InitDataBaseService{
+public class initDataBaseService{
 
     @Autowired
     private UserRepository userRepository;

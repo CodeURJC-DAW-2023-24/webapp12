@@ -1,7 +1,7 @@
 package es.codeurjc.yourHOmeTEL.model;
 
 import java.sql.Blob;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -77,6 +77,9 @@ public class UserE {
         this.lastname = lastname;
         this.email = email;
         this.pass = pass;
+        this.hotels = new ArrayList<>();
+        this.reviews = new ArrayList<>();
+        this.reservation = new ArrayList<>();
     }
 
     /*public UserE( String name, String lastname, String bio, String location, String language, String phone, String email, String organization,

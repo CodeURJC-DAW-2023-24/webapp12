@@ -102,7 +102,12 @@ public class UserController{
 		}
 		else
 		//Crear una pagina que muestre el error de que no hay habitaciones disponibles en esas fechas.
-			return "redirect:/notRooms";
+			return "redirect:/notRooms{id}";
+	}
+
+	@GetMapping("/notRooms{id}")
+	public String notRooms(Model model) {	
+		return "notRooms";
 	}
 	
 	
@@ -110,7 +115,7 @@ public class UserController{
 	@GetMapping("/clientreservation")
 	public String clientreservation(Model model,  HttpServletRequest request) {
 
-		return "clientreservation";
+		return "ClientReservation";
 
 	}
 
@@ -300,7 +305,6 @@ public class UserController{
 			else
 				rols.add("MANAGER");
 			user.setRols(rols);
-
 			userRepository.save(user);
 			return "redirect:/login";
 		} else {
