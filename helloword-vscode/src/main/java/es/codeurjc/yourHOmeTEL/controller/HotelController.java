@@ -90,6 +90,8 @@ public class HotelController {
     @GetMapping("/hotelinformation/{id}")
 	public String hotelinformation(Model model,  HttpServletRequest request, @PathVariable Long id) {
 		Hotel hotel = hotelRepository.findById(id).orElseThrow();
+		if (hotel.getManager().getvalidated() == false)
+			return "redirect:/error";
 		model.addAttribute("hotel", hotel);
 		model.addAttribute("numRooms", hotel.getNumRooms());
 

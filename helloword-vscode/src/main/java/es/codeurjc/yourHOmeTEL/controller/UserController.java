@@ -84,7 +84,7 @@ public class UserController{
 		UserE user = userRepository.findByNick(nick).orElseThrow();
 
 		List <Reservation> userReservations = user.getReservations();
-		List<Hotel> recomendedHotels = userService.findRecomendedHotels(6, userReservations);
+		List<Hotel> recomendedHotels = userService.findRecomendedHotels(6, userReservations, user);
 				
 		model.addAttribute("hotels", recomendedHotels);
 
@@ -100,8 +100,14 @@ public class UserController{
 
 	}
 
+	@GetMapping("/error")
+	public String Error(Model model, HttpServletRequest request) {	
+		return "/error";
+
+	}
+
 	@GetMapping("/returnmainpage")
-	public String notFoundError(Model model, HttpServletRequest request) {	
+	public String returnmainpage(Model model, HttpServletRequest request) {	
 		return "redirect:/index";
 
 	}
@@ -111,7 +117,7 @@ public class UserController{
 	public String addReservation(Model model, @PathVariable Long id, HttpServletRequest request, String checkIn, String checkOut, Integer numPeople) {
 		LocalDate checkInDate = reservationService.toLocalDate(checkIn);
 		LocalDate checkOutDate = reservationService.toLocalDate(checkOut);
-		Room room = hotelService.checkRooms(id, checkInDate, checkOutDate);
+		Room room = hotelService.checkRooms(id, checkInDate, checkOutDate, numPeople);
 		if (room != null){
 			UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			Hotel hotel = hotelRepository.findById(id).orElseThrow();
@@ -120,16 +126,22 @@ public class UserController{
 			return "redirect:/clientreservations";
 		}
 		else
-		//Crear una pagina que muestre el error de que no hay habitaciones disponibles en esas fechas.
 			return "redirect:/notRooms";
+	}
+
+	@GetMapping("/notRooms")
+	public String notRooms(Model model) {	
+		return "notRooms";
 	}
 	
 	
 	
 	@GetMapping("/clientreservation")
 	public String clientreservation(Model model,  HttpServletRequest request) {
+		UserE currentClient =  userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 
-		return "clientreservation";
+		model.addAttribute("reservations", currentClient.getReservations());
+		return "ClientReservation";
 
 	}
 
@@ -277,15 +289,43 @@ public class UserController{
 	}
 	
 
-
-
-	
 	@GetMapping("/profile")
 	public String profile(Model model,HttpServletRequest request) {
 		
 
 		String usernick = request.getUserPrincipal().getName();
 		UserE currentUser =  userRepository.findByNick(usernick).orElseThrow();
+		if (currentUser.getBio() == null){
+			model.addAttribute("hasbio", false);
+			currentUser.setBio("");
+		}else
+			model.addAttribute("hasbio", true);
+
+		if (currentUser.getLocation() == null){
+				model.addAttribute("haslocation", false);
+				currentUser.setLocation("");
+		}else
+			model.addAttribute("haslocation", true);
+
+		if (currentUser.getPhone() == null){
+				model.addAttribute("hasphone", false);
+				currentUser.setPhone(" ");
+		}else
+			model.addAttribute("hasphone", true);
+
+		if (currentUser.getOrganization() == null){
+				model.addAttribute("hasorg", false);
+				currentUser.setOrganization(" ");
+		}else
+			model.addAttribute("hasorg", true);
+
+		if (currentUser.getLanguage() == null){
+				model.addAttribute("haslang", false);
+				currentUser.setLanguage(" ");
+		}else
+			model.addAttribute("haslang", true);
+		
+			
 		model.addAttribute("user", currentUser);
 
 		return "profile";
@@ -319,7 +359,6 @@ public class UserController{
 			else
 				rols.add("MANAGER");
 			user.setRols(rols);
-
 			userRepository.save(user);
 			return "redirect:/login";
 		} else {

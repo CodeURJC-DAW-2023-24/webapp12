@@ -42,7 +42,9 @@
                                                 class="img-fluid avatar-xxl rounded-circle" alt="">                                           
                                             <h4 class="text-primary font-size-20 mt-3 mb-2">{{user.nick}}</h4>
                                             {{#isManager}}
+                                            {{#hasorg}}
                                             <h5 class="text-muted font-size-13 mb-0 p-1">{{user.organization}}</h5>
+                                            {{/hasorg}}
                                             {{#user.validated}}
                                             <p class="text-validated font-size-15 mb-0 p-1">Validated manager</p>
                                             {{/user.validated}}
@@ -51,19 +53,23 @@
                                     </div><!-- end col -->
                                     <div class="col-md-8">
                                         <div class="ms-3">
+                                            {{#hasbio}}
                                             <div>
                                                 <h4 class="card-title mb-2">Biography</h4>
                                                 <p class="mb-0 text-muted">{{user.bio}}</p>
                                             </div>
+                                            {{/hasbio}}
                                             <div class="row my-4">
                                                 <div class="col-md-12">
                                                     <div>
                                                         <p class="text-muted mb-2 fw-medium"><i
                                                                 class="mdi mdi-email-outline me-2"></i>{{user.email}}
                                                         </p>
+                                                        {{#hasphone}}
                                                         <p class="text-muted fw-medium mb-0"><i
                                                                 class="mdi mdi-phone-in-talk-outline me-2"></i>{{user.phone}}
                                                         </p>
+                                                        {{/hasphone}}
                                                     </div>
                                                 </div><!-- end col -->
                                             </div><!-- end row -->
@@ -108,18 +114,24 @@
                                                     <th scope="row">Nombre</th>
                                                     <td>{{user.name}}</td>
                                                 </tr><!-- end tr -->
+                                                {{#haslocation}}
                                                 <tr>
                                                     <th scope="row">Location</th>
                                                     <td>{{user.location}}</td>
                                                 </tr><!-- end tr -->
+                                                {{/haslocation}}
+                                                {{#haslang}}
                                                 <tr>
                                                     <th scope="row">Language</th>
                                                     <td>{{user.language}}</td>
                                                 </tr><!-- end tr -->
+                                                {{/haslang}}
+                                                {{#hasphone}}
                                                 <tr>
                                                     <th scope="row">Phone number</th>
                                                     <td>{{user.phone}}</td>
                                                 </tr><!-- end tr -->
+                                                {{/hasphone}}
                                                 <tr>
                                                     <th scope="row">Email</th>
                                                     <td>{{user.email}}</td>

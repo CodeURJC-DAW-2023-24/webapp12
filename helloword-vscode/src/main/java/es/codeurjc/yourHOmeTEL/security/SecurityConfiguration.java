@@ -55,6 +55,8 @@ public class SecurityConfiguration {
                 .requestMatchers("/notfounderror/**").permitAll()
                 .requestMatchers("/hotelReview/**").permitAll()
                 .requestMatchers("/hotelinformation/**").permitAll()
+                .requestMatchers("indexsearch").permitAll()
+                .requestMatchers("/notRooms/**").permitAll()
                 .requestMatchers("/indexsearch").permitAll()
                 .requestMatchers("/returnmainpage").permitAll()
                 

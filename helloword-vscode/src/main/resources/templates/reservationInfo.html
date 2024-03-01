@@ -1,81 +1,88 @@
-<!-- Hotel more info -->
-<form action = "/confirmReservation" method="post">  
-    <div class="modal fade" role="dialog" tabindex="-1" id="hotel-info-modal">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Reservation info</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="py-1">             
-                        <div class="row">
-                            <div class="col">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hotel Information</title>
+    {{>headerindex}}
+        <!-- Hotel more info -->
+        <form action = "/confirmReservation" method="post">  
+            <div class="modal fade" role="dialog" tabindex="-1" id="hotel-info-modal">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Reservation info</h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="py-1">             
                                 <div class="row">
-                                    <div class="col ml-4">
-                                        <div class="form-group">
-                                            <p>Hotel: </p>
-                                            <p id="nameHotel">{{reservation.hotel.name}}</p>
-                                        </div>
-                                    </div>
                                     <div class="col">
-                                        <div class="form-group">
-                                            <p>Location: </p>
-                                            <p id="location">{{reservation.hotel.location}}</p>
+                                        <div class="row">
+                                            <div class="col ml-4">
+                                                <div class="form-group">
+                                                    <p>Hotel: </p>
+                                                    <p id="nameHotel">{{reservation.hotel.name}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <p>Location: </p>
+                                                    <p id="location">{{reservation.hotel.location}}</p>
+                                                </div>
+                                            </div>
+                                        </div>                     
+                                        <div class="row">
+                                            <div class="col mb-3 ml-4">
+                                                <div class="form-group">
+                                                    <p>Price: </p>
+                                                    <p id="roomsAmount">{{reservation.room.cost}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <p>Check-In</p>
+                                                    <p id="hotelManager">{{reservation.checkIn}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col mr-4">
+                                                <div class="form-group">
+                                                    <p>Chech-Out</p>
+                                                    <p id="hotelManager">{{reservation.checkOut}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col mb-3 ml-4">                         
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <p>Maximum capacity</p>
+                                                    <p id="reservations">{{reservation.numPeople}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col mr-4">
+                                            </div>                      
+                                        </div>
+                                        <div class="row">
+                                            <div class="col mb-3 ml-4">                        
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">                                      
+                                                    <input type="submit" value="Confirm reservartion" class="btn btn-primary btn-user btn-block"/>
+                                                    <input type="hidden" name="_csrf" value="{{token}}"/>
+                                                </div>
+                                            </div>
+                                            <div class="col mr-4">
+                                            </div>                      
                                         </div>
                                     </div>
-                                </div>                     
-                                <div class="row">
-                                    <div class="col mb-3 ml-4">
-                                        <div class="form-group">
-                                            <p>Price: </p>
-                                            <p id="roomsAmount">{{reservation.room.cost}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <p>Check-In</p>
-                                            <p id="hotelManager">{{reservation.checkIn}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col mr-4">
-                                        <div class="form-group">
-                                            <p>Chech-Out</p>
-                                            <p id="hotelManager">{{reservation.checkOut}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col mb-3 ml-4">                         
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <p>Maximum capacity</p>
-                                            <p id="reservations">{{reservation.numPeople}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col mr-4">
-                                    </div>                      
-                                </div>
-                                <div class="row">
-                                    <div class="col mb-3 ml-4">                        
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">                                      
-                                            <input type="submit" value="Confirm reservartion" class="btn btn-primary btn-user btn-block"/>
-                                            <input type="hidden" name="_csrf" value="{{token}}"/>
-                                        </div>
-                                    </div>
-                                    <div class="col mr-4">
-                                    </div>                      
-                                </div>
+                                </div>                
                             </div>
-                        </div>                
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</form>
+        </form>
+    {{>footerindex}}
+</html>
