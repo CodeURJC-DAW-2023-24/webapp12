@@ -41,40 +41,27 @@
               <div class="e-panel card">
                 <div class="card-body">
                   <div class="card-title">
-                    <h6 class="mr-2"><span>Hotels</span><small class="px-1">Check where you have been</small></h6>
+                    <h6 class="mr-2"><span>Hotels</span><small class="px-1">Check your reservations</small></h6>
                   </div>
                   <div class="e-table">
                     <div class="table-responsive table-lg mt-3">
                       <table class="table table-bordered">
                         <thead>
                           <tr>
-                            <th class="align-top">
-                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0">
-                                <input type="checkbox" class="custom-control-input" id="all-items">
-                                <label class="custom-control-label" for="all-items"></label>
-                              </div>
-                            </th>
-                            <th>Photo</th>
                             <th class="max-width">Name</th>
-                            <th class="sortable">Date</th>
-                            <th>Room</th>
+                            <th class="sortable">Check-In</th>
+                            <th class="sortable">Chech-Out</th>
+                            <th>People</th>
                             <th>Actions</th>
                           </tr>
                         </thead>
                         <tbody>
+                          {{#reservations}}
                           <tr>
-                            <td class="align-middle">
-                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input type="checkbox" class="custom-control-input" id="item-1">
-                                <label class="custom-control-label" for="item-1"></label>
-                              </div>
-                            </td>
-                            <td class="align-middle text-center">
-                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
-                            </td>
-                            <td class="text-nowrap align-middle">Hotel 1</td>
-                            <td class="text-nowrap align-middle"><span>09 Dec 2017</span></td>
-                            <td class="text-nowrap align-middle">30</td>
+                            <td class="text-nowrap align-middle">{{hotel.name}}</td>
+                            <td class="text-nowrap align-middle"><span>{{checkIn}}</span></td>
+                            <td class="text-nowrap align-middle"><span>{{checkOut}}</span></td>
+                            <td class="text-nowrap align-middle">{{numPeople}}</td>
                             <td class="text-center align-middle">
                               <div class="btn-group align-top">
                                   <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
@@ -82,315 +69,10 @@
                               </div>
                             </td>
                           </tr>
-                          <tr>
-                            <td class="align-middle">
-                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input type="checkbox" class="custom-control-input" id="item-2">
-                                <label class="custom-control-label" for="item-2"></label>
-                              </div>
-                            </td>
-                            <td class="align-middle text-center">
-                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
-                            </td>
-                            <td class="text-nowrap align-middle">Hotel 2</td>
-                            <td class="text-nowrap align-middle"><span>26 Jan 2018</span></td>
-                            <td class="text-nowrap align-middle">30</td>
-                            <td class="text-center align-middle">
-                              <div class="btn-group align-top">
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="align-middle">
-                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input type="checkbox" class="custom-control-input" id="item-3">
-                                <label class="custom-control-label" for="item-3"></label>
-                              </div>
-                            </td>
-                            <td class="align-middle text-center">
-                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
-                            </td>
-                            <td class="text-nowrap align-middle">Hotel 3</td>
-                            <td class="text-nowrap align-middle"><span>27 Jan 2018</span></td>
-                            <td class="text-nowrap align-middle">30</td>
-                            <td class="text-center align-middle">
-                              <div class="btn-group align-top">
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="align-middle">
-                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input type="checkbox" class="custom-control-input" id="item-4">
-                                <label class="custom-control-label" for="item-4"></label>
-                              </div>
-                            </td>
-                            <td class="align-middle text-center">
-                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
-                            </td>
-                            <td class="text-nowrap align-middle">Hotel 4</td>
-                            <td class="text-nowrap align-middle"><span>20 Jan 2018</span></td>
-                            <td class="text-nowrap align-middle">30</td>
-                            <td class="text-center align-middle">
-                              <div class="btn-group align-top">
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="align-middle">
-                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input type="checkbox" class="custom-control-input" id="item-5">
-                                <label class="custom-control-label" for="item-5"></label>
-                              </div>
-                            </td>
-                            <td class="align-middle text-center">
-                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
-                            </td>
-                            <td class="text-nowrap align-middle">Hotel 5</td>
-                            <td class="text-nowrap align-middle"><span>13 Jan 2018</span></td>
-                            <td class="text-nowrap align-middle">30</td>
-                            <td class="text-center align-middle">
-                              <div class="btn-group align-top">
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="align-middle">
-                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input type="checkbox" class="custom-control-input" id="item-6">
-                                <label class="custom-control-label" for="item-6"></label>
-                              </div>
-                            </td>
-                            <td class="align-middle text-center">
-                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
-                            </td>
-                            <td class="text-nowrap align-middle">Hotel 6</td>
-                            <td class="text-nowrap align-middle"><span>25 Jan 2018</span></td>
-                            <td class="text-nowrap align-middle">30</td>
-                            <td class="text-center align-middle">
-                              <div class="btn-group align-top">
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="align-middle">
-                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input type="checkbox" class="custom-control-input" id="item-7">
-                                <label class="custom-control-label" for="item-7"></label>
-                              </div>
-                            </td>
-                            <td class="align-middle text-center">
-                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
-                            </td>
-                            <td class="text-nowrap align-middle">Hotel 7</td>
-                            <td class="text-nowrap align-middle"><span>12 Jan 2018</span></td>
-                            <td class="text-nowrap align-middle">30</td>
-                            <td class="text-center align-middle">
-                              <div class="btn-group align-top">
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="align-middle">
-                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input type="checkbox" class="custom-control-input" id="item-8">
-                                <label class="custom-control-label" for="item-8"></label>
-                              </div>
-                            </td>
-                            <td class="align-middle text-center">
-                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
-                            </td>
-                            <td class="text-nowrap align-middle">Hotel 8</td>
-                            <td class="text-nowrap align-middle"><span>27 Jan 2018</span></td>
-                            <td class="text-nowrap align-middle">30</td>
-                            <td class="text-center align-middle">
-                              <div class="btn-group align-top">
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="align-middle">
-                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input type="checkbox" class="custom-control-input" id="item-9">
-                                <label class="custom-control-label" for="item-9"></label>
-                              </div>
-                            </td>
-                            <td class="align-middle text-center">
-                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
-                            </td>
-                            <td class="text-nowrap align-middle">Hotel 9</td>
-                            <td class="text-nowrap align-middle"><span>12 Dec 2017</span></td>
-                            <td class="text-nowrap align-middle">30</td>
-                            <td class="text-center align-middle">
-                              <div class="btn-group align-top">
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="align-middle">
-                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input type="checkbox" class="custom-control-input" id="item-10">
-                                <label class="custom-control-label" for="item-10"></label>
-                              </div>
-                            </td>
-                            <td class="align-middle text-center">
-                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
-                            </td>
-                            <td class="text-nowrap align-middle">Hotel 10</td>
-                            <td class="text-nowrap align-middle"><span>10 Dec 2017</span></td>
-                            <td class="text-nowrap align-middle">30</td>
-                            <td class="text-center align-middle">
-                              <div class="btn-group align-top">
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="align-middle">
-                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input type="checkbox" class="custom-control-input" id="item-11">
-                                <label class="custom-control-label" for="item-11"></label>
-                              </div>
-                            </td>
-                            <td class="align-middle text-center">
-                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
-                            </td>
-                            <td class="text-nowrap align-middle">Hotel 11</td>
-                            <td class="text-nowrap align-middle"><span>03 Dec 2017</span></td>
-                            <td class="text-nowrap align-middle">30</td>
-                            <td class="text-center align-middle">
-                              <div class="btn-group align-top">
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="align-middle">
-                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                <input type="checkbox" class="custom-control-input" id="item-12">
-                                <label class="custom-control-label" for="item-12"></label>
-                              </div>
-                            </td>
-                            <td class="align-middle text-center">
-                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
-                            </td>
-                            <td class="text-nowrap align-middle">Hotel 12</td>
-                            <td class="text-nowrap align-middle"><span>09 Dec 2017</span></td>
-                            <td class="text-nowrap align-middle">30</td>
-                            <td class="text-center align-middle">
-                              <div class="btn-group align-top">
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
-                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
-                              </div>
-                            </td>
-                          </tr>
+                          {{/reservations}}
                         </tbody>
                       </table>
                     </div>
-                    <div class="d-flex justify-content-center">
-                      <ul class="pagination mt-3 mb-0">
-                        <li class="disabled page-item"><a href="#" class="page-link">‹</a></li>
-                        <li class="active page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">›</a></li>
-                        <li class="page-item"><a href="#" class="page-link">»</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-      
-          <!-- Hotel more info -->
-          <div class="modal fade" role="dialog" tabindex="-1" id="hotel-info-modal">
-            <div class="modal-dialog modal-lg" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Reservation info</h5>
-                  <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div class="py-1">
-                    
-                      <div class="row">
-                        <div class="col">
-                          <div class="row">
-                            <div class="col">
-                              <div class="form-group">
-                                <p>Hotel: </p>
-                                <p id="nameHotel"> Hotel name</p>
-                              </div>
-                            </div>
-                            <div class="col">
-                              <div class="form-group">
-                                <p>Location: </p>
-                                <p id="location">Country, city</p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col">
-                              <div class="form-group">
-                                <p>Contact: </p>
-                                <p id="hotelContact"> Hotel email and social media</p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col mb-3">
-                              <div class="form-group">
-                                <p>Rooms amount: </p>
-                                <p id="roomsAmount">Number of rooms </p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-12 col-sm-6 mb-3">
-                          <div class="mb-2"></div>
-                          <div class="row">
-                            <div class="col">
-                              <div class="form-group">
-                                <p>Manager:</p>
-                                <p id="hotelManager"> His name</p>
-                              </div>
-                            </div>
-                            <div class="col">
-                              <div class="form-group">
-                                <p>Review:</p>
-                                <p id="reservations"> Not yet. </p>
-                                <a href="hotelReview.html"><button class="btn btn-primary">Rate it</button></a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      
                   </div>
                 </div>
               </div>
