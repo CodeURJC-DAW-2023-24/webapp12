@@ -66,24 +66,46 @@ public class UserController{
 	
 
 	//ALL CONTROLLERS
+
+	
 	@GetMapping("/index")
 	public String index(Model model,  HttpServletRequest request) {
-		List<Hotel> hotels = hotelRepository.findTop6ByManager_Validated(true);
-
-
-		model.addAttribute("hotels", hotels);
-
-		
-		
+		List<Hotel> recomendedHotels = hotelRepository.findTop6ByManager_Validated(true);
+			
+		model.addAttribute("hotels", recomendedHotels);
 		return "index";
 
 	}
 
+	/*@GetMapping("/index")
+	public String index(Model model,  HttpServletRequest request) {
+		String nick = request.getUserPrincipal().getName();
+		UserE user = userRepository.findByNick(nick).orElseThrow();
+
+
+		List<Reservation> userReservations = userRepository.findReservationsById(user.getId());
+		List<Hotel> recomendedHotels = userService.findRecomendedHotels(6, userReservations);
+		
+		
+		model.addAttribute("hotels", recomendedHotels);
+
+		
+		
+		return "index";
+
+	}*/
+
 	@GetMapping("/indexsearch")
 	public String indexSearch(Model model,  @RequestParam String searchValue) {
-		List<Hotel> hotels = hotelRepository.findTop6ByName(searchValue);
+		List<Hotel> hotels = hotelRepository.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(true,searchValue);
 		model.addAttribute("hotels", hotels);		
 		return "index";
+
+	}
+
+	@GetMapping("/returnmainpage")
+	public String notFoundError(Model model, HttpServletRequest request) {	
+		return "redirect:/index";
 
 	}
 	

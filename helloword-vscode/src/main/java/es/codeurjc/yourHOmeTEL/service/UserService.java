@@ -1,5 +1,6 @@
 package es.codeurjc.yourHOmeTEL.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,7 +9,10 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import es.codeurjc.yourHOmeTEL.model.Hotel;
+import es.codeurjc.yourHOmeTEL.model.Reservation;
 import es.codeurjc.yourHOmeTEL.model.UserE;
+import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 
 
@@ -16,12 +20,15 @@ import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 public class UserService implements GeneralService<UserE> {
     
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private HotelRepository hotelRepository;
 
 
     @Override
     public Optional <UserE> findById(Long id){
-        return repository.findById(id);
+        return userRepository.findById(id);
 
     }
 
@@ -37,23 +44,23 @@ public class UserService implements GeneralService<UserE> {
 
     @Override
     public List <UserE> findAll() {
-        return repository.findAll();
+        return userRepository.findAll();
     }
 
     @Override
     public List <UserE> findAll(Sort sort){
         if (!sort.equals(null)){
-            return repository.findAll(sort);
+            return userRepository.findAll(sort);
         }
         else {
-            return repository.findAll();
+            return userRepository.findAll();
         }      
     }
 
 
     @Override
     public Boolean exist (Long id){
-        Optional <UserE> user = repository.findById(id);
+        Optional <UserE> user = userRepository.findById(id);
         if (user.isPresent())
             return true;
         else
@@ -61,28 +68,51 @@ public class UserService implements GeneralService<UserE> {
     }
 
     public Optional <UserE> findFirstByName(String name) {
-        return repository.findFirstByName(name);
+        return userRepository.findFirstByName(name);
     }
     
     public Optional <UserE> findByName(String name){
-        return repository.findByName(name);
+        return userRepository.findByName(name);
     }
 
     public List<UserE> findByPhone(String phone){
-        return repository.findByPhone(phone);
+        return userRepository.findByPhone(phone);
     }
 
     public List<UserE> findLocationByName (String name){
-        return repository.findLocationByName(name);
+        return userRepository.findLocationByName(name);
     }
 
     public Optional <UserE> findByNick(String nick){
-        return repository.findByNick(nick);
+        return userRepository.findByNick(nick);
     }
 
     public boolean existNick(String nick) {
 		Optional<UserE> user = findByNick(nick);
 		return user.isPresent();
 	}
+    /*public List<Hotel> findRecomendedHotels(int numHotels, List<Reservation> userReservations){
+        List<UserE> recomendedUsers = new ArrayList<>();
+        List<Hotel> recomendedHotels = new ArrayList<>();
+
+        for (Reservation reservation: userReservations){
+            Hotel reservedHotel = reservation.getHotel();
+            recomendedUsers = userRepository.findByHotelInReservation(reservedHotel);
+            for(UserE recommendedUser: recomendedUsers){
+                for (Reservation recommendedUserReservation: recommendedUser.getReservation()){
+                    Hotel recommendedHotel = recommendedUserReservation.getHotel();
+                    Boolean validHotel = recommendedHotel.getManager().getvalidated();
+                    
+                    if ((!recomendedHotels.contains(recommendedHotel)) || validHotel ){
+                        recomendedHotels.add(recommendedHotel);
+                        if (recomendedHotels.size() == (numHotels))
+                            return recomendedHotels;
+                    }
+                }    
+            }
+        }
+        return recomendedHotels;
+    }*/
+    
     
 }
