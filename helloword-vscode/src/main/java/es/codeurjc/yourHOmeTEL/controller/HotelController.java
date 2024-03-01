@@ -30,8 +30,6 @@ import es.codeurjc.yourHOmeTEL.service.UserService;
 import jakarta.persistence.ManyToOne;
 import jakarta.servlet.http.HttpServletRequest;
 
-
-
 @Controller
 public class HotelController {
 
@@ -43,11 +41,11 @@ public class HotelController {
 
 	@Autowired
 	HotelRepository hotelRepository;
-    
+
 	@GetMapping("/edithotel/{id}")
-	public String edithotel(Model model, @PathVariable Long id ) {
-		
-		Hotel hotel = hotelRepository.findById(id).orElseThrow(); 
+	public String edithotel(Model model, @PathVariable Long id) {
+
+		Hotel hotel = hotelRepository.findById(id).orElseThrow();
 		model.addAttribute("hotel", hotel);
 		return "editHotel";
 
@@ -56,10 +54,10 @@ public class HotelController {
 	@PostMapping("/edithotel/{id}")
 	public String edithotel(Model model, @PathVariable Long id,
 
-	@RequestParam	String name,
-	@RequestParam	int numRooms,
-	@RequestParam	String location,
-	@RequestParam	String description){
+			@RequestParam String name,
+			@RequestParam int numRooms,
+			@RequestParam String location,
+			@RequestParam String description) {
 
 		Hotel hotel = hotelRepository.findById(id).orElseThrow();
 
@@ -72,13 +70,13 @@ public class HotelController {
 		model.addAttribute("hotel", hotel);
 
 		return "redirect:/viewhotelsmanager";
-	
+
 	}
 
 	@GetMapping("/deleteHotel/{id}")
 	public String deleteHotel(Model model, @PathVariable Long id) {
 
-		Optional <Hotel> hotel = hotelRepository.findById(id); 
+		Optional<Hotel> hotel = hotelRepository.findById(id);
 		if (hotel.isPresent()) {
 			hotelRepository.deleteById(id);
 		}
@@ -86,9 +84,8 @@ public class HotelController {
 		return "redirect:/viewhotelsmanager";
 	}
 
-
-    @GetMapping("/hotelinformation/{id}")
-	public String hotelinformation(Model model,  HttpServletRequest request, @PathVariable Long id) {
+	@GetMapping("/hotelinformation/{id}")
+	public String hotelinformation(Model model, HttpServletRequest request, @PathVariable Long id) {
 		Hotel hotel = hotelRepository.findById(id).orElseThrow();
 		if (hotel.getManager().getvalidated() == false)
 			return "redirect:/error";
@@ -99,17 +96,18 @@ public class HotelController {
 
 	}
 
-    @GetMapping("/hotelreview/{id}")
-	public String hotelreview(Model model,  @PathVariable Long id) {
+	@GetMapping("/hotelReview/{id}")
+	public String hotelreview(Model model, @PathVariable Long id) {
 		Hotel hotel = hotelRepository.findById(id).orElseThrow();
 		model.addAttribute("hotel", hotel);
-		return "/hotelreview";
+		return "hotelReview";
 
 	}
 
-    /**
-	 * This method adds to the DB the review posted by the client so it is 
+	/**
+	 * This method adds to the DB the review posted by the client so it is
 	 * displayed in the hotel's reviews page
+	 * 
 	 * @param model
 	 * @param score
 	 * @param comment
@@ -120,53 +118,54 @@ public class HotelController {
 	 */
 	@GetMapping("/postReview")
 	public String postReview(
-		Model model, 
-		@RequestParam int score,
-		@RequestParam	String comment,
-		@RequestParam Date date,
-		@RequestParam Hotel hotel,
-		@RequestParam UserE user){
+			Model model,
+			@RequestParam int score,
+			@RequestParam String comment,
+			@RequestParam Date date,
+			@RequestParam Hotel hotel,
+			@RequestParam UserE user) {
 
-			model.addAttribute("score", score);
-			model.addAttribute("comment", comment);
-			model.addAttribute("date", date);
-			model.addAttribute("hotel", hotel);
-			model.addAttribute("user", user);
+		model.addAttribute("score", score);
+		model.addAttribute("comment", comment);
+		model.addAttribute("date", date);
+		model.addAttribute("hotel", hotel);
+		model.addAttribute("user", user);
 
-			return "hotelReview";
+		return "hotelReview";
 	}
 
-    /**
-	 * This controller is responsible of getting all the reviews from certain hotel to 
+	/**
+	 * This controller is responsible of getting all the reviews from certain hotel
+	 * to
 	 * display on its reviews page
+	 * 
 	 * @param model
 	 * @param hotelName
 	 * @return
 	 */
 	@GetMapping("posthotelReview/{hotelName}")
-	public String hotelReview(Model model, @PathVariable String hotelName){
+	public String hotelReview(Model model, @PathVariable String hotelName) {
 
-		//PENDIENTE deberíamos obtener los datos de las reseñas para mostrar aquí
-		//Mario: por que lo haces con hotel name y no id?
+		// PENDIENTE deberíamos obtener los datos de las reseñas para mostrar aquí
+		// Mario: por que lo haces con hotel name y no id?
 		return "hotelReview";
 	}
 
-
 	@GetMapping("/addHotel")
-	public String addHotel(Model model,  HttpServletRequest request) {
-		Optional <UserE> user = userRepository.findByNick(request.getUserPrincipal().getName());
-		if (user.isPresent()){
+	public String addHotel(Model model, HttpServletRequest request) {
+		Optional<UserE> user = userRepository.findByNick(request.getUserPrincipal().getName());
+		if (user.isPresent()) {
 			model.addAttribute("name", user.get().getName());
 			return "addHotel";
-		}
-		else
+		} else
 			return "redirect:/login";
- 
+
 	}
 
 	@PostMapping("/addHotel")
-	public String addHotelPost(HttpServletRequest request, Hotel newHotel, Integer room1, Integer cost1, Integer room2, Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4) {
-		//Falta añadir lo de las fotos
+	public String addHotelPost(HttpServletRequest request, Hotel newHotel, Integer room1, Integer cost1, Integer room2,
+			Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4) {
+		// Falta añadir lo de las fotos
 		UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 
 		newHotel.setManager(user);
@@ -174,16 +173,16 @@ public class HotelController {
 		newHotel.setReservations(new ArrayList<>());
 		newHotel.setReviews(new ArrayList<>());
 
-		for(int i = 0; i < room1; i++){
+		for (int i = 0; i < room1; i++) {
 			newHotel.getRooms().add(new Room(1, cost1, new ArrayList<>(), newHotel));
 		}
-		for(int i = 0; i < room2; i++){
+		for (int i = 0; i < room2; i++) {
 			newHotel.getRooms().add(new Room(2, cost2, new ArrayList<>(), newHotel));
 		}
-		for(int i = 0; i < room3; i++){
+		for (int i = 0; i < room3; i++) {
 			newHotel.getRooms().add(new Room(3, cost3, new ArrayList<>(), newHotel));
 		}
-		for(int i = 0; i < room4; i++){
+		for (int i = 0; i < room4; i++) {
 			newHotel.getRooms().add(new Room(4, cost4, new ArrayList<>(), newHotel));
 		}
 		hotelRepository.save(newHotel);
@@ -191,14 +190,76 @@ public class HotelController {
 	}
 
 	@GetMapping("/clientlist/{id}")
-	public String clientlist(Model model,  HttpServletRequest request, @PathVariable Long id) {
+	public String clientlist(Model model, HttpServletRequest request, @PathVariable Long id) {
 		Hotel hotel = hotelRepository.findById(id).orElseThrow();
-		List <UserE> validClients = new ArrayList<>();
+		List<UserE> validClients = new ArrayList<>();
 		validClients = hotelService.getValidClients(hotel);
-		
+
 		model.addAttribute("clients", validClients);
 
 		return "clientlist";
 
 	}
+
+	/**
+	 * Loads the next 6 hotels
+	 */
+	/*
+	 * @GetMapping("/loadMoreHotels/{start}/{end}")
+	 * public String loadMoreHotels(
+	 * Model model,
+	 * 
+	 * @PathVariable Long start,
+	 * 
+	 * @PathVariable Long end) {
+	 * 
+	 * var hotelsQuantity = hotelRepository.count();
+	 * 
+	 * if (start <= hotelsQuantity) {
+	 * 
+	 * var hotels = new ArrayList<>();
+	 * 
+	 * // we get the next 6 hotels or the remaining ones
+	 * for (Long index = start; index < end && index < hotelsQuantity; index++) {
+	 * hotels.add(hotelRepository.findById(index));
+	 * }
+	 * 
+	 * model.addAttribute("hotels", hotels);
+	 * }
+	 * 
+	 * return "/hotelTemplate";
+	 * }
+	 */
+
+	@GetMapping("/loadMoreHotels/{start}/{end}")
+	public String loadMoreHotels(Model model,
+			@PathVariable Long start,
+			@PathVariable Long end) {
+
+		var hotelsQuantity = hotelRepository.count();
+
+		if (start <= hotelsQuantity) {
+
+			var hotels = new ArrayList<>();
+
+			// Obtenemos los IDs de los hoteles para la página actual
+			List<Long> hotelIds = new ArrayList<>();
+			for (long index = start; index < end && index <= hotelsQuantity; index++) {
+				hotelIds.add(index);
+			}
+
+			// Buscamos los objetos Hotel correspondientes a los IDs
+			for (Long hotelId : hotelIds) {
+				Hotel hotel = hotelRepository.findById(hotelId).orElse(null);
+				if (hotel != null) {
+					hotels.add(hotel);
+				}
+			}
+
+			model.addAttribute("hotels", hotels);
+		}
+
+		return "hotelTemplate";
+	}
+
 }

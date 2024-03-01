@@ -1,74 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Index</title>
-{{>headerindex}}
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-	    <div class="container">
-	      <a class="navbar-brand" href="index">Your<span>HOmeTEL</span></a>
-	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="oi oi-menu"></span> Menu
-	      </button>
-        <ul class="navbar-nav ml-auto">
-          <!--Search bar-->
-          <div class="collapse navbar-collapse" id="ftco-nav">
-            <div class="sidebar-box mt-3">
-              <form method="get" action="/indexsearch" class="search-form">
-                <div class="form-group">
-                  <input type="search" class="form-control" placeholder="Type..." name="searchValue">
-                  <button class="icon ion-ios-search" type="submit">
-                  <input type="hidden" name="_csrf" value="{{token}}"/>
-                </div>
-              </form>
-            </div>
+
+<head>
+  <script src="/js/loadHotels.js"></script>
+  <title>Index</title>
+  {{>headerindex}}
+  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index">Your<span>HOmeTEL</span></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="oi oi-menu"></span> Menu
+      </button>
+      <ul class="navbar-nav ml-auto">
+        <!--Search bar-->
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <div class="sidebar-box mt-3">
+            <form method="get" action="/indexsearch" class="search-form">
+              <div class="form-group">
+                <input type="search" class="form-control" placeholder="Type..." name="searchValue">
+                <button class="icon ion-ios-search" type="submit">
+                  <input type="hidden" name="_csrf" value="{{token}}" />
+              </div>
+            </form>
           </div>
-          <li class="nav-item active"><a href="/index" class="nav-link font-size-20">Home</a></li>
-          {{^isUser}}
-          <li class="nav-item"><a href="/login" class="nav-link font-size-20">Log In</a></li>
-          {{/isUser}}
-          {{#isUser}}
-          <li class="nav-item"><a href="/profile" class="nav-link font-size-15">Profile</a></li>
-          {{/isUser}}
-	      </ul>
-	    </div>
-	  </nav>
-    <!-- END nav -->
-		<div class="hero-wrap" style="background-image: url('images/bg_3.jpg');">
-      <div class="overlay"></div>
-      <div class="container">
-        <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
-          <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
-          	<div class="text">
-	            <p class="breadcrumbs mb-2"><span class="mr-2"><a href="index.html">Home</a></span> <span>About Us</span></p>
-	            <h1 class="mb-4 bread">Our Hotels</h1>
-            </div>
+        </div>
+        <li class="nav-item active"><a href="/index" class="nav-link font-size-20">Home</a></li>
+        {{^isUser}}
+        <li class="nav-item"><a href="/login" class="nav-link font-size-20">Log In</a></li>
+        {{/isUser}}
+        {{#isUser}}
+        <li class="nav-item"><a href="/profile" class="nav-link font-size-15">Profile</a></li>
+        {{/isUser}}
+      </ul>
+    </div>
+  </nav>
+  <!-- END nav -->
+  <div class="hero-wrap" style="background-image: url('images/bg_3.jpg');">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
+        <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+          <div class="text">
+            <p class="breadcrumbs mb-2"><span class="mr-2"><a href="index.html">Home</a></span> <span>About Us</span>
+            </p>
+            <h1 class="mb-4 bread">Our Hotels</h1>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <section class="ftco-section">
-      <div class="container">
-        <div class="row d-flex">
-          {{#hotels}}
-          <div class="col-md-4 d-flex ftco-animate">
-            <div class="blog-entry align-self-stretch">
-              <a class="block-20 rounded" style="background-image: url('images/hotel1.jpg');">
-              </a>
-              <div class="text mt-3">
-                <h3 class="heading">{{name}}</h3>
-                <p>{{description}}</p>
-                {{#isClient}}
-                <a href="/hotelinformation/{{id}}" class="btn btn-secondary rounded">Book now</a>
-                {{/isClient}}
-                {{^isClient}}
-                <a href="/hotelinformation/{{id}}" class="btn btn-secondary rounded">View information</a>
-                {{/isClient}}
-                <a href="/hotelReview/{{id}}" class="btn btn-secondary rounded">Reviews</a>
-              </div>
+  <section class="ftco-section">
+    <div class="container">
+      <div class="row d-flex" id="hotelsList">
+        {{#hotels}}
+        <div class="col-md-4 d-flex ftco-animate">
+          <div class="blog-entry align-self-stretch">
+            <a class="block-20 rounded" style="background-image: url('images/hotel1.jpg');">
+            </a>
+            <div class="text mt-3">
+              <h3 class="heading">{{name}}</h3>
+              <p>{{description}}</p>
+              {{#isClient}}
+              <a href="/hotelinformation/{{id}}" class="btn btn-secondary rounded">Book now</a>
+              {{/isClient}}
+              {{^isClient}}
+              <a href="/hotelinformation/{{id}}" class="btn btn-secondary rounded">View information</a>
+              {{/isClient}}
+              <a href="/hotelReview/{{id}}" class="btn btn-secondary rounded">Reviews</a>
             </div>
           </div>
-          {{/hotels}}
-    </section>
+        </div>
+        {{/hotels}}
+      </div>
+    </div>
+  </section>
 
-    {{>footerindex}}
+  <div>
+    <a onclick='loadMoreHotels()' class="btn btn-secondary rounded">Más hoteles</a>
+  </div>
+
+
+  {{>footerindex}}

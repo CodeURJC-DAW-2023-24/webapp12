@@ -111,10 +111,15 @@ public class initDataBaseService{
         Hotel hotel2 = new Hotel("Hotel2", "hotel ", "loc2",0F, null, manager2, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         
         Hotel hotel3 = new Hotel("Hotel3", "hotel ", "loc2",0F, null, manager3, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+
         
         hotelRepository.save(hotel1); 
         hotelRepository.save(hotel2);
         hotelRepository.save(hotel3); 
+
+        for (int i = 4; i <= 20; i++) {
+            hotelRepository.save(new Hotel("Hotel" + i, "Desc hotel" + i, "Loc hotel" + i, i, null, manager3, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
+        }
 
         //add hotel to rooms
         room1.setHotel(hotel1);

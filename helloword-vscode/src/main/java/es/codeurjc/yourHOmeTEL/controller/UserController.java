@@ -1,6 +1,5 @@
 package es.codeurjc.yourHOmeTEL.controller;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,11 +36,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
-
 @Controller
-public class UserController{
+public class UserController {
 
 	@Autowired
 	private UserService userService;
@@ -63,97 +59,112 @@ public class UserController{
 
 	@Autowired
 	private ReservationRepository reservationRepository;
-	
 
-	//ALL CONTROLLERS
+	// ALL CONTROLLERS
 
-	
-	/*@GetMapping("/index")
-	public String index(Model model,  HttpServletRequest request) {
-		List<Hotel> recomendedHotels = hotelRepository.findTop6ByManager_Validated(true);
-			
-		model.addAttribute("hotels", recomendedHotels);
-		return "index";
+	/*
+	 * @GetMapping("/index")
+	 * public String index(Model model, HttpServletRequest request) {
+	 * List<Hotel> recomendedHotels =
+	 * hotelRepository.findTop6ByManager_Validated(true);
+	 * 
+	 * model.addAttribute("hotels", recomendedHotels);
+	 * return "index";
+	 * 
+	 * }
+	 */
 
-	}*/
-
-	//ADVANCED RECOMMENDATION ALGORITHM DONT DELETE
-	@GetMapping("/index")
-	public String index(Model model,  HttpServletRequest request) {
+	// ADVANCED RECOMMENDATION ALGORITHM DONT DELETE
+/* 	@GetMapping("/index")
+	public String index(Model model, HttpServletRequest request) {
 		String nick = request.getUserPrincipal().getName();
 		UserE user = userRepository.findByNick(nick).orElseThrow();
 
-		List <Reservation> userReservations = user.getReservations();
+		List<Reservation> userReservations = user.getReservations();
 		List<Hotel> recomendedHotels = userService.findRecomendedHotels(6, userReservations, user);
-				
+
 		model.addAttribute("hotels", recomendedHotels);
+
+		return "index";
+
+	} */
+
+	@GetMapping("/index")
+	public String index(Model model, HttpServletRequest request) {
+		List<Hotel> hotels = new ArrayList<>();
+		for (Long i = 1L; i <= 6L; i++) {
+			Hotel hotel = hotelRepository.findById(i).orElseThrow();
+			hotels.add(hotel);
+		}
+
+		model.addAttribute("hotels", hotels);
 
 		return "index";
 
 	}
+	
 
 	@GetMapping("/indexsearch")
-	public String indexSearch(Model model,  @RequestParam String searchValue) {
-		List<Hotel> hotels = hotelRepository.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(true,searchValue);
-		model.addAttribute("hotels", hotels);		
+	public String indexSearch(Model model, @RequestParam String searchValue) {
+		List<Hotel> hotels = hotelRepository.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(true,
+				searchValue);
+		model.addAttribute("hotels", hotels);
 		return "index";
 
 	}
 
 	@GetMapping("/error")
-	public String Error(Model model, HttpServletRequest request) {	
+	public String Error(Model model, HttpServletRequest request) {
 		return "/error";
 
 	}
 
 	@GetMapping("/returnmainpage")
-	public String returnmainpage(Model model, HttpServletRequest request) {	
+	public String returnmainpage(Model model, HttpServletRequest request) {
 		return "redirect:/index";
 
 	}
-	
-	//CLIENT CONTROLLERS
+
+	// CLIENT CONTROLLERS
 	@PostMapping("/addReservation/{id}")
-	public String addReservation(Model model, @PathVariable Long id, HttpServletRequest request, String checkIn, String checkOut, Integer numPeople) {
+	public String addReservation(Model model, @PathVariable Long id, HttpServletRequest request, String checkIn,
+			String checkOut, Integer numPeople) {
 		LocalDate checkInDate = reservationService.toLocalDate(checkIn);
 		LocalDate checkOutDate = reservationService.toLocalDate(checkOut);
 		Room room = hotelService.checkRooms(id, checkInDate, checkOutDate, numPeople);
-		if (room != null){
+		if (room != null) {
 			UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			Hotel hotel = hotelRepository.findById(id).orElseThrow();
-			Reservation newRe = new Reservation(checkInDate,checkOutDate, numPeople, hotel, room, user);
+			Reservation newRe = new Reservation(checkInDate, checkOutDate, numPeople, hotel, room, user);
 			reservationRepository.save(newRe);
 			return "redirect:/clientreservations";
-		}
-		else
+		} else
 			return "redirect:/notRooms";
 	}
 
 	@GetMapping("/notRooms")
-	public String notRooms(Model model) {	
+	public String notRooms(Model model) {
 		return "notRooms";
 	}
-	
-	
-	
+
 	@GetMapping("/clientreservation")
-	public String clientreservation(Model model,  HttpServletRequest request) {
-		UserE currentClient =  userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+	public String clientreservation(Model model, HttpServletRequest request) {
+		UserE currentClient = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 
 		model.addAttribute("reservations", currentClient.getReservations());
 		return "ClientReservation";
 
 	}
 
-	//MANAGER CONTROLLERS
+	// MANAGER CONTROLLERS
 	@GetMapping("/viewhotelsmanager")
-	public String viewHotelsManager(Model model,HttpServletRequest request) {
+	public String viewHotelsManager(Model model, HttpServletRequest request) {
 
 		String managernick = request.getUserPrincipal().getName();
-		UserE currentManager =  userRepository.findByNick(managernick).orElseThrow();
+		UserE currentManager = userRepository.findByNick(managernick).orElseThrow();
 
 		model.addAttribute("hotels", currentManager.getHotels());
-		
+
 		return "viewhotelsmanager";
 
 	}
@@ -163,20 +174,20 @@ public class UserController{
 
 		List<Integer> info = new ArrayList<>();
 		model.addAttribute("info", info);
-		
+
 		return "testChart";
 
 	}
 
 	@GetMapping("/chartsmanager")
-	public String chartsManager(Model model,  HttpServletRequest request) {
+	public String chartsManager(Model model, HttpServletRequest request) {
 
 		return "chartsmanager";
 
 	}
 
 	@PostMapping("/application")
-	public String managerApplication(Model model,  HttpServletRequest request) {
+	public String managerApplication(Model model, HttpServletRequest request) {
 
 		String nick = request.getUserPrincipal().getName();
 		UserE manager = userRepository.findByNick(nick).orElseThrow();
@@ -187,10 +198,9 @@ public class UserController{
 
 	}
 
-
-	//ADMIN CONTROLLERS
+	// ADMIN CONTROLLERS
 	@GetMapping("/chartsadmin")
-	public String chartsAdmin(Model model,  HttpServletRequest request) {
+	public String chartsAdmin(Model model, HttpServletRequest request) {
 
 		return "chartsadmin";
 
@@ -198,12 +208,12 @@ public class UserController{
 
 	@GetMapping("/managervalidation")
 	public String managerValidation(Model model) {
-		List <UserE> unvalidatedManagersList = new ArrayList<>();
+		List<UserE> unvalidatedManagersList = new ArrayList<>();
 		unvalidatedManagersList = userRepository.findByValidatedAndRejected(false, false);
 
-		if (unvalidatedManagersList!=null){
-			model.addAttribute("unvalidatedManagers", unvalidatedManagersList);		
-		}	
+		if (unvalidatedManagersList != null) {
+			model.addAttribute("unvalidatedManagers", unvalidatedManagersList);
+		}
 
 		return "managervalidation";
 	}
@@ -211,64 +221,61 @@ public class UserController{
 	@PostMapping("/rejection/{id}")
 	public String rejectManager(Model model, @PathVariable Long id) {
 		UserE manager = userRepository.findById(id).orElseThrow();
-		
-		if (manager!=null){
+
+		if (manager != null) {
 			manager.setRejected(true);
 			manager.setvalidated(false);
-			userRepository.save(manager);			
-		}			
+			userRepository.save(manager);
+		}
 		return "redirect:/managervalidation";
 
 	}
 
 	@PostMapping("/acceptance/{id}")
-	public String acceptManager(Model model,  @PathVariable Long id) {
+	public String acceptManager(Model model, @PathVariable Long id) {
 		UserE manager = userRepository.findById(id).orElseThrow();
-		
-		if (manager!=null){
+
+		if (manager != null) {
 			manager.setRejected(false);
 			manager.setvalidated(true);
-			userRepository.save(manager);			
-		}			
+			userRepository.save(manager);
+		}
 		return "redirect:/managervalidation";
 
 	}
 
-
-
 	@GetMapping("/managerlist")
-	public String managerList(Model model,  HttpServletRequest request) {
+	public String managerList(Model model, HttpServletRequest request) {
 
 		return "managerlist";
 
 	}
-	
-	
+
 	@GetMapping("/editprofile/{id}")
-	public String editProfile(Model model, @PathVariable Long id ) {
-		
-		UserE foundUser = userRepository.findById(id).orElseThrow(); //need to transform the throw into 404 error. Page 25 database
+	public String editProfile(Model model, @PathVariable Long id) {
+
+		UserE foundUser = userRepository.findById(id).orElseThrow(); // need to transform the throw into 404 error. Page 25
+																																	// database
 		model.addAttribute("user", foundUser);
 		return "editprofile";
 
 	}
 
-	
 	@PostMapping("/editprofile/replace/{id}")
-	public String editProfile(Model model, @PathVariable Long id,		
-	
-	@RequestParam	String name,
-	@RequestParam	String lastname,
-	@RequestParam	String location,
-	@RequestParam	String org,
-	@RequestParam	String language,
-	@RequestParam	String phone,
-	@RequestParam	String mail,
-	@RequestParam	String bio) {
-		//TODO: process POST request
-		
+	public String editProfile(Model model, @PathVariable Long id,
+
+			@RequestParam String name,
+			@RequestParam String lastname,
+			@RequestParam String location,
+			@RequestParam String org,
+			@RequestParam String language,
+			@RequestParam String phone,
+			@RequestParam String mail,
+			@RequestParam String bio) {
+		// TODO: process POST request
+
 		UserE foundUser = userRepository.findById(id).orElseThrow();
-		
+
 		foundUser.setName(name);
 		foundUser.setLocation(location);
 		foundUser.setOrganization(org);
@@ -278,60 +285,55 @@ public class UserController{
 		foundUser.setBio(bio);
 
 		userRepository.save(foundUser);
-		
+
 		model.addAttribute("user", foundUser);
 
-		return "redirect:/profile" ;
+		return "redirect:/profile";
 
-		//no se cambia el nick por el tema de la seguridad 
+		// no se cambia el nick por el tema de la seguridad
 
-		
 	}
-	
 
 	@GetMapping("/profile")
-	public String profile(Model model,HttpServletRequest request) {
-		
+	public String profile(Model model, HttpServletRequest request) {
 
 		String usernick = request.getUserPrincipal().getName();
-		UserE currentUser =  userRepository.findByNick(usernick).orElseThrow();
-		if (currentUser.getBio() == null){
+		UserE currentUser = userRepository.findByNick(usernick).orElseThrow();
+		if (currentUser.getBio() == null) {
 			model.addAttribute("hasbio", false);
 			currentUser.setBio("");
-		}else
+		} else
 			model.addAttribute("hasbio", true);
 
-		if (currentUser.getLocation() == null){
-				model.addAttribute("haslocation", false);
-				currentUser.setLocation("");
-		}else
+		if (currentUser.getLocation() == null) {
+			model.addAttribute("haslocation", false);
+			currentUser.setLocation("");
+		} else
 			model.addAttribute("haslocation", true);
 
-		if (currentUser.getPhone() == null){
-				model.addAttribute("hasphone", false);
-				currentUser.setPhone(" ");
-		}else
+		if (currentUser.getPhone() == null) {
+			model.addAttribute("hasphone", false);
+			currentUser.setPhone(" ");
+		} else
 			model.addAttribute("hasphone", true);
 
-		if (currentUser.getOrganization() == null){
-				model.addAttribute("hasorg", false);
-				currentUser.setOrganization(" ");
-		}else
+		if (currentUser.getOrganization() == null) {
+			model.addAttribute("hasorg", false);
+			currentUser.setOrganization(" ");
+		} else
 			model.addAttribute("hasorg", true);
 
-		if (currentUser.getLanguage() == null){
-				model.addAttribute("haslang", false);
-				currentUser.setLanguage(" ");
-		}else
+		if (currentUser.getLanguage() == null) {
+			model.addAttribute("haslang", false);
+			currentUser.setLanguage(" ");
+		} else
 			model.addAttribute("haslang", true);
-		
-			
+
 		model.addAttribute("user", currentUser);
 
 		return "profile";
 
-}
-
+	}
 
 	@GetMapping("/login")
 	public String login(Model model) {
@@ -349,7 +351,7 @@ public class UserController{
 	}
 
 	@PostMapping("/register")
-	public String registerClient(Model model, UserE user, Integer type){
+	public String registerClient(Model model, UserE user, Integer type) {
 		if (!userService.existNick(user.getNick())) {
 			user.setPass(passwordEncoder.encode(user.getPass()));
 			List<String> rols = new ArrayList<>();
@@ -365,7 +367,7 @@ public class UserController{
 			return "redirect:/nickTaken";
 		}
 	}
-	
+
 	@GetMapping("/nickTaken")
 	public String takenUserName(Model model, HttpServletRequest request) {
 		return "nickTaken";

@@ -59,6 +59,9 @@ public class SecurityConfiguration {
                 .requestMatchers("/notRooms/**").permitAll()
                 .requestMatchers("/indexsearch").permitAll()
                 .requestMatchers("/returnmainpage").permitAll()
+                .requestMatchers("/loadMoreHotels/**").permitAll()
+
+
                 
                 //User pages
                 .requestMatchers("/profile/**").hasAnyRole("USER")
