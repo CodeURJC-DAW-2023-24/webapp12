@@ -91,7 +91,7 @@ public class UserService implements GeneralService<UserE> {
 		Optional<UserE> user = findByNick(nick);
 		return user.isPresent();
 	}
-    /*public List<Hotel> findRecomendedHotels(int numHotels, List<Reservation> userReservations){
+    public List<Hotel> findRecomendedHotels(int numHotels, List<Reservation> userReservations){
         List<UserE> recomendedUsers = new ArrayList<>();
         List<Hotel> recomendedHotels = new ArrayList<>();
 
@@ -112,7 +112,7 @@ public class UserService implements GeneralService<UserE> {
             }
         }
         return recomendedHotels;
-    }*/
+    }
     
     
 }

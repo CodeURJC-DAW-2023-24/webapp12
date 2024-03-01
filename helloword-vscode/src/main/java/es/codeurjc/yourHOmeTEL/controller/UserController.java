@@ -77,6 +77,7 @@ public class UserController{
 
 	}
 
+	//ADVANCED RECOMMENDATION ALGORITHM DONT DELETE
 	/*@GetMapping("/index")
 	public String index(Model model,  HttpServletRequest request) {
 		String nick = request.getUserPrincipal().getName();

@@ -66,8 +66,11 @@ public class InitDataBaseService{
         
 
         //init users
-        UserE client =new UserE("Jack1", "Wells1", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "user", passwordEncoder.encode("pass"), null, null, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());            
+        UserE client1 =new UserE("Jack1", "Wells1", "Bio", "loc", "lan", "phone",
+        "mail", "org", null, "user", passwordEncoder.encode("pass"), null, null, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        
+        UserE client2 =new UserE("Jack4", "Wells4", "Bio", "loc", "lan", "phone",
+        "mail", "org", null, "user2", passwordEncoder.encode("pass2"), null, null, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());            
         
         UserE manager1 = new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
         "mail", "org", null, "manager",  passwordEncoder.encode("manager"), true, false, rolesManager, new ArrayList<>(), new ArrayList<>(),  new ArrayList<>()); 
@@ -80,7 +83,8 @@ public class InitDataBaseService{
         
         userRepository.save(manager1);
         userRepository.save(manager2);
-        userRepository.save(client);
+        userRepository.save(client1);
+        userRepository.save(client2);
         userRepository.save(admin); 
 
         //init rooms
@@ -99,6 +103,14 @@ public class InitDataBaseService{
         hotelRepository.save(hotel1); 
         hotelRepository.save(hotel2); 
 
+        //add hotel to rooms
+        room1.setHotel(hotel1);
+        room2.setHotel(hotel2);//mirar el tema de las habitaciones del hotel ya que se supone que el hotel no tiene habitaciones
+         
+        //save rooms
+        roomRepository.save(room1);
+        roomRepository.save(room2);
+        
         //add hotel to manager
         manager1.getHotels().add(hotel1);
         manager2.getHotels().add(hotel2);
@@ -107,14 +119,7 @@ public class InitDataBaseService{
         userRepository.save(manager2);
         
 
-        //add hotel to rooms
-        room1.setHotel(hotel1);
-        room2.setHotel(hotel1);//mirar el tema de las habitaciones del hotel ya que se supone que el hotel no tiene habitaciones
-        
-
-
-        roomRepository.save(room1);
-        roomRepository.save(room2);
+       
         
         //date creation
         LocalDate today = LocalDate.now();
@@ -123,7 +128,7 @@ public class InitDataBaseService{
         LocalDate dayAfterTomorrow = today.plus(Period.ofDays(2));
         
         //init review
-        Review review1 = new Review(4, "Hola", null, hotel1, client);
+        Review review1 = new Review(4, "Hola", null, hotel1, client1);
 
         reviewRepository.save(review1);
 
@@ -133,34 +138,38 @@ public class InitDataBaseService{
         hotelRepository.save(hotel1);
 
         //add review to client
-        client.getReviews().add(review1);
+        client1.getReviews().add(review1);
 
-        userRepository.save(client);
+        userRepository.save(client1);
 
         //init reservation
         
 
-        Reservation reservation1 = new Reservation(LocalDate.of(2024, 2, 27), LocalDate.of(2024, 3, 1), 2, hotel1, room1, client);
-        Reservation reservation2 = new Reservation(LocalDate.of(2024, 3, 4), LocalDate.of(2024, 3, 6), 2, hotel1, room1, client);
+        Reservation reservation1 = new Reservation(LocalDate.of(2024, 2, 27), LocalDate.of(2024, 3, 1), 2, hotel1, room1, client1);
+        Reservation reservation2 = new Reservation(LocalDate.of(2024, 3, 4), LocalDate.of(2024, 5, 6), 2, hotel2, room2, client2);
 
         reservationRepository.save(reservation1);
         reservationRepository.save(reservation2);
 
         //add reservation to hotel
         hotel1.getReservations().add(reservation1);
-        hotel1.getReservations().add(reservation2);
+        hotel2.getReservations().add(reservation2);
 
         hotelRepository.save(hotel1);
-
+        hotelRepository.save(hotel2);
+        
         //add reservation to room
         room1.getReservations().add(reservation1);
+        room2.getReservations().add(reservation2);
 
         roomRepository.save(room1);
 
         //add reservation to client
-        client.getReservation().add(reservation1);
+        client1.getReservation().add(reservation1);
+        client2.getReservation().add(reservation2);
 
-        userRepository.save(client);
+        userRepository.save(client1);
+        userRepository.save(client2);
 
     }
 }
