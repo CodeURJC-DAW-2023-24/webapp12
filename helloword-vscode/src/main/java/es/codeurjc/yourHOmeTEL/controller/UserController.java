@@ -84,7 +84,7 @@ public class UserController{
 		UserE user = userRepository.findByNick(nick).orElseThrow();
 
 		List <Reservation> userReservations = user.getReservations();
-		List<Hotel> recomendedHotels = userService.findRecomendedHotels(6, userReservations);
+		List<Hotel> recomendedHotels = userService.findRecomendedHotels(6, userReservations, user);
 				
 		model.addAttribute("hotels", recomendedHotels);
 
@@ -97,6 +97,12 @@ public class UserController{
 		List<Hotel> hotels = hotelRepository.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(true,searchValue);
 		model.addAttribute("hotels", hotels);		
 		return "index";
+
+	}
+
+	@GetMapping("/error")
+	public String Error(Model model, HttpServletRequest request) {	
+		return "/error";
 
 	}
 
@@ -283,15 +289,43 @@ public class UserController{
 	}
 	
 
-
-
-	
 	@GetMapping("/profile")
 	public String profile(Model model,HttpServletRequest request) {
 		
 
 		String usernick = request.getUserPrincipal().getName();
 		UserE currentUser =  userRepository.findByNick(usernick).orElseThrow();
+		if (currentUser.getBio() == null){
+			model.addAttribute("hasbio", false);
+			currentUser.setBio("");
+		}else
+			model.addAttribute("hasbio", true);
+
+		if (currentUser.getLocation() == null){
+				model.addAttribute("haslocation", false);
+				currentUser.setLocation("");
+		}else
+			model.addAttribute("haslocation", true);
+
+		if (currentUser.getPhone() == null){
+				model.addAttribute("hasphone", false);
+				currentUser.setPhone(" ");
+		}else
+			model.addAttribute("hasphone", true);
+
+		if (currentUser.getOrganization() == null){
+				model.addAttribute("hasorg", false);
+				currentUser.setOrganization(" ");
+		}else
+			model.addAttribute("hasorg", true);
+
+		if (currentUser.getLanguage() == null){
+				model.addAttribute("haslang", false);
+				currentUser.setLanguage(" ");
+		}else
+			model.addAttribute("haslang", true);
+		
+			
 		model.addAttribute("user", currentUser);
 
 		return "profile";

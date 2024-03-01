@@ -70,29 +70,39 @@ public class initDataBaseService{
         "mail", "org", null, "user", passwordEncoder.encode("pass"), null, null, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         
         UserE client2 =new UserE("Jack4", "Wells4", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "user2", passwordEncoder.encode("pass2"), null, null, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());            
+        "mail", "org", null, "user2", passwordEncoder.encode("pass2"), null, null, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()); 
+        
+        UserE client3 =new UserE("Jack6", "Wells6", "Bio", "loc", "lan", "phone",
+        "mail", "org", null, "user3", passwordEncoder.encode("pass3"), null, null, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());            
         
         UserE manager1 = new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
         "mail", "org", null, "manager",  passwordEncoder.encode("manager"), true, false, rolesManager, new ArrayList<>(), new ArrayList<>(),  new ArrayList<>()); 
         
         UserE manager2 = new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "manager2",  passwordEncoder.encode("manager2"), false, false, rolesManager, new ArrayList<>(), new ArrayList<>(),  new ArrayList<>());         
+        "mail", "org", null, "manager2",  passwordEncoder.encode("manager2"), true, false, rolesManager, new ArrayList<>(), new ArrayList<>(),  new ArrayList<>());
+        
+        UserE manager3 = new UserE("Jack5", "Wells5", "Bio", "loc", "lan", "phone",
+        "mail", "org", null, "manager3",  passwordEncoder.encode("manager3"), false, false, rolesManager, new ArrayList<>(), new ArrayList<>(),  new ArrayList<>());         
 
         UserE admin = new UserE("Jack3", "Wells3", "Bio", "loc", "lan", "phone",
         "mail", "org", null, "admin",  passwordEncoder.encode("admin"), null, null, rolesAdmin, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()); 
         
         userRepository.save(manager1);
         userRepository.save(manager2);
+        userRepository.save(manager3);
         userRepository.save(client1);
         userRepository.save(client2);
+        userRepository.save(client3);
         userRepository.save(admin); 
 
         //init rooms
         Room room1 = new Room(2, 200F, new ArrayList<>(), null);
         Room room2 = new Room(2, 200F, new ArrayList<>(), null);
+        Room room3 = new Room(3, 300F, new ArrayList<>(), null);
 
         roomRepository.save(room1);
         roomRepository.save(room2);
+        roomRepository.save(room3);
 
 
         //init hoteles
@@ -100,26 +110,30 @@ public class initDataBaseService{
 
         Hotel hotel2 = new Hotel("Hotel2", "hotel ", "loc2",0F, null, manager2, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         
+        Hotel hotel3 = new Hotel("Hotel3", "hotel ", "loc2",0F, null, manager3, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        
         hotelRepository.save(hotel1); 
-        hotelRepository.save(hotel2); 
+        hotelRepository.save(hotel2);
+        hotelRepository.save(hotel3); 
 
         //add hotel to rooms
         room1.setHotel(hotel1);
         room2.setHotel(hotel2);//mirar el tema de las habitaciones del hotel ya que se supone que el hotel no tiene habitaciones
-         
+        room3.setHotel(hotel3); 
+        
         //save rooms
         roomRepository.save(room1);
         roomRepository.save(room2);
+        roomRepository.save(room3);
         
         //add hotel to manager
         manager1.getHotels().add(hotel1);
         manager2.getHotels().add(hotel2);
+        manager2.getHotels().add(hotel3);
 
         userRepository.save(manager1);
         userRepository.save(manager2);
-        
-
-       
+          
         
         //date creation
         LocalDate today = LocalDate.now();
@@ -127,52 +141,66 @@ public class initDataBaseService{
         LocalDate tomorrow = today.plus(Period.ofDays(1));
         LocalDate dayAfterTomorrow = today.plus(Period.ofDays(2));
         
-        //init review
-        Review review1 = new Review(4, "Hola", null, hotel1, client1);
-
-        reviewRepository.save(review1);
-
-        //add review to hotel
-        hotel1.getReviews().add(review1);
-
-        hotelRepository.save(hotel1);
-
-        //add review to client
-        client1.getReviews().add(review1);
-
-        userRepository.save(client1);
 
         //init reservation
-        
-
         Reservation reservation1 = new Reservation(LocalDate.of(2024, 2, 27), LocalDate.of(2024, 3, 1), 2, hotel1, room1, client1);
         Reservation reservation2 = new Reservation(LocalDate.of(2024, 3, 4), LocalDate.of(2024, 5, 6), 2, hotel2, room2, client1);
         Reservation reservation3 = new Reservation(LocalDate.of(2024, 6, 4), LocalDate.of(2024, 7, 6), 2, hotel2, room2, client2);
-
+        Reservation reservation4 = new Reservation(LocalDate.of(2024, 6, 4), LocalDate.of(2024, 7, 6), 2, hotel3, room3, client3);
+        
         reservationRepository.save(reservation1);
         reservationRepository.save(reservation2);
         reservationRepository.save(reservation3);
+        reservationRepository.save(reservation4);
 
         //add reservation to hotel
         hotel1.getReservations().add(reservation1);
         hotel2.getReservations().add(reservation2);
         hotel2.getReservations().add(reservation3);
+        hotel3.getReservations().add(reservation4);
 
         hotelRepository.save(hotel1);
         hotelRepository.save(hotel2);
+        hotelRepository.save(hotel3);
         
         //add reservation to room
         room1.getReservations().add(reservation1);
         room2.getReservations().add(reservation2);
         room2.getReservations().add(reservation3);
+        room3.getReservations().add(reservation4);
 
         roomRepository.save(room1);
+        roomRepository.save(room2);
+        roomRepository.save(room3);
 
         //add reservation to client
         client1.getReservations().add(reservation1);
         client1.getReservations().add(reservation2);
         client2.getReservations().add(reservation3);
+        client3.getReservations().add(reservation4);
 
+        userRepository.save(client1);
+        userRepository.save(client2);
+        userRepository.save(client3);
+
+        //init review
+        Review review1 = new Review(4, "Hola", LocalDate.of(2024, 3, 2), hotel1, client1);
+        Review review2 = new Review(4, "Hola", LocalDate.of(2024, 7, 7), hotel2, client2);
+
+        reviewRepository.save(review1);
+        reviewRepository.save(review2);
+
+        //add review to hotel
+        hotel1.getReviews().add(review1);
+        hotel1.getReviews().add(review2);
+
+        hotelRepository.save(hotel1);
+        hotelRepository.save(hotel2);
+
+        //add review to client
+        client1.getReviews().add(review1);
+        client2.getReviews().add(review2);
+        
         userRepository.save(client1);
         userRepository.save(client2);
 
