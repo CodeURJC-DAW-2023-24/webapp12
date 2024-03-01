@@ -59,6 +59,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/notRooms/**").permitAll()
                 .requestMatchers("/indexsearch").permitAll()
                 .requestMatchers("/returnmainpage").permitAll()
+                .requestMatchers("/captcha").permitAll()
                 .requestMatchers("/loadMoreHotels/**").permitAll()
 
 
@@ -69,8 +70,10 @@ public class SecurityConfiguration {
                 
 
                 //Client pages
-                .requestMatchers("/clientreservation/**").hasAnyRole("CLIENT")
+                .requestMatchers("/clientreservations/**").hasAnyRole("CLIENT")
+                .requestMatchers("/reservationInfo/**").hasAnyRole("CLIENT")
                 .requestMatchers("/addReservation/**").hasAnyRole("CLIENT")
+                .requestMatchers("/cancelReservation/**").hasAnyRole("CLIENT")
 
                 //Manager pages
                 .requestMatchers("/edithotel/**").hasAnyRole("MANAGER")

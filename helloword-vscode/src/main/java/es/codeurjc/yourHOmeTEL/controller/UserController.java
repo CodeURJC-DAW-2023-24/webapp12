@@ -146,14 +146,33 @@ public class UserController {
 	public String notRooms(Model model) {
 		return "notRooms";
 	}
-
-	@GetMapping("/clientreservation")
-	public String clientreservation(Model model, HttpServletRequest request) {
-		UserE currentClient = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-
+	
+	
+	
+	@GetMapping("/clientreservations")
+	public String clientreservation(Model model,  HttpServletRequest request) {
+		UserE currentClient =  userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 		model.addAttribute("reservations", currentClient.getReservations());
 		return "ClientReservation";
 
+	}
+
+	@GetMapping("/reservationInfo/{id}")
+	public String clientreservation(Model model,  HttpServletRequest request,  @PathVariable Long id) {
+		model.addAttribute("reservation", reservationRepository.findById(id).orElseThrow());
+		return "reservationInfo";
+
+	}
+
+	@GetMapping("/cancelReservation/{id}")
+	public String deleteReservation(@PathVariable Long id) {
+
+		Optional <Reservation> reservation = reservationRepository.findById(id); 
+		if (reservation.isPresent()) {
+			hotelRepository.deleteById(id);
+		}
+
+		return "redirect:/clientreservations";
 	}
 
 	// MANAGER CONTROLLERS
