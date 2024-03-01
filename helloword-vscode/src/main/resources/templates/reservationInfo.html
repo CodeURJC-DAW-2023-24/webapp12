@@ -2,87 +2,72 @@
 <html lang="en">
   <head>
     <title>Hotel Information</title>
-    {{>headerindex}}
-        <!-- Hotel more info -->
-        <form action = "/confirmReservation" method="post">  
-            <div class="modal fade" role="dialog" tabindex="-1" id="hotel-info-modal">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Reservation info</h5>
-                            <button type="button" class="close" data-dismiss="modal">
-                            <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="py-1">             
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="row">
-                                            <div class="col ml-4">
-                                                <div class="form-group">
-                                                    <p>Hotel: </p>
-                                                    <p id="nameHotel">{{reservation.hotel.name}}</p>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <p>Location: </p>
-                                                    <p id="location">{{reservation.hotel.location}}</p>
-                                                </div>
-                                            </div>
-                                        </div>                     
-                                        <div class="row">
-                                            <div class="col mb-3 ml-4">
-                                                <div class="form-group">
-                                                    <p>Price: </p>
-                                                    <p id="roomsAmount">{{reservation.room.cost}}</p>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <p>Check-In</p>
-                                                    <p id="hotelManager">{{reservation.checkIn}}</p>
-                                                </div>
-                                            </div>
-                                            <div class="col mr-4">
-                                                <div class="form-group">
-                                                    <p>Chech-Out</p>
-                                                    <p id="hotelManager">{{reservation.checkOut}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col mb-3 ml-4">                         
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <p>Maximum capacity</p>
-                                                    <p id="reservations">{{reservation.numPeople}}</p>
-                                                </div>
-                                            </div>
-                                            <div class="col mr-4">
-                                            </div>                      
-                                        </div>
-                                        <div class="row">
-                                            <div class="col mb-3 ml-4">                        
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group">                                      
-                                                    <input type="submit" value="Confirm reservartion" class="btn btn-primary btn-user btn-block"/>
-                                                    <input type="hidden" name="_csrf" value="{{token}}"/>
-                                                </div>
-                                            </div>
-                                            <div class="col mr-4">
-                                            </div>                      
-                                        </div>
-                                    </div>
-                                </div>                
-                            </div>
-                        </div>
-                    </div>
-                </div>
+{{>headerindex}}
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="index.html">Your<span>HOmeTEL</span></a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	          <li class="nav-item"><a href="index" class="nav-link">Home</a></li>
+            {{^isUser}}
+            <li class="nav-item"><a href="login" class="nav-link">Log In</a></li>
+            {{/isUser}}
+            {{#isUser}}
+            <li class="nav-item"><a href="profile" class="nav-link">Profile</a></li>
+            {{/isUser}}
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
+	<div class="hero-wrap" style="background-image: url('/images/bg_3.jpg');">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+          	<div class="text">
+	            <h1 class="mb-4 bread">Reservation Details</h1>
             </div>
-        </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+          	<div class="row">
+          		<div class="col-md-12 ftco-animate">
+                    <div class="d-md-flex mt-5 mb-5">							
+                        <ul class="list">
+                            <li><span>Name: </span>{{reservation.hotel.name}}</li>
+                            <li><span>Location: </span>{{reservation.hotel.location}}</li>
+                            <li><span>Price: </span>{{reservation.room.cost}}</li>
+                        </ul>
+                        <ul class="list ml-md-5">
+                            <li><span>Number of people: </span>{{reservation.numPeople}}</li>
+                            <li><span>Check-In:</span>{{reservation.checkIn}}</li>
+                            <li><span>Check-Out:</span>{{reservation.checkOut}}</li>
+                        </ul>
+                    </div>
+          		</div>
+          	</div>
+          </div> <!-- .col-md-8 -->
+          <div class="col-lg-4 sidebar ftco-animate pl-md-5">
+            <div class="mt-4">
+              <a href = "/clientreservation">
+                <button class="btn btn-primary" type="button">Go back</button>
+              </a>
+            <a href="/cancelReservation/{{id}}">
+                <button class="btn btn-danger" type="button">Cancel Reservation</button>
+            </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> <!-- .section -->
     {{>footerindex}}
-</html>
