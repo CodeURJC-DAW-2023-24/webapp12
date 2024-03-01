@@ -53,7 +53,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/nickTaken").permitAll()
                 .requestMatchers("/error").permitAll()
                 .requestMatchers("/notfounderror/**").permitAll()
-                .requestMatchers("/hotelreview/**").permitAll()
+                .requestMatchers("/hotelReview/**").permitAll()
                 .requestMatchers("/hotelinformation/**").permitAll()
                 .requestMatchers("/indexsearch").permitAll()
                 .requestMatchers("/returnmainpage").permitAll()
@@ -65,7 +65,6 @@ public class SecurityConfiguration {
 
                 //Client pages
                 .requestMatchers("/clientreservation/**").hasAnyRole("CLIENT")
-                .requestMatchers("/hotelreview").hasAnyRole("CLIENT")
                 .requestMatchers("/addReservation/**").hasAnyRole("CLIENT")
 
                 //Manager pages

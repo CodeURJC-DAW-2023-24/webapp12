@@ -166,10 +166,7 @@ public class Hotel {
     }
 
     public void setrating(float rating) {
-        rating = rating;
+        this.rating = rating;
     }
-
-
-    //PENDIENTE añadir métodos sobre las reseñas, como la media de reseñas, y ordenarlas
 
 }
