@@ -1,4 +1,6 @@
 {{>header}}
+    <script src="/js/captcha.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onLoadCallBack&render=explicit" async defer></script>
     <title>SB Admin 2 - Login</title>
     <!-- Custom fonts for this template-->
     <link href="/css/all.css" rel="stylesheet" type="text/css">
@@ -58,8 +60,9 @@
                                         <input type="password" name="password" class="form-control form-control-user"
                                             id="exampleInputPassword" placeholder="Password">
                                     </div>
-                                    <input type="submit" value="Log In" class="btn btn-primary btn-user btn-block"/>
+                                    <input id="loginButton" type="submit" value="Log In" class="btn btn-primary btn-user btn-block mb-4"/>
                                     <input type="hidden" name="_csrf" value="{{token}}"/>
+                                    <div id="divRecaptcha" class="g-recaptcha"></div>
                                 </form>
                                 <hr>
                                 <div class="text-center">

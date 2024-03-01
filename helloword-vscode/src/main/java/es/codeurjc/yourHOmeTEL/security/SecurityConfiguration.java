@@ -59,6 +59,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/notRooms/**").permitAll()
                 .requestMatchers("/indexsearch").permitAll()
                 .requestMatchers("/returnmainpage").permitAll()
+                .requestMatchers("/captcha").permitAll()
                 
                 //User pages
                 .requestMatchers("/profile/**").hasAnyRole("USER")
