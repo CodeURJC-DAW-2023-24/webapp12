@@ -79,7 +79,7 @@ public class UserE {
         this.pass = pass;
         this.hotels = new ArrayList<>();
         this.reviews = new ArrayList<>();
-        this.reservation = new ArrayList<>();
+        this.reservations = new ArrayList<>();
     }
 
     /*public UserE( String name, String lastname, String bio, String location, String language, String phone, String email, String organization,
