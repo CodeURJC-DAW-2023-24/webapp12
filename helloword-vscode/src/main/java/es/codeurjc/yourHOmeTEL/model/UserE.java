@@ -54,7 +54,7 @@ public class UserE {
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Reservation> reservation;
+    private List<Reservation> reservations;
 
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -95,7 +95,7 @@ public class UserE {
     }*/
     
     public UserE( String name, String lastname, String bio, String location, String language, String phone, String email, String organization,
-            Blob profileImg,  String nick, String pass, Boolean validated, Boolean rejected, List<String> rols, List<Reservation> reservation, List<Review> reviews,
+            Blob profileImg,  String nick, String pass, Boolean validated, Boolean rejected, List<String> rols, List<Reservation> reservations, List<Review> reviews,
             List<Hotel> hotels) {
         
         this.name = name;
@@ -112,7 +112,7 @@ public class UserE {
         this.pass = pass;
         this.validated = validated;
         this.rejected= rejected;
-        this.reservation = reservation;
+        this.reservations = reservations;
         this.reviews = reviews;
         this.hotels = hotels;
     }
@@ -252,13 +252,13 @@ public class UserE {
     }
 
 
-    public List<Reservation> getReservation() {
-        return reservation;
+    public List<Reservation> getReservations() {
+        return reservations;
     }
 
 
-    public void setReservation(List<Reservation> reservation) {
-        this.reservation = reservation;
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
 

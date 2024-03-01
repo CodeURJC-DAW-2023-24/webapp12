@@ -97,13 +97,13 @@ public class UserService implements GeneralService<UserE> {
 
         for (Reservation reservation: userReservations){
             Hotel reservedHotel = reservation.getHotel();
-            recomendedUsers = userRepository.findByHotelInReservation(reservedHotel);
+            recomendedUsers = userRepository.findByHotelInReservations(reservedHotel);
             for(UserE recommendedUser: recomendedUsers){
-                for (Reservation recommendedUserReservation: recommendedUser.getReservation()){
+                for (Reservation recommendedUserReservation: recommendedUser.getReservations()){
                     Hotel recommendedHotel = recommendedUserReservation.getHotel();
                     Boolean validHotel = recommendedHotel.getManager().getvalidated();
                     
-                    if ((!recomendedHotels.contains(recommendedHotel)) || validHotel ){
+                    if ((!recomendedHotels.contains(recommendedHotel)) && validHotel ){
                         recomendedHotels.add(recommendedHotel);
                         if (recomendedHotels.size() == (numHotels))
                             return recomendedHotels;

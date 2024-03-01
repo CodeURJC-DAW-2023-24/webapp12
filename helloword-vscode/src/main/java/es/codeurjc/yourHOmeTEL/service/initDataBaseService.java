@@ -146,14 +146,17 @@ public class InitDataBaseService{
         
 
         Reservation reservation1 = new Reservation(LocalDate.of(2024, 2, 27), LocalDate.of(2024, 3, 1), 2, hotel1, room1, client1);
-        Reservation reservation2 = new Reservation(LocalDate.of(2024, 3, 4), LocalDate.of(2024, 5, 6), 2, hotel2, room2, client2);
+        Reservation reservation2 = new Reservation(LocalDate.of(2024, 3, 4), LocalDate.of(2024, 5, 6), 2, hotel2, room2, client1);
+        Reservation reservation3 = new Reservation(LocalDate.of(2024, 6, 4), LocalDate.of(2024, 7, 6), 2, hotel2, room2, client2);
 
         reservationRepository.save(reservation1);
         reservationRepository.save(reservation2);
+        reservationRepository.save(reservation3);
 
         //add reservation to hotel
         hotel1.getReservations().add(reservation1);
         hotel2.getReservations().add(reservation2);
+        hotel2.getReservations().add(reservation3);
 
         hotelRepository.save(hotel1);
         hotelRepository.save(hotel2);
@@ -161,12 +164,14 @@ public class InitDataBaseService{
         //add reservation to room
         room1.getReservations().add(reservation1);
         room2.getReservations().add(reservation2);
+        room2.getReservations().add(reservation3);
 
         roomRepository.save(room1);
 
         //add reservation to client
-        client1.getReservation().add(reservation1);
-        client2.getReservation().add(reservation2);
+        client1.getReservations().add(reservation1);
+        client1.getReservations().add(reservation2);
+        client2.getReservations().add(reservation3);
 
         userRepository.save(client1);
         userRepository.save(client2);
