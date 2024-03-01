@@ -70,7 +70,10 @@ public class initDataBaseService{
         "mail", "org", null, "user", passwordEncoder.encode("pass"), null, null, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         
         UserE client2 =new UserE("Jack4", "Wells4", "Bio", "loc", "lan", "phone",
-        "mail", "org", null, "user2", passwordEncoder.encode("pass2"), null, null, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());            
+        "mail", "org", null, "user2", passwordEncoder.encode("pass2"), null, null, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()); 
+        
+        UserE client3 =new UserE("Jack6", "Wells6", "Bio", "loc", "lan", "phone",
+        "mail", "org", null, "user3", passwordEncoder.encode("pass3"), null, null, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());            
         
         UserE manager1 = new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
         "mail", "org", null, "manager",  passwordEncoder.encode("manager"), true, false, rolesManager, new ArrayList<>(), new ArrayList<>(),  new ArrayList<>()); 
@@ -89,6 +92,7 @@ public class initDataBaseService{
         userRepository.save(manager3);
         userRepository.save(client1);
         userRepository.save(client2);
+        userRepository.save(client3);
         userRepository.save(admin); 
 
         //init rooms
@@ -142,34 +146,42 @@ public class initDataBaseService{
         Reservation reservation1 = new Reservation(LocalDate.of(2024, 2, 27), LocalDate.of(2024, 3, 1), 2, hotel1, room1, client1);
         Reservation reservation2 = new Reservation(LocalDate.of(2024, 3, 4), LocalDate.of(2024, 5, 6), 2, hotel2, room2, client1);
         Reservation reservation3 = new Reservation(LocalDate.of(2024, 6, 4), LocalDate.of(2024, 7, 6), 2, hotel2, room2, client2);
-
+        Reservation reservation4 = new Reservation(LocalDate.of(2024, 6, 4), LocalDate.of(2024, 7, 6), 2, hotel3, room3, client3);
+        
         reservationRepository.save(reservation1);
         reservationRepository.save(reservation2);
         reservationRepository.save(reservation3);
+        reservationRepository.save(reservation4);
 
         //add reservation to hotel
         hotel1.getReservations().add(reservation1);
         hotel2.getReservations().add(reservation2);
         hotel2.getReservations().add(reservation3);
+        hotel3.getReservations().add(reservation4);
 
         hotelRepository.save(hotel1);
         hotelRepository.save(hotel2);
+        hotelRepository.save(hotel3);
         
         //add reservation to room
         room1.getReservations().add(reservation1);
         room2.getReservations().add(reservation2);
         room2.getReservations().add(reservation3);
+        room3.getReservations().add(reservation4);
 
         roomRepository.save(room1);
         roomRepository.save(room2);
+        roomRepository.save(room3);
 
         //add reservation to client
         client1.getReservations().add(reservation1);
         client1.getReservations().add(reservation2);
         client2.getReservations().add(reservation3);
+        client3.getReservations().add(reservation4);
 
         userRepository.save(client1);
         userRepository.save(client2);
+        userRepository.save(client3);
 
         //init review
         Review review1 = new Review(4, "Hola", LocalDate.of(2024, 3, 2), hotel1, client1);
