@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -35,6 +36,12 @@ public class Hotel {
 
 
     //private Blob imageHotel;
+
+        @Lob 
+    private Blob imageFile;
+
+    private boolean image;
+
 
 
     @ManyToOne
@@ -111,14 +118,22 @@ public class Hotel {
         return this.rooms.size();
     }
 
-    //public Blob getImageHotel() {
-       // return imageHotel;
-    //}
+    public Blob getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(Blob imageFile) {
+        this.imageFile = imageFile;
+    }
+    public boolean isImage() {
+        return image;
+    }
 
 
-    //public void setImageHotel(Blob imageHotel) {
-        //this.imageHotel = imageHotel;
-    //}
+    public void setImage(boolean image) {
+        this.image = image;
+    }
+ 
 
 
     public UserE getManager() {

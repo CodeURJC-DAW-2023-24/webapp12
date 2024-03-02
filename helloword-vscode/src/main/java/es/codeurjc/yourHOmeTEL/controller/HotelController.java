@@ -5,8 +5,12 @@ import java.util.List;
 import java.util.Optional;
 
 import java.sql.Date;
+import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -88,6 +92,23 @@ public class HotelController {
 		return "redirect:/viewhotelsmanager";
 	}
 
+	@GetMapping("/index/{id}/images")
+	public ResponseEntity<Object> downloadImage(@PathVariable Long id) throws SQLException {
+
+		Optional<Hotel> hotel = hotelRepository.findById(id);
+		if (hotel.isPresent() && hotel.get().getImageFile() != null) {
+
+			Resource file = new InputStreamResource(hotel.get().getImageFile().getBinaryStream());
+
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
+					.contentLength(hotel.get().getImageFile().length()).body(file);
+
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+
+	}
+
 	@GetMapping("/hotelinformation/{id}")
 	public String hotelinformation(Model model, HttpServletRequest request, @PathVariable Long id) {
 		Hotel hotel = hotelRepository.findById(id).orElseThrow();
@@ -126,7 +147,7 @@ public class HotelController {
 		targetHotel.getReviews().add(review);
 		hotelRepository.save(targetHotel);
 
-		return "redirect:/hotelReviews"+id;
+		return "redirect:/hotelReviews" + id;
 	}
 
 	@GetMapping("/hotelReviews/{id}")
@@ -136,11 +157,11 @@ public class HotelController {
 		model.addAttribute("hotelreviews", selectedHotel.getReviews());
 		model.addAttribute("numreviews", selectedHotel.getReviews().size());
 		int totalReviews = 0;
-		for (int i = 1; i<=5; i++){
-			List <Review> reviews = reviewRepository.findByScore(i);
+		for (int i = 1; i <= 5; i++) {
+			List<Review> reviews = reviewRepository.findByScore(i);
 			int numReviews = reviews.size();
 			totalReviews += numReviews;
-			model.addAttribute("numreviews"+i, numReviews);
+			model.addAttribute("numreviews" + i, numReviews);
 		}
 		model.addAttribute("totalreviews", totalReviews);
 		// PENDIENTE deberíamos obtener los datos de las reseñas para mostrar aquí

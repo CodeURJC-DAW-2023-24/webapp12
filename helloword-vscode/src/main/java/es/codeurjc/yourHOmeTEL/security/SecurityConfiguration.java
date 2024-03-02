@@ -63,6 +63,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/loadMoreHotels/**").permitAll()
                         .requestMatchers("/profile/*/images/").permitAll()
                         .requestMatchers("/static/images/**").permitAll()
+                        .requestMatchers("/index/*/images/**").permitAll()
 
                         // User pages
                         .requestMatchers("/profile/**").hasAnyRole("USER")

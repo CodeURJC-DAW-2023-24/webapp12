@@ -128,14 +128,40 @@ public class initDataBaseService {
         
         Hotel hotel3 = new Hotel("Hotel3", "hotel ", "loc2",0F, null, manager3, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
+        Hotel hotel4 = new Hotel("Hotel4", "hotel ", "loc2",0F, null, manager3, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+
+        Hotel hotel5 = new Hotel("Hotel5", "hotel ", "loc2",0F, null, manager3, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+
+
+        Hotel hotel6 = new Hotel("Hotel6", "hotel ", "loc2",0F, null, manager3, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+
+
+        Hotel hotel7 = new Hotel("Hotel7", "hotel ", "loc2",0F, null, manager3, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+
+
+        Hotel hotel8 = new Hotel("Hotel8", "hotel ", "loc2",0F, null, manager3, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+
+
+        Hotel hotel9 = new Hotel("Hotel9", "hotel ", "loc2",0F, null, manager3, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+
+
+        Hotel hotel10 = new Hotel("Hotel3", "hotel ", "loc2",0F, null, manager3, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+
+        Hotel hotel11 = new Hotel("Hotel10", "hotel ", "loc2",0F, null, manager3, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         
         hotelRepository.save(hotel1); 
         hotelRepository.save(hotel2);
         hotelRepository.save(hotel3); 
+        hotelRepository.save(hotel4); 
+        hotelRepository.save(hotel5); 
+        hotelRepository.save(hotel6); 
+        hotelRepository.save(hotel7); 
+        hotelRepository.save(hotel8); 
+        hotelRepository.save(hotel9); 
+        hotelRepository.save(hotel10); 
+        hotelRepository.save(hotel11); 
 
-        for (int i = 4; i <= 20; i++) {
-            hotelRepository.save(new Hotel("Hotel" + i, "Desc hotel" + i, "Loc hotel" + i, i, null, manager3, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
-        }
+
 
         // add hotel to rooms
         room1.setHotel(hotel1);
@@ -179,6 +205,10 @@ public class initDataBaseService {
         hotel2.getReservations().add(reservation2);
         hotel2.getReservations().add(reservation3);
         hotel3.getReservations().add(reservation4);
+
+
+
+
 
         hotelRepository.save(hotel1);
         hotelRepository.save(hotel2);
@@ -225,13 +255,50 @@ public class initDataBaseService {
         userRepository.save(client1);
         userRepository.save(client2);
 
-
+        //images for all type of users that we created
         setImage(client1, "/static/images/userPhoto.jpg");
-        setImage(manager1, "/static/images/userPhoto.jpg");
-        setImage(admin, "/static/images/userPhoto.jpg");
+        setImage(client2, "/static/images/client2.jpg");
+        setImage(client3, "/static/images/client3.jpg");
+        setImage(manager1, "/static/images/manager.jpg");
+        setImage(manager1, "/static/images/manager.jpg");
+        setImage(manager2, "/static/images/manager2.jpg");
+        setImage(manager3, "/static/images/manager3.jpg");
+        setImage(admin, "/static/images/admin.jpg");
         userRepository.save(client1);
+        userRepository.save(client2);
+        userRepository.save(client3);
         userRepository.save(manager1);
+        userRepository.save(manager2);
+        userRepository.save(manager3);
         userRepository.save(admin);
+
+
+        //images for hotels
+
+        setImage(hotel1, "/static/images/hotel.jpg");
+        setImage(hotel2, "/static/images/hotel1.jpg");
+        setImage(hotel3, "/static/images/hotel2.jpg");
+        setImage(hotel4, "/static/images/hotel4.jpg");
+        setImage(hotel5, "/static/images/hotel3.jpg");
+        setImage(hotel6, "/static/images/hotel4.jpg");
+        setImage(hotel7, "/static/images/hotel6.jpg");
+        setImage(hotel8, "/static/images/hortel5.jpg");
+        setImage(hotel9, "/static/images/hotel6.jpg");
+        setImage(hotel10, "/static/images/hotel4.jpg");
+        setImage(hotel11, "/static/images/hotel.jpg");
+        hotelRepository.save(hotel1);
+        hotelRepository.save(hotel2);
+        hotelRepository.save(hotel3);
+        hotelRepository.save(hotel4);
+        hotelRepository.save(hotel5);
+        hotelRepository.save(hotel6);
+        hotelRepository.save(hotel7);
+        hotelRepository.save(hotel8);
+        hotelRepository.save(hotel9);
+        hotelRepository.save(hotel10);
+        hotelRepository.save(hotel11);
+ 
+        
 
     }
 
@@ -243,4 +310,13 @@ public class initDataBaseService {
         user.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
         user.setImage(true);
     } 
+
+    //for hotels images
+    public void setImage(Hotel hotel, String classpathResource) throws IOException {
+
+        Resource image = new ClassPathResource(classpathResource);
+
+        hotel.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
+        hotel.setImage(true);
+    }
 }
