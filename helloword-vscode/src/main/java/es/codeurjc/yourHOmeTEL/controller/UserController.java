@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller; 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -36,6 +37,7 @@ import es.codeurjc.yourHOmeTEL.model.Room;
 import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
 import es.codeurjc.yourHOmeTEL.repository.ReservationRepository;
+import es.codeurjc.yourHOmeTEL.repository.RoomRepository;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.UserService;
 import es.codeurjc.yourHOmeTEL.service.HotelService;
@@ -60,13 +62,18 @@ public class UserController {
 	private HotelRepository hotelRepository;
 
 	@Autowired
-	private PasswordEncoder passwordEncoder;
-
-	@Autowired
 	private ReservationService reservationService;
 
 	@Autowired
 	private ReservationRepository reservationRepository;
+
+	@Autowired
+	private RoomRepository roomRepository;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	
 
 	// ALL CONTROLLERS
 
@@ -82,8 +89,8 @@ public class UserController {
 	 * }
 	 */
 
-	// ADVANCED RECOMMENDATION ALGORITHM DONT DELETE
- 	  @GetMapping("/index")
+	// ADVANCED RECOMMENDATION ALGORITHM
+ 	@GetMapping("/index")
 	public String index(Model model, HttpServletRequest request) {
 		String nick = request.getUserPrincipal().getName();
 		UserE user = userRepository.findByNick(nick).orElseThrow();
@@ -94,9 +101,11 @@ public class UserController {
 		model.addAttribute("hotels", recomendedHotels);
 
 		if (recomendedHotels.size() <6){
-			for (int i = recomendedHotels.size(); i < 6L; i++) {
+			//size +1 to avoid looking for id = 0 if size = 0
+			for (int i = recomendedHotels.size() + 1; i < 6; i++) {
 				Hotel hotel = hotelRepository.findById((long) i).orElseThrow();
-				recomendedHotels.add(hotel);
+				if (hotel != null)
+					recomendedHotels.add(hotel);
 			}
 		}
 		
@@ -177,13 +186,25 @@ public class UserController {
 	}
 
 	@GetMapping("/cancelReservation/{id}")
-	public String deleteReservation(@PathVariable Long id) {
+	public String deleteReservation(HttpServletRequest request, @PathVariable Long id) {
 
-		Optional <Reservation> reservation = reservationRepository.findById(id); 
-		if (reservation.isPresent()) {
-			hotelRepository.deleteById(id);
+		Reservation reservation = reservationRepository.findById(id).orElseThrow(); 
+		if (reservation != null) {
+			UserE user = reservation.getUser();
+			user.getReservations().remove(reservation);	
+			userRepository.save(user);
+			
+			Hotel hotel = reservation.getHotel();
+			hotel.getReservations().remove(reservation);
+			hotelRepository.save(hotel);
+
+			Room room = reservation.getRooms();
+			room.getReservations().remove(reservation);
+			roomRepository.save(room);
+
+			reservationRepository.deleteById(id);					
 		}
-
+		
 		return "redirect:/clientreservations";
 	}
 
@@ -402,8 +423,10 @@ public class UserController {
 
 	}
 
+
 	@GetMapping("/login")
 	public String login(Model model) {
+		
 		return "login";
 	}
 

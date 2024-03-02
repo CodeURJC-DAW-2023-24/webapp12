@@ -48,4 +48,5 @@ public class DefaultController {
     public String getPath(HttpServletRequest request){
          return request.getServletPath();
     }
+
 }
