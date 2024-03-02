@@ -88,6 +88,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/addHotel").hasAnyRole("MANAGER")
                         .requestMatchers("/testChart/**").hasAnyRole("MANAGER")
                         .requestMatchers("/application").hasAnyRole("MANAGER")
+                        .requestMatchers("/index/*/images/**").hasAnyRole("MANAGER")
+                        .requestMatchers("/edithotelimage/**").hasAnyRole("MANAGER")
                         // Admin pages
                         .requestMatchers("/managerlist").hasAnyRole("ADMIN")
                         .requestMatchers("/chartsadmin").hasAnyRole("ADMIN")

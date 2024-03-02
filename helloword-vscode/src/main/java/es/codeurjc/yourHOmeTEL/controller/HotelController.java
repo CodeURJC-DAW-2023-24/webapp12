@@ -3,10 +3,11 @@ package es.codeurjc.yourHOmeTEL.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import es.codeurjc.yourHOmeTEL.model.Hotel;
@@ -81,6 +83,10 @@ public class HotelController {
 
 	}
 
+
+
+
+
 	@GetMapping("/deleteHotel/{id}")
 	public String deleteHotel(Model model, @PathVariable Long id) {
 
@@ -108,6 +114,22 @@ public class HotelController {
 		}
 
 	}
+
+
+
+	@PostMapping("/edithotelimage/{id}")
+    public String editImage(@RequestParam MultipartFile imageFile,
+                            @PathVariable Long id,
+                            Model model) throws IOException {
+        Hotel hotel = hotelRepository.findById(id).orElseThrow();
+
+        if (!imageFile.getOriginalFilename().isBlank()) {
+            hotel.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+            hotelRepository.save(hotel);
+            model.addAttribute("hotel", hotel);
+        }
+        return "redirect:/viewhotelsmanager";
+    }
 
 	@GetMapping("/hotelinformation/{id}")
 	public String hotelinformation(Model model, HttpServletRequest request, @PathVariable Long id) {
