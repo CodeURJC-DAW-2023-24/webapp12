@@ -89,8 +89,8 @@ public class UserController {
 	 * }
 	 */
 
-	// ADVANCED RECOMMENDATION ALGORITHM DONT DELETE
- 	  @GetMapping("/index")
+	// ADVANCED RECOMMENDATION ALGORITHM
+ 	@GetMapping("/index")
 	public String index(Model model, HttpServletRequest request) {
 		String nick = request.getUserPrincipal().getName();
 		UserE user = userRepository.findByNick(nick).orElseThrow();
@@ -101,9 +101,11 @@ public class UserController {
 		model.addAttribute("hotels", recomendedHotels);
 
 		if (recomendedHotels.size() <6){
-			for (int i = recomendedHotels.size(); i < 6L; i++) {
+			//size +1 to avoid looking for id = 0 if size = 0
+			for (int i = recomendedHotels.size() + 1; i < 6; i++) {
 				Hotel hotel = hotelRepository.findById((long) i).orElseThrow();
-				recomendedHotels.add(hotel);
+				if (hotel != null)
+					recomendedHotels.add(hotel);
 			}
 		}
 		
