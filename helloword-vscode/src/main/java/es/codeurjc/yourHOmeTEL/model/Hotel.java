@@ -34,7 +34,7 @@ public class Hotel {
 
 
 
-    private Blob imageHotel;
+    //private Blob imageHotel;
 
 
     @ManyToOne
@@ -69,7 +69,7 @@ public class Hotel {
         this.description = description;
         this.location = location;
         this.rating = rating;
-        this.imageHotel = imageHotel;
+        //this.imageHotel = imageHotel;
         this.manager = manager;
         this.rooms = rooms;
         this.reservations = reservations;
@@ -111,14 +111,14 @@ public class Hotel {
         return this.rooms.size();
     }
 
-    public Blob getImageHotel() {
-        return imageHotel;
-    }
+    //public Blob getImageHotel() {
+       // return imageHotel;
+    //}
 
 
-    public void setImageHotel(Blob imageHotel) {
-        this.imageHotel = imageHotel;
-    }
+    //public void setImageHotel(Blob imageHotel) {
+        //this.imageHotel = imageHotel;
+    //}
 
 
     public UserE getManager() {

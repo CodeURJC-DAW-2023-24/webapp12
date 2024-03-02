@@ -4,14 +4,22 @@ import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.rowset.serial.SerialBlob;
+
+
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.micrometer.common.lang.Nullable;
+import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 
 
@@ -36,7 +44,14 @@ public class UserE {
 
     private String email;
 
-    private Blob profileImg;
+    
+    @Lob 
+    private Blob imageFile;
+
+    private boolean image;
+
+
+
 
     private String organization;
 
@@ -98,7 +113,7 @@ public class UserE {
     }*/
     
     public UserE( String name, String lastname, String bio, String location, String language, String phone, String email, String organization,
-            Blob profileImg,  String nick, String pass, Boolean validated, Boolean rejected, List<String> rols, List<Reservation> reservations, List<Review> reviews,
+            Blob imageFile ,  String nick, String pass, Boolean validated, Boolean rejected, List<String> rols, List<Reservation> reservations, List<Review> reviews,
             List<Hotel> hotels) {
         
         this.name = name;
@@ -109,7 +124,7 @@ public class UserE {
         this.phone = phone;
         this.email = email;
         this.organization = organization;
-        this.profileImg = profileImg;
+        this.imageFile = imageFile ;
         this.rols = rols;
         this.nick = nick;
         this.pass = pass;
@@ -209,16 +224,22 @@ public class UserE {
         this.organization = organization;
     }
     
-    public Blob getProfileImg() {
-        return profileImg;
+    public Blob getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(Blob imageFile) {
+        this.imageFile = imageFile;
+    }
+    public boolean isImage() {
+        return image;
     }
 
 
-    public void setProfileImg(Blob profileImg) {
-        this.profileImg = profileImg;
+    public void setImage(boolean image) {
+        this.image = image;
     }
-
-
+ 
     public String getNick() {
         return nick;
     }
@@ -291,4 +312,6 @@ public class UserE {
     public void setRols(List<String> rols){
         this.rols = rols;
     }
+
+
 }

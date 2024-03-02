@@ -1,18 +1,29 @@
 package es.codeurjc.yourHOmeTEL.service;
 
+import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.rowset.serial.SerialBlob;
+
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.cglib.core.Local;
+import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Io;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StreamUtils;
+
+import com.mysql.cj.jdbc.Blob;
 
 import es.codeurjc.yourHOmeTEL.security.SecurityConfiguration;
 import es.codeurjc.yourHOmeTEL.model.Hotel;
@@ -26,10 +37,10 @@ import es.codeurjc.yourHOmeTEL.repository.ReviewRepository;
 import es.codeurjc.yourHOmeTEL.repository.RoomRepository;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
-
+import org.springframework.core.io.Resource;
 
 @Service
-public class initDataBaseService{
+public class initDataBaseService {
 
     @Autowired
     private UserRepository userRepository;
@@ -47,10 +58,10 @@ public class initDataBaseService{
     private RoomRepository roomRepository;
 
     @Autowired
-	private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @PostConstruct
-    private void initDatabase() {
+    private void initDatabase() throws IOException {
 
         List<String> rolesUser = new ArrayList<>();
         rolesUser.add("USER");
@@ -62,13 +73,16 @@ public class initDataBaseService{
         rolesAdmin.add("USER");
         rolesAdmin.add("ADMIN");
 
-        //default entities
+        // default entities
+
+        // init users
+;
         
 
         //init users
         UserE client1 =new UserE("Jack1", "Wells1", "Bio", "loc", "lan", "phone",
         "mail", "org", null, "user", passwordEncoder.encode("pass"), null, null, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-        
+       
         UserE client2 =new UserE("Jack4", "Wells4", "Bio", "loc", "lan", "phone",
         "mail", "org", null, "user2", passwordEncoder.encode("pass2"), null, null, rolesUser, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()); 
         
@@ -95,7 +109,7 @@ public class initDataBaseService{
         userRepository.save(client3);
         userRepository.save(admin); 
 
-        //init rooms
+        // init rooms
         Room room1 = new Room(2, 200F, new ArrayList<>(), null);
         Room room2 = new Room(2, 200F, new ArrayList<>(), null);
         Room room3 = new Room(3, 300F, new ArrayList<>(), null);
@@ -103,6 +117,8 @@ public class initDataBaseService{
         roomRepository.save(room1);
         roomRepository.save(room2);
         roomRepository.save(room3);
+
+        // init hoteles
 
 
         //init hoteles
@@ -121,7 +137,7 @@ public class initDataBaseService{
             hotelRepository.save(new Hotel("Hotel" + i, "Desc hotel" + i, "Loc hotel" + i, i, null, manager3, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
         }
 
-        //add hotel to rooms
+        // add hotel to rooms
         room1.setHotel(hotel1);
         room2.setHotel(hotel2);//mirar el tema de las habitaciones del hotel ya que se supone que el hotel no tiene habitaciones
         room3.setHotel(hotel3); 
@@ -195,7 +211,7 @@ public class initDataBaseService{
         reviewRepository.save(review1);
         reviewRepository.save(review2);
 
-        //add review to hotel
+        // add review to hotel
         hotel1.getReviews().add(review1);
         hotel1.getReviews().add(review2);
 
@@ -209,6 +225,22 @@ public class initDataBaseService{
         userRepository.save(client1);
         userRepository.save(client2);
 
-    }
-}
 
+        setImage(client1, "/static/images/userPhoto.jpg");
+        setImage(manager1, "/static/images/userPhoto.jpg");
+        setImage(admin, "/static/images/userPhoto.jpg");
+        userRepository.save(client1);
+        userRepository.save(manager1);
+        userRepository.save(admin);
+
+    }
+
+    // para asignarle la iimagen al usuario
+    public void setImage(UserE user, String classpathResource) throws IOException {
+
+        Resource image = new ClassPathResource(classpathResource);
+
+        user.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
+        user.setImage(true);
+    } 
+}

@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.io.IOException;
+import java.sql.Blob;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
+import org.springframework.core.io.Resource;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller; 
 import org.springframework.ui.Model;
@@ -19,6 +24,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import es.codeurjc.yourHOmeTEL.model.Hotel;
@@ -85,7 +93,7 @@ public class UserController {
 
 		model.addAttribute("hotels", recomendedHotels);
 
-		if (recomendedHotels.size() < 6){
+		if (recomendedHotels.size() <6){
 			for (int i = recomendedHotels.size(); i < 6L; i++) {
 				Hotel hotel = hotelRepository.findById((long) i).orElseThrow();
 				recomendedHotels.add(hotel);
@@ -277,8 +285,7 @@ public class UserController {
 	@GetMapping("/editprofile/{id}")
 	public String editProfile(Model model, @PathVariable Long id) {
 
-		UserE foundUser = userRepository.findById(id).orElseThrow(); // need to transform the throw into 404 error. Page 25
-																																	// database
+		UserE foundUser = userRepository.findById(id).orElseThrow(); // need to transform the throw into 404 error. Page 25	// database
 		model.addAttribute("user", foundUser);
 		return "editprofile";
 
@@ -317,6 +324,37 @@ public class UserController {
 
 	}
 
+	@GetMapping("/profile/{id}/images")
+	public ResponseEntity<Object> downloadImage(@PathVariable Long id) throws SQLException {
+
+		Optional<UserE> user = userRepository.findById(id);
+		if (user.isPresent() && user.get().getImageFile() != null) {
+
+			Resource file = new InputStreamResource(user.get().getImageFile().getBinaryStream());
+
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
+					.contentLength(user.get().getImageFile().length()).body(file);
+
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+
+	}
+
+	/*@PostMapping("/uploadImage")
+	public String uploadImage(@RequestParam("imageFile") MultipartFile imageFile, HttpServletRequest request)
+			throws IOException {
+		String username = request.getUserPrincipal().getName();
+		UserE user = userRepository.findByNick(username).orElseThrow();
+
+		if (imageFile != null && !imageFile.isEmpty()) {
+			user.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+			userRepository.save(user);
+		}
+
+		return "redirect:/profile";
+	}*/
+
 	@GetMapping("/profile")
 	public String profile(Model model, HttpServletRequest request) {
 
@@ -353,6 +391,10 @@ public class UserController {
 			model.addAttribute("haslang", true);
 
 		model.addAttribute("user", currentUser);
+		model.addAttribute("imageFile", currentUser.getImageFile());
+		
+
+	
 
 		return "profile";
 
