@@ -22,103 +22,105 @@
   {{>sidebar}}
   <div class="container">
     <div id="content-wrapper" class="d-flex flex-column"></div>
-      <div class="row flex-lg-nowrap mt-4">
-        <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
-          <div class="card p-2">
-            <div class="e-navlist e-navlist--active-bg">
-              <ul class="nav">
-                <li class="nav-item"><a class="nav-link px-1 active" href=viewhotelsmanager><i
-                      class="fa fa-fw fa-bar-chart mr-1"></i><span>Go to hotel list</span></a></li>
-              </ul>
-            </div>
+    <div class="row flex-lg-nowrap mt-4">
+      <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
+        <div class="card p-2">
+          <div class="e-navlist e-navlist--active-bg">
+            <ul class="nav">
+              <li class="nav-item"><a class="nav-link px-1 active" href=viewhotelsmanager><i
+                    class="fa fa-fw fa-bar-chart mr-1"></i><span>Go to hotel list</span></a></li>
+            </ul>
           </div>
         </div>
+      </div>
 
-        <div class="col">
-          <div class="row">
-            <div class="col mb-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="e-profile">
-                    <div class="row">
-                      <div class="col-12 col-sm-auto mb-3">
-                        <div class="mx-auto" style="width: 140px;">
-                          <div class="d-flex justify-content-center align-items-center rounded"
-                            style="height: 140px; background-color: rgb(233, 236, 239);">
-                            <img class="hotel-preview-image"
-                              src="https://img.freepik.com/photos-gratuite/chambre-luxe-hotel_1150-10836.jpg?size=626&ext=jpg">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                        <div class="text-center text-sm-left mb-2 mb-sm-0">
-                          <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">Hotel x</h4>
-                          <div class="mt-2">
-                            <button class="btn btn-primary" type="button">
-                              <i class="fa fa-fw fa-camera"></i>
-                              <span>Change Photo</span>
-                            </button>
-                          </div>
-                        </div>
-                        <div class="text-center text-sm-right">
-                          <span class="badge badge-secondary">Managed by [manager]</span>
-                          <div class="text-muted"><small>Last updated on 09 Dec 2017</small></div>
+      <div class="col">
+        <div class="row">
+          <div class="col mb-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="e-profile">
+                  <div class="row">
+                    <div class="col-12 col-sm-auto mb-3">
+                      <div class="mx-auto" style="width: 140px;">
+                        <div class="d-flex justify-content-center align-items-center rounded"
+                          style="height: 140px; background-color: rgb(233, 236, 239);">
+                          <img src="/index/{{id}}/images" class="hotel-preview-image">
                         </div>
                       </div>
                     </div>
-                    <ul class="nav nav-tabs">
-                      <li class="nav-item"><a href="" class="active nav-link">Hotel data</a></li>
-                    </ul>
-                    <div class="tab-content pt-3">
-                      <div class="tab-pane active">
-                        <form method="post" action="/edithotel/{{hotel.id}}">
-                          <div class="row">
-                            <div class="col">
-                              <div class="row">
-                                <div class="col">
-                                  <div class="form-group">
-                                    <label>Hotel name</label>
-                                    <input class="form-control" type="text" name="name" placeholder="type your hotel name"
-                                      value="{{hotel.name}}">
-                                  </div>
-                                </div>
-                                <div class="col">
-                                  <div class="form-group">
-                                    <label>Number of rooms</label>
-                                    <input class="form-control" type="text" name="numRooms"
-                                      placeholder="Current number of rooms" value="{{hotel.numRooms}}">
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col">
-                                  <div class="form-group">
-                                    <label>Location</label>
-                                    <input class="form-control" type="text" name="location" placeholder="Current location"
-                                      value="{{hotel.location}}">
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col mb-3">
-                                  <div class="form-group">
-                                    <label>Hotel description</label>
-                                    <textarea class="form-control" rows="5" name="description"
-                                      placeholder="Current description">{{hotel.description}}</textarea>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                    <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                      <form action="/edithotelimage/{{hotel.id}}" method="post"  enctype="multipart/form-data">
+                        <div class="text-center text-sm-left mb-2 mb-sm-0">
+                          <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{hotel.name}}</h4>
+                          <div class="mt-2">
+                            <input type="file" id="file" name="imageFile">
+                            <button class="btn btn-primary" type="submit">
+                              <i class="fa fa-fw fa-camera"></i>
+                               Change Photo
+                            </button>
                           </div>
-                          <div class="row">
-                            <div class="col d-flex justify-content-end">
-                              <input class="btn btn-primary" type="submit" value="Guardar">
-                              <input type="hidden" name="_csrf" value="{{token}}">
-                            </div>
-                          </div>
-                        </form>
-
+                        </div>
+                        <input type="hidden" name="_csrf" value="{{token}}" />
+                      </form>
+                      <div class="text-center text-sm-right">
+                        <span class="badge badge-secondary">Managed by [manager]</span>
+                        <div class="text-muted"><small>Last updated on 09 Dec 2017</small></div>
                       </div>
+                    </div>
+                  </div>
+                  <ul class="nav nav-tabs">
+                    <li class="nav-item"><a href="" class="active nav-link">Hotel data</a></li>
+                  </ul>
+                  <div class="tab-content pt-3">
+                    <div class="tab-pane active">
+                      <form method="post" action="/edithotel/{{hotel.id}}">
+                        <div class="row">
+                          <div class="col">
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                  <label>Hotel name</label>
+                                  <input class="form-control" type="text" name="name" placeholder="type your hotel name"
+                                    value="{{hotel.name}}">
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                  <label>Number of rooms</label>
+                                  <input class="form-control" type="text" name="numRooms"
+                                    placeholder="Current number of rooms" value="{{hotel.numRooms}}">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                  <label>Location</label>
+                                  <input class="form-control" type="text" name="location" placeholder="Current location"
+                                    value="{{hotel.location}}">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col mb-3">
+                                <div class="form-group">
+                                  <label>Hotel description</label>
+                                  <textarea class="form-control" rows="5" name="description"
+                                    placeholder="Current description">{{hotel.description}}</textarea>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col d-flex justify-content-end">
+                            <input class="btn btn-primary" type="submit" value="Guardar">
+                            <input type="hidden" name="_csrf" value="{{token}}">
+                          </div>
+                        </div>
+                      </form>
+
                     </div>
                   </div>
                 </div>
@@ -126,9 +128,10 @@
             </div>
           </div>
         </div>
-        {{>footer}}
       </div>
+      {{>footer}}
     </div>
+  </div>
   </div>
 </body>
 <!-- Bootstrap core JavaScript-->
