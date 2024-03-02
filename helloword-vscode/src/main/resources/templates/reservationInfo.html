@@ -44,7 +44,7 @@
           		<div class="col-md-12 ftco-animate">
                     <div class="d-md-flex mt-5 mb-5">							
                         <ul class="list">
-                            <li><span>Name: </span>{{reservation.hotel.name}}</li>
+                            <li><h3>Name: </h3>{{reservation.hotel.name}}</li>
                             <li><span>Location: </span>{{reservation.hotel.location}}</li>
                             <li><span>Price: </span>{{reservation.room.cost}}</li>
                         </ul>
@@ -62,7 +62,7 @@
               <a href = "/clientreservations">
                 <button class="btn btn-primary" type="button">Go back</button>
               </a>
-            <a href="/cancelReservation/{{id}}">
+            <a href="/cancelReservation/{{reservation.id}}">
                 <button class="btn btn-danger" type="button">Cancel Reservation</button>
             </a>
             </div>
