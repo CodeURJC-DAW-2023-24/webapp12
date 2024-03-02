@@ -1,80 +1,83 @@
 {{>header}}
-    <script src="/js/captcha.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js?onload=onLoadCallBack&render=explicit" async defer></script>
-    <title>SB Admin 2 - Login</title>
-    <!-- Custom fonts for this template-->
-    <link href="/css/all.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+<script src="/js/captcha.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?onload=onLoadCallBack&render=explicit" async defer></script>
+<title>SB Admin 2 - Login</title>
+<!-- Custom fonts for this template-->
+<link href="/css/all.css" rel="stylesheet" type="text/css">
+<link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
 
-    <!-- Custom styles for this template-->
-    <link href="/css/sb-admin-2.css" rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="/css/sb-admin-2.css" rel="stylesheet">
 
 </head>
 
 <body class="bg-gradient-primary">
     <div class="container">
 
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">Your<span>HOmeTEL</span></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="oi oi-menu"></span> Menu
-            </button>
-        
-            <div class="collapse navbar-collapse" id="ftco-nav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="index" class="nav-link">Home</a></li>
-                    {{#isUser}}
-                    <li class="nav-item"><a href="profile" class="nav-link">Profile</a></li>
-                    {{/isUser}}
-                </ul>
+        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">Your<span>HOmeTEL</span></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                    aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="oi oi-menu"></span> Menu
+                </button>
+
+                <div class="collapse navbar-collapse" id="ftco-nav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a href="index" class="nav-link">Home</a></li>
+                        {{#isUser}}
+                        <li class="nav-item"><a href="profile" class="nav-link">Profile</a></li>
+                        {{/isUser}}
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-    <!-- END nav -->
+        </nav>
+        <!-- END nav -->
 
-    <!-- Outer Row -->
-    <div class="row justify-content-center">
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+            <div class="row flex-lg-nowrap mt-4"></div>
+            <div class="col-xl-10 col-lg-12 col-md-9">
 
-        <div class="col-xl-10 col-lg-12 col-md-9">
-
-            <div class="card o-hidden border-0 shadow-lg my-5">
-                <div class="card-body p-0">
-                    <!-- Nested Row within Card Body -->
-                    <div class="row">
-                        <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                        <div class="col-lg-6">
-                            <div class="p-5">
-                                <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
-                                </div>
-                                <form action = "/login" method="post" class="user">                                        
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" name = "username"
-                                            id="exampleInputEmail" aria-describedby="emailHelp"
-                                            placeholder="Enter User">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <div class="form-group">
-                                        <input type="password" name="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Password">
+                                    <form action="/login" method="post" class="user">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-user" name="username"
+                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                placeholder="Enter User">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="password"
+                                                class="form-control form-control-user" id="exampleInputPassword"
+                                                placeholder="Password">
+                                        </div>
+                                        <input id="loginButton" type="submit" value="Log In"
+                                            class="btn btn-primary btn-user btn-block mb-4" />
+                                        <input type="hidden" name="_csrf" value="{{token}}" />
+                                        <div id="divRecaptcha" class="g-recaptcha"></div>
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="/register">Create an Account!</a>
                                     </div>
-                                    <input id="loginButton" type="submit" value="Log In" class="btn btn-primary btn-user btn-block mb-4"/>
-                                    <input type="hidden" name="_csrf" value="{{token}}"/>
-                                    <div id="divRecaptcha" class="g-recaptcha"></div>
-                                </form>
-                                <hr>
-                                <div class="text-center">
-                                    <a class="small" href="/register">Create an Account!</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+            
         </div>
+        {{>footer}}
     </div>
-</div>
-{{>footer}}

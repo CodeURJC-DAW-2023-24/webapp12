@@ -3,7 +3,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- User-->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/profile">
             <div class="sidebar-brand-text mx-3">{{userType}} Profile</div>
         </a>
 
@@ -17,7 +17,7 @@
 
         <!-- For all users -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="profile">
+            <a class="nav-link collapsed" href="/profile">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>Personal Data</span>
             </a>
@@ -34,7 +34,7 @@
         <!--Cliente-->
         {{#isClient}}
         <li class="nav-item">
-            <a class="nav-link" href="clientreservations">
+            <a class="nav-link" href="/clientreservations">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>My reservations</span></a>
         </li>
@@ -42,7 +42,7 @@
         <!--Managers-->
         {{#isManager}}
         <li class="nav-item">
-            <a class="nav-link" href="viewhotelsmanager">
+            <a class="nav-link" href="/viewhotelsmanager">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>My Hotels</span></a>
         </li>
@@ -58,8 +58,8 @@
             <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="managerlist">View managers</a>
-                    <a class="collapse-item" href="managervalidation">Validate new managers</a>
+                    <a class="collapse-item" href="/managerlist">View managers</a>
+                    <a class="collapse-item" href="/managervalidation">Validate new managers</a>
                 </div>
             </div>
         </li>
@@ -73,7 +73,7 @@
         <!-- Nav Item - Pages Collapse Menu -->
         <!--Admin-->
         <li class="nav-item">
-            <a class="nav-link" href="chartsadmin">
+            <a class="nav-link" href="/chartsadmin">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>User Charts</span>
             </a>
@@ -82,7 +82,7 @@
         <!--Manager-->
         {{#isManager}}
         <li class="nav-item">
-            <a class="nav-link" href="chartsmanager">
+            <a class="nav-link" href="/chartsmanager">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Hotel Charts</span>
             </a>
@@ -97,7 +97,7 @@
         </div>
 
         <li class="nav-item">
-            <a class="nav-link" href="index">
+            <a class="nav-link" href="/index">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Return to main page</span>
             </a>

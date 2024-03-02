@@ -24,6 +24,7 @@ import es.codeurjc.yourHOmeTEL.model.Review;
 import es.codeurjc.yourHOmeTEL.model.Room;
 import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
+import es.codeurjc.yourHOmeTEL.repository.ReviewRepository;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.HotelService;
 import es.codeurjc.yourHOmeTEL.service.UserService;
@@ -41,6 +42,9 @@ public class HotelController {
 
 	@Autowired
 	HotelRepository hotelRepository;
+
+	@Autowired
+	ReviewRepository reviewRepository;
 
 	@GetMapping("/edithotel/{id}")
 	public String edithotel(Model model, @PathVariable Long id) {
@@ -116,39 +120,32 @@ public class HotelController {
 	 * @param user
 	 * @return
 	 */
-	@GetMapping("/postReview")
-	public String postReview(
-			Model model,
-			@RequestParam int score,
-			@RequestParam String comment,
-			@RequestParam Date date,
-			@RequestParam Hotel hotel,
-			@RequestParam UserE user) {
+	@PostMapping("/posthotelReviews/{id}")
+	public String postReview(Model model, Review review, @PathVariable Long id) {
+		Hotel targetHotel = hotelRepository.findById(id).orElseThrow();
+		targetHotel.getReviews().add(review);
+		hotelRepository.save(targetHotel);
 
-		model.addAttribute("score", score);
-		model.addAttribute("comment", comment);
-		model.addAttribute("date", date);
-		model.addAttribute("hotel", hotel);
-		model.addAttribute("user", user);
-
-		return "hotelReview";
+		return "redirect:/hotelReviews"+id;
 	}
 
-	/**
-	 * This controller is responsible of getting all the reviews from certain hotel
-	 * to
-	 * display on its reviews page
-	 * 
-	 * @param model
-	 * @param hotelName
-	 * @return
-	 */
-	@GetMapping("posthotelReview/{hotelName}")
-	public String hotelReview(Model model, @PathVariable String hotelName) {
-
+	@GetMapping("/hotelReviews/{id}")
+	public String hotelReviews(Model model, @PathVariable Long id) {
+		Hotel selectedHotel = hotelRepository.findById(id).orElseThrow();
+		model.addAttribute("hotel", selectedHotel);
+		model.addAttribute("hotelreviews", selectedHotel.getReviews());
+		model.addAttribute("numreviews", selectedHotel.getReviews().size());
+		int totalReviews = 0;
+		for (int i = 1; i<=5; i++){
+			List <Review> reviews = reviewRepository.findByScore(i);
+			int numReviews = reviews.size();
+			totalReviews += numReviews;
+			model.addAttribute("numreviews"+i, numReviews);
+		}
+		model.addAttribute("totalreviews", totalReviews);
 		// PENDIENTE deberíamos obtener los datos de las reseñas para mostrar aquí
 		// Mario: por que lo haces con hotel name y no id?
-		return "hotelReview";
+		return "hotelReviews";
 	}
 
 	@GetMapping("/addHotel")
