@@ -341,19 +341,21 @@ public class UserController {
 
 	}
 
-	/*@PostMapping("/uploadImage")
-	public String uploadImage(@RequestParam("imageFile") MultipartFile imageFile, HttpServletRequest request)
-			throws IOException {
-		String username = request.getUserPrincipal().getName();
-		UserE user = userRepository.findByNick(username).orElseThrow();
 
-		if (imageFile != null && !imageFile.isEmpty()) {
-			user.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-			userRepository.save(user);
-		}
+	@PostMapping("/editprofileimage/{id}")
+    public String editImage(@RequestParam MultipartFile imageFile,
+                            @PathVariable Long id,
+                            Model model) throws IOException {
+        UserE currentUser = userRepository.findById(id).orElseThrow();
 
-		return "redirect:/profile";
-	}*/
+        if (!imageFile.getOriginalFilename().isBlank()) {
+            currentUser.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+            userRepository.save(currentUser);
+            model.addAttribute("user", currentUser);
+        }
+        return "redirect:/profile";
+    }
+
 
 	@GetMapping("/profile")
 	public String profile(Model model, HttpServletRequest request) {
