@@ -60,97 +60,132 @@ public class HotelController {
 	ReviewService reviewService;
 
 	@GetMapping("/edithotel/{id}")
-	public String edithotel(Model model, @PathVariable Long id) {
+	public String edithotel(HttpServletRequest request, Model model, @PathVariable Long id) {
 
-		Hotel hotel = hotelRepository.findById(id).orElseThrow();
-		model.addAttribute("hotel", hotel);
-		return "editHotel";
+		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = hotelRepository.findById(id).orElseThrow().getManager();
 
+		if (currentUser.equals(foundUser)) {
+			Hotel hotel = hotelRepository.findById(id).orElseThrow();
+			model.addAttribute("hotel", hotel);
+			return "editHotel";
+
+		} else
+			return "/error";
 	}
 
 	@PostMapping("/edithotel/{id}")
-	public String edithotel(Model model, HttpServletRequest request, Hotel newHotel, Integer room1, Integer cost1, Integer room2,
-	Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable Long id) 
-	throws IOException{
+	public String edithotel(Model model, HttpServletRequest request, Hotel newHotel, Integer room1, Integer cost1,
+			Integer room2,
+			Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable Long id)
+			throws IOException {
 
-		Hotel hotel = hotelRepository.findById(id).orElseThrow();
+		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = hotelRepository.findById(id).orElseThrow().getManager();
 
-		hotel.setName(newHotel.getName());
-		hotel.setLocation(newHotel.getLocation());
-		hotel.setDescription(newHotel.getDescription());
+		if (currentUser.equals(foundUser)) {
+			Hotel hotel = hotelRepository.findById(id).orElseThrow();
 
-		List <Room> resetedRooms = new ArrayList<>();
-		hotel.setRooms(resetedRooms);
+			hotel.setName(newHotel.getName());
+			hotel.setLocation(newHotel.getLocation());
+			hotel.setDescription(newHotel.getDescription());
 
-		if(room1 != null)
-			for (int i = 0; i < room1; i++) {
-				hotel.getRooms().add(new Room(1, cost1, new ArrayList<>(), newHotel));
-			}
-		
-		if(room2 != null)
-			for (int i = 0; i < room2; i++) {
-				hotel.getRooms().add(new Room(2, cost2, new ArrayList<>(), newHotel));
-			}
+			List<Room> resetedRooms = new ArrayList<>();
+			hotel.setRooms(resetedRooms);
 
-		if(room3 != null)
-			for (int i = 0; i < room3; i++) {
-				hotel.getRooms().add(new Room(3, cost3, new ArrayList<>(), newHotel));
-			}
+			if (room1 != null)
+				for (int i = 0; i < room1; i++) {
+					hotel.getRooms().add(new Room(1, cost1, new ArrayList<>(), newHotel));
+				}
 
-		if(room4 != null)
-			for (int i = 0; i < room4; i++) {
-				hotel.getRooms().add(new Room(4, cost4, new ArrayList<>(), newHotel));
-			}
+			if (room2 != null)
+				for (int i = 0; i < room2; i++) {
+					hotel.getRooms().add(new Room(2, cost2, new ArrayList<>(), newHotel));
+				}
 
-		hotelRepository.save(hotel);
+			if (room3 != null)
+				for (int i = 0; i < room3; i++) {
+					hotel.getRooms().add(new Room(3, cost3, new ArrayList<>(), newHotel));
+				}
 
-		model.addAttribute("hotel", hotel);
+			if (room4 != null)
+				for (int i = 0; i < room4; i++) {
+					hotel.getRooms().add(new Room(4, cost4, new ArrayList<>(), newHotel));
+				}
 
-		return "redirect:/viewhotelsmanager";
+			hotelRepository.save(hotel);
+
+			model.addAttribute("hotel", hotel);
+
+			return "redirect:/viewhotelsmanager";
+
+		} else
+			return "/error";
 
 	}
 
 	@GetMapping("/deleteHotel/{id}")
-	public String deleteHotel(Model model, @PathVariable Long id) {
+	public String deleteHotel(HttpServletRequest request, Model model, @PathVariable Long id) {
 
-		Optional<Hotel> hotel = hotelRepository.findById(id);
-		if (hotel.isPresent()) {
-			hotelRepository.deleteById(id);
-		}
+		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = hotelRepository.findById(id).orElseThrow().getManager();
 
-		return "redirect:/viewhotelsmanager";
+		if (currentUser.equals(foundUser)) {
+			Optional<Hotel> hotel = hotelRepository.findById(id);
+			if (hotel.isPresent()) {
+				hotelRepository.deleteById(id);
+			}
+
+			return "redirect:/viewhotelsmanager";
+
+		} else
+			return "/error";
 	}
 
 	@GetMapping("/index/{id}/images")
-	public ResponseEntity<Object> downloadImage(@PathVariable Long id) throws SQLException {
+	public ResponseEntity<Object> downloadImage(HttpServletRequest request, @PathVariable Long id) throws SQLException {
 
-		Optional<Hotel> hotel = hotelRepository.findById(id);
-		if (hotel.isPresent() && hotel.get().getImageFile() != null) {
+		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = hotelRepository.findById(id).orElseThrow().getManager();
 
-			Resource file = new InputStreamResource(hotel.get().getImageFile().getBinaryStream());
+		if (currentUser.equals(foundUser)) {
+			Optional<Hotel> hotel = hotelRepository.findById(id);
+			if (hotel.isPresent() && hotel.get().getImageFile() != null) {
 
-			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
-					.contentLength(hotel.get().getImageFile().length()).body(file);
+				Resource file = new InputStreamResource(hotel.get().getImageFile().getBinaryStream());
+				return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
+						.contentLength(hotel.get().getImageFile().length()).body(file);
 
-		} else {
+			} else {
+				return ResponseEntity.notFound().build();
+				// return "/error";
+			}
+		} else
 			return ResponseEntity.notFound().build();
-		}
-
+		// return "/error";
 	}
 
 	@PostMapping("/edithotelimage/{id}")
-	public String editImage(@RequestParam MultipartFile imageFile,
+	public String editImage(HttpServletRequest request, @RequestParam MultipartFile imageFile,
 			@PathVariable Long id,
 			Model model) throws IOException {
-		Hotel hotel = hotelRepository.findById(id).orElseThrow();
 
-        if (!imageFile.getOriginalFilename().isBlank()) {
-            hotel.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-            hotelRepository.save(hotel);           
-        }
-		model.addAttribute("hotel", hotel);
-        return "redirect:/edithotel/"+id;
-    }
+		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = hotelRepository.findById(id).orElseThrow().getManager();
+
+		if (currentUser.equals(foundUser)) {
+			Hotel hotel = hotelRepository.findById(id).orElseThrow();
+
+			if (!imageFile.getOriginalFilename().isBlank()) {
+				hotel.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+				hotelRepository.save(hotel);
+			}
+			model.addAttribute("hotel", hotel);
+			return "redirect:/edithotel/" + id;
+
+		} else
+			return "/error";
+	}
 
 	@PostMapping("/selecthotelimage/{imgName}")
 	public String editImage(@RequestParam MultipartFile imageFile,
@@ -164,13 +199,20 @@ public class HotelController {
 
 	@GetMapping("/hotelinformation/{id}")
 	public String hotelinformation(Model model, HttpServletRequest request, @PathVariable Long id) {
-		Hotel hotel = hotelRepository.findById(id).orElseThrow();
-		if (hotel.getManager().getvalidated() == false)
-			return "redirect:/error";
-		model.addAttribute("hotel", hotel);
-		model.addAttribute("numRooms", hotel.getNumRooms());
 
-		return "/hotelinformation";
+		UserE hotelManager = hotelRepository.findById(id).orElseThrow().getManager();
+
+		if (hotelManager.getvalidated()) {
+			Hotel hotel = hotelRepository.findById(id).orElseThrow();
+			if (hotel.getManager().getvalidated() == false)
+				return "redirect:/error";
+			model.addAttribute("hotel", hotel);
+			model.addAttribute("numRooms", hotel.getNumRooms());
+
+			return "/hotelinformation";
+
+		} else
+			return "/error";
 
 	}
 
@@ -203,7 +245,6 @@ public class HotelController {
 
 		UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 		Hotel targetHotel = hotelRepository.findById(id).orElseThrow();
-
 
 		targetHotel.getReviews().add(new Review(rating, comment, LocalDate.now(), targetHotel, user));
 
@@ -252,7 +293,7 @@ public class HotelController {
 
 	}
 
-	@PostMapping("/createHotel/{imgName}") 
+	@PostMapping("/createHotel/{imgName}")
 	public String addHotelPost(HttpServletRequest request, Hotel newHotel, Integer room1, Integer cost1, Integer room2,
 			Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable String imgName)
 			throws IOException {
@@ -269,22 +310,22 @@ public class HotelController {
 		newHotel.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
 		newHotel.setImage(true);
 
-		if(room1 != null)
+		if (room1 != null)
 			for (int i = 0; i < room1; i++) {
 				newHotel.getRooms().add(new Room(1, cost1, new ArrayList<>(), newHotel));
 			}
 
-		if(room2 != null)
+		if (room2 != null)
 			for (int i = 0; i < room2; i++) {
 				newHotel.getRooms().add(new Room(2, cost2, new ArrayList<>(), newHotel));
 			}
 
-		if(room3 != null)
+		if (room3 != null)
 			for (int i = 0; i < room3; i++) {
 				newHotel.getRooms().add(new Room(3, cost3, new ArrayList<>(), newHotel));
 			}
 
-		if(room4 != null)
+		if (room4 != null)
 			for (int i = 0; i < room4; i++) {
 				newHotel.getRooms().add(new Room(4, cost4, new ArrayList<>(), newHotel));
 			}
