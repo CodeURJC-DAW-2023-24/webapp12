@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -21,14 +19,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import es.codeurjc.yourHOmeTEL.model.Hotel;
-import es.codeurjc.yourHOmeTEL.model.Reservation;
 import es.codeurjc.yourHOmeTEL.model.Review;
 import es.codeurjc.yourHOmeTEL.model.Room;
 import es.codeurjc.yourHOmeTEL.model.UserE;
@@ -37,8 +31,6 @@ import es.codeurjc.yourHOmeTEL.repository.ReviewRepository;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.HotelService;
 import es.codeurjc.yourHOmeTEL.service.ReviewService;
-import es.codeurjc.yourHOmeTEL.service.UserService;
-import jakarta.persistence.ManyToOne;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -145,18 +137,17 @@ public class HotelController {
 	@GetMapping("/index/{id}/images")
 	public ResponseEntity<Object> downloadImage(HttpServletRequest request, @PathVariable Long id) throws SQLException {
 
-		
-			Optional<Hotel> hotel = hotelRepository.findById(id);
-			if (hotel.isPresent() && hotel.get().getImageFile() != null) {
+		Optional<Hotel> hotel = hotelRepository.findById(id);
+		if (hotel.isPresent() && hotel.get().getImageFile() != null) {
 
-				Resource file = new InputStreamResource(hotel.get().getImageFile().getBinaryStream());
-				return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
-						.contentLength(hotel.get().getImageFile().length()).body(file);
+			Resource file = new InputStreamResource(hotel.get().getImageFile().getBinaryStream());
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
+					.contentLength(hotel.get().getImageFile().length()).body(file);
 
-			} else {
-				return ResponseEntity.notFound().build();
-				// return "/error";
-			}
+		} else {
+			return ResponseEntity.notFound().build();
+			// return "/error";
+		}
 	}
 
 	@PostMapping("/edithotelimage/{id}")
@@ -210,21 +201,6 @@ public class HotelController {
 
 	}
 
-	@GetMapping("/hotelReview/{id}")
-	public String hotelreview(Model model, @PathVariable Long id) {
-
-		UserE hotelManager = hotelRepository.findById(id).orElseThrow().getManager();
-
-		if (hotelManager.getvalidated()) {
-			Hotel hotel = hotelRepository.findById(id).orElseThrow();
-			model.addAttribute("hotel", hotel);
-			return "hotelReview";
-
-		} else
-			return "/error";
-
-	}
-
 	/**
 	 * This method adds to the DB the review posted by the client so it is
 	 * displayed in the hotel's reviews page
@@ -244,40 +220,51 @@ public class HotelController {
 			@RequestParam String comment,
 			@PathVariable Long id) {
 
-		UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		Hotel targetHotel = hotelRepository.findById(id).orElseThrow();
+		UserE hotelManager = hotelRepository.findById(id).orElseThrow().getManager();
 
-		targetHotel.getReviews().add(new Review(rating, comment, LocalDate.now(), targetHotel, user));
+		if (hotelManager.getvalidated()) {
+			UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			Hotel targetHotel = hotelRepository.findById(id).orElseThrow();
+			targetHotel.getReviews().add(new Review(rating, comment, LocalDate.now(), targetHotel, user));
+			hotelRepository.save(targetHotel);
 
-		hotelRepository.save(targetHotel);
+			return "redirect:/hotelReviews/" + id;
 
-		return "redirect:/hotelReviews/" + id;
+		} else
+			return "/error";
 	}
 
 	@GetMapping("/hotelReviews/{id}")
 	public String hotelReviews(Model model, @PathVariable Long id) {
-		Hotel selectedHotel = hotelRepository.findById(id).orElseThrow();
-		model.addAttribute("hotel", selectedHotel);
-		model.addAttribute("hotelreviews", selectedHotel.getReviews());
-		model.addAttribute("numreviews", selectedHotel.getReviews().size());
 
-		int totalReviews = 0;
+		UserE hotelManager = hotelRepository.findById(id).orElseThrow().getManager();
 
-		for (int i = 1; i <= 5; i++) {
-			List<Review> reviews = reviewService.findByScoreAndHotel(selectedHotel, i);
-			int numReviews = reviews.size();
-			totalReviews += numReviews;
-			model.addAttribute("numreviews" + i, numReviews);
-		}
-		model.addAttribute("totalreviews", totalReviews);
+		if (hotelManager.getvalidated()) {
+			Hotel selectedHotel = hotelRepository.findById(id).orElseThrow();
+			model.addAttribute("hotel", selectedHotel);
+			model.addAttribute("hotelreviews", selectedHotel.getReviews());
+			model.addAttribute("numreviews", selectedHotel.getReviews().size());
 
-		for (int i = 5; i >= 1; i--) {
-			int percentageOfIScoreReview = selectedHotel.getPercentageOfNScore(i);
+			int totalReviews = 0;
 
-			model.addAttribute("percentageReview" + i, percentageOfIScoreReview);
-		}
+			for (int i = 1; i <= 5; i++) {
+				List<Review> reviews = reviewService.findByScoreAndHotel(selectedHotel, i);
+				int numReviews = reviews.size();
+				totalReviews += numReviews;
+				model.addAttribute("numreviews" + i, numReviews);
+			}
+			model.addAttribute("totalreviews", totalReviews);
 
-		return "hotelReviews";
+			for (int i = 5; i >= 1; i--) {
+				int percentageOfIScoreReview = selectedHotel.getPercentageOfNScore(i);
+
+				model.addAttribute("percentageReview" + i, percentageOfIScoreReview);
+			}
+			return "hotelReviews";
+
+		} else
+			return "/error";
+
 	}
 
 	@GetMapping("/addHotel/{imgName}")
@@ -342,14 +329,20 @@ public class HotelController {
 
 	@GetMapping("/clientlist/{id}")
 	public String clientlist(Model model, HttpServletRequest request, @PathVariable Long id) {
-		Hotel hotel = hotelRepository.findById(id).orElseThrow();
-		List<UserE> validClients = new ArrayList<>();
-		validClients = hotelService.getValidClients(hotel);
 
-		model.addAttribute("clients", validClients);
+		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = hotelRepository.findById(id).orElseThrow().getManager();
 
-		return "clientlist";
+		if (currentUser.equals(foundUser)) {
+			Hotel hotel = hotelRepository.findById(id).orElseThrow();
+			List<UserE> validClients = new ArrayList<>();
+			validClients = hotelService.getValidClients(hotel);
+			model.addAttribute("clients", validClients);
 
+			return "clientlist";
+
+		} else
+			return "/error";
 	}
 
 	/**
