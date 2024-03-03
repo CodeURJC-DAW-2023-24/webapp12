@@ -97,9 +97,7 @@ public class Room {
         int i = 0;
         //Check if the room is available for the dates
         while(i < this.reservations.size() && available){
-            if (checkIn.isEqual(checkIn) && checkOut.isEqual(checkOut))
-                available = false;
-            else if (checkIn.isAfter(this.reservations.get(i).getCheckIn()) && checkIn.isBefore(this.reservations.get(i).getCheckOut()))
+            if (checkIn.isAfter(this.reservations.get(i).getCheckIn()) && checkIn.isBefore(this.reservations.get(i).getCheckOut()))
                 available = false;
             else if (checkOut.isAfter(this.reservations.get(i).getCheckIn()) && checkOut.isBefore(this.reservations.get(i).getCheckOut()))
                 available = false;

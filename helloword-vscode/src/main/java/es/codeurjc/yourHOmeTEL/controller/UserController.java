@@ -160,11 +160,11 @@ public class UserController {
 			reservationRepository.save(newRe);
 			return "redirect:/clientreservations";
 		} else
-			return "redirect:/notRooms";
+			return "redirect:/notRooms/{id}";
 	}
 
-	@GetMapping("/notRooms")
-	public String notRooms(Model model) {
+	@GetMapping("/notRooms/{id}")
+	public String notRooms(Model model, @PathVariable Long id) {
 		return "notRooms";
 	}
 	
