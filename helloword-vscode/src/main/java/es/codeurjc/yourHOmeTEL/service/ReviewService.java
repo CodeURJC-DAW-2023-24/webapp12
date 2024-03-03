@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import es.codeurjc.yourHOmeTEL.model.Hotel;
 import es.codeurjc.yourHOmeTEL.model.Review;
 import es.codeurjc.yourHOmeTEL.repository.ReviewRepository;
 
@@ -47,6 +48,17 @@ public class ReviewService implements GeneralService<Review> {
             return repository.findAll();
         }      
     }
+
+
+    public List<Review> findByScoreAndHotel(Hotel hotel, int score){
+
+        List<Review> reviews = repository.findByScore(score);
+        List<Review> hotels = repository.findByHotel(hotel);
+        reviews.retainAll(hotels);
+        
+        return reviews;
+    }
+
 
 
     @Override

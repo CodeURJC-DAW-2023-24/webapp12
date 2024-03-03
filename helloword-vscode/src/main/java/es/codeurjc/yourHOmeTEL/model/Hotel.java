@@ -1,7 +1,6 @@
 package es.codeurjc.yourHOmeTEL.model;
 
 import java.sql.Blob;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -177,16 +176,23 @@ public class Hotel {
     }
 
     public int getPercentageOfNScore(int score) {
-        
-        int numberOfNScoreReview = 0;
 
-        for (Review review : this.reviews) {
-            if (review.getScore() == score) {
-                numberOfNScoreReview++;
+        int numReviews = this.reviews.size();
+
+        if (numReviews > 0) {
+
+            int numberOfNScoreReview = 0;
+
+            for (Review review : this.reviews) {
+                if (review.getScore() == score) {
+                    numberOfNScoreReview++;
+                }
             }
-        }
 
-        return numberOfNScoreReview * 100 / this.reviews.size();
+            return numberOfNScoreReview * 100 / numReviews;
+        } else {
+            return 0;
+        }
     }
 
 }

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import es.codeurjc.yourHOmeTEL.model.Review;
 import es.codeurjc.yourHOmeTEL.model.Room;
+import es.codeurjc.yourHOmeTEL.model.Hotel;
+
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
@@ -17,6 +19,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByHotel_Name(String name);
     List<Review> findByDate(Date date);
     List<Review> findByScore(int score);
+    List<Review> findByHotel(Hotel hotel);
     Optional<Review> findById(Long id);
-
+    //List<Review> findByScoreAndHotel(Hotel hotel, int score);
 }

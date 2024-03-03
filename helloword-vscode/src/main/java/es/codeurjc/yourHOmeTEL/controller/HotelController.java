@@ -33,6 +33,7 @@ import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
 import es.codeurjc.yourHOmeTEL.repository.ReviewRepository;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.HotelService;
+import es.codeurjc.yourHOmeTEL.service.ReviewService;
 import es.codeurjc.yourHOmeTEL.service.UserService;
 import jakarta.persistence.ManyToOne;
 import jakarta.servlet.http.HttpServletRequest;
@@ -51,6 +52,10 @@ public class HotelController {
 
 	@Autowired
 	ReviewRepository reviewRepository;
+
+	@Autowired
+	ReviewService reviewService;
+
 
 	@GetMapping("/edithotel/{id}")
 	public String edithotel(Model model, @PathVariable Long id) {
@@ -180,15 +185,15 @@ public class HotelController {
 		model.addAttribute("numreviews", selectedHotel.getReviews().size());
 
 		int totalReviews = 0;
+
+
 		for (int i = 1; i <= 5; i++) {
-			List<Review> reviews = reviewRepository.findByScore(i);
+			List<Review> reviews = reviewService.findByScoreAndHotel(selectedHotel, i);
 			int numReviews = reviews.size();
 			totalReviews += numReviews;
 			model.addAttribute("numreviews" + i, numReviews);
 		}
 		model.addAttribute("totalreviews", totalReviews);
-		// PENDIENTE deberíamos obtener los datos de las reseñas para mostrar aquí
-		// Mario: por que lo haces con hotel name y no id?
 
 		for (int i = 5; i >= 1; i--) {
 			int percentageOfIScoreReview = selectedHotel.getPercentageOfNScore(i);
