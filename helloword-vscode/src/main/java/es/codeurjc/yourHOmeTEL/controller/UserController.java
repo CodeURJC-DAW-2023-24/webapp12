@@ -160,11 +160,65 @@ public class UserController {
 	
 	
 	
+	/**
+	 * Redirects the users to the page of reservations, where they can check their reservations
+	 * @param model
+	 * @param request
+	 * @return
+	 */
 	@GetMapping("/clientreservations")
 	public String clientreservation(Model model,  HttpServletRequest request) {
 		UserE currentClient =  userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		model.addAttribute("reservations", currentClient.getReservations());
+
+		List<Reservation> bookings = currentClient.getReservations();
+
+
+		if (bookings.size() < 6){
+			model.addAttribute("reservations", bookings);
+
+		}else {
+
+			List<Reservation> auxBookings = new ArrayList<>();
+			for (int i = 0; i < 6; i++) {
+				auxBookings.add(bookings.get(i));
+			}
+
+			model.addAttribute("reservations", auxBookings);
+
+		}
+
+		model.addAttribute("user", currentClient);
+
 		return "clientReservation";
+
+	}
+
+	/**
+	 * Loads up to 6 more reservations 
+	 */
+	@GetMapping("/loadMoreReservations/{start}/{end}")
+	public String loadMoreReservations(
+		Model model,
+	HttpServletRequest request,
+	@PathVariable int start,
+	@PathVariable int end) {
+
+		UserE currentClient =  userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+
+		List<Reservation> bookings = currentClient.getReservations();
+		List<Reservation> auxBookings = new ArrayList<>();
+
+
+		if (start <= bookings.size()) {
+
+			for (int i = start; i < end && i <= bookings.size(); i++) {
+				auxBookings.add(bookings.get(i - 1));
+			}
+
+			model.addAttribute("reservations", auxBookings);
+		}
+
+		return "reservationTemplate";
 
 	}
 
@@ -199,13 +253,23 @@ public class UserController {
 	}
 
 	// MANAGER CONTROLLERS
+
+	/**
+	 * Loads the first 6 hotels of a manager
+	 */
 	@GetMapping("/viewhotelsmanager")
 	public String viewHotelsManager(Model model, HttpServletRequest request) {
 
 		String managernick = request.getUserPrincipal().getName();
 		UserE currentManager = userRepository.findByNick(managernick).orElseThrow();
 
-		model.addAttribute("hotels", currentManager.getHotels());
+		List<Hotel> hotels = currentManager.getHotels();
+
+		if (hotels.size() > 6){
+			hotels = hotels.subList(0, 6);
+		}
+
+		model.addAttribute("hotels", hotels);
 
 		return "viewhotelsmanager";
 

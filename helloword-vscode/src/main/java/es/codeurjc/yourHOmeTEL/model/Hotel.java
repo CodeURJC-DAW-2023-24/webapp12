@@ -28,7 +28,7 @@ public class Hotel {
     private String location;
 
     private float rating;
-    // añadir rating y cambiar la base de datos
+
 
     // private Blob imageHotel;
 

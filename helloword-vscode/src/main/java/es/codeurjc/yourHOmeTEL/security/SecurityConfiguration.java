@@ -61,6 +61,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/returnmainpage").permitAll()
                         .requestMatchers("/captcha").permitAll()
                         .requestMatchers("/loadMoreHotels/**").permitAll()
+                        .requestMatchers("/loadMoreReviews/**").permitAll()
                         .requestMatchers("/profile/*/images/").permitAll()
                         .requestMatchers("/static/images/**").permitAll()
                         .requestMatchers("/index/*/images/**").permitAll()
@@ -71,6 +72,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/editprofile/*/images").hasAnyRole("USER")
                         .requestMatchers("/editprofileimage/**").hasAnyRole("USER")
                         .requestMatchers("/posthotelReviews/**").hasAnyRole("USER")
+
                         
                         
 
@@ -79,7 +81,9 @@ public class SecurityConfiguration {
                         .requestMatchers("/reservationInfo/**").hasAnyRole("CLIENT")
                         .requestMatchers("/addReservation/**").hasAnyRole("CLIENT")
                         .requestMatchers("/cancelReservation/**").hasAnyRole("CLIENT")
-                        .requestMatchers("/posthotelReviews/**").permitAll()
+                        .requestMatchers("/posthotelReviews/**").hasAnyRole("CLIENT")
+                        .requestMatchers("/loadMoreReservations/**").hasAnyRole("CLIENT")
+
 
                         // Manager pages
                         .requestMatchers("/edithotel/**").hasAnyRole("MANAGER")
@@ -100,7 +104,9 @@ public class SecurityConfiguration {
                         .requestMatchers("/application").hasAnyRole("MANAGER")
                         .requestMatchers("/index/*/images/**").hasAnyRole("MANAGER")
                         .requestMatchers("/edithotelimage/**").hasAnyRole("MANAGER")
+                        .requestMatchers("/loadMoreHotelsManagerView/**").hasAnyRole("MANAGER")
 
+                        
                         // Admin pages
                         .requestMatchers("/managerlist").hasAnyRole("ADMIN")
                         .requestMatchers("/chartsadmin").hasAnyRole("ADMIN")

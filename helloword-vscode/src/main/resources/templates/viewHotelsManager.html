@@ -1,5 +1,8 @@
 {{>header}}
 
+<!-- AJAX for loading more hotels -->
+<script src='/js/loadMoreHotelsViewHotelsManager.js'></script>
+
 <!-- Custom styles sidebar-->
 <link href="/css/all.css" rel="stylesheet" type="text/css">
 <link
@@ -23,6 +26,8 @@
 <link rel="stylesheet" href="css/managerStyles.css" />
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css'>
 <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js'></script>
+
+
 
 <title>Hotels Manager</title>
 </head>
@@ -50,18 +55,18 @@
                             <table class="table" style="margin-bottom: 120px;">
                                 <thead class="small text-uppercase bg-body text-muted">
                                     <tr>
-                                        <th >Name</th>
+                                        <th>Name</th>
                                         <th>Location</th>
                                         <th>Rating score</th>
                                         <th class="text-end">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="managerHotelsList">
                                     {{#hotels}}
                                     <tr class="align-middle">
                                         <td><span class="d-inline-block align-middle">{{name}}</span></td>
                                         <td> <span class="d-inline-block align-middle">{{location}}</span></td>
-                                        <td><span class="d-inline-block align-middle">{{rating}}</span></td>
+                                        <td><span class="d-inline-block align-middle">{{averageRating}}</span></td>
                                         <td class="text-end">
                                             <div class="drodown">
                                                 <a data-bs-toggle="dropdown" href="#" class="btn p-1"
@@ -73,7 +78,8 @@
                                                         information</a>
                                                     <a href="/clientlist/{{id}}" class="dropdown-item">Clients</a>
                                                     <hr class="collapse-divider">
-                                                    <a href="/deleteHotel/{{id}}" class="dropdown-item-danger">Delete hotel</a>
+                                                    <a href="/deleteHotel/{{id}}" class="dropdown-item-danger">Delete
+                                                        hotel</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -83,6 +89,14 @@
                             </table>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row mt-4 ml-2 mr-2">
+                <div class="col-9"></div>
+                <div class="col-3">
+                    <a onclick='loadMoreHotelsManagerView()'>
+                        <button class="btn btn-primary btn-user btn-block">Load more hotels</button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -99,6 +113,8 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.js"></script>
+
+
 </body>
 
 </html>

@@ -69,9 +69,10 @@ public class HotelController {
 	}
 
 	@PostMapping("/edithotel/{id}")
-	public String edithotel(Model model, HttpServletRequest request, Hotel newHotel, Integer room1, Integer cost1, Integer room2,
-	Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable Long id) 
-	throws IOException{
+	public String edithotel(Model model, HttpServletRequest request, Hotel newHotel, Integer room1, Integer cost1,
+			Integer room2,
+			Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable Long id)
+			throws IOException {
 
 		Hotel hotel = hotelRepository.findById(id).orElseThrow();
 
@@ -79,25 +80,25 @@ public class HotelController {
 		hotel.setLocation(newHotel.getLocation());
 		hotel.setDescription(newHotel.getDescription());
 
-		List <Room> resetedRooms = new ArrayList<>();
+		List<Room> resetedRooms = new ArrayList<>();
 		hotel.setRooms(resetedRooms);
 
-		if(room1 != null)
+		if (room1 != null)
 			for (int i = 0; i < room1; i++) {
 				hotel.getRooms().add(new Room(1, cost1, new ArrayList<>(), newHotel));
 			}
-		
-		if(room2 != null)
+
+		if (room2 != null)
 			for (int i = 0; i < room2; i++) {
 				hotel.getRooms().add(new Room(2, cost2, new ArrayList<>(), newHotel));
 			}
 
-		if(room3 != null)
+		if (room3 != null)
 			for (int i = 0; i < room3; i++) {
 				hotel.getRooms().add(new Room(3, cost3, new ArrayList<>(), newHotel));
 			}
 
-		if(room4 != null)
+		if (room4 != null)
 			for (int i = 0; i < room4; i++) {
 				hotel.getRooms().add(new Room(4, cost4, new ArrayList<>(), newHotel));
 			}
@@ -144,13 +145,13 @@ public class HotelController {
 			Model model) throws IOException {
 		Hotel hotel = hotelRepository.findById(id).orElseThrow();
 
-        if (!imageFile.getOriginalFilename().isBlank()) {
-            hotel.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-            hotelRepository.save(hotel);           
-        }
+		if (!imageFile.getOriginalFilename().isBlank()) {
+			hotel.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+			hotelRepository.save(hotel);
+		}
 		model.addAttribute("hotel", hotel);
-        return "redirect:/edithotel/"+id;
-    }
+		return "redirect:/edithotel/" + id;
+	}
 
 	@PostMapping("/selecthotelimage/{imgName}")
 	public String editImage(@RequestParam MultipartFile imageFile,
@@ -204,7 +205,6 @@ public class HotelController {
 		UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 		Hotel targetHotel = hotelRepository.findById(id).orElseThrow();
 
-
 		targetHotel.getReviews().add(new Review(rating, comment, LocalDate.now(), targetHotel, user));
 
 		hotelRepository.save(targetHotel);
@@ -216,13 +216,20 @@ public class HotelController {
 	public String hotelReviews(Model model, @PathVariable Long id) {
 		Hotel selectedHotel = hotelRepository.findById(id).orElseThrow();
 		model.addAttribute("hotel", selectedHotel);
-		model.addAttribute("hotelreviews", selectedHotel.getReviews());
+
+		List<Review> reviews = new ArrayList<>();
+		for (int i = 0; i < 6 && i < selectedHotel.getReviews().size(); i++){
+			reviews.add(selectedHotel.getReviews().get(i));
+		}
+
+		model.addAttribute("hotelreviews", reviews);
+
 		model.addAttribute("numreviews", selectedHotel.getReviews().size());
 
 		int totalReviews = 0;
 
 		for (int i = 1; i <= 5; i++) {
-			List<Review> reviews = reviewService.findByScoreAndHotel(selectedHotel, i);
+			reviews = reviewService.findByScoreAndHotel(selectedHotel, i);
 			int numReviews = reviews.size();
 			totalReviews += numReviews;
 			model.addAttribute("numreviews" + i, numReviews);
@@ -252,7 +259,7 @@ public class HotelController {
 
 	}
 
-	@PostMapping("/createHotel/{imgName}") 
+	@PostMapping("/createHotel/{imgName}")
 	public String addHotelPost(HttpServletRequest request, Hotel newHotel, Integer room1, Integer cost1, Integer room2,
 			Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable String imgName)
 			throws IOException {
@@ -269,22 +276,22 @@ public class HotelController {
 		newHotel.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
 		newHotel.setImage(true);
 
-		if(room1 != null)
+		if (room1 != null)
 			for (int i = 0; i < room1; i++) {
 				newHotel.getRooms().add(new Room(1, cost1, new ArrayList<>(), newHotel));
 			}
 
-		if(room2 != null)
+		if (room2 != null)
 			for (int i = 0; i < room2; i++) {
 				newHotel.getRooms().add(new Room(2, cost2, new ArrayList<>(), newHotel));
 			}
 
-		if(room3 != null)
+		if (room3 != null)
 			for (int i = 0; i < room3; i++) {
 				newHotel.getRooms().add(new Room(3, cost3, new ArrayList<>(), newHotel));
 			}
 
-		if(room4 != null)
+		if (room4 != null)
 			for (int i = 0; i < room4; i++) {
 				newHotel.getRooms().add(new Room(4, cost4, new ArrayList<>(), newHotel));
 			}
@@ -359,13 +366,13 @@ public class HotelController {
 
 			var hotels = new ArrayList<>();
 
-			// Obtenemos los IDs de los hoteles para la página actual
+			// We obtain the hotels IDs for the actual page
 			List<Long> hotelIds = new ArrayList<>();
 			for (long index = start; index < end && index <= hotelsQuantity; index++) {
 				hotelIds.add(index);
 			}
 
-			// Buscamos los objetos Hotel correspondientes a los IDs
+			// We look for the Hotel objects related to the IDs
 			for (Long hotelId : hotelIds) {
 				Hotel hotel = hotelRepository.findById(hotelId).orElse(null);
 				if (hotel != null) {
@@ -377,6 +384,68 @@ public class HotelController {
 		}
 
 		return "hotelTemplate";
+	}
+
+	@GetMapping("/loadMoreReviews/{id}/{start}/{end}")
+	public String loadMoreReviews(Model model,
+			@PathVariable int id,
+			@PathVariable int start,
+			@PathVariable int end) {
+
+		List<Review> reviews = hotelRepository.findById((long) id).get().getReviews();
+		int reviewsQuantity = reviews.size();
+
+		List<Review> newReviews = new ArrayList<>();
+
+		if (start <= reviewsQuantity) {
+
+			for (int i = start; i < end && i <= reviewsQuantity; i++) {
+				newReviews.add(reviews.get(i - 1));
+			}
+
+			model.addAttribute("hotelreviews", newReviews);
+		}
+
+		return "hotelReviewTemplate";
+	}
+
+	/**
+	 * Using AJAX, loads the next 6 hotels in the page, or none if all are loaded
+	 * 
+	 * @param model
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	@GetMapping("/loadMoreHotelsManagerView/{start}/{end}")
+	public String loadMoreHotelsManagerView(Model model,
+			@PathVariable Long start,
+			@PathVariable Long end) {
+
+		var hotelsQuantity = hotelRepository.count();
+
+		if (start <= hotelsQuantity) {
+
+			var hotels = new ArrayList<>();
+
+			// We obtain the hotels IDs for the actual page
+			List<Long> hotelIds = new ArrayList<>();
+			for (long index = start; index < end && index <= hotelsQuantity; index++) {
+				hotelIds.add(index);
+			}
+
+			// We look for the Hotel objects related to the IDs
+			for (Long hotelId : hotelIds) {
+				Hotel hotel = hotelRepository.findById(hotelId).orElse(null);
+				if (hotel != null) {
+					hotels.add(hotel);
+				}
+			}
+
+			model.addAttribute("hotels", hotels);
+		}
+
+		return "hotelListViewTemplate";
 	}
 
 }

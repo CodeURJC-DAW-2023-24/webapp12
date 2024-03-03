@@ -197,18 +197,38 @@ public class initDataBaseService {
         Reservation reservation1 = new Reservation(LocalDate.of(2024, 2, 27), LocalDate.of(2024, 2, 28), 2, hotel1, room1, client1);
         Reservation reservation2 = new Reservation(LocalDate.of(2024, 3, 4), LocalDate.of(2024, 3, 6), 2, hotel2, room2, client1);
         Reservation reservation3 = new Reservation(LocalDate.of(2024, 6, 4), LocalDate.of(2024, 6, 6), 2, hotel2, room2, client2);
-        Reservation reservation4 = new Reservation(LocalDate.of(2024, 6, 4), LocalDate.of(2024, 6, 6), 2, hotel3, room3, client3);
+        Reservation reservation4 = new Reservation(LocalDate.of(2012, 6, 4), LocalDate.of(2013, 6, 6), 2, hotel3, room3, client3);
+        Reservation reservation5 = new Reservation(LocalDate.of(2012, 6, 5), LocalDate.of(2014, 6, 6), 2, hotel3, room3, client3);
+        Reservation reservation6 = new Reservation(LocalDate.of(2012, 6, 6), LocalDate.of(2015, 6, 6), 2, hotel3, room3, client3);
+        Reservation reservation7 = new Reservation(LocalDate.of(2012, 6, 7), LocalDate.of(2016, 6, 6), 2, hotel3, room3, client3);
+        Reservation reservation8 = new Reservation(LocalDate.of(2012, 6, 8), LocalDate.of(2017, 6, 6), 2, hotel3, room3, client3);
+        Reservation reservation9 = new Reservation(LocalDate.of(2012, 6, 9), LocalDate.of(2018, 6, 6), 2, hotel3, room3, client3);
+
         
         reservationRepository.save(reservation1);
         reservationRepository.save(reservation2);
         reservationRepository.save(reservation3);
+
         reservationRepository.save(reservation4);
+        reservationRepository.save(reservation5);
+        reservationRepository.save(reservation6);
+        reservationRepository.save(reservation7);
+        reservationRepository.save(reservation8);
+        reservationRepository.save(reservation9);
+
 
         // add reservation to hotel
         hotel1.getReservations().add(reservation1);
         hotel2.getReservations().add(reservation2);
         hotel2.getReservations().add(reservation3);
         hotel3.getReservations().add(reservation4);
+
+        hotel2.getReservations().add(reservation5);
+        hotel2.getReservations().add(reservation6);
+        hotel2.getReservations().add(reservation7);
+        hotel2.getReservations().add(reservation8);
+        hotel2.getReservations().add(reservation9);
+
 
         hotelRepository.save(hotel1);
         hotelRepository.save(hotel2);
