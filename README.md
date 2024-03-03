@@ -382,6 +382,21 @@ Paula implemented the security of the application. She made the login, register,
 | #4 | Add Hotel funcionality                   | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0919514f0510402152d3343ba84da95c86401d46 |
 | #5 | Add Reservation funcionality             | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/15e4aece696816d8a61f168e71f71972a2dd17a9 |
 
+### Mario Recio Montero
+
+  - Description: 
+Mario was in charge of setting up the database logic and entities, implementation of controllers, backend logic for users, managers and admins, reCAPTCHA technollogy, advanced algorithms, images logic, dynamic mustache templates, along side other feats, bug fixes and code quality improvements.
+
+  - Five most important commits
+
+| Commit Number | Description | Link |
+|:--:|:----------------------------------------:|:------------------------------------------------------------------------------------------------:|
+| #1 | Implemented Google reCAPTCHA verification| https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/18f7065766ff6dabd74900b933f32e47b358b9f5 |
+| #2 | Implemented advanced algorithm for hotels| https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/f00a838b0ef83cfe393160240e51c6604819f4d4 |
+| #3 | Allows creation of hotels with photos    | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/a4d37e910af711c4199b1b94d6531d4d9d6f963c |
+| #4 | Access restriction on private entities   | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/62dd991a08903f2294c8bf16b9f2e65089e5853e |
+| #5 | Logic and html for manager validation    | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/1dae0bf8500ea86dbebe63d151c8ebbdc866a7e4 |
+
 
   - Five most participation files
 
