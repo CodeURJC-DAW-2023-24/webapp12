@@ -174,7 +174,7 @@ public class UserController {
 	public String clientreservation(Model model,  HttpServletRequest request) {
 		UserE currentClient =  userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 		model.addAttribute("reservations", currentClient.getReservations());
-		return "ClientReservation";
+		return "clientReservation";
 
 	}
 
