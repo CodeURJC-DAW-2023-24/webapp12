@@ -63,18 +63,38 @@ public class HotelController {
 	}
 
 	@PostMapping("/edithotel/{id}")
-	public String edithotel(Model model, @PathVariable Long id,
-
-			@RequestParam String name,
-			@RequestParam int numRooms,
-			@RequestParam String location,
-			@RequestParam String description) {
+	public String edithotel(Model model, HttpServletRequest request, Hotel newHotel, Integer room1, Integer cost1, Integer room2,
+	Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable Long id) 
+	throws IOException{
 
 		Hotel hotel = hotelRepository.findById(id).orElseThrow();
 
-		hotel.setName(name);
-		hotel.setLocation(location);
-		hotel.setDescription(description);
+		hotel.setName(newHotel.getName());
+		hotel.setLocation(newHotel.getLocation());
+		hotel.setDescription(newHotel.getDescription());
+
+		List <Room> resetedRooms = new ArrayList<>();
+		hotel.setRooms(resetedRooms);
+
+		if(room1 != null)
+			for (int i = 0; i < room1; i++) {
+				hotel.getRooms().add(new Room(1, cost1, new ArrayList<>(), newHotel));
+			}
+		
+		if(room2 != null)
+			for (int i = 0; i < room2; i++) {
+				hotel.getRooms().add(new Room(2, cost2, new ArrayList<>(), newHotel));
+			}
+
+		if(room3 != null)
+			for (int i = 0; i < room3; i++) {
+				hotel.getRooms().add(new Room(3, cost3, new ArrayList<>(), newHotel));
+			}
+
+		if(room4 != null)
+			for (int i = 0; i < room4; i++) {
+				hotel.getRooms().add(new Room(4, cost4, new ArrayList<>(), newHotel));
+			}
 
 		hotelRepository.save(hotel);
 
@@ -83,10 +103,6 @@ public class HotelController {
 		return "redirect:/viewhotelsmanager";
 
 	}
-
-
-
-
 
 	@GetMapping("/deleteHotel/{id}")
 	public String deleteHotel(Model model, @PathVariable Long id) {
@@ -126,10 +142,10 @@ public class HotelController {
 
         if (!imageFile.getOriginalFilename().isBlank()) {
             hotel.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-            hotelRepository.save(hotel);
-            model.addAttribute("hotel", hotel);
+            hotelRepository.save(hotel);           
         }
-        return "redirect:/viewhotelsmanager";
+		model.addAttribute("hotel", hotel);
+        return "redirect:/edithotel/"+id;
     }
 
 	@PostMapping("/selecthotelimage/{imgName}")
@@ -226,7 +242,7 @@ public class HotelController {
 
 	}
 
-	@PostMapping("/updateAddHotel/{imgName}") 
+	@PostMapping("/createHotel/{imgName}") 
 	public String addHotelPost(HttpServletRequest request, Hotel newHotel, Integer room1, Integer cost1, Integer room2,
 			Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable String imgName) 
 			throws IOException{
@@ -243,18 +259,25 @@ public class HotelController {
         newHotel.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
         newHotel.setImage(true);
 
-		for (int i = 0; i < room1; i++) {
-			newHotel.getRooms().add(new Room(1, cost1, new ArrayList<>(), newHotel));
-		}
-		for (int i = 0; i < room2; i++) {
-			newHotel.getRooms().add(new Room(2, cost2, new ArrayList<>(), newHotel));
-		}
-		for (int i = 0; i < room3; i++) {
-			newHotel.getRooms().add(new Room(3, cost3, new ArrayList<>(), newHotel));
-		}
-		for (int i = 0; i < room4; i++) {
-			newHotel.getRooms().add(new Room(4, cost4, new ArrayList<>(), newHotel));
-		}
+		if(room1 != null)
+			for (int i = 0; i < room1; i++) {
+				newHotel.getRooms().add(new Room(1, cost1, new ArrayList<>(), newHotel));
+			}
+
+		if(room2 != null)
+			for (int i = 0; i < room2; i++) {
+				newHotel.getRooms().add(new Room(2, cost2, new ArrayList<>(), newHotel));
+			}
+
+		if(room3 != null)
+			for (int i = 0; i < room3; i++) {
+				newHotel.getRooms().add(new Room(3, cost3, new ArrayList<>(), newHotel));
+			}
+
+		if(room4 != null)
+			for (int i = 0; i < room4; i++) {
+				newHotel.getRooms().add(new Room(4, cost4, new ArrayList<>(), newHotel));
+			}
 		hotelRepository.save(newHotel);
 		return "redirect:/viewhotelsmanager";
 	}

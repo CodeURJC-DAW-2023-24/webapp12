@@ -75,19 +75,7 @@ public class UserController {
 
 	
 
-	// ALL CONTROLLERS
-
-	/*
-	 * @GetMapping("/index")
-	 * public String index(Model model, HttpServletRequest request) {
-	 * List<Hotel> recomendedHotels =
-	 * hotelRepository.findTop6ByManager_Validated(true);
-	 * 
-	 * model.addAttribute("hotels", recomendedHotels);
-	 * return "index";
-	 * 
-	 * }
-	 */
+	// PUBLIC CONTROLLERS
 
 	// ADVANCED RECOMMENDATION ALGORITHM
  	@GetMapping("/index")
@@ -394,10 +382,10 @@ public class UserController {
 
         if (!imageFile.getOriginalFilename().isBlank()) {
             currentUser.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-            userRepository.save(currentUser);
-            model.addAttribute("user", currentUser);
+            userRepository.save(currentUser);		
         }
-        return "redirect:/profile";
+
+		return "redirect:/editprofile/"+id;
     }
 
 
