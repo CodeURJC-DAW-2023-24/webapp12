@@ -352,7 +352,7 @@ In order to execute the app, you will need to follow the next steps:
 
   - 9.Additionally, it's advisable to update the 'application.properties' file to use 'create-drop' instead of 'update'.
 
-## EXECUTION
+# EXECUTION
 The code for the application is developed in Visual Studio Code. To execute the application, you need to press the 'Run' button within the IDE, ensuring that it is set to the backend directory. Following that, open your preferred browser, such as Google Chrome, and navigate to https://localhost:8443/ to view the main page
 
 # DATABASE ENTITY DIAGRAM
@@ -365,11 +365,31 @@ The code for the application is developed in Visual Studio Code. To execute the 
 ![classAndTemplates](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/c7cdb1af-a1b2-461c-9a78-fd93ccec1a6e)
 
 
+# Group Members Participation
+
+### Paula Monrobel Ugidos
+
+  - Description: 
+Paula implemented the security of the application. She made the login, register, addHotel and addReservation funcionality.
+
+  - Five most important commits
+
+| Commit Number | Description | Link |
+|:--:|:----------------------------------------:|:------------------------------------------------------------------------------------------------:|
+| #1 | Https and port 8443                      | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/f808c3e650fb7fe23c825d797e9fea01a2159ab9 |
+| #2 | Funcional login with the security        | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/06d6576cb3395df10ac27ba7229d87a365b10155 |
+| #3 | Load user from database for the security | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/b82d17620744cf1836eb28cd07f2f6ef9433b62d |
+| #4 | Add Hotel funcionality                   | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0919514f0510402152d3343ba84da95c86401d46 |
+| #5 | Add Reservation funcionality             | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/15e4aece696816d8a61f168e71f71972a2dd17a9 |
 
 
+  - Five most participation files
 
-
-
-
-
+| File number | File |
+|:--:|:------------------------:|
+| #1 | SecurityConfiguration    |
+| #2 | User Controller          |
+| #3 | CSRFHandlerConfiguration |
+| #4 | ReservationInfo          |
+| #5 | addHotel                 |
 
