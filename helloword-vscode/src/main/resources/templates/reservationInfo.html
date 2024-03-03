@@ -1,73 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>yourHOmeTEL Hotel Information</title>
-{{>headerindex}}
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-	    <div class="container">
-	      <a class="navbar-brand" href="index.html">Your<span>HOmeTEL</span></a>
-	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="oi oi-menu"></span> Menu
-	      </button>
 
-	      <div class="collapse navbar-collapse" id="ftco-nav">
-	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item"><a href="index" class="nav-link">Home</a></li>
-            {{^isUser}}
-            <li class="nav-item"><a href="login" class="nav-link">Log In</a></li>
-            {{/isUser}}
-            {{#isUser}}
-            <li class="nav-item"><a href="profile" class="nav-link">Profile</a></li>
-            {{/isUser}}
-	        </ul>
-	      </div>
-	    </div>
-	  </nav>
-    <!-- END nav -->
-	<div class="hero-wrap" style="background-image: url('/images/bg_3.jpg');">
-      <div class="overlay"></div>
-      <div class="container">
-        <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
-          <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
-          	<div class="text">
-	            <h1 class="mb-4 bread">Reservation Details</h1>
-            </div>
+<head>
+  <title>yourHOmeTEL Hotel Information</title>
+  {{>headerindex}}
+  {{>navindex}}
+  <!-- END nav -->
+  <div class="hero-wrap" style="background-image: url('/images/bg_3.jpg');">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
+        <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+          <div class="text">
+            <h1 class="mb-4 bread">Reservation Details</h1>
           </div>
         </div>
       </div>
     </div>
-    <section class="ftco-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8">
-          	<div class="row">
-          		<div class="col-md-12 ftco-animate">
-                    <div class="d-md-flex mt-5 mb-5">							
-                        <ul class="list">
-                            <li><h3>Name: </h3>{{reservation.hotel.name}}</li>
-                            <li><span>Location: </span>{{reservation.hotel.location}}</li>
-                            <li><span>Price: </span>{{reservation.room.cost}}</li>
-                        </ul>
-                        <ul class="list ml-md-5">
-                            <li><span>Number of people: </span>{{reservation.numPeople}}</li>
-                            <li><span>Check-In:</span>{{reservation.checkIn}}</li>
-                            <li><span>Check-Out:</span>{{reservation.checkOut}}</li>
-                        </ul>
-                    </div>
-          		</div>
-          	</div>
-          </div> <!-- .col-md-8 -->
-          <div class="col-lg-4 sidebar ftco-animate pl-md-5">
-            <div class="mt-4">
-              <a href = "/clientreservations">
-                <button class="btn btn-primary" type="button">Go back</button>
-              </a>
-            <a href="/cancelReservation/{{reservation.id}}">
-                <button class="btn btn-danger" type="button">Cancel Reservation</button>
-            </a>
+  </div>
+  <section class="ftco-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="row">
+            <div class="col-md-12 ftco-animate">
+              <h3>Your reservation info</h3>
+              <div class="d-md-flex mt-5 mb-5">
+                <ul class="list">
+                  <li>Name: {{reservation.hotel.name}}</li>
+                  <li><span>Location: </span>{{reservation.hotel.location}}</li>
+                  <li><span>Price: </span>{{reservation.room.cost}}</li>
+                </ul>
+                <ul class="list ml-md-5">
+                  <li><span>Number of people: </span>{{reservation.numPeople}}</li>
+                  <li><span>Check-In:</span>{{reservation.checkIn}}</li>
+                  <li><span>Check-Out:</span>{{reservation.checkOut}}</li>
+                </ul>
+              </div>
             </div>
+          </div>
+        </div> <!-- .col-md-8 -->
+        <div class="col-lg-4 sidebar ftco-animate pl-md-5">
+          <div class="mt-4">
+            <a href="/clientreservations">
+              <button class="btn btn-primary" type="button">Go back</button>
+            </a>
+            <a href="/cancelReservation/{{reservation.id}}">
+              <button class="btn btn-danger" type="button">Cancel Reservation</button>
+            </a>
           </div>
         </div>
       </div>
-    </section> <!-- .section -->
-    {{>footerindex}}
+    </div>
+  </section> <!-- .section -->
+  {{>footerindex}}

@@ -89,6 +89,8 @@ public class HotelService implements GeneralService<Hotel> {
                     room = rooms.get(i);
                     roomLocated = true;
                 }
+                else
+                    i++;
             }
             else
                 i++;
