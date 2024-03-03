@@ -231,10 +231,31 @@ public class UserController {
 
 	}
 
-	@GetMapping("/chartsmanager")
+
+	/**
+	 * Loads the data of all hotels owned by a manager to be viewed in a graph
+	 * @param model
+	 * @param request
+	 * @return The chart template
+	 */
+	@GetMapping("/chartsManager")
 	public String chartsManager(Model model, HttpServletRequest request) {
 
-		return "chartsmanager";
+		String managernick = request.getUserPrincipal().getName();
+		UserE currentManager = userRepository.findByNick(managernick).orElseThrow();
+
+		var reviewsAverage = new ArrayList<String>();
+		var hotelNames = new ArrayList<String>();
+
+		for (Hotel hotel : currentManager.getHotels()) {
+			hotelNames.add(hotel.getName());
+			reviewsAverage.add("%.1f".formatted((hotel.getAverageRating())));
+		}
+
+		model.addAttribute("reviewsAverage", reviewsAverage);
+		model.addAttribute("hotelNames", hotelNames);
+
+		return "chartsManager";
 
 	}
 
