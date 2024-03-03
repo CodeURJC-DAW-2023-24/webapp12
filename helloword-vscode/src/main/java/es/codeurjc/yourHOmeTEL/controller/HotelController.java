@@ -178,6 +178,7 @@ public class HotelController {
 		model.addAttribute("hotel", selectedHotel);
 		model.addAttribute("hotelreviews", selectedHotel.getReviews());
 		model.addAttribute("numreviews", selectedHotel.getReviews().size());
+
 		int totalReviews = 0;
 		for (int i = 1; i <= 5; i++) {
 			List<Review> reviews = reviewRepository.findByScore(i);
@@ -188,6 +189,13 @@ public class HotelController {
 		model.addAttribute("totalreviews", totalReviews);
 		// PENDIENTE deberíamos obtener los datos de las reseñas para mostrar aquí
 		// Mario: por que lo haces con hotel name y no id?
+
+		for (int i = 5; i >= 1; i--) {
+			int percentageOfIScoreReview = selectedHotel.getPercentageOfNScore(i);
+
+			model.addAttribute("percentageReview" + i, percentageOfIScoreReview);
+		}
+
 		return "hotelReviews";
 	}
 
@@ -271,6 +279,14 @@ public class HotelController {
 	 * }
 	 */
 
+
+	 /**
+		* Using AJAX, loads the next 6 hotels in the page, or none if all are loaded
+		* @param model
+		* @param start
+		* @param end
+		* @return
+	  */
 	@GetMapping("/loadMoreHotels/{start}/{end}")
 	public String loadMoreHotels(Model model,
 			@PathVariable Long start,

@@ -84,12 +84,12 @@ public class SecurityConfiguration {
                         .requestMatchers("/viewhotelsmanager").hasAnyRole("MANAGER")
                         .requestMatchers("/deleteHotel/**").hasAnyRole("MANAGER")
                         .requestMatchers("/clientlist/**").hasAnyRole("MANAGER")
-                        .requestMatchers("/chartsmanager").hasAnyRole("MANAGER")
+                        .requestMatchers("/chartsManager").hasAnyRole("MANAGER")
                         .requestMatchers("/addHotel").hasAnyRole("MANAGER")
-                        .requestMatchers("/testChart/**").hasAnyRole("MANAGER")
                         .requestMatchers("/application").hasAnyRole("MANAGER")
                         .requestMatchers("/index/*/images/**").hasAnyRole("MANAGER")
                         .requestMatchers("/edithotelimage/**").hasAnyRole("MANAGER")
+
                         // Admin pages
                         .requestMatchers("/managerlist").hasAnyRole("ADMIN")
                         .requestMatchers("/chartsadmin").hasAnyRole("ADMIN")
