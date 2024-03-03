@@ -14,7 +14,7 @@
   - Pages
   - Diagram
 
-## Phase 0: Team creation and definition of website functionalities
+# Phase 0: Team creation and definition of website functionalities
 ### App name: YourHOmeTEL
 
 ### Team members 
@@ -109,7 +109,7 @@ Possibility to print a PDF with reservation details.
 An automatic hotel recommendation algorithm will be used, based on each user's previous bookings and ratings. Each hotel can be marked with a series of tags, and remember the user's preferred choices to show personalized suggestions. 
 
 
-## Phase 1: Page layout with HTML and CSS
+# Phase 1: PAGE LAYOUT WITH HTML AND CSS
 ### Pages
 
 - Index: Our home page. You start here to use our page.
@@ -210,6 +210,63 @@ An automatic hotel recommendation algorithm will be used, based on each user's p
 
 ### Diagram Navigation
 ![Final](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/123741250/13f95e0b-1883-4fb3-bb92-1f54bc84a9bd)
+
+
+# PHASE 2: WEB WITH HTML GENERATED IN SERVER AND AJAX
+
+## EXECUTION INSTRUCTIONS
+
+### VERSION 
+
+The tecnologies that we use in this phase are:
+
+    -MySQL: 8.0.19
+  
+    -Maven : 4.0.0
+  
+    -Spring Boot: 3.2.3
+
+    -Java: 21
+
+    -Google ReCAPTCHA: Version 2
+
+## CONFIGURATION 
+
+In order to execute the app, you will need to follow the next steps:
+
+  - 1.Download the zip that appears in this link, https://github.com/CodeURJC-DAW-2023-24/webapp12
+
+  - 2.Navigate to the MySQL website at https://dev.mysql.com/downloads/workbench/ and select the 'Download' option.
+
+  - 3.Choose your operating system and click 'Download' to initiate the download procedure.
+
+  - 4.Open MySQL Workbench using your applications menu or start menu.
+
+  - 5.Select 'Local instance 3306' from the 'MySQL Connections' section to establish a connection with the default local   MySQL server
+
+  - 6.Provide your MySQL server credentials if requested.
+
+  - 7.Upon establishing the connection, you'll have the capability to create or manage databases and tables, as well as execute SQL queries using the MySQL Workbench interface.
+
+  - 8.Before utilizing this database, it's necessary to input new data by populating the DataSampleService with information regarding the elements in the tables
+
+  - 9.Additionally, it's advisable to update the 'application.properties' file to use 'create-drop' instead of 'update'.
+
+## EXECUTION
+The code for the application is developed in Visual Studio Code. To execute the application, you need to press the 'Run' button within the IDE, ensuring that it is set to the backend directory. Following that, open your preferred browser, such as Google Chrome, and navigate to https://localhost:8443/ to view the main page
+
+# DATABASE ENTITY DIAGRAM
+
+![FINAL DIAGRAM ER](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/123741250/cd20321b-4803-4d3b-91d2-5fba12500976)
+
+
+  
+
+
+
+
+
+
 
 
 
