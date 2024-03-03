@@ -104,6 +104,7 @@ public class initDataBaseService {
         UserE manager3 = new UserE("Jack5", "Wells5", "Bio", "loc", "lan", "phone",
                 "mail", "org", null, "manager3", passwordEncoder.encode("manager3"), false, false, rolesManager,
                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+                
 
         UserE admin = new UserE("Jack3", "Wells3", "Bio", "loc", "lan", "phone",
                 "mail", "org", null, "admin", passwordEncoder.encode("admin"), null, null, rolesAdmin,

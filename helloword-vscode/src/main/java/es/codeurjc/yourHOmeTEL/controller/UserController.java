@@ -82,7 +82,7 @@ public class UserController {
 				// size +1 to avoid looking for id = 0 if size = 0
 				for (int i = recomendedHotels.size() + 1; i < 7; i++) {
 					Hotel hotel = hotelRepository.findById((long) i).orElseThrow();
-					if (hotel != null)
+					if (hotel != null && hotel.getManager().getvalidated())
 						recomendedHotels.add(hotel);
 				}
 			}
