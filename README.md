@@ -365,9 +365,9 @@ The code for the application is developed in Visual Studio Code. To execute the 
 ![classAndTemplates](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/c7cdb1af-a1b2-461c-9a78-fd93ccec1a6e)
 
 
-#Group Members Participation
+# Group Members Participation
 
-###Paula Monrobel Ugidos
+### Paula Monrobel Ugidos
 
   - Description: 
 Paula implemented the security of the application. She made the login, register, addHotel and addReservation funcionality.
