@@ -94,7 +94,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/edithotelimage/**").hasAnyRole("MANAGER")
                         .requestMatchers("/addHotelPhoto/**").hasAnyRole("MANAGER")
                         .requestMatchers("/selecthotelimage/**").hasAnyRole("MANAGER")
-                        .requestMatchers("/updateAddHotel/**").hasAnyRole("MANAGER")
+                        .requestMatchers("/createHotel/**").hasAnyRole("MANAGER")
                         .requestMatchers("/chartsManager").hasAnyRole("MANAGER")
                         .requestMatchers("/addHotel").hasAnyRole("MANAGER")
                         .requestMatchers("/application").hasAnyRole("MANAGER")
