@@ -373,10 +373,6 @@ public class UserController {
 	@GetMapping("/profile/{id}/images")
 	public ResponseEntity<Object> downloadImage(HttpServletRequest request, @PathVariable Long id) throws SQLException {
 
-		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		UserE foundUser = userRepository.findById(id).orElseThrow();
-
-		if (currentUser.equals(foundUser)) {
 			Optional<UserE> user = userRepository.findById(id);
 			if (user.isPresent() && user.get().getImageFile() != null) {
 
@@ -388,10 +384,6 @@ public class UserController {
 				return ResponseEntity.notFound().build();
 				// return "/error";
 			}
-		} else {
-			return ResponseEntity.notFound().build();
-			// return "/error";
-		}
 	}
 
 	@PostMapping("/editprofileimage/{id}")

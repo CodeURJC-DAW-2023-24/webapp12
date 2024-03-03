@@ -145,10 +145,7 @@ public class HotelController {
 	@GetMapping("/index/{id}/images")
 	public ResponseEntity<Object> downloadImage(HttpServletRequest request, @PathVariable Long id) throws SQLException {
 
-		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		UserE foundUser = hotelRepository.findById(id).orElseThrow().getManager();
-
-		if (currentUser.equals(foundUser)) {
+		
 			Optional<Hotel> hotel = hotelRepository.findById(id);
 			if (hotel.isPresent() && hotel.get().getImageFile() != null) {
 
@@ -160,9 +157,6 @@ public class HotelController {
 				return ResponseEntity.notFound().build();
 				// return "/error";
 			}
-		} else
-			return ResponseEntity.notFound().build();
-		// return "/error";
 	}
 
 	@PostMapping("/edithotelimage/{id}")
@@ -198,7 +192,7 @@ public class HotelController {
 	}
 
 	@GetMapping("/hotelinformation/{id}")
-	public String hotelinformation(Model model, HttpServletRequest request, @PathVariable Long id) {
+	public String hotelinformation(Model model, @PathVariable Long id) {
 
 		UserE hotelManager = hotelRepository.findById(id).orElseThrow().getManager();
 
@@ -218,9 +212,16 @@ public class HotelController {
 
 	@GetMapping("/hotelReview/{id}")
 	public String hotelreview(Model model, @PathVariable Long id) {
-		Hotel hotel = hotelRepository.findById(id).orElseThrow();
-		model.addAttribute("hotel", hotel);
-		return "hotelReview";
+
+		UserE hotelManager = hotelRepository.findById(id).orElseThrow().getManager();
+
+		if (hotelManager.getvalidated()) {
+			Hotel hotel = hotelRepository.findById(id).orElseThrow();
+			model.addAttribute("hotel", hotel);
+			return "hotelReview";
+
+		} else
+			return "/error";
 
 	}
 
