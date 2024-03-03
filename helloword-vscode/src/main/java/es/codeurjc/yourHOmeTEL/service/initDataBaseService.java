@@ -181,19 +181,11 @@ public class initDataBaseService {
         userRepository.save(manager1);
         userRepository.save(manager2);
           
-        
-        //date creation
-        LocalDate today = LocalDate.now();
-        LocalDate yesterday = today.minus(Period.ofDays(1));
-        LocalDate tomorrow = today.plus(Period.ofDays(1));
-        LocalDate dayAfterTomorrow = today.plus(Period.ofDays(2));
-        
-
         //init reservation
-        Reservation reservation1 = new Reservation(LocalDate.of(2024, 2, 27), LocalDate.of(2024, 5, 30), 2, hotel1, room1, client1);
-        Reservation reservation2 = new Reservation(LocalDate.of(2024, 3, 4), LocalDate.of(2024, 5, 6), 2, hotel2, room2, client1);
-        Reservation reservation3 = new Reservation(LocalDate.of(2024, 6, 4), LocalDate.of(2024, 7, 6), 2, hotel2, room2, client2);
-        Reservation reservation4 = new Reservation(LocalDate.of(2024, 6, 4), LocalDate.of(2024, 7, 6), 2, hotel3, room3, client3);
+        Reservation reservation1 = new Reservation(LocalDate.of(2024, 2, 27), LocalDate.of(2024, 2, 28), 2, hotel1, room1, client1);
+        Reservation reservation2 = new Reservation(LocalDate.of(2024, 3, 4), LocalDate.of(2024, 3, 6), 2, hotel2, room2, client1);
+        Reservation reservation3 = new Reservation(LocalDate.of(2024, 6, 4), LocalDate.of(2024, 6, 6), 2, hotel2, room2, client2);
+        Reservation reservation4 = new Reservation(LocalDate.of(2024, 6, 4), LocalDate.of(2024, 6, 6), 2, hotel3, room3, client3);
         
         reservationRepository.save(reservation1);
         reservationRepository.save(reservation2);
