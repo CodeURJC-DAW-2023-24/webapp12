@@ -6,9 +6,11 @@ import java.util.Optional;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -57,7 +59,6 @@ public class HotelController {
 	@Autowired
 	ReviewService reviewService;
 
-
 	@GetMapping("/edithotel/{id}")
 	public String edithotel(Model model, @PathVariable Long id) {
 
@@ -89,10 +90,6 @@ public class HotelController {
 
 	}
 
-
-
-
-
 	@GetMapping("/deleteHotel/{id}")
 	public String deleteHotel(Model model, @PathVariable Long id) {
 
@@ -121,31 +118,29 @@ public class HotelController {
 
 	}
 
-
-
 	@PostMapping("/edithotelimage/{id}")
-    public String editImage(@RequestParam MultipartFile imageFile,
-                            @PathVariable Long id,
-                            Model model) throws IOException {
-        Hotel hotel = hotelRepository.findById(id).orElseThrow();
+	public String editImage(@RequestParam MultipartFile imageFile,
+			@PathVariable Long id,
+			Model model) throws IOException {
+		Hotel hotel = hotelRepository.findById(id).orElseThrow();
 
-        if (!imageFile.getOriginalFilename().isBlank()) {
-            hotel.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-            hotelRepository.save(hotel);
-            model.addAttribute("hotel", hotel);
-        }
-        return "redirect:/viewhotelsmanager";
-    }
+		if (!imageFile.getOriginalFilename().isBlank()) {
+			hotel.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+			hotelRepository.save(hotel);
+			model.addAttribute("hotel", hotel);
+		}
+		return "redirect:/viewhotelsmanager";
+	}
 
 	@PostMapping("/selecthotelimage/{imgName}")
-    public String editImage(@RequestParam MultipartFile imageFile,
-                            Model model, HttpServletRequest request, @PathVariable String imgName) throws IOException {
-		
-		if(!imageFile.getOriginalFilename().isBlank())
-			return "redirect:/addHotel/"+imageFile.getOriginalFilename();
+	public String editImage(@RequestParam MultipartFile imageFile,
+			Model model, HttpServletRequest request, @PathVariable String imgName) throws IOException {
+
+		if (!imageFile.getOriginalFilename().isBlank())
+			return "redirect:/addHotel/" + imageFile.getOriginalFilename();
 		else
-			return "redirect:/addHotelPhoto/"+imgName;
-    }
+			return "redirect:/addHotelPhoto/" + imgName;
+	}
 
 	@GetMapping("/hotelinformation/{id}")
 	public String hotelinformation(Model model, HttpServletRequest request, @PathVariable Long id) {
@@ -180,12 +175,21 @@ public class HotelController {
 	 * @return
 	 */
 	@PostMapping("/posthotelReviews/{id}")
-	public String postReview(Model model, Review review, @PathVariable Long id) {
+	public String postReview(
+			Model model, HttpServletRequest request,
+			@RequestParam int rating,
+			@RequestParam String comment,
+			@PathVariable Long id) {
+
+		UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 		Hotel targetHotel = hotelRepository.findById(id).orElseThrow();
-		targetHotel.getReviews().add(review);
+
+
+		targetHotel.getReviews().add(new Review(rating, comment, LocalDate.now(), targetHotel, user));
+
 		hotelRepository.save(targetHotel);
 
-		return "redirect:/hotelReviews" + id;
+		return "redirect:/hotelReviews/" + id;
 	}
 
 	@GetMapping("/hotelReviews/{id}")
@@ -196,7 +200,6 @@ public class HotelController {
 		model.addAttribute("numreviews", selectedHotel.getReviews().size());
 
 		int totalReviews = 0;
-
 
 		for (int i = 1; i <= 5; i++) {
 			List<Review> reviews = reviewService.findByScoreAndHotel(selectedHotel, i);
@@ -215,7 +218,6 @@ public class HotelController {
 		return "hotelReviews";
 	}
 
-
 	@GetMapping("/addHotel/{imgName}")
 	public String addHotelWithPhoto(Model model, HttpServletRequest request, @PathVariable String imgName) {
 
@@ -225,16 +227,15 @@ public class HotelController {
 			model.addAttribute("photo", imgName);
 			return "addHotel";
 
-			
 		} else
 			return "redirect:/login";
 
 	}
 
-	@PostMapping("/updateAddHotel/{imgName}") 
+	@PostMapping("/updateAddHotel/{imgName}")
 	public String addHotelPost(HttpServletRequest request, Hotel newHotel, Integer room1, Integer cost1, Integer room2,
-			Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable String imgName) 
-			throws IOException{
+			Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable String imgName)
+			throws IOException {
 
 		UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 
@@ -243,10 +244,10 @@ public class HotelController {
 		newHotel.setReservations(new ArrayList<>());
 		newHotel.setReviews(new ArrayList<>());
 
-		Resource image = new ClassPathResource("/static/images/"+imgName);
+		Resource image = new ClassPathResource("/static/images/" + imgName);
 
-        newHotel.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
-        newHotel.setImage(true);
+		newHotel.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
+		newHotel.setImage(true);
 
 		for (int i = 0; i < room1; i++) {
 			newHotel.getRooms().add(new Room(1, cost1, new ArrayList<>(), newHotel));
@@ -312,14 +313,14 @@ public class HotelController {
 	 * }
 	 */
 
-
-	 /**
-		* Using AJAX, loads the next 6 hotels in the page, or none if all are loaded
-		* @param model
-		* @param start
-		* @param end
-		* @return
-	  */
+	/**
+	 * Using AJAX, loads the next 6 hotels in the page, or none if all are loaded
+	 * 
+	 * @param model
+	 * @param start
+	 * @param end
+	 * @return
+	 */
 	@GetMapping("/loadMoreHotels/{start}/{end}")
 	public String loadMoreHotels(Model model,
 			@PathVariable Long start,
