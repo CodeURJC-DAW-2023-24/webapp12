@@ -71,6 +71,9 @@ public class SecurityConfiguration {
                         .requestMatchers("/editprofile/*/images").hasAnyRole("USER")
                         .requestMatchers("/editprofileimage/**").hasAnyRole("USER")
                         .requestMatchers("/posthotelReviews/**").hasAnyRole("USER")
+                        .requestMatchers("/replace/**").hasAnyRole("USER")
+
+                       
                         
                         
 

@@ -16,7 +16,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller; 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -73,25 +72,23 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	
-
 	// PUBLIC CONTROLLERS
 
 	// ADVANCED RECOMMENDATION ALGORITHM
- 	@GetMapping("/index")
+	@GetMapping("/index")
 	public String index(Model model, HttpServletRequest request) {
 		List<Hotel> recomendedHotels = new ArrayList<>();
-		try{
-		String nick = request.getUserPrincipal().getName();
-		UserE user = userRepository.findByNick(nick).orElseThrow();
-		List<Reservation> userReservations = user.getReservations();
-		recomendedHotels = userService.findRecomendedHotels(6, userReservations, user);
+		try {
+			String nick = request.getUserPrincipal().getName();
+			UserE user = userRepository.findByNick(nick).orElseThrow();
+			List<Reservation> userReservations = user.getReservations();
+			recomendedHotels = userService.findRecomendedHotels(6, userReservations, user);
 
-		}catch(NullPointerException e){
+		} catch (NullPointerException e) {
 
-		}finally{
-			if (recomendedHotels.size() <6){
-				//size +1 to avoid looking for id = 0 if size = 0
+		} finally {
+			if (recomendedHotels.size() < 6) {
+				// size +1 to avoid looking for id = 0 if size = 0
 				for (int i = recomendedHotels.size() + 1; i < 7; i++) {
 					Hotel hotel = hotelRepository.findById((long) i).orElseThrow();
 					if (hotel != null)
@@ -101,19 +98,20 @@ public class UserController {
 		}
 		model.addAttribute("hotels", recomendedHotels);
 		return "index";
-	} 
+	}
 
-/* 	@GetMapping("/index")
-	public String index(Model model, HttpServletRequest request) {
-		List<Hotel> hotels = new ArrayList<>();
-		
-
-		model.addAttribute("hotels", hotels);
-
-		return "index";
-
-	} */
-	
+	/*
+	 * @GetMapping("/index")
+	 * public String index(Model model, HttpServletRequest request) {
+	 * List<Hotel> hotels = new ArrayList<>();
+	 * 
+	 * 
+	 * model.addAttribute("hotels", hotels);
+	 * 
+	 * return "index";
+	 * 
+	 * }
+	 */
 
 	@GetMapping("/indexsearch")
 	public String indexSearch(Model model, @RequestParam String searchValue) {
@@ -140,6 +138,7 @@ public class UserController {
 	@PostMapping("/addReservation/{id}")
 	public String addReservation(Model model, @PathVariable Long id, HttpServletRequest request, String checkIn,
 			String checkOut, Integer numPeople) {
+				
 		LocalDate checkInDate = reservationService.toLocalDate(checkIn);
 		LocalDate checkOutDate = reservationService.toLocalDate(checkOut);
 		Room room = hotelService.checkRooms(id, checkInDate, checkOutDate, numPeople);
@@ -157,44 +156,41 @@ public class UserController {
 	public String notRooms(Model model, @PathVariable Long id) {
 		return "notRooms";
 	}
-	
-	
-	
+
 	@GetMapping("/clientreservations")
-	public String clientreservation(Model model,  HttpServletRequest request) {
-		UserE currentClient =  userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+	public String clientreservation(Model model, HttpServletRequest request) {
+		UserE currentClient = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 		model.addAttribute("reservations", currentClient.getReservations());
 		return "clientReservation";
 
 	}
 
 	@GetMapping("/reservationInfo/{id}")
-	public String clientreservation(Model model,  HttpServletRequest request,  @PathVariable Long id) {
+	public String clientreservation(Model model, HttpServletRequest request, @PathVariable Long id) {
 		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 		UserE foundUser = reservationRepository.findById(id).orElseThrow().getUser();
-		
-		if (currentUser.equals(foundUser)){
+
+		if (currentUser.equals(foundUser)) {
 			model.addAttribute("reservation", reservationRepository.findById(id).orElseThrow());
 			return "reservationInfo";
-		}
-		else
+		} else
 			return "/error";
 
 	}
 
-	@GetMapping("/cancelReservation/{id}")//this should be a post
+	@GetMapping("/cancelReservation/{id}") // this should be a post
 	public String deleteReservation(HttpServletRequest request, @PathVariable Long id) {
 
 		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 		UserE foundUser = reservationRepository.findById(id).orElseThrow().getUser();
-		
-		if (currentUser.equals(foundUser)){
-			Reservation reservation = reservationRepository.findById(id).orElseThrow(); 
+
+		if (currentUser.equals(foundUser)) {
+			Reservation reservation = reservationRepository.findById(id).orElseThrow();
 			if (reservation != null) {
 				UserE user = reservation.getUser();
-				user.getReservations().remove(reservation);	
+				user.getReservations().remove(reservation);
 				userRepository.save(user);
-				
+
 				Hotel hotel = reservation.getHotel();
 				hotel.getReservations().remove(reservation);
 				hotelRepository.save(hotel);
@@ -203,12 +199,11 @@ public class UserController {
 				room.getReservations().remove(reservation);
 				roomRepository.save(room);
 
-				reservationRepository.deleteById(id);					
-			}		
+				reservationRepository.deleteById(id);
+			}
 			return "redirect:/clientreservations";
-		}
-		else
-			return "/error";		
+		} else
+			return "/error";
 	}
 
 	// MANAGER CONTROLLERS
@@ -234,9 +229,9 @@ public class UserController {
 
 	}
 
-
 	/**
 	 * Loads the data of all hotels owned by a manager to be viewed in a graph
+	 * 
 	 * @param model
 	 * @param request
 	 * @return The chart template
@@ -331,19 +326,19 @@ public class UserController {
 	public String editProfile(Model model, HttpServletRequest request, @PathVariable Long id) {
 
 		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		UserE foundUser = userRepository.findById(id).orElseThrow(); // need to transform the throw into 404 error. Page 25	// database
-		
-		if (currentUser.equals(foundUser)){
+		UserE foundUser = userRepository.findById(id).orElseThrow(); // need to transform the throw into 404 error. Page
+																		// 25 // database
+
+		if (currentUser.equals(foundUser)) {
 			model.addAttribute("user", foundUser);
 			return "editprofile";
-		}
-		else
+		} else
 			return "/error";
 
 	}
 
-	@PostMapping("/editprofile/replace/{id}")
-	public String editProfile(Model model, @PathVariable Long id,
+	@PostMapping("/replace/{id}")
+	public String editProfile(HttpServletRequest request, Model model, @PathVariable Long id,
 
 			@RequestParam String name,
 			@RequestParam String lastname,
@@ -352,61 +347,73 @@ public class UserController {
 			@RequestParam String language,
 			@RequestParam String phone,
 			@RequestParam String mail,
-			@RequestParam String bio) {
-		// TODO: process POST request
+			@RequestParam String bio) { // could be changed to construct user automatically
 
+		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 		UserE foundUser = userRepository.findById(id).orElseThrow();
 
-		foundUser.setName(name);
-		foundUser.setLocation(location);
-		foundUser.setOrganization(org);
-		foundUser.setLanguage(language);
-		foundUser.setPhone(phone);
-		foundUser.setEmail(mail);
-		foundUser.setBio(bio);
+		if (currentUser.equals(foundUser)) {
+			foundUser.setName(name);
+			foundUser.setLocation(location);
+			foundUser.setOrganization(org);
+			foundUser.setLanguage(language);
+			foundUser.setPhone(phone);
+			foundUser.setEmail(mail);
+			foundUser.setBio(bio);
 
-		userRepository.save(foundUser);
+			userRepository.save(foundUser);
 
-		model.addAttribute("user", foundUser);
+			model.addAttribute("user", foundUser);
 
-		return "redirect:/profile";
-
-		// no se cambia el nick por el tema de la seguridad
-
+			return "redirect:/profile";
+		} else
+			return "/error";
 	}
 
 	@GetMapping("/profile/{id}/images")
-	public ResponseEntity<Object> downloadImage(@PathVariable Long id) throws SQLException {
+	public ResponseEntity<Object> downloadImage(HttpServletRequest request, @PathVariable Long id) throws SQLException {
 
-		Optional<UserE> user = userRepository.findById(id);
-		if (user.isPresent() && user.get().getImageFile() != null) {
+		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = userRepository.findById(id).orElseThrow();
 
-			Resource file = new InputStreamResource(user.get().getImageFile().getBinaryStream());
+		if (currentUser.equals(foundUser)) {
+			Optional<UserE> user = userRepository.findById(id);
+			if (user.isPresent() && user.get().getImageFile() != null) {
 
-			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
-					.contentLength(user.get().getImageFile().length()).body(file);
+				Resource file = new InputStreamResource(user.get().getImageFile().getBinaryStream());
 
+				return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
+						.contentLength(user.get().getImageFile().length()).body(file);
+			} else {
+				return ResponseEntity.notFound().build();
+				// return "/error";
+			}
 		} else {
 			return ResponseEntity.notFound().build();
+			// return "/error";
 		}
-
 	}
 
-
 	@PostMapping("/editprofileimage/{id}")
-    public String editImage(@RequestParam MultipartFile imageFile,
-                            @PathVariable Long id,
-                            Model model) throws IOException {
-        UserE currentUser = userRepository.findById(id).orElseThrow();
+	public String editImage(HttpServletRequest request, @RequestParam MultipartFile imageFile,
+			@PathVariable Long id,
+			Model model) throws IOException {
 
-        if (!imageFile.getOriginalFilename().isBlank()) {
-            currentUser.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-            userRepository.save(currentUser);		
-        }
+		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = userRepository.findById(id).orElseThrow();
 
-		return "redirect:/editprofile/"+id;
-    }
+		if (currentUser.equals(foundUser)) {
+			if (!imageFile.getOriginalFilename().isBlank()) {
+				currentUser.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+				userRepository.save(currentUser);
+			}
+			return "redirect:/editprofile/" + id;
 
+		} else
+			return "/error";
+
+		
+	}
 
 	@GetMapping("/profile")
 	public String profile(Model model, HttpServletRequest request) {
@@ -445,18 +452,14 @@ public class UserController {
 
 		model.addAttribute("user", currentUser);
 		model.addAttribute("imageFile", currentUser.getImageFile());
-		
-
-	
 
 		return "profile";
 
 	}
 
-
 	@GetMapping("/login")
 	public String login(Model model) {
-		
+
 		return "login";
 	}
 
