@@ -50,31 +50,19 @@
         <!--Admin-->
         {{#isAdmin}}
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts"
-                aria-expanded="true" aria-controls="collapsePages">
+            <a class="nav-link" href="/managervalidation">
                 <i class="fas fa-fw fa-chart-area"></i>
-                <span>Management</span>
-            </a>
-            <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts"
-                data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="/managerlist">View managers</a>
-                    <a class="collapse-item" href="/managervalidation">Validate new managers</a>
-                </div>
-            </div>
+                <span>Validate new managers</span></a>
         </li>
-        <!-- Divider -->
-        <hr class="sidebar-divider">
 
-        <div class="sidebar-heading">
-            Statistics
-        </div>
-
-        <!-- Nav Item - Pages Collapse Menu -->
         <!--Admin-->
         {{/isAdmin}}
         <!--Manager-->
         {{#isManager}}
+        <div class="sidebar-heading">
+            Statistics
+        </div>
+
         <li class="nav-item">
             <a class="nav-link" href="/chartsManager">
                 <i class="fas fa-fw fa-chart-area"></i>
