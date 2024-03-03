@@ -214,9 +214,109 @@ An automatic hotel recommendation algorithm will be used, based on each user's p
 
 # PHASE 2: WEB WITH HTML GENERATED IN SERVER AND AJAX
 
+## PAGES
+
+- Index: Our home page. You start here to use our page.
+  
+  From here you can log in, or sign up, and watch information about the hotel rooms and reviews they have.
+![Index](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/5b6f17af-2d70-4b36-9d57-ee244c69a614)
+
+- Login: Insert credential and get to your profile.
+
+  If you have an account, instert your username and password and keep surfing our page. If not, create one at the link bellow.
+![login](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/8efe3b55-0c00-48b4-a8ae-5600ed2810dc)
+
+-Login Error: If you put an invalid credential you will end up here.
+
+![loginError](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/360d5502-8921-45b7-beb0-f8cd9d14b6df)
+
+- Sign Up:  Create your account here and enjoy all the funcionalities of our page.
+
+  Insert your full name, username and create a pasword and enjoy your new and custimized profile
+![register](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/4d85ed8f-fe3a-494f-8457-55a9de26f907)
+
+-Nick Taken: If you try to sign up with an username already in use, you will go to this page.
+
+![nickTaken](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/7a41ff3b-a169-450d-9f75-00163facabca)
+
+- Profile: Here you can see and edit your personal information.
+
+  Upload a picture of yourself and coustome your profile as you like. Then you can see some relevant information at the sidebar, like your reservations, as a client, or your hotels, if you are a hotel manager, just by clicking at the buttons on your left.
+
+![Profile](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/af91e015-31fd-4e18-a534-72d84685cd0f)
+
+-Edit Profile: Here you can change your user information.
+
+You can update all your user information, even your image.
+
+![editProfile](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/c28a08d1-54eb-485c-981c-37d77a2b1224)
+
+- Hotel reviews: Here you can see if other people enjoyed the hotel.
+  
+  On top you can go to the information of the hotel, and on the bottom you can see peoples reviews.
+
+![hotelReviews](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/3010c3ea-9d11-4a4c-99a4-6136c4964ba9)
+
+- Hotel information: All the details about the room and it's availability.
+  
+  You can see pictures of the hotel and a description. Here you will be able to book it when you log in, to log in you can do it on the top of the page.
+
+![infoHotel](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/47c37705-1171-4a4c-a0fa-ab7f85f8641b)
+
+  -Not Rooms: If there is not available rooms when you try to do the reservation you will be sent to this page.
+
+![notRooms](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/2989da63-cd5a-47eb-bb14-3ac0bd4c9f87)
+
+- Reservations: Watch your reservations here.
+
+  It doesn´t matter if you want to see if you have booked well the room or check past hotels, this is your place. Seek for all the information you need.
+
+![clientReservations](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/2b960aeb-a27a-4533-bbb8-36c3b7a769f8)
+
+- Reservation Information: Watch all the information about one of your resrvations.
+
+  If you want to cancel your reservation you can do it in this page.
+
+![infoReservation](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/f80fa923-06ac-490c-9733-79b70bd700f6)
+
+
+- List of hotels: As a hotel manager, here you can see your hotels.
+
+  Check all about your hotels, edit the current information about them or add new hotels here. 
+
+![managerHotels](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/8b2d7b58-8291-4cc8-8bc7-b33bdd2a3faa)
+
+
+  -Add Hotel: As a manager, here you can add new hotels.
+
+  In this page you can put all the information about your hotel.
+
+![addHotel](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/6c6a8c82-c7c8-4e02-a4ad-787efccf2b16)
+
+  -Add Photo Hotel: As a manager, here you can add the photo of your hotel.
+
+![addPhotoHotel](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/7579eb5f-2247-4655-a925-03ea87b7e80e)
+
+  -Edit Hotel: As a manager, here you can edit the information of your hotels.
+
+  You can update all the information about your hotel.
+
+![editHotel](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/78b3ebcf-e09b-4e31-9372-5775dcef4e33)
+
+
+  -Manager Validation: As an administrator, you can validated the new managers.
+
+  Check the new registered manager and choose if you validate them.
+
+![managerValidation](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/d72062f1-8927-4426-874a-2d923409bd9f)
+
+## Diagram Navigation
+
+![navmap](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/216006da-6899-44f7-9a3b-63e936b969bc)
+
 ## EXECUTION INSTRUCTIONS
 
-### VERSION 
+###VERSION 
 
 The tecnologies that we use in this phase are:
 
