@@ -70,6 +70,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/editprofile/**").hasAnyRole("USER")
                         .requestMatchers("/editprofile/*/images").hasAnyRole("USER")
                         .requestMatchers("/editprofileimage/**").hasAnyRole("USER")
+                        .requestMatchers("/posthotelReviews/**").hasAnyRole("USER")
+                        
                         
 
                         // Client pages
