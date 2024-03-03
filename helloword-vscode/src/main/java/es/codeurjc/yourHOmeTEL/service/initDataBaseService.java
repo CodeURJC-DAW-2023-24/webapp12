@@ -156,10 +156,10 @@ public class initDataBaseService {
         Hotel hotel9 = new Hotel("Hotel9", "hotel ", "loc2", 0F, null, manager3, new ArrayList<>(), new ArrayList<>(),
                 new ArrayList<>());
 
-        Hotel hotel10 = new Hotel("Hotel3", "hotel ", "loc2", 0F, null, manager3, new ArrayList<>(), new ArrayList<>(),
+        Hotel hotel10 = new Hotel("Hotel10", "hotel ", "loc2", 0F, null, manager3, new ArrayList<>(), new ArrayList<>(),
                 new ArrayList<>());
 
-        Hotel hotel11 = new Hotel("Hotel10", "hotel ", "loc2", 0F, null, manager3, new ArrayList<>(), new ArrayList<>(),
+        Hotel hotel11 = new Hotel("Hotel11", "hotel ", "loc2", 0F, null, manager3, new ArrayList<>(), new ArrayList<>(),
                 new ArrayList<>());
 
         hotelRepository.save(hotel1);
@@ -241,16 +241,19 @@ public class initDataBaseService {
         reviewRepository.save(review1);
         reviewRepository.save(review2);
 
-        Random randomInt = new Random();
-
-        for (int i = 0; i < 10; i++) {
-            reviewRepository
-                    .save(new Review(randomInt.nextInt(5) + 1, "Hola" + i, LocalDate.of(2024, 7, 7), hotel1, client1));
-        }
 
         // add review to hotel
         hotel1.getReviews().add(review1);
         hotel1.getReviews().add(review2);
+
+        Random randomInt = new Random();
+
+        for (int i = 0; i < 10; i++) {
+            Review review = new Review(randomInt.nextInt(5) + 1, "Hola" + i, LocalDate.of(2024, 7, 7), hotel3, client1);
+            reviewRepository.save(review);
+            hotel2.getReviews().add(review);
+        }
+
 
         hotelRepository.save(hotel1);
         hotelRepository.save(hotel2);
