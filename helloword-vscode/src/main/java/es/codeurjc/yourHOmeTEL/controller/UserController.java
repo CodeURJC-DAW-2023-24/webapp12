@@ -92,25 +92,27 @@ public class UserController {
 	// ADVANCED RECOMMENDATION ALGORITHM
  	@GetMapping("/index")
 	public String index(Model model, HttpServletRequest request) {
+		List<Hotel> recomendedHotels = new ArrayList<>();
+		try{
 		String nick = request.getUserPrincipal().getName();
 		UserE user = userRepository.findByNick(nick).orElseThrow();
-
 		List<Reservation> userReservations = user.getReservations();
-		List<Hotel> recomendedHotels = userService.findRecomendedHotels(6, userReservations, user);
+		recomendedHotels = userService.findRecomendedHotels(6, userReservations, user);
 
-		model.addAttribute("hotels", recomendedHotels);
+		}catch(NullPointerException e){
 
-		if (recomendedHotels.size() <6){
-			//size +1 to avoid looking for id = 0 if size = 0
-			for (int i = recomendedHotels.size() + 1; i < 6; i++) {
-				Hotel hotel = hotelRepository.findById((long) i).orElseThrow();
-				if (hotel != null)
-					recomendedHotels.add(hotel);
+		}finally{
+			if (recomendedHotels.size() <6){
+				//size +1 to avoid looking for id = 0 if size = 0
+				for (int i = recomendedHotels.size() + 1; i < 7; i++) {
+					Hotel hotel = hotelRepository.findById((long) i).orElseThrow();
+					if (hotel != null)
+						recomendedHotels.add(hotel);
+				}
 			}
 		}
-		
+		model.addAttribute("hotels", recomendedHotels);
 		return "index";
-		
 	} 
 
 /* 	@GetMapping("/index")

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -136,6 +137,16 @@ public class HotelController {
         return "redirect:/viewhotelsmanager";
     }
 
+	@PostMapping("/selecthotelimage/{imgName}")
+    public String editImage(@RequestParam MultipartFile imageFile,
+                            Model model, HttpServletRequest request, @PathVariable String imgName) throws IOException {
+		
+		if(!imageFile.getOriginalFilename().isBlank())
+			return "redirect:/addHotel/"+imageFile.getOriginalFilename();
+		else
+			return "redirect:/addHotelPhoto/"+imgName;
+    }
+
 	@GetMapping("/hotelinformation/{id}")
 	public String hotelinformation(Model model, HttpServletRequest request, @PathVariable Long id) {
 		Hotel hotel = hotelRepository.findById(id).orElseThrow();
@@ -204,27 +215,38 @@ public class HotelController {
 		return "hotelReviews";
 	}
 
-	@GetMapping("/addHotel")
-	public String addHotel(Model model, HttpServletRequest request) {
+
+	@GetMapping("/addHotel/{imgName}")
+	public String addHotelWithPhoto(Model model, HttpServletRequest request, @PathVariable String imgName) {
+
 		Optional<UserE> user = userRepository.findByNick(request.getUserPrincipal().getName());
 		if (user.isPresent()) {
 			model.addAttribute("name", user.get().getName());
+			model.addAttribute("photo", imgName);
 			return "addHotel";
+
+			
 		} else
 			return "redirect:/login";
 
 	}
 
-	@PostMapping("/addHotel")
+	@PostMapping("/updateAddHotel/{imgName}") 
 	public String addHotelPost(HttpServletRequest request, Hotel newHotel, Integer room1, Integer cost1, Integer room2,
-			Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4) {
-		// Falta añadir lo de las fotos
+			Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable String imgName) 
+			throws IOException{
+
 		UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 
 		newHotel.setManager(user);
 		newHotel.setRooms(new ArrayList<>());
 		newHotel.setReservations(new ArrayList<>());
 		newHotel.setReviews(new ArrayList<>());
+
+		Resource image = new ClassPathResource("/static/images/"+imgName);
+
+        newHotel.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
+        newHotel.setImage(true);
 
 		for (int i = 0; i < room1; i++) {
 			newHotel.getRooms().add(new Room(1, cost1, new ArrayList<>(), newHotel));
@@ -240,6 +262,12 @@ public class HotelController {
 		}
 		hotelRepository.save(newHotel);
 		return "redirect:/viewhotelsmanager";
+	}
+
+	@GetMapping("/addHotelPhoto/{imgName}")
+	public String addHotelPost(Model model, HttpServletRequest request, @PathVariable String imgName) {
+		model.addAttribute("photo", imgName);
+		return "addHotelPhoto";
 	}
 
 	@GetMapping("/clientlist/{id}")

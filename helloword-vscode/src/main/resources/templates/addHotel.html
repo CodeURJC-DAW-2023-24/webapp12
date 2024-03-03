@@ -1,164 +1,189 @@
 {{>header}}
 
-    <title>Add hotel</title>
-    
-    <link href="/css/all.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">   
-    <link href="/css/sb-admin-2.css" rel="stylesheet">
-    
-    <!-- Custom styles-->
-    <link rel='stylesheet' href="/css/clientListManagerStyles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css'>
-    <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js'></script>
-    
-    <!-- Custom fonts-->
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-    
-     <!--Custom styles-->
-    <link rel="stylesheet" href="/css/managerStyles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.2.96/css/materialdesignicons.min.css" integrity="sha512-LX0YV/MWBEn2dwXCYgQHrpa9HJkwB+S+bnBpifSOTO1No27TqNMKYoAn6ff2FBh03THAzAiiCwQ+aPX+/Qt/Ow==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css'>
-    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js'></script>
+<title>Add hotel</title>
+
+<link href="/css/all.css" rel="stylesheet" type="text/css">
+<link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+<link href="/css/sb-admin-2.css" rel="stylesheet">
+<link href="/css/photoButton.css" rel="stylesheet">
+
+<!-- Custom styles-->
+<link rel='stylesheet' href="/css/clientListManagerStyles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+    integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css'>
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js'></script>
+
+<!-- Custom fonts-->
+<link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+
+<!--Custom styles-->
+<link rel="stylesheet" href="/css/managerStyles.css">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.2.96/css/materialdesignicons.min.css"
+    integrity="sha512-LX0YV/MWBEn2dwXCYgQHrpa9HJkwB+S+bnBpifSOTO1No27TqNMKYoAn6ff2FBh03THAzAiiCwQ+aPX+/Qt/Ow=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css'>
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js'></script>
 </head>
 
 <body>
-{{>sidebar}}  
+    {{>sidebar}}
     <div class="container">
         <div id="content-wrapper" class="d-flex flex-column"></div>
-            <div class="row flex-lg-nowrap mt-4">
-                <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
-                    <div class="card p-2">
-                        <div class="e-navlist e-navlist--active-bg">
-                            <ul class="nav">
-                                <li class="nav-item"><a class="nav-link px-1 active" href=viewhotelsmanager>
-                                <i class="fa fa-fw fa-bar-chart mr-1"></i><span>Go to hotel list</span></a></li>
-                            </ul>
-                        </div>
+        <div class="row flex-lg-nowrap mt-4">
+            <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
+                <div class="card p-2">
+                    <div class="e-navlist e-navlist--active-bg">
+                        <ul class="nav">
+                            <li class="nav-item"><a class="nav-link px-1 active" href=/viewhotelsmanager>
+                                    <i class="fa fa-fw fa-bar-chart mr-1"></i><span>Go to hotel list</span></a></li>
+                        </ul>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="row">
-                        <div class="col mb-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="e-profile">
-                                        <div class="row">
-                                            <div class="col-12 col-sm-auto mb-3">
-                                                <div class="mx-auto" style="width: 140px;">
-                                                    <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
-                                                        <img class="hotel-preview-image" src="https://img.freepik.com/photos-gratuite/chambre-luxe-hotel_1150-10836.jpg?size=626&ext=jpg">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                                                <div class="text-center text-sm-left mb-2 mb-sm-0">
-                                                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">Hotel</h4>
-                                                    <div class="mt-2">
-                                                        <button class="btn btn-primary" type="button">
-                                                            <i class="fa fa-fw fa-camera"></i>
-                                                            <span>Add Photo</span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="text-center text-sm-right">
-                                                    <span class="badge badge-secondary">Managed by {{name}}</span>
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="e-profile">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-auto mb-3">
+                                            <div class="mx-auto" style="width: 140px;">
+                                                <div class="d-flex justify-content-center align-items-center rounded"
+                                                    style="height: 140px; background-color: rgb(233, 236, 239);">
+                                                    <img class="hotel-preview-image"
+                                                        src=/images/{{photo}}>
                                                 </div>
                                             </div>
                                         </div>
-                                        <ul class="nav nav-tabs">
-                                            <li class="nav-item"><a href="" class="active nav-link">Hotel data</a></li>
-                                        </ul>
-                                        <div class="tab-content pt-3">
-                                            <div class="tab-pane active">
-                                                <form class="form" action="/addHotel" method="post">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label>Hotel name</label>
-                                                                        <input class="form-control" type="text" name="name">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label>Location</label>
-                                                                        <input class="form-control" type="text" name="location">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col mb-3">
-                                                                    <div class="form-group">
-                                                                        <label>Hotel description</label>
-                                                                        <textarea class="form-control" rows="5" name="description"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <div class="form-group">
-                                                                        <label>Rooms Number</label>
-                                                                        <div class="row">
-                                                                            <div class="col" class="addrooms">
-                                                                                <label>Room for 1</label>
-                                                                            </div>
-                                                                            <div class="col">
-                                                                                <input placeholder="Rooms Number" class="form-control" type="number" name="room1">
-                                                                            </div>
-                                                                            <div class="col">
-                                                                                <input placeholder="Room Price" class="form-control" type="number" name="cost1">
-                                                                            </div>
-                                                                            <div class="col" class="addrooms">
-                                                                                <label>Room for 2</label>
-                                                                            </div>
-                                                                            <div class="col">
-                                                                                <input placeholder="Rooms Number" class="form-control" type="number" name="room2">
-                                                                            </div>
-                                                                            <div class="col">
-                                                                                <input placeholder="Room Price" class="form-control" type="number" name="cost2">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col mt-2" class="addrooms">
-                                                                                <label>Room for 3</label>
-                                                                            </div>
-                                                                            <div class="col">
-                                                                                <input placeholder="Rooms Number" class="form-control mt-2" type="number" name="room3">
-                                                                            </div>
-                                                                            <div class="col">
-                                                                                <input placeholder="Room Price" class="form-control mt-2" type="number" name="cost3">
-                                                                            </div>
-                                                                            <div class="col mt-2" class="addrooms">
-                                                                                <label>Room for 4</label>
-                                                                            </div>
-                                                                            <div class="col">
-                                                                                <input placeholder="Rooms Number" class="form-control mt-2" type="number" name="room4">
-                                                                            </div>
-                                                                            <div class="col">
-                                                                                <input placeholder="Room Price" class="form-control mt-2" type="number" name="cost4">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col d-flex justify-content-end">
-                                                            <button class="btn btn-primary" type="submit">Save Hotel</button>
-                                                            <input type="hidden" name="_csrf" value="{{token}}"/>
-                                                        </div>
-                                                    </div>
-                                                </form>
+                                        <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                                            <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">Hotel name</h4>
+                                            <div class="text-center text-sm-left mb-2 mb-sm-0">
+                                                <div class="mt-2">
+                                                    <form action="/addHotelPhoto/{{photo}}" method="get">
+                                                        <input type="submit" value="Change photo" class="btn btn-primary"/>
+                                                        <input type="hidden" name="_csrf" value="{{token}}"/>
+                                                    </form>                                                   
+                                                </div>
                                             </div>
+                                            <div class="text-center text-sm-right">
+                                                <span class="badge badge-secondary">Managed by {{name}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item"><a href="" class="active nav-link">Hotel data</a></li>
+                                    </ul>
+                                    <div class="tab-content pt-3">
+                                        <div class="tab-pane active">
+                                            <form class="form" action="/updateAddHotel/{{photo}}" method="post">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label>Hotel name</label>
+                                                                    <input class="form-control" type="text" name="name">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label>Location</label>
+                                                                    <input class="form-control" type="text"
+                                                                        name="location">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col mb-3">
+                                                                <div class="form-group">
+                                                                    <label>Hotel description</label>
+                                                                    <textarea class="form-control" rows="5"
+                                                                        name="description"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label class="mb-3"><h3>Rooms Number</h3></label>
+                                                                    <div class="row">
+                                                                        <div class="col" class="addrooms">
+                                                                            <label>Rooms for 1</label>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <input placeholder="Rooms Number"
+                                                                                class="form-control" type="number"
+                                                                                name="room1">
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <input placeholder="Room Price"
+                                                                                class="form-control" type="number"
+                                                                                name="cost1">
+                                                                        </div>
+                                                                        <div class="col" class="addrooms">
+                                                                            <label>Rooms for 2</label>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <input placeholder="Rooms Number"
+                                                                                class="form-control" type="number"
+                                                                                name="room2">
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <input placeholder="Room Price"
+                                                                                class="form-control" type="number"
+                                                                                name="cost2">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col mt-2" class="addrooms">
+                                                                            <label>Rooms for 3</label>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <input placeholder="Rooms Number"
+                                                                                class="form-control mt-2" type="number"
+                                                                                name="room3">
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <input placeholder="Room Price"
+                                                                                class="form-control mt-2" type="number"
+                                                                                name="cost3">
+                                                                        </div>
+                                                                        <div class="col mt-2" class="addrooms">
+                                                                            <label>Rooms for 4</label>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <input placeholder="Rooms Number"
+                                                                                class="form-control mt-2" type="number"
+                                                                                name="room4">
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <input placeholder="Room Price"
+                                                                                class="form-control mt-2" type="number"
+                                                                                name="cost4">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col d-flex justify-content-end">
+                                                        <button class="btn btn-primary" type="submit">Save
+                                                            Hotel</button>
+                                                        <input type="hidden" name="_csrf" value="{{token}}" />
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -166,8 +191,8 @@
                         </div>
                     </div>
                 </div>
-                {{>footer}}
             </div>
+            {{>footer}}
         </div>
     </div>
-
+    </div>
