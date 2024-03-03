@@ -170,32 +170,45 @@ public class UserController {
 
 	@GetMapping("/reservationInfo/{id}")
 	public String clientreservation(Model model,  HttpServletRequest request,  @PathVariable Long id) {
-		model.addAttribute("reservation", reservationRepository.findById(id).orElseThrow());
-		return "reservationInfo";
+		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = reservationRepository.findById(id).orElseThrow().getUser();
+		
+		if (currentUser.equals(foundUser)){
+			model.addAttribute("reservation", reservationRepository.findById(id).orElseThrow());
+			return "reservationInfo";
+		}
+		else
+			return "/error";
 
 	}
 
-	@GetMapping("/cancelReservation/{id}")
+	@GetMapping("/cancelReservation/{id}")//this should be a post
 	public String deleteReservation(HttpServletRequest request, @PathVariable Long id) {
 
-		Reservation reservation = reservationRepository.findById(id).orElseThrow(); 
-		if (reservation != null) {
-			UserE user = reservation.getUser();
-			user.getReservations().remove(reservation);	
-			userRepository.save(user);
-			
-			Hotel hotel = reservation.getHotel();
-			hotel.getReservations().remove(reservation);
-			hotelRepository.save(hotel);
-
-			Room room = reservation.getRooms();
-			room.getReservations().remove(reservation);
-			roomRepository.save(room);
-
-			reservationRepository.deleteById(id);					
-		}
+		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = reservationRepository.findById(id).orElseThrow().getUser();
 		
-		return "redirect:/clientreservations";
+		if (currentUser.equals(foundUser)){
+			Reservation reservation = reservationRepository.findById(id).orElseThrow(); 
+			if (reservation != null) {
+				UserE user = reservation.getUser();
+				user.getReservations().remove(reservation);	
+				userRepository.save(user);
+				
+				Hotel hotel = reservation.getHotel();
+				hotel.getReservations().remove(reservation);
+				hotelRepository.save(hotel);
+
+				Room room = reservation.getRooms();
+				room.getReservations().remove(reservation);
+				roomRepository.save(room);
+
+				reservationRepository.deleteById(id);					
+			}		
+			return "redirect:/clientreservations";
+		}
+		else
+			return "/error";		
 	}
 
 	// MANAGER CONTROLLERS
@@ -315,11 +328,17 @@ public class UserController {
 	}
 
 	@GetMapping("/editprofile/{id}")
-	public String editProfile(Model model, @PathVariable Long id) {
+	public String editProfile(Model model, HttpServletRequest request, @PathVariable Long id) {
 
+		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 		UserE foundUser = userRepository.findById(id).orElseThrow(); // need to transform the throw into 404 error. Page 25	// database
-		model.addAttribute("user", foundUser);
-		return "editprofile";
+		
+		if (currentUser.equals(foundUser)){
+			model.addAttribute("user", foundUser);
+			return "editprofile";
+		}
+		else
+			return "/error";
 
 	}
 
