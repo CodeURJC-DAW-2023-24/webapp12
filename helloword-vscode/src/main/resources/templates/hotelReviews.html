@@ -15,8 +15,7 @@
                         <div class="mx-auto" style="width: 140px;">
                           <div class="d-flex justify-content-center align-items-center rounded"
                             style="height: 140px; background-color: rgb(233, 236, 239);">
-                            <img class="hotel-preview-image"
-                              src="https://img.freepik.com/photos-gratuite/chambre-luxe-hotel_1150-10836.jpg?size=626&ext=jpg">
+                            <img src="/index/{{hotel.id}}/images" class="hotel-preview-image">
                           </div>
                         </div>
                       </div>
@@ -67,7 +66,7 @@
                     <td class="progress-bar-container">
                       <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                         <div class="fit-progressbar-background">
-                          <span class="progress-fill" style="width: 97.2973%;"></span>
+                          <span class="progress-fill" style="width: {{percentageReview5}}%;"></span>
                         </div>
                       </div>
                     </td>
@@ -84,7 +83,7 @@
                       <td class="progress-bar-container">
                         <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                           <div class="fit-progressbar-background">
-                            <span class="progress-fill" style="width: 2.2973%;"></span>
+                            <span class="progress-fill" style="width: {{percentageReview4}}%;"></span>
                           </div>
                         </div>
                       </td>
@@ -101,7 +100,7 @@
                     <td class="progress-bar-container">
                       <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                         <div class="fit-progressbar-background">
-                          <span class="progress-fill" style="width: 0;"></span>
+                          <span class="progress-fill" style="width: {{percentageReview3}}%;"></span>
                         </div>
                       </div>
                     </td>
@@ -118,7 +117,7 @@
                     <td class="progress-bar-container">
                       <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                         <div class="fit-progressbar-background">
-                          <span class="progress-fill" style="width: 0;"></span>
+                          <span class="progress-fill" style="width: {{percentageReview2}}%;"></span>
                         </div>
                       </div>
                     </td>
@@ -135,7 +134,7 @@
                     <td class="progress-bar-container">
                       <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                         <div class="fit-progressbar-background">
-                          <span class="progress-fill" style="width: 0;"></span>
+                          <span class="progress-fill" style="width: {{percentageReview1}}%;"></span>
                         </div>
                       </div>
                     </td>

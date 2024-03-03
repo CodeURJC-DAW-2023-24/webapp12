@@ -93,6 +93,12 @@ public class SecurityConfiguration {
                         .requestMatchers("/addHotelPhoto/**").hasAnyRole("MANAGER")
                         .requestMatchers("/selecthotelimage/**").hasAnyRole("MANAGER")
                         .requestMatchers("/updateAddHotel/**").hasAnyRole("MANAGER")
+                        .requestMatchers("/chartsManager").hasAnyRole("MANAGER")
+                        .requestMatchers("/addHotel").hasAnyRole("MANAGER")
+                        .requestMatchers("/application").hasAnyRole("MANAGER")
+                        .requestMatchers("/index/*/images/**").hasAnyRole("MANAGER")
+                        .requestMatchers("/edithotelimage/**").hasAnyRole("MANAGER")
+
                         // Admin pages
                         .requestMatchers("/managerlist").hasAnyRole("ADMIN")
                         .requestMatchers("/chartsadmin").hasAnyRole("ADMIN")
