@@ -360,8 +360,9 @@ The code for the application is developed in Visual Studio Code. To execute the 
 ![FINAL DIAGRAM ER](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/123741250/cd20321b-4803-4d3b-91d2-5fba12500976)
 
 
-  
+# CLASS AND TEMPLATES DIAGRAM
 
+![classAndTemplates](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/c7cdb1af-a1b2-461c-9a78-fd93ccec1a6e)
 
 
 
