@@ -63,6 +63,11 @@ public class ReservationService implements GeneralService<Reservation> {
         else
             return false;
     }
+
+    public void deleteById(Long id) {
+        reservationRepository.deleteById(id);
+    }
+
     public LocalDate toLocalDate(String date) {
         String[] list;
         list = date.split("/");

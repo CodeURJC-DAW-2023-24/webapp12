@@ -12,8 +12,6 @@ import es.codeurjc.yourHOmeTEL.model.Hotel;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-
-    Optional<Review> findById(Long id);
     
     List<Review> findByUser_Name(String name);
 

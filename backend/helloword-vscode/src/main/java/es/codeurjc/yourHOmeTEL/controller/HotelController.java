@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.yourHOmeTEL.model.Hotel;
-import es.codeurjc.yourHOmeTEL.model.Review;
 import es.codeurjc.yourHOmeTEL.model.Room;
 import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
@@ -33,28 +31,20 @@ import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.HotelService;
 import es.codeurjc.yourHOmeTEL.service.ReviewService;
 import es.codeurjc.yourHOmeTEL.service.RoomService;
+import es.codeurjc.yourHOmeTEL.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class HotelController {
 
 	@Autowired
-	UserRepository userRepository;
-
+	UserService userService;
+	
 	@Autowired
 	HotelService hotelService;
 
 	@Autowired
-	HotelRepository hotelRepository;
-
-	@Autowired
-	ReviewRepository reviewRepository;
-
-	@Autowired
 	ReviewService reviewService;
-
-	@Autowired
-	RoomRepository roomRepository;
 
 	@Autowired
 	RoomService roomService;
@@ -62,11 +52,11 @@ public class HotelController {
 	@GetMapping("/edithotel/{id}")
 	public String edithotel(HttpServletRequest request, Model model, @PathVariable Long id) {
 
-		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		UserE foundUser = hotelRepository.findById(id).orElseThrow().getManager();
+		UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = hotelService.findById(id).orElseThrow().getManager();
 
 		if (currentUser.equals(foundUser)) {
-			Hotel hotel = hotelRepository.findById(id).orElseThrow();
+			Hotel hotel = hotelService.findById(id).orElseThrow();
 			model.addAttribute("hotel", hotel);
 			return "editHotel";
 
@@ -80,11 +70,11 @@ public class HotelController {
 			Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable Long id)
 			throws IOException {
 
-		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		UserE foundUser = hotelRepository.findById(id).orElseThrow().getManager();
+		UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = hotelService.findById(id).orElseThrow().getManager();
 
 		if (currentUser.equals(foundUser)) {
-			Hotel hotel = hotelRepository.findById(id).orElseThrow();
+			Hotel hotel = hotelService.findById(id).orElseThrow();
 
 			hotel.setName(newHotel.getName());
 			hotel.setLocation(newHotel.getLocation());
@@ -95,31 +85,31 @@ public class HotelController {
 				for (int i = 0; i < room1; i++) {
 					Room room = new Room(1, cost1, new ArrayList<>(), newHotel);
 					hotel.getRooms().add(room);
-					roomRepository.save(room);
+					roomService.save(room);
 				}
 
 			if (room2 != null)
 				for (int i = 0; i < room2; i++) {
 					Room room = new Room(2, cost2, new ArrayList<>(), newHotel);
 					hotel.getRooms().add(room);
-					roomRepository.save(room);
+					roomService.save(room);
 				}
 
 			if (room3 != null)
 				for (int i = 0; i < room3; i++) {
 					Room room = new Room(3, cost3, new ArrayList<>(), newHotel);
 					hotel.getRooms().add(room);
-					roomRepository.save(room);
+					roomService.save(room);
 				}
 
 			if (room4 != null)
 				for (int i = 0; i < room4; i++) {
 					Room room = new Room(4, cost4, new ArrayList<>(), newHotel);
 					hotel.getRooms().add(room);
-					roomRepository.save(room);
+					roomService.save(room);
 				}
 
-			hotelRepository.save(hotel);
+			hotelService.save(hotel);
 
 			model.addAttribute("hotel", hotel);
 
@@ -133,13 +123,13 @@ public class HotelController {
 	@GetMapping("/deleteHotel/{id}")
 	public String deleteHotel(HttpServletRequest request, Model model, @PathVariable Long id) {
 
-		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		UserE foundUser = hotelRepository.findById(id).orElseThrow().getManager();
+		UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = hotelService.findById(id).orElseThrow().getManager();
 
 		if (currentUser.equals(foundUser)) {
-			Optional<Hotel> hotel = hotelRepository.findById(id);
+			Optional<Hotel> hotel = hotelService.findById(id);
 			if (hotel.isPresent()) {
-				hotelRepository.deleteById(id);
+				hotelService.deleteById(id);
 			}
 
 			return "redirect:/viewhotelsmanager";
@@ -151,7 +141,7 @@ public class HotelController {
 	@GetMapping("/index/{id}/images")
 	public ResponseEntity<Object> downloadImage(HttpServletRequest request, @PathVariable Long id) throws SQLException {
 
-		Optional<Hotel> hotel = hotelRepository.findById(id);
+		Optional<Hotel> hotel = hotelService.findById(id);
 		if (hotel.isPresent() && hotel.get().getImageFile() != null) {
 
 			Resource file = new InputStreamResource(hotel.get().getImageFile().getBinaryStream());
@@ -169,15 +159,15 @@ public class HotelController {
 			@PathVariable Long id,
 			Model model) throws IOException {
 
-		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		UserE foundUser = hotelRepository.findById(id).orElseThrow().getManager();
+		UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = hotelService.findById(id).orElseThrow().getManager();
 
 		if (currentUser.equals(foundUser)) {
-			Hotel hotel = hotelRepository.findById(id).orElseThrow();
+			Hotel hotel = hotelService.findById(id).orElseThrow();
 
 			if (!imageFile.getOriginalFilename().isBlank()) {
 				hotel.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-				hotelRepository.save(hotel);
+				hotelService.save(hotel);
 			}
 			model.addAttribute("hotel", hotel);
 			return "redirect:/edithotel/" + id;
@@ -199,10 +189,10 @@ public class HotelController {
 	@GetMapping("/hotelinformation/{id}")
 	public String hotelinformation(Model model, @PathVariable Long id) {
 
-		UserE hotelManager = hotelRepository.findById(id).orElseThrow().getManager();
+		UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
 
 		if (hotelManager.getvalidated()) {
-			Hotel hotel = hotelRepository.findById(id).orElseThrow();
+			Hotel hotel = hotelService.findById(id).orElseThrow();
 			if (hotel.getManager().getvalidated() == false)
 				return "redirect:/error";
 			model.addAttribute("hotel", hotel);
@@ -220,7 +210,7 @@ public class HotelController {
 	@GetMapping("/addHotel/{imgName}")
 	public String addHotelWithPhoto(Model model, HttpServletRequest request, @PathVariable String imgName) {
 
-		Optional<UserE> user = userRepository.findByNick(request.getUserPrincipal().getName());
+		Optional<UserE> user = userService.findByNick(request.getUserPrincipal().getName());
 		if (user.isPresent()) {
 			model.addAttribute("name", user.get().getName());
 			model.addAttribute("photo", imgName);
@@ -236,7 +226,7 @@ public class HotelController {
 			Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable String imgName)
 			throws IOException {
 
-		UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 
 		newHotel.setManager(user);
 		newHotel.setRooms(new ArrayList<>());
@@ -267,7 +257,7 @@ public class HotelController {
 			for (int i = 0; i < room4; i++) {
 				newHotel.getRooms().add(new Room(4, cost4, new ArrayList<>(), newHotel));
 			}
-		hotelRepository.save(newHotel);
+		hotelService.save(newHotel);
 		return "redirect:/viewhotelsmanager";
 	}
 
@@ -280,11 +270,11 @@ public class HotelController {
 	@GetMapping("/clientlist/{id}")
 	public String clientlist(Model model, HttpServletRequest request, @PathVariable Long id) {
 
-		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		UserE foundUser = hotelRepository.findById(id).orElseThrow().getManager();
+		UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = hotelService.findById(id).orElseThrow().getManager();
 
 		if (currentUser.equals(foundUser)) {
-			Hotel hotel = hotelRepository.findById(id).orElseThrow();
+			Hotel hotel = hotelService.findById(id).orElseThrow();
 			List<UserE> validClients = new ArrayList<>();
 			validClients = hotelService.getValidClients(hotel);
 			model.addAttribute("clients", validClients);
@@ -307,7 +297,7 @@ public class HotelController {
 	 * 
 	 * @PathVariable Long end) {
 	 * 
-	 * var hotelsQuantity = hotelRepository.count();
+	 * var hotelsQuantity = hotelService.count();
 	 * 
 	 * if (start <= hotelsQuantity) {
 	 * 
@@ -315,7 +305,7 @@ public class HotelController {
 	 * 
 	 * // we get the next 6 hotels or the remaining ones
 	 * for (Long index = start; index < end && index < hotelsQuantity; index++) {
-	 * hotels.add(hotelRepository.findById(index));
+	 * hotels.add(hotelService.findById(index));
 	 * }
 	 * 
 	 * model.addAttribute("hotels", hotels);
@@ -338,7 +328,7 @@ public class HotelController {
 			@PathVariable Long start,
 			@PathVariable Long end) {
 
-		var hotelsQuantity = hotelRepository.count();
+		var hotelsQuantity = hotelService.count();
 
 		if (start <= hotelsQuantity) {
 
@@ -352,7 +342,7 @@ public class HotelController {
 
 			// We look for the Hotel objects related to the IDs
 			for (Long hotelId : hotelIds) {
-				Hotel hotel = hotelRepository.findById(hotelId).orElse(null);
+				Hotel hotel = hotelService.findById(hotelId).orElse(null);
 				if (hotel != null) {
 					hotels.add(hotel);
 				}
@@ -382,7 +372,7 @@ public class HotelController {
 			@PathVariable Long end) {
 
 
-		var hotelsQuantity = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow().getHotels().size();
+		var hotelsQuantity = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow().getHotels().size();
 
 		if (start <= hotelsQuantity) {
 
@@ -396,7 +386,7 @@ public class HotelController {
 
 			// We look for the Hotel objects related to the IDs
 			for (Long hotelId : hotelIds) {
-				Hotel hotel = hotelRepository.findById(hotelId).orElse(null);
+				Hotel hotel = hotelService.findById(hotelId).orElse(null);
 				if (hotel != null) {
 					hotels.add(hotel);
 				}

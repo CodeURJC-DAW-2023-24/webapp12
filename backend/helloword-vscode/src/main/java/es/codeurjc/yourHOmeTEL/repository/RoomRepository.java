@@ -11,6 +11,5 @@ import es.codeurjc.yourHOmeTEL.model.Room;
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
-    Optional<Room> findById(Long id);
     List<Room> findByMaxClients(int maxClients); 
 }

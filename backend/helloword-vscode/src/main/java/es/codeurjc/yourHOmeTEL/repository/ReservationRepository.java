@@ -10,8 +10,6 @@ import es.codeurjc.yourHOmeTEL.model.Reservation;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-
-    Optional<Reservation> findById(Long id);
     
     List<Reservation> findByUser_Name(String name);
 

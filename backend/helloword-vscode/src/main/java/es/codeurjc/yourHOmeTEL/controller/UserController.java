@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 import org.springframework.core.io.Resource;
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -44,23 +43,12 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private UserRepository userRepository;
 
 	@Autowired
 	private HotelService hotelService;
 
 	@Autowired
-	private HotelRepository hotelRepository;
-
-	@Autowired
 	private ReservationService reservationService;
-
-	@Autowired
-	private ReservationRepository reservationRepository;
-
-	@Autowired
-	private RoomRepository roomRepository;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -73,7 +61,7 @@ public class UserController {
 		List<Hotel> recomendedHotels = new ArrayList<>();
 		try {
 			String nick = request.getUserPrincipal().getName();
-			UserE user = userRepository.findByNick(nick).orElseThrow();
+			UserE user = userService.findByNick(nick).orElseThrow();
 			List<Reservation> userReservations = user.getReservations();
 			recomendedHotels = userService.findRecomendedHotels(6, userReservations, user);
 
@@ -83,7 +71,7 @@ public class UserController {
 			if (recomendedHotels.size() < 6) {
 				// size +1 to avoid looking for id = 0 if size = 0
 				for (int i = recomendedHotels.size() + 1; i < 7; i++) {
-					Hotel hotel = hotelRepository.findById((long) i).orElseThrow();
+					Hotel hotel = hotelService.findById((long) i).orElseThrow();
 					if (hotel != null && hotel.getManager().getvalidated())
 						recomendedHotels.add(hotel);
 				}
@@ -95,7 +83,7 @@ public class UserController {
 
 	@GetMapping("/indexsearch")
 	public String indexSearch(Model model, @RequestParam String searchValue) {
-		List<Hotel> hotels = hotelRepository.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(true,
+		List<Hotel> hotels = hotelService.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(true,
 				searchValue);
 		model.addAttribute("hotels", hotels);
 		return "index";
@@ -125,7 +113,7 @@ public class UserController {
 	public String viewHotelsManager(Model model, HttpServletRequest request) {
 
 		String managernick = request.getUserPrincipal().getName();
-		UserE currentManager = userRepository.findByNick(managernick).orElseThrow();
+		UserE currentManager = userService.findByNick(managernick).orElseThrow();
 
 		List<Hotel> hotels = currentManager.getHotels();
 
@@ -160,7 +148,7 @@ public class UserController {
 	public String chartsManager(Model model, HttpServletRequest request) {
 
 		String managernick = request.getUserPrincipal().getName();
-		UserE currentManager = userRepository.findByNick(managernick).orElseThrow();
+		UserE currentManager = userService.findByNick(managernick).orElseThrow();
 
 		var reviewsAverage = new ArrayList<String>();
 		var hotelNames = new ArrayList<String>();
@@ -180,12 +168,12 @@ public class UserController {
 	@PostMapping("/application/{id}")
 	public String managerApplication(Model model, HttpServletRequest request, @PathVariable Long id) {
 
-		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		UserE foundManager = userRepository.findById(id).orElseThrow();
+		UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundManager = userService.findById(id).orElseThrow();
 
 		if (currentUser.equals(foundManager)) {
 			foundManager.setRejected(false);
-			userRepository.save(foundManager);
+			userService.save(foundManager);
 			model.addAttribute("user", foundManager);
 			return "redirect:/profile";
 
@@ -204,7 +192,7 @@ public class UserController {
 	@GetMapping("/managervalidation")
 	public String managerValidation(Model model) {
 		List<UserE> unvalidatedManagersList = new ArrayList<>();
-		unvalidatedManagersList = userRepository.findByValidatedAndRejected(false, false);
+		unvalidatedManagersList = userService.findByValidatedAndRejected(false, false);
 
 		if (unvalidatedManagersList != null) {
 			model.addAttribute("unvalidatedManagers", unvalidatedManagersList);
@@ -215,12 +203,12 @@ public class UserController {
 
 	@PostMapping("/rejection/{id}")
 	public String rejectManager(Model model, @PathVariable Long id) {
-		UserE manager = userRepository.findById(id).orElseThrow();
+		UserE manager = userService.findById(id).orElseThrow();
 
 		if (manager != null) {
 			manager.setRejected(true);
 			manager.setvalidated(false);
-			userRepository.save(manager);
+			userService.save(manager);
 		}
 		return "redirect:/managervalidation";
 
@@ -228,12 +216,12 @@ public class UserController {
 
 	@PostMapping("/acceptance/{id}")
 	public String acceptManager(Model model, @PathVariable Long id) {
-		UserE manager = userRepository.findById(id).orElseThrow();
+		UserE manager = userService.findById(id).orElseThrow();
 
 		if (manager != null) {
 			manager.setRejected(false);
 			manager.setvalidated(true);
-			userRepository.save(manager);
+			userService.save(manager);
 		}
 		return "redirect:/managervalidation";
 
@@ -249,8 +237,8 @@ public class UserController {
 	@GetMapping("/editprofile/{id}")
 	public String editProfile(Model model, HttpServletRequest request, @PathVariable Long id) {
 
-		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		UserE foundUser = userRepository.findById(id).orElseThrow(); // need to transform the throw into 404 error. Page
+		UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = userService.findById(id).orElseThrow(); // need to transform the throw into 404 error. Page
 																		// 25 // database
 
 		if (currentUser.equals(foundUser)) {
@@ -273,8 +261,8 @@ public class UserController {
 			@RequestParam String mail,
 			@RequestParam String bio) { // could be changed to construct user automatically
 
-		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		UserE foundUser = userRepository.findById(id).orElseThrow();
+		UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = userService.findById(id).orElseThrow();
 
 		if (currentUser.equals(foundUser)) {
 			foundUser.setName(name);
@@ -285,7 +273,7 @@ public class UserController {
 			foundUser.setEmail(mail);
 			foundUser.setBio(bio);
 
-			userRepository.save(foundUser);
+			userService.save(foundUser);
 
 			model.addAttribute("user", foundUser);
 
@@ -297,7 +285,7 @@ public class UserController {
 	@GetMapping("/profile/{id}/images")
 	public ResponseEntity<Object> downloadImage(HttpServletRequest request, @PathVariable Long id) throws SQLException {
 
-		Optional<UserE> user = userRepository.findById(id);
+		Optional<UserE> user = userService.findById(id);
 		if (user.isPresent() && user.get().getImageFile() != null) {
 
 			Resource file = new InputStreamResource(user.get().getImageFile().getBinaryStream());
@@ -315,13 +303,13 @@ public class UserController {
 			@PathVariable Long id,
 			Model model) throws IOException {
 
-		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		UserE foundUser = userRepository.findById(id).orElseThrow();
+		UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = userService.findById(id).orElseThrow();
 
 		if (currentUser.equals(foundUser)) {
 			if (!imageFile.getOriginalFilename().isBlank()) {
 				currentUser.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-				userRepository.save(currentUser);
+				userService.save(currentUser);
 			}
 			return "redirect:/editprofile/" + id;
 
@@ -334,7 +322,7 @@ public class UserController {
 	public String profile(Model model, HttpServletRequest request) {
 
 		String usernick = request.getUserPrincipal().getName();
-		UserE currentUser = userRepository.findByNick(usernick).orElseThrow();
+		UserE currentUser = userService.findByNick(usernick).orElseThrow();
 		if (currentUser.getBio() == null) {
 			model.addAttribute("hasbio", false);
 			currentUser.setBio("");
@@ -418,13 +406,13 @@ public class UserController {
 			user.setPhone("");
 			user.setOrganization("");
 
-			userRepository.save(user);
+			userService.save(user);
 
 			Resource image = new ClassPathResource("/static/images/default-hotel.jpg");
         	user.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
         	user.setImage(true);
 
-			userRepository.save(user);
+			userService.save(user);
 
 			return "redirect:/login";
 		} else {

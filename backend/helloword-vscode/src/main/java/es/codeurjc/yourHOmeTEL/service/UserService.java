@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import es.codeurjc.yourHOmeTEL.model.Hotel;
 import es.codeurjc.yourHOmeTEL.model.Reservation;
 import es.codeurjc.yourHOmeTEL.model.UserE;
-import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 
 @Service
@@ -21,8 +20,6 @@ public class UserService implements GeneralService<UserE> {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private HotelRepository hotelRepository;
 
     @Override
     public Optional<UserE> findById(Long id) {

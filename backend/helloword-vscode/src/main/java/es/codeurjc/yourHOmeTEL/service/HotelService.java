@@ -36,6 +36,23 @@ public class HotelService implements GeneralService<Hotel> {
         return hotelRepository.findById(id);
     }
 
+    public List<Hotel> findByName(String name){
+        return hotelRepository.findByName(name);
+    }
+
+    public List<Hotel> findByLocation(String location){
+        return hotelRepository.findByLocation(location);
+    }
+
+    public List<Hotel> findTop6ByManager_Validated(Boolean validated){
+        return hotelRepository.findTop6ByManager_Validated(validated);
+    }
+
+    public List<Hotel> findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(Boolean validated,
+            String searchValue){
+                return hotelRepository.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(validated, searchValue);
+            }
+
     @Override
     public List<Hotel> findAll() {
         return hotelRepository.findAll();
@@ -91,6 +108,14 @@ public class HotelService implements GeneralService<Hotel> {
                 i++;
         }
         return room;
+    }
+
+    public void deleteById(Long id){
+        hotelRepository.deleteById(id);
+    }
+
+    public long count(){
+        return hotelRepository.count();
     }
 
 }

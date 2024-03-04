@@ -22,6 +22,7 @@ import es.codeurjc.yourHOmeTEL.repository.RoomRepository;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.HotelService;
 import es.codeurjc.yourHOmeTEL.service.ReservationService;
+import es.codeurjc.yourHOmeTEL.service.RoomService;
 import es.codeurjc.yourHOmeTEL.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -31,23 +32,17 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
-    @Autowired
-	private ReservationRepository reservationRepository;
 
     @Autowired
 	private UserService userService;
 
-	@Autowired
-	private UserRepository userRepository;
 
 	@Autowired
 	private HotelService hotelService;
 
-	@Autowired
-	private HotelRepository hotelRepository;
 
 	@Autowired
-	private RoomRepository roomRepository;
+	private RoomService roomService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -60,10 +55,10 @@ public class ReservationController {
 		LocalDate checkOutDate = reservationService.toLocalDate(checkOut);
 		Room room = hotelService.checkRooms(id, checkInDate, checkOutDate, numPeople);
 		if (room != null) {
-			UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			Hotel hotel = hotelRepository.findById(id).orElseThrow();
+			UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			Hotel hotel = hotelService.findById(id).orElseThrow();
 			Reservation newRe = new Reservation(checkInDate, checkOutDate, numPeople, hotel, room, user);
-			reservationRepository.save(newRe);
+			reservationService.save(newRe);
 			return "redirect:/clientreservations";
 		} else
 			return "redirect:/notRooms/{id}";
@@ -84,7 +79,7 @@ public class ReservationController {
 	 */
 	@GetMapping("/clientreservations")
 	public String clientreservation(Model model, HttpServletRequest request) {
-		UserE currentClient = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE currentClient = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 
 		List<Reservation> bookings = currentClient.getReservations();
 
@@ -118,7 +113,7 @@ public class ReservationController {
 			@PathVariable int start,
 			@PathVariable int end) {
 
-		UserE currentClient = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE currentClient = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 
 		List<Reservation> bookings = currentClient.getReservations();
 		List<Reservation> auxBookings = new ArrayList<>();
@@ -138,11 +133,11 @@ public class ReservationController {
 
 	@GetMapping("/reservationInfo/{id}")
 	public String clientreservation(Model model, HttpServletRequest request, @PathVariable Long id) {
-		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		UserE foundUser = reservationRepository.findById(id).orElseThrow().getUser();
+		UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = reservationService.findById(id).orElseThrow().getUser();
 
 		if (currentUser.equals(foundUser)) {
-			model.addAttribute("reservation", reservationRepository.findById(id).orElseThrow());
+			model.addAttribute("reservation", reservationService.findById(id).orElseThrow());
 			return "reservationInfo";
 		} else
 			return "/error";
@@ -152,25 +147,25 @@ public class ReservationController {
 	@GetMapping("/cancelReservation/{id}") // this should be a post
 	public String deleteReservation(HttpServletRequest request, @PathVariable Long id) {
 
-		UserE currentUser = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		UserE foundUser = reservationRepository.findById(id).orElseThrow().getUser();
+		UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundUser = reservationService.findById(id).orElseThrow().getUser();
 
 		if (currentUser.equals(foundUser)) {
-			Reservation reservation = reservationRepository.findById(id).orElseThrow();
+			Reservation reservation = reservationService.findById(id).orElseThrow();
 			if (reservation != null) {
 				UserE user = reservation.getUser();
 				user.getReservations().remove(reservation);
-				userRepository.save(user);
+				userService.save(user);
 
 				Hotel hotel = reservation.getHotel();
 				hotel.getReservations().remove(reservation);
-				hotelRepository.save(hotel);
+				hotelService.save(hotel);
 
 				Room room = reservation.getRooms();
 				room.getReservations().remove(reservation);
-				roomRepository.save(room);
+				roomService.save(room);
 
-				reservationRepository.deleteById(id);
+				reservationService.deleteById(id);
 			}
 			return "redirect:/clientreservations";
 		} else

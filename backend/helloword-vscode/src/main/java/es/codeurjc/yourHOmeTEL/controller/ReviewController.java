@@ -29,17 +29,12 @@ public class ReviewController {
     private ReviewService reviewService;
 
     @Autowired
-	UserRepository userRepository;
-
-    @Autowired
 	UserService userService;
 
 
 	@Autowired
 	HotelService hotelService;
 
-	@Autowired
-	HotelRepository hotelRepository;
 
     /**
 	 * This method adds to the DB the review posted by the client so it is
@@ -60,15 +55,15 @@ public class ReviewController {
 			@RequestParam String comment,
 			@PathVariable Long id) {
 
-		UserE hotelManager = hotelRepository.findById(id).orElseThrow().getManager();
+		UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
 
 		if (hotelManager.getvalidated()) {
 			int score = (rating != null) ? rating : 0;
 			if(score != 0){
-				UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-				Hotel targetHotel = hotelRepository.findById(id).orElseThrow();
+				UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+				Hotel targetHotel = hotelService.findById(id).orElseThrow();
 				targetHotel.getReviews().add(new Review(score, comment, LocalDate.now(), targetHotel, user));
-				hotelRepository.save(targetHotel);
+				hotelService.save(targetHotel);
 
 				return "redirect:/hotelReviews/" + id;
 			}
@@ -84,10 +79,10 @@ public class ReviewController {
 			Model model,
 			@PathVariable Long id) {
 
-		UserE hotelManager = hotelRepository.findById(id).orElseThrow().getManager();
+		UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
 
 		if (hotelManager.getvalidated()) {
-			Hotel selectedHotel = hotelRepository.findById(id).orElseThrow();
+			Hotel selectedHotel = hotelService.findById(id).orElseThrow();
 			model.addAttribute("hotel", selectedHotel);
 
 			List<Review> reviews = new ArrayList<>();
@@ -124,7 +119,7 @@ public class ReviewController {
 			@PathVariable int start,
 			@PathVariable int end) {
 
-		List<Review> reviews = hotelRepository.findById((long) id).get().getReviews();
+		List<Review> reviews = hotelService.findById((long) id).get().getReviews();
 		int reviewsQuantity = reviews.size();
 
 		List<Review> newReviews = new ArrayList<>();
