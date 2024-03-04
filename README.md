@@ -411,7 +411,7 @@ Laila was tasked for creating the model of database entities and it´s logic, im
 | #2 | Functional hotel and it´s modification      |https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/045c6fd536a04ed4d203f7121ef4f79074082c90 |
 | #3 | Allows to edit profile and it´s image       |https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/9029b9e3b1daf1d013e5b533c08f96a01c8fc352 |
 | #4 | Database entities and logic                 |https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/9d5a82c25c7ac261fe54322321045a069b69d5a9 |
-| #5 | Allows update index hotels images           |https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0b92837e4f8cc7a9e544328fc3b284b554f1b729
+| #5 | Allows update index hotel images           |https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0b92837e4f8cc7a9e544328fc3b284b554f1b729
 
 
 
