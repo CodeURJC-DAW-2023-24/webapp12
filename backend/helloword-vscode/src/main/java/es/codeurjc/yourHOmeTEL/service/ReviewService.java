@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import es.codeurjc.yourHOmeTEL.model.Hotel;
 import es.codeurjc.yourHOmeTEL.model.Review;
-import es.codeurjc.yourHOmeTEL.model.Room;
 import es.codeurjc.yourHOmeTEL.repository.ReviewRepository;
 
 @Service

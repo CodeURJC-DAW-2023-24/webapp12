@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +15,6 @@ import es.codeurjc.yourHOmeTEL.model.Hotel;
 import es.codeurjc.yourHOmeTEL.model.Reservation;
 import es.codeurjc.yourHOmeTEL.model.Room;
 import es.codeurjc.yourHOmeTEL.model.UserE;
-import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
-import es.codeurjc.yourHOmeTEL.repository.ReservationRepository;
-import es.codeurjc.yourHOmeTEL.repository.RoomRepository;
-import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.HotelService;
 import es.codeurjc.yourHOmeTEL.service.ReservationService;
 import es.codeurjc.yourHOmeTEL.service.RoomService;
@@ -44,8 +39,6 @@ public class ReservationController {
 	@Autowired
 	private RoomService roomService;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
     @PostMapping("/addReservation/{id}")
 	public String addReservation(Model model, @PathVariable Long id, HttpServletRequest request, String checkIn,

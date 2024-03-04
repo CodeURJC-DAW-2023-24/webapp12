@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import es.codeurjc.yourHOmeTEL.model.Hotel;
 import es.codeurjc.yourHOmeTEL.model.Review;
 import es.codeurjc.yourHOmeTEL.model.UserE;
-import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
-import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.HotelService;
 import es.codeurjc.yourHOmeTEL.service.ReviewService;
 import es.codeurjc.yourHOmeTEL.service.UserService;

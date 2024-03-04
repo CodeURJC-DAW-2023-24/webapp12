@@ -9,7 +9,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.yourHOmeTEL.model.Reservation;
-import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.repository.ReservationRepository;
 
 @Service

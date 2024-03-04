@@ -26,15 +26,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import es.codeurjc.yourHOmeTEL.model.Hotel;
 import es.codeurjc.yourHOmeTEL.model.Reservation;
 import es.codeurjc.yourHOmeTEL.model.Review;
-import es.codeurjc.yourHOmeTEL.model.Room;
 import es.codeurjc.yourHOmeTEL.model.UserE;
-import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
-import es.codeurjc.yourHOmeTEL.repository.ReservationRepository;
-import es.codeurjc.yourHOmeTEL.repository.RoomRepository;
-import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.UserService;
 import es.codeurjc.yourHOmeTEL.service.HotelService;
-import es.codeurjc.yourHOmeTEL.service.ReservationService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -46,9 +40,6 @@ public class UserController {
 
 	@Autowired
 	private HotelService hotelService;
-
-	@Autowired
-	private ReservationService reservationService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
