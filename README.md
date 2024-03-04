@@ -437,3 +437,27 @@ Laila was tasked for creating the model of database entities and it´s logic, im
 | #4 | ReservationInfo          |
 | #5 | addHotel                 |
 
+### Carlos Hermán Andrés Andrés
+
+  - Description:
+Carlos was tasked to handle the reviews of the hotels, the implementation of some type of charts and AJAX technology throughout the app.
+
+  - Most important commits
+
+| Commit number | Description |  File |
+|:--:|:----------------------------------------:|:------------------------------------------------------------------------------------------------:  |
+| #1 | AJAX included wherever it's needed        | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/aa5514671d7187a0b737e33bbd4e84873b84404b  |
+| #2 | Post Reviews working                      | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/b1d0518c2b589299f24b6f9fd3b25456d45bc252  |
+| #3 | Reviews graphs fully working              | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/9eca9a618fb7b4119dcff70bc55fa226f9448159  |
+| #4 | Hotel reviews page and styles             | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/f6669b09db6f77bed120f06102d927119f83a1b2  |
+| #5 | Review controller without DB management   | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/328a80a1672ee6249c1ddc4ee8eecd3b4f6e5b5c  |
+
+  - Most participated files 
+
+| File number | File |
+|:--:|:------------------------:|
+| #1 | UserController    |
+| #2 |   hotelReview.html             |
+| #3 | loadHotels.js |
+| #4 | loadMoreReservations.js        |
+| #5 |     HotelController        |
