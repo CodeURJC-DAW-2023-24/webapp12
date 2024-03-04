@@ -1,4 +1,4 @@
-package es.codeurjc.yourHOmeTEL.service;
+package es.codeurjc.yourhometel.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import es.codeurjc.yourHOmeTEL.model.Hotel;
-import es.codeurjc.yourHOmeTEL.model.Review;
-import es.codeurjc.yourHOmeTEL.repository.ReviewRepository;
+import es.codeurjc.yourhometel.model.Hotel;
+import es.codeurjc.yourhometel.model.Review;
+import es.codeurjc.yourhometel.repository.ReviewRepository;
 
 @Service
 public class ReviewService implements GeneralService<Review> {
@@ -17,52 +17,47 @@ public class ReviewService implements GeneralService<Review> {
     @Autowired
     private ReviewRepository repository;
 
-
     @Override
-    public Optional <Review> findById(Long id){
+    public Optional<Review> findById(Long id) {
         return repository.findById(id);
 
     }
 
     @Override
-    public void save(Review go){
-        
-    }
-
-    @Override
-    public void delete(Review go){
+    public void save(Review go) {
 
     }
 
     @Override
-    public List <Review> findAll() {
+    public void delete(Review go) {
+
+    }
+
+    @Override
+    public List<Review> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public List <Review> findAll(Sort sort){
-        if (!sort.equals(null)){
+    public List<Review> findAll(Sort sort) {
+        if (!sort.equals(null)) {
             return repository.findAll(sort);
-        }
-        else {
+        } else {
             return repository.findAll();
-        }      
+        }
     }
 
-
-    public List<Review> findByScoreAndHotel(Hotel hotel, int score){
+    public List<Review> findByScoreAndHotel(Hotel hotel, int score) {
 
         List<Review> reviews = repository.findByScore(score);
         List<Review> hotels = repository.findByHotel(hotel);
         reviews.retainAll(hotels);
-        
+
         return reviews;
     }
 
-
-
     @Override
-    public Boolean exist (Long id){
+    public Boolean exist(Long id) {
         return null;
     }
 }

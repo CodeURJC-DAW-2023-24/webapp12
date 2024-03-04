@@ -1,4 +1,4 @@
-package es.codeurjc.yourHOmeTEL.controller;
+package es.codeurjc.yourhometel.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,17 +23,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import es.codeurjc.yourHOmeTEL.model.Hotel;
-import es.codeurjc.yourHOmeTEL.model.Reservation;
-import es.codeurjc.yourHOmeTEL.model.Room;
-import es.codeurjc.yourHOmeTEL.model.UserE;
-import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
-import es.codeurjc.yourHOmeTEL.repository.ReservationRepository;
-import es.codeurjc.yourHOmeTEL.repository.RoomRepository;
-import es.codeurjc.yourHOmeTEL.repository.UserRepository;
-import es.codeurjc.yourHOmeTEL.service.UserService;
-import es.codeurjc.yourHOmeTEL.service.HotelService;
-import es.codeurjc.yourHOmeTEL.service.ReservationService;
+import es.codeurjc.yourhometel.model.Hotel;
+import es.codeurjc.yourhometel.model.Reservation;
+import es.codeurjc.yourhometel.model.Room;
+import es.codeurjc.yourhometel.model.UserE;
+import es.codeurjc.yourhometel.repository.HotelRepository;
+import es.codeurjc.yourhometel.repository.ReservationRepository;
+import es.codeurjc.yourhometel.repository.RoomRepository;
+import es.codeurjc.yourhometel.repository.UserRepository;
+import es.codeurjc.yourhometel.service.UserService;
+import es.codeurjc.yourhometel.service.HotelService;
+import es.codeurjc.yourhometel.service.ReservationService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -91,19 +91,6 @@ public class UserController {
 		return "index";
 	}
 
-	/*
-	 * @GetMapping("/index")
-	 * public String index(Model model, HttpServletRequest request) {
-	 * List<Hotel> hotels = new ArrayList<>();
-	 * 
-	 * 
-	 * model.addAttribute("hotels", hotels);
-	 * 
-	 * return "index";
-	 * 
-	 * }
-	 */
-
 	@GetMapping("/indexsearch")
 	public String indexSearch(Model model, @RequestParam String searchValue) {
 		List<Hotel> hotels = hotelRepository.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(true,
@@ -129,7 +116,7 @@ public class UserController {
 	@PostMapping("/addReservation/{id}")
 	public String addReservation(Model model, @PathVariable Long id, HttpServletRequest request, String checkIn,
 			String checkOut, Integer numPeople) {
-				
+
 		LocalDate checkInDate = reservationService.toLocalDate(checkIn);
 		LocalDate checkOutDate = reservationService.toLocalDate(checkOut);
 		Room room = hotelService.checkRooms(id, checkInDate, checkOutDate, numPeople);
@@ -147,26 +134,25 @@ public class UserController {
 	public String notRooms(Model model, @PathVariable Long id) {
 		return "notRooms";
 	}
-	
-	
-	
+
 	/**
-	 * Redirects the users to the page of reservations, where they can check their reservations
+	 * Redirects the users to the page of reservations, where they can check their
+	 * reservations
+	 * 
 	 * @param model
 	 * @param request
 	 * @return
 	 */
 	@GetMapping("/clientreservations")
-	public String clientreservation(Model model,  HttpServletRequest request) {
-		UserE currentClient =  userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+	public String clientreservation(Model model, HttpServletRequest request) {
+		UserE currentClient = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 
 		List<Reservation> bookings = currentClient.getReservations();
 
-
-		if (bookings.size() < 6){
+		if (bookings.size() < 6) {
 			model.addAttribute("reservations", bookings);
 
-		}else {
+		} else {
 
 			List<Reservation> auxBookings = new ArrayList<>();
 			for (int i = 0; i < 6; i++) {
@@ -184,20 +170,19 @@ public class UserController {
 	}
 
 	/**
-	 * Loads up to 6 more reservations 
+	 * Loads up to 6 more reservations
 	 */
 	@GetMapping("/loadMoreReservations/{start}/{end}")
 	public String loadMoreReservations(
-		Model model,
-	HttpServletRequest request,
-	@PathVariable int start,
-	@PathVariable int end) {
+			Model model,
+			HttpServletRequest request,
+			@PathVariable int start,
+			@PathVariable int end) {
 
-		UserE currentClient =  userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE currentClient = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 
 		List<Reservation> bookings = currentClient.getReservations();
 		List<Reservation> auxBookings = new ArrayList<>();
-
 
 		if (start <= bookings.size()) {
 
@@ -266,7 +251,7 @@ public class UserController {
 
 		List<Hotel> hotels = currentManager.getHotels();
 
-		if (hotels.size() > 6){
+		if (hotels.size() > 6) {
 			hotels = hotels.subList(0, 6);
 		}
 
@@ -430,17 +415,17 @@ public class UserController {
 	@GetMapping("/profile/{id}/images")
 	public ResponseEntity<Object> downloadImage(HttpServletRequest request, @PathVariable Long id) throws SQLException {
 
-			Optional<UserE> user = userRepository.findById(id);
-			if (user.isPresent() && user.get().getImageFile() != null) {
+		Optional<UserE> user = userRepository.findById(id);
+		if (user.isPresent() && user.get().getImageFile() != null) {
 
-				Resource file = new InputStreamResource(user.get().getImageFile().getBinaryStream());
+			Resource file = new InputStreamResource(user.get().getImageFile().getBinaryStream());
 
-				return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
-						.contentLength(user.get().getImageFile().length()).body(file);
-			} else {
-				return ResponseEntity.notFound().build();
-				// return "/error";
-			}
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
+					.contentLength(user.get().getImageFile().length()).body(file);
+		} else {
+			return ResponseEntity.notFound().build();
+			// return "/error";
+		}
 	}
 
 	@PostMapping("/editprofileimage/{id}")
@@ -461,7 +446,6 @@ public class UserController {
 		} else
 			return "/error";
 
-		
 	}
 
 	@GetMapping("/profile")

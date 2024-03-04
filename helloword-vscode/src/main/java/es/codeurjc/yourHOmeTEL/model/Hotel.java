@@ -1,4 +1,4 @@
-package es.codeurjc.yourHOmeTEL.model;
+package es.codeurjc.yourhometel.model;
 
 import java.sql.Blob;
 import java.util.List;
@@ -28,9 +28,6 @@ public class Hotel {
     private String location;
 
     private float rating;
-
-
-    // private Blob imageHotel;
 
     @Lob
     private Blob imageFile;
@@ -79,11 +76,9 @@ public class Hotel {
         return id;
     }
 
-
     public void setId(Long id) {
         this.id = id;
     }
-
 
     public String getName() {
         return name;

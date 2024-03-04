@@ -1,4 +1,4 @@
-package es.codeurjc.yourHOmeTEL.security;
+package es.codeurjc.yourhometel.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.web.csrf.CsrfToken;
