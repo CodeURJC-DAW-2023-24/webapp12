@@ -4,6 +4,13 @@
       "type": "java",
       "name": "HellowordVscodeApplication",
       "request": "launch",
+      "mainClass": "es.codeurjc.yourhometel.HellowordVscodeApplication",
+      "projectName": "yourHOmeTEL"
+    },
+    {
+      "type": "java",
+      "name": "HellowordVscodeApplication",
+      "request": "launch",
       "mainClass": "es.codeurjc.yourHOmeTEL.HellowordVscodeApplication",
       "projectName": "yourHOmeTEL"
     },

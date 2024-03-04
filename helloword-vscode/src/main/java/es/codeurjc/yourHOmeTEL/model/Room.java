@@ -1,18 +1,12 @@
-package es.codeurjc.yourHOmeTEL.model;
-
-
-
-
+package es.codeurjc.yourhometel.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -33,9 +27,8 @@ public class Room {
     @ManyToOne
     private Hotel hotel;
 
+    public Room() {
 
-    public Room(){
-        
     }
 
     public Room(int maxClients, float cost, List<Reservation> reservations, Hotel hotel) {
@@ -45,21 +38,17 @@ public class Room {
         this.hotel = hotel;
     }
 
-
     public Long getId() {
         return id;
     }
-
 
     public void setId(Long id) {
         this.id = id;
     }
 
-
     public int getMaxClients() {
         return maxClients;
     }
-
 
     public void setMaxClients(int maxClients) {
         this.maxClients = maxClients;
@@ -73,16 +62,13 @@ public class Room {
         this.cost = cost;
     }
 
-
     public List<Reservation> getReservations() {
         return reservations;
     }
 
-
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
     }
-
 
     public Hotel getHotel() {
         return hotel;
@@ -95,27 +81,37 @@ public class Room {
     public boolean available(LocalDate checkIn, LocalDate checkOut) {
         Boolean available = true;
         int i = 0;
-        //Check if the room is available for the dates
-        while(i < this.reservations.size() && available){
-            if (checkIn.isAfter(this.reservations.get(i).getCheckIn()) && checkIn.isBefore(this.reservations.get(i).getCheckOut()))
+        // Check if the room is available for the dates
+        while (i < this.reservations.size() && available) {
+            if (checkIn.isAfter(this.reservations.get(i).getCheckIn())
+                    && checkIn.isBefore(this.reservations.get(i).getCheckOut()))
                 available = false;
-            else if (checkOut.isAfter(this.reservations.get(i).getCheckIn()) && checkOut.isBefore(this.reservations.get(i).getCheckOut()))
+            else if (checkOut.isAfter(this.reservations.get(i).getCheckIn())
+                    && checkOut.isBefore(this.reservations.get(i).getCheckOut()))
                 available = false;
-            else if(checkIn.isBefore(this.reservations.get(i).getCheckIn()) && checkOut.isAfter(this.reservations.get(i).getCheckOut()))
+            else if (checkIn.isBefore(this.reservations.get(i).getCheckIn())
+                    && checkOut.isAfter(this.reservations.get(i).getCheckOut()))
                 available = false;
-            else if(checkIn.isEqual(this.reservations.get(i).getCheckIn()) || checkOut.isEqual(this.reservations.get(i).getCheckOut()))
+            else if (checkIn.isEqual(this.reservations.get(i).getCheckIn())
+                    || checkOut.isEqual(this.reservations.get(i).getCheckOut()))
                 available = false;
-            else if(checkIn.isEqual(this.reservations.get(i).getCheckIn()) && checkOut.isEqual(this.reservations.get(i).getCheckOut()))
+            else if (checkIn.isEqual(this.reservations.get(i).getCheckIn())
+                    && checkOut.isEqual(this.reservations.get(i).getCheckOut()))
                 available = false;
-            else if(checkIn.isAfter(this.reservations.get(i).getCheckIn()) && checkOut.isBefore(this.reservations.get(i).getCheckOut()))
+            else if (checkIn.isAfter(this.reservations.get(i).getCheckIn())
+                    && checkOut.isBefore(this.reservations.get(i).getCheckOut()))
                 available = false;
-            else if(checkIn.isEqual(this.reservations.get(i).getCheckIn()) && checkOut.isAfter(this.reservations.get(i).getCheckOut()))
+            else if (checkIn.isEqual(this.reservations.get(i).getCheckIn())
+                    && checkOut.isAfter(this.reservations.get(i).getCheckOut()))
                 available = false;
-            else if(checkIn.isBefore(this.reservations.get(i).getCheckIn()) && checkOut.isEqual(this.reservations.get(i).getCheckOut()))
+            else if (checkIn.isBefore(this.reservations.get(i).getCheckIn())
+                    && checkOut.isEqual(this.reservations.get(i).getCheckOut()))
                 available = false;
-            else if(checkIn.isAfter(this.reservations.get(i).getCheckIn()) && checkOut.isEqual(this.reservations.get(i).getCheckOut()))
+            else if (checkIn.isAfter(this.reservations.get(i).getCheckIn())
+                    && checkOut.isEqual(this.reservations.get(i).getCheckOut()))
                 available = false;
-            else if(checkIn.isEqual(this.reservations.get(i).getCheckIn()) && checkOut.isBefore(this.reservations.get(i).getCheckOut()))
+            else if (checkIn.isEqual(this.reservations.get(i).getCheckIn())
+                    && checkOut.isBefore(this.reservations.get(i).getCheckOut()))
                 available = false;
             else
                 i++;

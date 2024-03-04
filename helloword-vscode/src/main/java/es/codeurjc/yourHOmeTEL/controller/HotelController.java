@@ -1,4 +1,4 @@
-package es.codeurjc.yourHOmeTEL.controller;
+package es.codeurjc.yourhometel.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,17 +22,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import es.codeurjc.yourHOmeTEL.model.Hotel;
-import es.codeurjc.yourHOmeTEL.model.Review;
-import es.codeurjc.yourHOmeTEL.model.Room;
-import es.codeurjc.yourHOmeTEL.model.UserE;
-import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
-import es.codeurjc.yourHOmeTEL.repository.ReviewRepository;
-import es.codeurjc.yourHOmeTEL.repository.RoomRepository;
-import es.codeurjc.yourHOmeTEL.repository.UserRepository;
-import es.codeurjc.yourHOmeTEL.service.HotelService;
-import es.codeurjc.yourHOmeTEL.service.ReviewService;
-import es.codeurjc.yourHOmeTEL.service.RoomService;
+import es.codeurjc.yourhometel.model.Hotel;
+import es.codeurjc.yourhometel.model.Review;
+import es.codeurjc.yourhometel.model.Room;
+import es.codeurjc.yourhometel.model.UserE;
+import es.codeurjc.yourhometel.repository.HotelRepository;
+import es.codeurjc.yourhometel.repository.ReviewRepository;
+import es.codeurjc.yourhometel.repository.RoomRepository;
+import es.codeurjc.yourhometel.repository.UserRepository;
+import es.codeurjc.yourhometel.service.HotelService;
+import es.codeurjc.yourhometel.service.ReviewService;
+import es.codeurjc.yourhometel.service.RoomService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller

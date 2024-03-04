@@ -1,9 +1,8 @@
-package es.codeurjc.yourHOmeTEL.service;
+package es.codeurjc.yourhometel.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.el.stream.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,13 +11,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import es.codeurjc.yourHOmeTEL.model.UserE;
-import es.codeurjc.yourHOmeTEL.repository.UserRepository;
+import es.codeurjc.yourhometel.model.UserE;
+import es.codeurjc.yourhometel.repository.UserRepository;
 
 @Service
 public class UserSecurityService implements UserDetailsService {
 
-  @Autowired  
+  @Autowired
   private UserRepository userRepository;
 
   @Override
@@ -29,5 +28,5 @@ public class UserSecurityService implements UserDetailsService {
       roles.add(new SimpleGrantedAuthority("ROLE_" + role));
     }
     return new org.springframework.security.core.userdetails.User(user.getNick(), user.getPass(), roles);
- }
+  }
 }

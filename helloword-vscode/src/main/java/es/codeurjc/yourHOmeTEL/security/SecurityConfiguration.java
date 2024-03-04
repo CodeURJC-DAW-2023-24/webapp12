@@ -1,4 +1,4 @@
-package es.codeurjc.yourHOmeTEL.security;
+package es.codeurjc.yourhometel.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -6,14 +6,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-import es.codeurjc.yourHOmeTEL.service.UserSecurityService;
+import es.codeurjc.yourhometel.service.UserSecurityService;
 
 @Configuration
 @EnableWebSecurity
@@ -74,10 +71,6 @@ public class SecurityConfiguration {
                         .requestMatchers("/posthotelReviews/**").hasAnyRole("USER")
                         .requestMatchers("/replace/**").hasAnyRole("USER")
 
-                       
-                        
-                        
-
                         // Client pages
                         .requestMatchers("/clientreservations/**").hasAnyRole("CLIENT")
                         .requestMatchers("/reservationInfo/**").hasAnyRole("CLIENT")
@@ -85,7 +78,6 @@ public class SecurityConfiguration {
                         .requestMatchers("/cancelReservation/**").hasAnyRole("CLIENT")
                         .requestMatchers("/posthotelReviews/**").hasAnyRole("CLIENT")
                         .requestMatchers("/loadMoreReservations/**").hasAnyRole("CLIENT")
-
 
                         // Manager pages
                         .requestMatchers("/edithotel/**").hasAnyRole("MANAGER")
@@ -107,7 +99,6 @@ public class SecurityConfiguration {
                         .requestMatchers("/edithotelimage/**").hasAnyRole("MANAGER")
                         .requestMatchers("/loadMoreHotelsManagerView/**").hasAnyRole("MANAGER")
 
-                        
                         // Admin pages
                         .requestMatchers("/managerlist").hasAnyRole("ADMIN")
                         .requestMatchers("/chartsadmin").hasAnyRole("ADMIN")
@@ -116,7 +107,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/rejection/**").hasAnyRole("ADMIN")
 
                 )
-                 .formLogin(formLogin -> formLogin
+                .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .failureUrl("/loginerror")
                         .defaultSuccessUrl("/profile")

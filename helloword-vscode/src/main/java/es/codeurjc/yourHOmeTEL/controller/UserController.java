@@ -1,4 +1,4 @@
-package es.codeurjc.yourHOmeTEL.controller;
+package es.codeurjc.yourhometel.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,18 +24,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import es.codeurjc.yourHOmeTEL.model.Hotel;
-import es.codeurjc.yourHOmeTEL.model.Reservation;
-import es.codeurjc.yourHOmeTEL.model.Review;
-import es.codeurjc.yourHOmeTEL.model.Room;
-import es.codeurjc.yourHOmeTEL.model.UserE;
-import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
-import es.codeurjc.yourHOmeTEL.repository.ReservationRepository;
-import es.codeurjc.yourHOmeTEL.repository.RoomRepository;
-import es.codeurjc.yourHOmeTEL.repository.UserRepository;
-import es.codeurjc.yourHOmeTEL.service.UserService;
-import es.codeurjc.yourHOmeTEL.service.HotelService;
-import es.codeurjc.yourHOmeTEL.service.ReservationService;
+import es.codeurjc.yourhometel.model.Hotel;
+import es.codeurjc.yourhometel.model.Reservation;
+import es.codeurjc.yourhometel.model.Review;
+import es.codeurjc.yourhometel.model.Room;
+import es.codeurjc.yourhometel.model.UserE;
+import es.codeurjc.yourhometel.repository.HotelRepository;
+import es.codeurjc.yourhometel.repository.ReservationRepository;
+import es.codeurjc.yourhometel.repository.RoomRepository;
+import es.codeurjc.yourhometel.repository.UserRepository;
+import es.codeurjc.yourhometel.service.UserService;
+import es.codeurjc.yourhometel.service.HotelService;
+import es.codeurjc.yourhometel.service.ReservationService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -92,19 +92,6 @@ public class UserController {
 		model.addAttribute("hotels", recomendedHotels);
 		return "index";
 	}
-
-	/*
-	 * @GetMapping("/index")
-	 * public String index(Model model, HttpServletRequest request) {
-	 * List<Hotel> hotels = new ArrayList<>();
-	 * 
-	 * 
-	 * model.addAttribute("hotels", hotels);
-	 * 
-	 * return "index";
-	 * 
-	 * }
-	 */
 
 	@GetMapping("/indexsearch")
 	public String indexSearch(Model model, @RequestParam String searchValue) {
