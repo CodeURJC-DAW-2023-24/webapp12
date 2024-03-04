@@ -471,11 +471,14 @@ public class HotelController {
 	 * @return
 	 */
 	@GetMapping("/loadMoreHotelsManagerView/{start}/{end}")
-	public String loadMoreHotelsManagerView(Model model,
+	public String loadMoreHotelsManagerView(
+		Model model,
+		HttpServletRequest request,
 			@PathVariable Long start,
 			@PathVariable Long end) {
 
-		var hotelsQuantity = hotelRepository.count();
+
+		var hotelsQuantity = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow().getHotels().size();
 
 		if (start <= hotelsQuantity) {
 

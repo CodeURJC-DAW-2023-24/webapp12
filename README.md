@@ -412,11 +412,13 @@ Mario was in charge of setting up the database logic and entities, implementatio
 
 | File number | File |
 |:--:|:------------------------:|
-| #1 |     |
-| #2 |           |
-| #3 |  |
-| #4 |          |
-| #5 |                 |
+| #1 | UserController.java      |
+| #2 | HotelController.java     |
+| #3 | InitDataBaseService.java |
+| #4 | UserService.java         |
+| #5 | UserRepository.java      |
+
+
 
 
 ### Laila El Khattabi El Hassnaoui
@@ -437,12 +439,12 @@ Laila was tasked for creating the model of database entities and it´s logic, im
   - Five most participation files
 
 | File number | File |
-|:--:|:------------------------:|
-| #1 |     |
-| #2 |           |
-| #3 |  |
-| #4 |           |
-| #5 |                 |
+|:--:|:------------------------:    |
+| #1 | HotelController.java             |
+| #2 | User.Controller.java              |
+| #3 | InitDatabaseInitializater.java    |
+| #4 | Load,updateImagesDatabase    |
+| #5 | Ajax functions               |
 
 ### Carlos Hermán Andrés Andrés
 
