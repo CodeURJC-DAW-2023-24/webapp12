@@ -28,9 +28,11 @@ import es.codeurjc.yourHOmeTEL.model.Room;
 import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.repository.HotelRepository;
 import es.codeurjc.yourHOmeTEL.repository.ReviewRepository;
+import es.codeurjc.yourHOmeTEL.repository.RoomRepository;
 import es.codeurjc.yourHOmeTEL.repository.UserRepository;
 import es.codeurjc.yourHOmeTEL.service.HotelService;
 import es.codeurjc.yourHOmeTEL.service.ReviewService;
+import es.codeurjc.yourHOmeTEL.service.RoomService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -50,6 +52,12 @@ public class HotelController {
 
 	@Autowired
 	ReviewService reviewService;
+
+	@Autowired
+	RoomRepository roomRepository;
+
+	@Autowired
+	RoomService roomService;
 
 	@GetMapping("/edithotel/{id}")
 	public String edithotel(HttpServletRequest request, Model model, @PathVariable Long id) {
@@ -82,27 +90,33 @@ public class HotelController {
 			hotel.setLocation(newHotel.getLocation());
 			hotel.setDescription(newHotel.getDescription());
 
-			List<Room> resetedRooms = new ArrayList<>();
-			hotel.setRooms(resetedRooms);
 
 			if (room1 != null)
 				for (int i = 0; i < room1; i++) {
-					hotel.getRooms().add(new Room(1, cost1, new ArrayList<>(), newHotel));
+					Room room = new Room(1, cost1, new ArrayList<>(), newHotel);
+					hotel.getRooms().add(room);
+					roomRepository.save(room);
 				}
 
 			if (room2 != null)
 				for (int i = 0; i < room2; i++) {
-					hotel.getRooms().add(new Room(2, cost2, new ArrayList<>(), newHotel));
+					Room room = new Room(2, cost2, new ArrayList<>(), newHotel);
+					hotel.getRooms().add(room);
+					roomRepository.save(room);
 				}
 
 			if (room3 != null)
 				for (int i = 0; i < room3; i++) {
-					hotel.getRooms().add(new Room(3, cost3, new ArrayList<>(), newHotel));
+					Room room = new Room(3, cost3, new ArrayList<>(), newHotel);
+					hotel.getRooms().add(room);
+					roomRepository.save(room);
 				}
 
 			if (room4 != null)
 				for (int i = 0; i < room4; i++) {
-					hotel.getRooms().add(new Room(4, cost4, new ArrayList<>(), newHotel));
+					Room room = new Room(4, cost4, new ArrayList<>(), newHotel);
+					hotel.getRooms().add(room);
+					roomRepository.save(room);
 				}
 
 			hotelRepository.save(hotel);
@@ -216,19 +230,24 @@ public class HotelController {
 	@PostMapping("/posthotelReviews/{id}")
 	public String postReview(
 			Model model, HttpServletRequest request,
-			@RequestParam int rating,
+			@RequestParam(required = false) Integer rating,
 			@RequestParam String comment,
 			@PathVariable Long id) {
 
 		UserE hotelManager = hotelRepository.findById(id).orElseThrow().getManager();
 
 		if (hotelManager.getvalidated()) {
-			UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			Hotel targetHotel = hotelRepository.findById(id).orElseThrow();
-			targetHotel.getReviews().add(new Review(rating, comment, LocalDate.now(), targetHotel, user));
-			hotelRepository.save(targetHotel);
+			int score = (rating != null) ? rating : 0;
+			if(score != 0){
+				UserE user = userRepository.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+				Hotel targetHotel = hotelRepository.findById(id).orElseThrow();
+				targetHotel.getReviews().add(new Review(score, comment, LocalDate.now(), targetHotel, user));
+				hotelRepository.save(targetHotel);
 
-			return "redirect:/hotelReviews/" + id;
+				return "redirect:/hotelReviews/" + id;
+			}
+			else
+				return "redirect:/hotelReviews/"+id;
 
 		} else
 			return "/error";

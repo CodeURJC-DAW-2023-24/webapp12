@@ -48,14 +48,14 @@
               </div>
             </div>
             <a href="/hotelinformation/{{id}}">
-              <button class="btn btn-primary mb-2 ml-2">Hotel's main page</button>
+              <button id="backButton" class="btn btn-primary mb-2 ml-2">Hotel's main page</button>
             </a>
           </div>
         </div>
       </div>
       <div id="reviews" class="review-section">
         <div class="d-flex align-items-center justify-content-between mb-4">
-          <h4 class="m-0">{{totalreviews}}</h4>
+          <h4 class="m-0">Total reviews: {{totalreviews}}</h4>
           <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2"
             style="width: 188px;">
             <span class="selection">
@@ -301,7 +301,7 @@
                 placeholder="Everything was so nice, a wonderful experience!"></textarea>
             </div>
 
-            <input type="submit" value="Send review!" class="btn btn-primary py-3 px-5">
+            <input type="submit" value="Send review!" id="sendButton" class="btn btn-primary py-3 px-5">
             <input type="hidden" name="_csrf" value="{{token}}" />
           </form>
 

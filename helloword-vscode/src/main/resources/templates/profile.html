@@ -91,7 +91,7 @@
                                                 {{^user.accepted}}
                                                 {{#user.rejected}}
                                                 <li class="nav-item mt-3 mb-3 ">
-                                                        <form action="/application" method="post">
+                                                        <form action="/application/{{user.id}}" method="post">
                                                             <input type="submit" value="Apply for validation" class="btn btn-primary btn-user btn-block" id="apply"/>
                                                             <input type="hidden" name="_csrf" value="{{token}}"/>
                                                         </form>                                              
