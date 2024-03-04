@@ -382,6 +382,17 @@ Paula implemented the security of the application. She made the login, register,
 | #4 | Add Hotel funcionality                   | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0919514f0510402152d3343ba84da95c86401d46 |
 | #5 | Add Reservation funcionality             | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/15e4aece696816d8a61f168e71f71972a2dd17a9 |
 
+- Five most participation files
+
+| File number | File |
+|:--:|:------------------------:|
+| #1 | SecurityConfiguration    |
+| #2 | User Controller          |
+| #3 | CSRFHandlerConfiguration |
+| #4 | ReservationInfo          |
+| #5 | addHotel                 |
+
+
 ### Mario Recio Montero
 
   - Description: 
@@ -396,6 +407,16 @@ Mario was in charge of setting up the database logic and entities, implementatio
 | #3 | Allows creation of hotels with photos    | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/a4d37e910af711c4199b1b94d6531d4d9d6f963c |
 | #4 | Access restriction on private entities   | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/62dd991a08903f2294c8bf16b9f2e65089e5853e |
 | #5 | Logic and html for manager validation    | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/1dae0bf8500ea86dbebe63d151c8ebbdc866a7e4 |
+
+- Five most participation files
+
+| File number | File |
+|:--:|:------------------------:|
+| #1 |     |
+| #2 |           |
+| #3 |  |
+| #4 |          |
+| #5 |                 |
 
 
 ### Laila El Khattabi El Hassnaoui
@@ -413,29 +434,15 @@ Laila was tasked for creating the model of database entities and it´s logic, im
 | #4 | Database entities and logic                 |https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/9d5a82c25c7ac261fe54322321045a069b69d5a9 |
 | #5 | Allows update index hotel images           |https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0b92837e4f8cc7a9e544328fc3b284b554f1b729
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   - Five most participation files
 
 | File number | File |
 |:--:|:------------------------:|
-| #1 | SecurityConfiguration    |
-| #2 | User Controller          |
-| #3 | CSRFHandlerConfiguration |
-| #4 | ReservationInfo          |
-| #5 | addHotel                 |
+| #1 |     |
+| #2 |           |
+| #3 |  |
+| #4 |           |
+| #5 |                 |
 
 ### Carlos Hermán Andrés Andrés
 
@@ -456,8 +463,8 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
 
 | File number | File |
 |:--:|:------------------------:|
-| #1 | UserController    |
-| #2 |   hotelReview.html             |
-| #3 | loadHotels.js |
-| #4 | loadMoreReservations.js        |
-| #5 |     HotelController        |
+| #1 | UserController           |
+| #2 | hotelReview.html         |
+| #3 | loadHotels.js            |
+| #4 | loadMoreReservations.js  |
+| #5 |     HotelController      |
