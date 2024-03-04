@@ -398,6 +398,35 @@ Mario was in charge of setting up the database logic and entities, implementatio
 | #5 | Logic and html for manager validation    | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/1dae0bf8500ea86dbebe63d151c8ebbdc866a7e4 |
 
 
+### Laila El Khattabi El Hassnaoui
+
+  - Description:
+Laila was tasked for creating the model of database entities and it´s logic, implementation of ajax functionality, backend logic for hotels and users and also the achievement to show images on the web that were saved in the database.
+
+  - Five most participation files
+
+| Commit number | Description |  File |
+|:--:|:----------------------------------------:|:------------------------------------------------------------------------------------------------:  |
+| #1 | Show saved images from database             |https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/53e7f9297978794e1b775fab4988c6ebd8869e83 |
+| #2 | Functional hotel and it´s modification      |https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/045c6fd536a04ed4d203f7121ef4f79074082c90 |
+| #3 | Allows to edit profile and it´s image       |https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/9029b9e3b1daf1d013e5b533c08f96a01c8fc352 |
+| #4 | Database entities and logic                 |https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/9d5a82c25c7ac261fe54322321045a069b69d5a9 |
+| #5 | Allows update index hotels images           |https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0b92837e4f8cc7a9e544328fc3b284b554f1b729
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   - Five most participation files
 
 | File number | File |
