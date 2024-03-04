@@ -440,9 +440,9 @@ Laila was tasked for creating the model of database entities and it´s logic, im
 
 | File number | File |
 |:--:|:------------------------:    |
-| #1 | Hotel Controller             |
-| #2 | User Controller              |
-| #3 | InitDatabaseInitializater    |
+| #1 | HotelController.java             |
+| #2 | User.Controller.java              |
+| #3 | InitDatabaseInitializater.java    |
 | #4 | Load,updateImagesDatabase    |
 | #5 | Ajax functions               |
 
