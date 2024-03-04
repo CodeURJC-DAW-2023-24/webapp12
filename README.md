@@ -15,7 +15,7 @@
   - Diagram
 
 # Phase 0: Team creation and definition of website functionalities
-### App name: YourHOmeTEL
+### App name: yourHOmeTEL
 
 ### Team members 
 | Name | Email | GitHub user |
