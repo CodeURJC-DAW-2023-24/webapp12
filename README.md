@@ -412,11 +412,13 @@ Mario was in charge of setting up the database logic and entities, implementatio
 
 | File number | File |
 |:--:|:------------------------:|
-| #1 |     |
-| #2 |           |
-| #3 |  |
-| #4 |          |
-| #5 |                 |
+| #1 | UserController.java      |
+| #2 | HotelController.java     |
+| #3 | InitDataBaseService.java |
+| #4 | UserService.java         |
+| #5 | UserRepository.java      |
+
+
 
 
 ### Laila El Khattabi El Hassnaoui
