@@ -13,6 +13,8 @@ import es.codeurjc.yourHOmeTEL.model.Hotel;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
+    Optional<Review> findById(Long id);
+    
     List<Review> findByUser_Name(String name);
 
     List<Review> findByHotel_Name(String name);
@@ -23,5 +25,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     List<Review> findByHotel(Hotel hotel);
 
-    Optional<Review> findById(Long id);
+    List<Review> findByScoreAndHotel(int score, Hotel hotel);
+
 }

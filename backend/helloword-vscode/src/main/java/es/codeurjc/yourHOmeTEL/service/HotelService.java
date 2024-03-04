@@ -21,11 +21,6 @@ public class HotelService implements GeneralService<Hotel> {
     HotelRepository hotelRepository;
 
     @Override
-    public Optional<Hotel> findById(Long id) {
-        return hotelRepository.findById(id);
-    }
-
-    @Override
     public void save(Hotel hotel) {
         hotelRepository.save(hotel);
     }
@@ -34,6 +29,11 @@ public class HotelService implements GeneralService<Hotel> {
     public void delete(Hotel hotel) {
         hotelRepository.delete(hotel);
         ;
+    }
+    
+    @Override
+    public Optional<Hotel> findById(Long id) {
+        return hotelRepository.findById(id);
     }
 
     @Override
@@ -52,8 +52,8 @@ public class HotelService implements GeneralService<Hotel> {
 
     @Override
     public Boolean exist(Long id) {
-        Optional<Hotel> user = hotelRepository.findById(id);
-        if (user.isPresent())
+        Optional<Hotel> hotel = hotelRepository.findById(id);
+        if (hotel.isPresent())
             return true;
         else
             return false;

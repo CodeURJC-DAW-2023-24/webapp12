@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.yourHOmeTEL.model.Hotel;
@@ -30,13 +31,13 @@ public class UserService implements GeneralService<UserE> {
     }
 
     @Override
-    public void save(UserE go) {
-
+    public void save(UserE user) {
+        userRepository.save(user);
     }
 
     @Override
-    public void delete(UserE go) {
-
+    public void delete(UserE user) {
+        userRepository.delete(user);
     }
 
     @Override
@@ -62,6 +63,10 @@ public class UserService implements GeneralService<UserE> {
             return false;
     }
 
+    public Optional<UserE> findByNick(String nick) {
+        return userRepository.findByNick(nick);
+    }
+    
     public Optional<UserE> findFirstByName(String name) {
         return userRepository.findFirstByName(name);
     }
@@ -70,6 +75,14 @@ public class UserService implements GeneralService<UserE> {
         return userRepository.findByName(name);
     }
 
+    public List<UserE> findByValidatedAndRejected(Boolean validated, Boolean rejected){
+        return userRepository.findByValidatedAndRejected(validated, rejected);
+    }
+
+    public List<UserE> findByRejected(Boolean validated){
+        return userRepository.findByRejected(validated);
+    }
+    
     public List<UserE> findByPhone(String phone) {
         return userRepository.findByPhone(phone);
     }
@@ -78,9 +91,11 @@ public class UserService implements GeneralService<UserE> {
         return userRepository.findLocationByName(name);
     }
 
-    public Optional<UserE> findByNick(String nick) {
-        return userRepository.findByNick(nick);
+    public List<UserE> findByHotelInReservations(@Param("hotel") Hotel hotel){
+        return userRepository.findByHotelInReservations(hotel);
     }
+
+    
 
     public boolean existNick(String nick) {
         Optional<UserE> user = findByNick(nick);

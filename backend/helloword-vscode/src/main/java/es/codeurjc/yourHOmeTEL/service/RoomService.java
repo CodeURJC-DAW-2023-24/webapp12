@@ -8,46 +8,55 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.yourHOmeTEL.model.Room;
+import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.repository.RoomRepository;
 
 @Service
 public class RoomService implements GeneralService<Room> {
 
     @Autowired
-    private RoomRepository repository;
+    private RoomRepository roomRepository;
 
     @Override
     public Optional<Room> findById(Long id) {
-        return repository.findById(id);
+        return roomRepository.findById(id);
 
     }
 
-    @Override
-    public void save(Room go) {
-
+    public List<Room> findByMaxClients(int maxClients){
+        return roomRepository.findByMaxClients(maxClients);
     }
 
     @Override
-    public void delete(Room go) {
+    public void save(Room room) {
+        roomRepository.save(room);
+    }
 
+    @Override
+    public void delete(Room room) {
+        roomRepository.delete(room);
     }
 
     @Override
     public List<Room> findAll() {
-        return repository.findAll();
+        return roomRepository.findAll();
     }
 
     @Override
     public List<Room> findAll(Sort sort) {
         if (!sort.equals(null)) {
-            return repository.findAll(sort);
+            return roomRepository.findAll(sort);
         } else {
-            return repository.findAll();
+            return roomRepository.findAll();
         }
     }
 
     @Override
     public Boolean exist(Long id) {
-        return null;
+        Optional<Room> room = roomRepository.findById(id);
+        if (room.isPresent())
+            return true;
+        else
+            return false;
     }
 }
