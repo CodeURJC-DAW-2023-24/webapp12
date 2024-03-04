@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title></title>
+
+  <!-- Custom styles sidebar-->
+  <link href="css/clientReservations.css" rel="stylesheet" type="text/css">
+  <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">   
+  <link href="css/sb-admin-2.css" rel="stylesheet">
+
+  <!-- Custom styles-->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel='stylesheet' href="css/clientListManagerStyles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css'>
+
+  <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js'></script>
+
+  <!-- Custom fonts-->
+  <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+  
+  <title>Hotel Reservation</title>
+
+</head>
+
+<body>
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    
+      <!-- User-->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-text mx-3">User Profile</div>
+      </a>
+    
+      <!-- Manager-->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-text mx-3">Manager Profile</div>
+      </a>
+    
+      <!-- Admin-->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-text mx-3">Admin Profile</div>
+      </a>
+    
+    
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+    
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Personal Area
+      </div>
+    
+      <!-- For all users -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="profile.html">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Personal Data</span>
+        </a>
+      </li>
+    
+    
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+    
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Administration
+      </div>
+      <!--Cliente-->
+      <li class="nav-item">
+        <a class="nav-link" href="clientReservation.html">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>My reservations</span></a>
+      </li>
+    
+      <!--Managers-->
+      <li class="nav-item">
+        <a class="nav-link" href="viewHotelsManager.html">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>My Hotels</span></a>
+      </li>
+      <!--Admin-->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts"
+                aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Hotel managment</span>
+        </a>
+        <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts"
+                data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="managerList.html">View managers</a>
+                <a class="collapse-item" href="hotelValidation.html">Validate new hotels</a>
+            </div>
+        </div>
+    </li>
+    <!-- Divider -->
+      <hr class="sidebar-divider">
+    
+      <div class="sidebar-heading">
+        Statistics
+      </div>
+    
+      <!-- Nav Item - Pages Collapse Menu -->
+      <!--Admin-->
+      <li class="nav-item">
+        <a class="nav-link" href="chartsAdmin.html">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>User Charts</span>
+        </a>
+      </li>
+      <!--Manager-->
+      <li class="nav-item">
+          <a class="nav-link" href="chartsManager.html">
+              <i class="fas fa-fw fa-chart-area"></i>
+              <span>Hotel Charts</span>
+          </a>
+      </li>
+      
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <div class="sidebar-heading">
+          Main page
+        </div>
+
+      <li class="nav-item">
+          <a class="nav-link" href="index.html">
+              <i class="fas fa-fw fa-chart-area"></i>
+              <span>Return to main page</span>
+          </a>
+      </li>
+      
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+    
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+      <!-- End of Sidebar -->
+    </ul>
+    <div class="container">
+      <div class="row flex-lg-nowrap">   
+        <div class="col">
+          <div class="e-tabs mb-3 px-3">
+            <ul class="nav nav-tabs">
+              <li class="nav-item"><a class="nav-link active" href="#">Reservations</a></li>
+            </ul>
+          </div>
+      
+          <div class="row flex-lg-nowrap">
+            <div class="col mb-3">
+              <div class="e-panel card">
+                <div class="card-body">
+                  <div class="card-title">
+                    <h6 class="mr-2"><span>Hotels</span><small class="px-1">Check where you have been</small></h6>
+                  </div>
+                  <div class="e-table">
+                    <div class="table-responsive table-lg mt-3">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th class="align-top">
+                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0">
+                                <input type="checkbox" class="custom-control-input" id="all-items">
+                                <label class="custom-control-label" for="all-items"></label>
+                              </div>
+                            </th>
+                            <th>Photo</th>
+                            <th class="max-width">Name</th>
+                            <th class="sortable">Date</th>
+                            <th>Room</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="align-middle">
+                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
+                                <input type="checkbox" class="custom-control-input" id="item-1">
+                                <label class="custom-control-label" for="item-1"></label>
+                              </div>
+                            </td>
+                            <td class="align-middle text-center">
+                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
+                            </td>
+                            <td class="text-nowrap align-middle">Hotel 1</td>
+                            <td class="text-nowrap align-middle"><span>09 Dec 2017</span></td>
+                            <td class="text-nowrap align-middle">30</td>
+                            <td class="text-center align-middle">
+                              <div class="btn-group align-top">
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="align-middle">
+                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
+                                <input type="checkbox" class="custom-control-input" id="item-2">
+                                <label class="custom-control-label" for="item-2"></label>
+                              </div>
+                            </td>
+                            <td class="align-middle text-center">
+                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
+                            </td>
+                            <td class="text-nowrap align-middle">Hotel 2</td>
+                            <td class="text-nowrap align-middle"><span>26 Jan 2018</span></td>
+                            <td class="text-nowrap align-middle">30</td>
+                            <td class="text-center align-middle">
+                              <div class="btn-group align-top">
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="align-middle">
+                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
+                                <input type="checkbox" class="custom-control-input" id="item-3">
+                                <label class="custom-control-label" for="item-3"></label>
+                              </div>
+                            </td>
+                            <td class="align-middle text-center">
+                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
+                            </td>
+                            <td class="text-nowrap align-middle">Hotel 3</td>
+                            <td class="text-nowrap align-middle"><span>27 Jan 2018</span></td>
+                            <td class="text-nowrap align-middle">30</td>
+                            <td class="text-center align-middle">
+                              <div class="btn-group align-top">
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="align-middle">
+                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
+                                <input type="checkbox" class="custom-control-input" id="item-4">
+                                <label class="custom-control-label" for="item-4"></label>
+                              </div>
+                            </td>
+                            <td class="align-middle text-center">
+                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
+                            </td>
+                            <td class="text-nowrap align-middle">Hotel 4</td>
+                            <td class="text-nowrap align-middle"><span>20 Jan 2018</span></td>
+                            <td class="text-nowrap align-middle">30</td>
+                            <td class="text-center align-middle">
+                              <div class="btn-group align-top">
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="align-middle">
+                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
+                                <input type="checkbox" class="custom-control-input" id="item-5">
+                                <label class="custom-control-label" for="item-5"></label>
+                              </div>
+                            </td>
+                            <td class="align-middle text-center">
+                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
+                            </td>
+                            <td class="text-nowrap align-middle">Hotel 5</td>
+                            <td class="text-nowrap align-middle"><span>13 Jan 2018</span></td>
+                            <td class="text-nowrap align-middle">30</td>
+                            <td class="text-center align-middle">
+                              <div class="btn-group align-top">
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="align-middle">
+                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
+                                <input type="checkbox" class="custom-control-input" id="item-6">
+                                <label class="custom-control-label" for="item-6"></label>
+                              </div>
+                            </td>
+                            <td class="align-middle text-center">
+                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
+                            </td>
+                            <td class="text-nowrap align-middle">Hotel 6</td>
+                            <td class="text-nowrap align-middle"><span>25 Jan 2018</span></td>
+                            <td class="text-nowrap align-middle">30</td>
+                            <td class="text-center align-middle">
+                              <div class="btn-group align-top">
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="align-middle">
+                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
+                                <input type="checkbox" class="custom-control-input" id="item-7">
+                                <label class="custom-control-label" for="item-7"></label>
+                              </div>
+                            </td>
+                            <td class="align-middle text-center">
+                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
+                            </td>
+                            <td class="text-nowrap align-middle">Hotel 7</td>
+                            <td class="text-nowrap align-middle"><span>12 Jan 2018</span></td>
+                            <td class="text-nowrap align-middle">30</td>
+                            <td class="text-center align-middle">
+                              <div class="btn-group align-top">
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="align-middle">
+                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
+                                <input type="checkbox" class="custom-control-input" id="item-8">
+                                <label class="custom-control-label" for="item-8"></label>
+                              </div>
+                            </td>
+                            <td class="align-middle text-center">
+                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
+                            </td>
+                            <td class="text-nowrap align-middle">Hotel 8</td>
+                            <td class="text-nowrap align-middle"><span>27 Jan 2018</span></td>
+                            <td class="text-nowrap align-middle">30</td>
+                            <td class="text-center align-middle">
+                              <div class="btn-group align-top">
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="align-middle">
+                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
+                                <input type="checkbox" class="custom-control-input" id="item-9">
+                                <label class="custom-control-label" for="item-9"></label>
+                              </div>
+                            </td>
+                            <td class="align-middle text-center">
+                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
+                            </td>
+                            <td class="text-nowrap align-middle">Hotel 9</td>
+                            <td class="text-nowrap align-middle"><span>12 Dec 2017</span></td>
+                            <td class="text-nowrap align-middle">30</td>
+                            <td class="text-center align-middle">
+                              <div class="btn-group align-top">
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="align-middle">
+                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
+                                <input type="checkbox" class="custom-control-input" id="item-10">
+                                <label class="custom-control-label" for="item-10"></label>
+                              </div>
+                            </td>
+                            <td class="align-middle text-center">
+                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
+                            </td>
+                            <td class="text-nowrap align-middle">Hotel 10</td>
+                            <td class="text-nowrap align-middle"><span>10 Dec 2017</span></td>
+                            <td class="text-nowrap align-middle">30</td>
+                            <td class="text-center align-middle">
+                              <div class="btn-group align-top">
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="align-middle">
+                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
+                                <input type="checkbox" class="custom-control-input" id="item-11">
+                                <label class="custom-control-label" for="item-11"></label>
+                              </div>
+                            </td>
+                            <td class="align-middle text-center">
+                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
+                            </td>
+                            <td class="text-nowrap align-middle">Hotel 11</td>
+                            <td class="text-nowrap align-middle"><span>03 Dec 2017</span></td>
+                            <td class="text-nowrap align-middle">30</td>
+                            <td class="text-center align-middle">
+                              <div class="btn-group align-top">
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="align-middle">
+                              <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
+                                <input type="checkbox" class="custom-control-input" id="item-12">
+                                <label class="custom-control-label" for="item-12"></label>
+                              </div>
+                            </td>
+                            <td class="align-middle text-center">
+                              <div class="bg-light d-inline-flex justify-content-center align-items-center align-top" style="width: 35px; height: 35px; border-radius: 3px;"><i class="fa fa-fw fa-photo" style="opacity: 0.8;"></i></div>
+                            </td>
+                            <td class="text-nowrap align-middle">Hotel 12</td>
+                            <td class="text-nowrap align-middle"><span>09 Dec 2017</span></td>
+                            <td class="text-nowrap align-middle">30</td>
+                            <td class="text-center align-middle">
+                              <div class="btn-group align-top">
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#hotel-info-modal">More info</button>
+                                  <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <ul class="pagination mt-3 mb-0">
+                        <li class="disabled page-item"><a href="#" class="page-link">‹</a></li>
+                        <li class="active page-item"><a href="#" class="page-link">1</a></li>
+                        <li class="page-item"><a href="#" class="page-link">2</a></li>
+                        <li class="page-item"><a href="#" class="page-link">3</a></li>
+                        <li class="page-item"><a href="#" class="page-link">4</a></li>
+                        <li class="page-item"><a href="#" class="page-link">5</a></li>
+                        <li class="page-item"><a href="#" class="page-link">›</a></li>
+                        <li class="page-item"><a href="#" class="page-link">»</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-3 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="text-center px-xl-3">
+                    <button class="btn btn-success btn-block" type="button" data-toggle="modal" data-target="#user-form-modal">New User</button>
+                  </div>
+                  <hr class="my-3">
+                  <div class="e-navlist e-navlist--active-bold">
+                    <ul class="nav">
+                      <li class="nav-item active"><a href="" class="nav-link"><span>All</span>&nbsp;<small>/&nbsp;32</small></a></li>
+                      <li class="nav-item"><a href="" class="nav-link"><span>Active</span>&nbsp;<small>/&nbsp;16</small></a></li>
+                      <li class="nav-item"><a href="" class="nav-link"><span>Selected</span>&nbsp;<small>/&nbsp;0</small></a></li>
+                    </ul>
+                  </div>
+                  <hr class="my-3">
+                  <div>
+                    <div class="form-group">
+                      <label>Date from - to:</label>
+                      <div>
+                        <input id="dates-range" class="form-control flatpickr-input" placeholder="01 Dec 17 - 27 Jan 18" type="text" readonly="readonly">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Search by Name:</label>
+                      <div><input class="form-control w-100" type="text" placeholder="Name" value=""></div>
+                    </div>
+                  </div>
+                  <hr class="my-3">
+                  <div class="">
+                    <label>Status:</label>
+                    <div class="px-2">
+                      <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" name="user-status" id="users-status-disabled">
+                        <label class="custom-control-label" for="users-status-disabled">Disabled</label>
+                      </div>
+                    </div>
+                    <div class="px-2">
+                      <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" name="user-status" id="users-status-active">
+                        <label class="custom-control-label" for="users-status-active">Active</label>
+                      </div>
+                    </div>
+                    <div class="px-2">
+                      <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" name="user-status" id="users-status-any" checked="">
+                        <label class="custom-control-label" for="users-status-any">Any</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Hotel more info -->
+          <div class="modal fade" role="dialog" tabindex="-1" id="hotel-info-modal">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Reservation info</h5>
+                  <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="py-1">
+                    
+                      <div class="row">
+                        <div class="col">
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <p>Hotel: </p>
+                                <p id="nameHotel"> Hotel name</p>
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <p>Location: </p>
+                                <p id="location">Country, city</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <p>Contact: </p>
+                                <p id="hotelContact"> Hotel email and social media</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col mb-3">
+                              <div class="form-group">
+                                <p>Rooms amount: </p>
+                                <p id="roomsAmount">Number of rooms </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-6 mb-3">
+                          <div class="mb-2"></div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <p>Manager:</p>
+                                <p id="hotelManager"> His name</p>
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <p>Review:</p>
+                                <p id="reservations"> Not yet. </p>
+                                <a href="hotelReview.html"><button class="btn btn-primary">Rate it</button></a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of Sidebar -->
+  </div>
+  <!-- Bootstrap core JavaScript-->
+  <script src="js/jquery.js"></script>
+  <script src="js/bootstrap.bundle.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="js/jquery.easing.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.js"></script>
+</body>
+</html>

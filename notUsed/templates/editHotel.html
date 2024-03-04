@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+    <title>Edit hotel</title>
+    
+    <!-- Custom styles sidebar-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom fonts-->
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+        
+    <!-- Custom styles-->
+    <link rel="stylesheet" href="css/managerStyles.css" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.min.css'>
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/js/bootstrap.bundle.min.js'></script>
+</head>
+
+<body>
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    
+      <!-- User-->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-text mx-3">User Profile</div>
+      </a>
+    
+      <!-- Manager-->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-text mx-3">Manager Profile</div>
+      </a>
+    
+      <!-- Admin-->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-text mx-3">Admin Profile</div>
+      </a>
+    
+    
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+    
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Personal Area
+      </div>
+    
+      <!-- For all users -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="profile.html">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Personal Data</span>
+        </a>
+      </li>
+    
+    
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+    
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Administration
+      </div>
+      <!--Cliente-->
+      <li class="nav-item">
+        <a class="nav-link" href="clientReservation.html">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>My reservations</span></a>
+      </li>
+    
+      <!--Managers-->
+      <li class="nav-item">
+        <a class="nav-link" href="viewHotelsManager.html">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>My Hotels</span></a>
+      </li>
+      <!--Admin-->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts"
+                aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Hotel managment</span>
+        </a>
+        <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts"
+                data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="managerList.html">View managers</a>
+                <a class="collapse-item" href="hotelValidation.html">Validate new hotels</a>
+            </div>
+        </div>
+    </li>
+    <!-- Divider -->
+      <hr class="sidebar-divider">
+    
+      <div class="sidebar-heading">
+        Statistics
+      </div>
+    
+      <!-- Nav Item - Pages Collapse Menu -->
+      <!--Admin-->
+      <li class="nav-item">
+        <a class="nav-link" href="chartsAdmin.html">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>User Charts</span>
+        </a>
+      </li>
+      <!--Manager-->
+      <li class="nav-item">
+          <a class="nav-link" href="chartsManager.html">
+              <i class="fas fa-fw fa-chart-area"></i>
+              <span>Hotel Charts</span>
+          </a>
+      </li>
+      
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <div class="sidebar-heading">
+          Main page
+        </div>
+
+      <li class="nav-item">
+          <a class="nav-link" href="index.html">
+              <i class="fas fa-fw fa-chart-area"></i>
+              <span>Return to main page</span>
+          </a>
+      </li>
+
+       <!-- Divider -->
+       <hr class="sidebar-divider">
+
+       <div class="sidebar-heading">
+           Main page
+         </div>
+
+       <li class="nav-item">
+           <a class="nav-link" href="index.html">
+               <i class="fas fa-fw fa-chart-area"></i>
+               <span>Return to main page</span>
+           </a>
+       </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+    
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+      <!-- End of Sidebar -->
+    </ul>
+    <!-- End of Sidebar -->
+    <div class="container">
+      <div id="content-wrapper" class="d-flex flex-column"></div>
+        <div class="row flex-lg-nowrap mt-4">
+          <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
+            <div class="card p-2">
+              <div class="e-navlist e-navlist--active-bg">
+                <ul class="nav">
+                  <li class="nav-item"><a class="nav-link px-1 active" href=viewHotelsManager.html><i
+                        class="fa fa-fw fa-bar-chart mr-1"></i><span>Go to hotel list</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="row">
+              <div class="col mb-3">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="e-profile">
+                      <div class="row">
+                        <div class="col-12 col-sm-auto mb-3">
+                          <div class="mx-auto" style="width: 140px;">
+                            <div class="d-flex justify-content-center align-items-center rounded"
+                              style="height: 140px; background-color: rgb(233, 236, 239);">
+                              <img class="hotel-preview-image"
+                                src="https://img.freepik.com/photos-gratuite/chambre-luxe-hotel_1150-10836.jpg?size=626&ext=jpg">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                          <div class="text-center text-sm-left mb-2 mb-sm-0">
+                            <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">Hotel x</h4>
+                            <div class="mt-2">
+                              <button class="btn btn-primary" type="button">
+                                <i class="fa fa-fw fa-camera"></i>
+                                <span>Change Photo</span>
+                              </button>
+                            </div>
+                          </div>
+                          <div class="text-center text-sm-right">
+                            <span class="badge badge-secondary">Managed by [manager]</span>
+                            <div class="text-muted"><small>Last updated on 09 Dec 2017</small></div>
+                          </div>
+                        </div>
+                      </div>
+                      <ul class="nav nav-tabs">
+                        <li class="nav-item"><a href="" class="active nav-link">Hotel data</a></li>
+                      </ul>
+                      <div class="tab-content pt-3">
+                        <div class="tab-pane active">
+                          <form class="form" novalidate="">
+                            <div class="row">
+                              <div class="col">
+                                <div class="row">
+                                  <div class="col">
+                                    <div class="form-group">
+                                      <label>Hotel name</label>
+                                      <input class="form-control" type="text" name="name" placeholder="Current hotel name"
+                                        value="Current hotel name">
+                                    </div>
+                                  </div>
+                                  <div class="col">
+                                    <div class="form-group">
+                                      <label>Number of rooms</label>
+                                      <input class="form-control" type="text" name="username"
+                                        placeholder="Current number of rooms" value="Current number of rooms">
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col">
+                                    <div class="form-group">
+                                      <label>Location</label>
+                                      <input class="form-control" type="text" placeholder="Current location">
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col mb-3">
+                                    <div class="form-group">
+                                      <label>Hotel description</label>
+                                      <textarea class="form-control" rows="5" placeholder="Current description"></textarea>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col d-flex justify-content-end">
+                                <button class="btn btn-primary" type="submit">Save Changes</button>
+                              </div>
+                            </div>
+                          </form>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+              <div class="copyright text-center my-auto">
+                  <span>Copyright &copy; yourHOmeTEL 2024</span>
+              </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+</body>
+<!-- Bootstrap core JavaScript-->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.bundle.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="js/jquery.easing.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin-2.js"></script>
+
+</html>
