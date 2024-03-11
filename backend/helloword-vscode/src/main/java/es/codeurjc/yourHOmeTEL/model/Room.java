@@ -3,6 +3,9 @@ package es.codeurjc.yourHOmeTEL.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,15 +16,21 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class Room {
 
+    interface Basic {}
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(Basic.class)
     private Long id;
 
+    @JsonView(Basic.class)
     private int maxClients;
 
+    @JsonView(Basic.class)
     private float cost;
 
     @OneToMany(mappedBy = "room")
+    @JsonView(Basic.class)
     private List<Reservation> reservations;
 
     @ManyToOne

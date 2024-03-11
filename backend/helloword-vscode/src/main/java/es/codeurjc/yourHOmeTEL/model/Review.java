@@ -1,6 +1,9 @@
 package es.codeurjc.yourHOmeTEL.model;
 
 import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,14 +13,20 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Review {
 
+    interface Basic{}
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(Basic.class)
     private Long id;
 
+    @JsonView(Basic.class)
     private int score;
 
+    @JsonView(Basic.class)
     private String comment;
 
+    @JsonView(Basic.class)
     private LocalDate date;
 
     @ManyToOne

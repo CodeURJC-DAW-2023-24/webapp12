@@ -4,6 +4,7 @@ import java.sql.Blob;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -17,36 +18,45 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class Hotel {
 
+    interface Basic {}
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(Basic.class)
     private Long id;
 
+    @JsonView(Basic.class)
     private String name;
 
+    @JsonView(Basic.class)
     private String description;
 
+    @JsonView(Basic.class)
     private String location;
 
+    @JsonView(Basic.class)
     private float rating;
 
     @Lob
+    @JsonView(Basic.class)
     private Blob imageFile;
 
+    @JsonView(Basic.class)
     private boolean image;
 
     @ManyToOne
     private UserE manager;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
+    @JsonView(Basic.class)
     private List<Room> rooms;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
+    @JsonView(Basic.class)
     private List<Reservation> reservations;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
+    @JsonView(Basic.class)
     private List<Review> reviews;
 
     public Hotel() {

@@ -17,6 +17,7 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class UserE {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -53,15 +54,12 @@ public class UserE {
     private String pass;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private List<Reservation> reservations;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private List<Review> reviews;
 
     @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private List<Hotel> hotels;
 
     public UserE() {
