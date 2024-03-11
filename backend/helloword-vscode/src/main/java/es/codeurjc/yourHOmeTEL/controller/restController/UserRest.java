@@ -3,6 +3,7 @@ package es.codeurjc.yourHOmeTEL.controller.restController;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -17,8 +18,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -184,30 +188,30 @@ public class UserRest {
 	}
 
 	@GetMapping("/managervalidation")
-	public ResponseEntity<List<UserE>> managerValidation(Model model) {
+	public ResponseEntity<List<UserE>> managerValidation() {
 		List<UserE> unvalidatedManagersList = new ArrayList<>();
-		unvalidatedManagersList = userService.findByValidatedAndRejected(false, false);
-
-		if (unvalidatedManagersList != null) {
+		
+        try{
+            unvalidatedManagersList = userService.findByValidatedAndRejected(false, false);
 			return ResponseEntity.ok(unvalidatedManagersList);
-		}
-        else{
+
+        }catch(NoSuchElementException e){
             return ResponseEntity.notFound().build();
         }
-
 	}
 
-	@PostMapping("/rejection/{id}")
-	public String rejectManager(Model model, @PathVariable Long id) {
-		UserE manager = userService.findById(id).orElseThrow();
+	@PatchMapping("/rejection/{id}")
+	public ResponseEntity<UserE> rejectManager(@RequestBody UserE updatedUser, @PathVariable Long id) {
 
-		if (manager != null) {
-			manager.setRejected(true);
-			manager.setvalidated(false);
-			userService.save(manager);
-		}
-		return "redirect:/managervalidation";
+		try{
+                userService.findById(id).orElseThrow(); //finds the user to be updated. throws 404 if not found
+                updatedUser.setId(id); //updates id if user is found
+                userService.save(updatedUser);
+                return ResponseEntity.ok(updatedUser);
 
+        }catch (NoSuchElementException e){
+            return ResponseEntity.notFound().build();
+        }		
 	}
 
 	@PostMapping("/acceptance/{id}")
