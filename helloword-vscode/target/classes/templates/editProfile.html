@@ -1,0 +1,153 @@
+{{>header}}
+
+<!-- Custom styles sidebar-->
+<link href="/css/all.css" rel="stylesheet" type="text/css">
+<link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">   
+<link href="/css/sb-admin-2.css" rel="stylesheet">
+<link href="/css/photoButton.css" rel="stylesheet">
+
+<!-- Custom styles-->
+<link rel='stylesheet' href="/css/clientListManagerStyles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css'>
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js'></script>
+
+<!-- Custom fonts-->
+<link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+
+ <!--Custom styles-->
+<link rel="stylesheet" href="/css/managerStyles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.2.96/css/materialdesignicons.min.css" integrity="sha512-LX0YV/MWBEn2dwXCYgQHrpa9HJkwB+S+bnBpifSOTO1No27TqNMKYoAn6ff2FBh03THAzAiiCwQ+aPX+/Qt/Ow==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css'>
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js'></script>
+
+<title>yourHOmeTEL Edit Profile</title>
+</head>
+
+<body>
+    {{>sidebar}}
+    <div class="container-xl px-4 mt-4">
+        <div id="content-wrapper" class="d-flex flex-column">
+            <hr class="mt-0 mb-4">
+            <div class="row">
+                <div class="col-xl-4">
+                    <!-- Profile picture card-->
+                    <div class="card mb-4 mb-xl-0">
+                        <div class="card-header">Profile Picture</div>
+                    
+                        <div class="card-body text-center">
+                            <!-- Profile picture image-->
+                            <img src="/profile/{{user.id}}/images" class="img-fluid avatar-xxl rounded-circle" alt="">
+                            <form action="/editprofileimage/{{user.id}}" method="post" enctype="multipart/form-data">
+                                <!-- Profile picture help block-->
+                                <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                                <!-- Profile picture upload button-->
+                                <label for="file" class="btn btn-primary mt-4 mr-4">
+                                    Upload new image
+                                </label>
+                                <input type="file" id="file" name="imageFile">
+                                <input class="btn btn-primary mt-3" type="submit" value="Submit"></input>
+                                <input type="hidden" name="_csrf" value="{{token}}" />
+                            </form>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8">
+                    <!-- Account details card-->
+                    <div class="card mb-4">
+                        <div class="card-header">Account Details</div>
+                        <div class="card-body">
+
+                            <form method='post' action="/replace/{{user.id}}">
+                                <!-- Form Group (username)-->
+                                <!-- Form Row-->
+                                <div class="row gx-3 mb-3">
+                                    <!-- Form Group (first name)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputFirstName">Name</label>
+                                        <input class="form-control" id="inputFirstName" type="text" name="name"
+                                            placeholder="Enter your first name" value={{user.name}}>
+                                    </div>
+                                    <!-- Form Group (last name)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputLastName">Last name</label>
+                                        <input class="form-control" id="inputLastName" type="text" name="lastname"
+                                            placeholder="Enter your last name" value={{user.lastname}}>
+                                    </div>
+                                </div>
+                                <!-- Form Row        -->
+                                <div class="row gx-3 mb-3">
+                                    <!-- Form Group (location)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputLocation">Location</label>
+                                        <input class="form-control" id="inputLocation" type="text" name="location"
+                                            placeholder="Enter your location" value={{user.location}}>
+                                    </div>
+                                    <!-- Form Group (organization)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputLocation">Organization</label>
+                                        <input class="form-control" id="inputLocation" type="text" name="org"
+                                            placeholder="Enter your organization" value="{{user.organization}}">
+                                    </div>
+                                    <!-- Form Group (organization name)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputOrgName">Language</label>
+                                        <input class="form-control" id="inputOrgName" type="text" name="language"
+                                            placeholder="Enter known languages" value={{user.language}}>
+                                    </div>
+                                </div>
+                                <div class="row gx-3 mb-3">
+                                    <!-- Form Group (phone number)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputPhone">Phone number</label>
+                                        <input class="form-control" id="inputPhone" type="text" name="phone"
+                                            placeholder="Enter your phone number" value={{user.phone}}>
+                                    </div>
+                                    <!-- Form Group (email address)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                                        <input class="form-control" id="inputEmailAddress" type="text" name="mail"
+                                            placeholder="Enter your email address" value={{user.email}}>
+                                    </div>
+                                </div>
+
+
+                                <div class="row gx-3 mb-3">
+                                    <!-- Form Group (bio)-->
+                                    <div class="col-md-6">
+                                        <label>Biography</label>
+                                        <textarea class="form-control" rows="5" name="bio"
+                                            placeholder="Current description">{{user.bio}}</textarea>
+                                    </div>
+                                </div>
+
+
+                                <!-- Save changes button-->
+                                <input class="btn btn-primary" type="submit" value="Save">
+                                <input type="hidden" name="_csrf" value="{{token}}" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{>footer}}
+        </div>
+    </div>
+    </div>
+</body>
+<!-- Bootstrap core JavaScript-->
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/js/sb-admin-2.min.js"></script>
+
+</html>
