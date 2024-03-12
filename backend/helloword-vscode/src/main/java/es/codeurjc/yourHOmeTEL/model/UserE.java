@@ -1,10 +1,13 @@
 package es.codeurjc.yourHOmeTEL.model;
 
 import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -17,48 +20,70 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class UserE {
 
+    public interface Complete{}
+    public interface Basic{}
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView({Complete.class, Basic.class})
     private Long id;
 
+    @JsonView(Complete.class)
     private String name;
 
+    @JsonView(Complete.class)
     private String lastname;
 
+    @JsonView(Complete.class)
     private String bio;
 
+    @JsonView(Complete.class)
     private String location;
 
+    @JsonView(Complete.class)
     private String language;
 
+    @JsonView(Complete.class)
     private String phone;
 
+    @JsonView(Complete.class)
     private String email;
 
+    @JsonIgnore
     @Lob
     private Blob imageFile;
 
+    @JsonView(Complete.class)
     private boolean image;
 
+    @JsonView(Complete.class)
     private String organization;
 
+    @JsonView(Complete.class)
     private Boolean validated;
 
+    @JsonView(Complete.class)
     private Boolean rejected;
 
+    @JsonView(Complete.class)
     private List<String> rols;
 
+    @JsonView(Complete.class)
     private String nick;
 
+    @JsonView(Complete.class)
     private String pass;
 
+    @JsonView(Complete.class)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations;
 
+    @JsonView(Complete.class)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;
 
+    @JsonView(Complete.class)
     @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Hotel> hotels;
 
@@ -174,9 +199,25 @@ public class UserE {
         this.organization = organization;
     }
 
+    @JsonIgnore
     public Blob getImageFile() {
         return imageFile;
     }
+
+    // Include the Base64 image data in JSON
+    @JsonIgnore(false)
+    public String getImageBase64() {
+        if (this.imageFile != null) {
+            try {
+                byte[] bytes = this.imageFile.getBytes(1, (int) this.imageFile.length());
+                return Base64.getEncoder().encodeToString(bytes);
+            } catch (SQLException e) {
+                // handle exception
+            }
+        }
+        return null;
+    }
+
 
     public void setImageFile(Blob imageFile) {
         this.imageFile = imageFile;

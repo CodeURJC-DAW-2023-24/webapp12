@@ -13,7 +13,7 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Reservation {
 
-    interface Basic {}
+    public interface Basic {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

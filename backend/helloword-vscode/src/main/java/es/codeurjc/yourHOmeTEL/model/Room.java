@@ -16,7 +16,7 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class Room {
 
-    interface Basic {}
+    public interface Basic {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

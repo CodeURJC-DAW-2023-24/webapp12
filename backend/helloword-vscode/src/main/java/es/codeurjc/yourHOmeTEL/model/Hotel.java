@@ -1,6 +1,8 @@
 package es.codeurjc.yourHOmeTEL.model;
 
 import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.Base64;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,7 +20,7 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class Hotel {
 
-    interface Basic {}
+    public interface Basic {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,6 +41,7 @@ public class Hotel {
 
     @Lob
     @JsonView(Basic.class)
+    @JsonIgnore
     private Blob imageFile;
 
     @JsonView(Basic.class)
@@ -118,8 +121,23 @@ public class Hotel {
         return this.rooms.size();
     }
 
+    @JsonIgnore
     public Blob getImageFile() {
         return imageFile;
+    }
+
+    // Include the Base64 image data in JSON
+    @JsonIgnore(false)
+    public String getImageBase64() {
+        if (this.imageFile != null) {
+            try {
+                byte[] bytes = this.imageFile.getBytes(1, (int) this.imageFile.length());
+                return Base64.getEncoder().encodeToString(bytes);
+            } catch (SQLException e) {
+                // handle exception
+            }
+        }
+        return null;
     }
 
     public void setImageFile(Blob imageFile) {
