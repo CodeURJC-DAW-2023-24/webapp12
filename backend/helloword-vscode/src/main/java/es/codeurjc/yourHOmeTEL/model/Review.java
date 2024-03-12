@@ -14,6 +14,7 @@ import jakarta.persistence.ManyToOne;
 public class Review {
 
     public interface Basic{}
+    public interface Complete{}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,9 +31,11 @@ public class Review {
     private LocalDate date;
 
     @ManyToOne
+    @JsonView(Complete.class)
     private Hotel hotel;
 
     @ManyToOne
+    @JsonView(Complete.class)
     private UserE user;
 
     public Review() {

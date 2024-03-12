@@ -14,28 +14,32 @@ import jakarta.persistence.ManyToOne;
 public class Reservation {
 
     public interface Basic {}
+    public interface Complete{}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private Long id;
 
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private LocalDate checkIn;
 
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private LocalDate checkOut;
 
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private int numPeople;
 
     @ManyToOne
+    @JsonView(Complete.class)
     private Hotel hotel;
 
     @ManyToOne
+    @JsonView(Complete.class)
     private Room room;
 
     @ManyToOne
+    @JsonView(Complete.class)
     private UserE user;
 
     public Reservation() {

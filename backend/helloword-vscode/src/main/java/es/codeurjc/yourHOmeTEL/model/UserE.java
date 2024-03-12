@@ -29,50 +29,50 @@ public class UserE {
     @JsonView({Complete.class, Basic.class})
     private Long id;
 
-    @JsonView(Complete.class)
+    @JsonView({Complete.class, Basic.class})
     private String name;
 
-    @JsonView(Complete.class)
+    @JsonView({Complete.class, Basic.class})
     private String lastname;
 
-    @JsonView(Complete.class)
+    @JsonView({Complete.class, Basic.class})
     private String bio;
 
-    @JsonView(Complete.class)
+    @JsonView({Complete.class, Basic.class})
     private String location;
 
-    @JsonView(Complete.class)
+    @JsonView({Complete.class, Basic.class})
     private String language;
 
-    @JsonView(Complete.class)
+    @JsonView({Complete.class, Basic.class})
     private String phone;
 
-    @JsonView(Complete.class)
+    @JsonView({Complete.class, Basic.class})
     private String email;
 
     @JsonIgnore
     @Lob
     private Blob imageFile;
 
-    @JsonView(Complete.class)
+    @JsonView({Complete.class, Basic.class})
     private boolean image;
 
-    @JsonView(Complete.class)
+    @JsonView({Complete.class, Basic.class})
     private String organization;
 
-    @JsonView(Complete.class)
+    @JsonView({Complete.class, Basic.class})
     private Boolean validated;
 
-    @JsonView(Complete.class)
+    @JsonView({Complete.class, Basic.class})
     private Boolean rejected;
 
-    @JsonView(Complete.class)
+    @JsonView({Complete.class, Basic.class})
     private List<String> rols;
 
-    @JsonView(Complete.class)
+    @JsonView({Complete.class, Basic.class})
     private String nick;
 
-    @JsonView(Complete.class)
+    @JsonView({Complete.class, Basic.class})
     private String pass;
 
     @JsonView(Complete.class)

@@ -21,45 +21,47 @@ import jakarta.persistence.OneToMany;
 public class Hotel {
 
     public interface Basic {}
+    public interface Complete {}   
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private Long id;
 
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private String name;
 
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private String description;
 
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private String location;
 
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private float rating;
 
     @Lob
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     @JsonIgnore
     private Blob imageFile;
 
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private boolean image;
 
     @ManyToOne
+    @JsonView(Complete.class)
     private UserE manager;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonView(Basic.class)
+    @JsonView(Complete.class)
     private List<Room> rooms;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonView(Basic.class)
+    @JsonView(Complete.class)
     private List<Reservation> reservations;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonView(Basic.class)
+    @JsonView(Complete.class)
     private List<Review> reviews;
 
     public Hotel() {

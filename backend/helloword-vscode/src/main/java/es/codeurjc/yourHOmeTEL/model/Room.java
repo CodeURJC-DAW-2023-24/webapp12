@@ -16,24 +16,26 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class Room {
 
-    public interface Basic {}
+    public interface Complete{}
+    public interface Basic{}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private Long id;
 
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private int maxClients;
 
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private float cost;
 
     @OneToMany(mappedBy = "room")
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private List<Reservation> reservations;
 
     @ManyToOne
+    @JsonView(Complete.class)
     private Hotel hotel;
 
     public Room() {
