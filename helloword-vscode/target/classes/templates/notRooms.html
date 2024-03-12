@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>your HOmeTEL Not Rooms</title>
+    {{>headerindex}}
+    {{>navindex}}
+  <!-- END nav -->
+  <div class="hero-wrap" style="background-image: url('/images/bg_3.jpg');">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
+        <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+          <div class="text">
+            <h1 class="mb-4 bread">Not Rooms</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4 room-single mt-4 mb-5 ftco-animate">
+          <p>Sorry, we don't have any rooms available</p>
+      </div>
+      <div class="col-md-4">
+        <a href = "/hotelinformation/{{id}}">
+          <button class="btn btn-primary mt-4" type="button">Back to Home</button>
+        </a>
+      </div>
+    </div>
+    {{>footerindex}}
