@@ -31,7 +31,7 @@ public class Room {
     private float cost;
 
     @OneToMany(mappedBy = "room")
-    @JsonView({Complete.class, Basic.class})
+    @JsonView(Complete.class)
     private List<Reservation> reservations;
 
     @ManyToOne

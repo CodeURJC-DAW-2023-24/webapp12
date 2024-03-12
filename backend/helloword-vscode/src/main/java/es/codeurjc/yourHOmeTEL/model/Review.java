@@ -18,16 +18,16 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private Long id;
 
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private int score;
 
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private String comment;
 
-    @JsonView(Basic.class)
+    @JsonView({Complete.class, Basic.class})
     private LocalDate date;
 
     @ManyToOne
