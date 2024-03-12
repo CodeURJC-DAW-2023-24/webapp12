@@ -1,4 +1,4 @@
-/*document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {
     function successCallback(token) {
         var loginButton = document.getElementById("loginButton");
         //Enables button once captcha gets a success call
@@ -23,4 +23,4 @@
 
     // Call onLoadCallBack to render reCAPTCHA
     onLoadCallBack();
-});*/
+});
