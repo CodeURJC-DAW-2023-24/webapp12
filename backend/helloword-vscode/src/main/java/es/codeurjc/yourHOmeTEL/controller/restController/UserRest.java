@@ -53,7 +53,7 @@ import java.util.Date;
 public class UserRest {
 
     interface UserDetails
-    extends UserE.Basic, Hotel.Basic, Review.Basic, Room.Basic, Reservation.Basic {}
+    extends UserE.Complete, Hotel.Basic, Review.Basic, Room.Basic, Reservation.Basic {}
 
 
     @Autowired
