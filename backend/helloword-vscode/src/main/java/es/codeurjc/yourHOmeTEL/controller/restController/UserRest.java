@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.naming.Binding;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.attribute.UserPrincipal;
 import java.sql.SQLException;
 
@@ -54,6 +55,7 @@ import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.security.jwt.JwtTokenProvider;
 import es.codeurjc.yourHOmeTEL.service.UserService;
 import es.codeurjc.yourHOmeTEL.service.HotelService;
+import es.codeurjc.yourHOmeTEL.service.ImageService;
 import es.codeurjc.yourHOmeTEL.service.UserSecurityService;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
@@ -67,17 +69,18 @@ import java.util.Date;
 @RequestMapping("/api")
 public class UserRest {
 
-
     interface UserDetails
             extends UserE.Complete, Hotel.Basic, Review.Basic, Room.Basic, Reservation.Basic {
     }
 
     @Autowired
     private UserService userService;
- 
 
     @Autowired
     private HotelService hotelService;
+
+    @Autowired
+    private ImageService imgService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -333,19 +336,25 @@ public class UserRest {
         }
     }
 
-    @GetMapping("/profile/{id}/images")
-    public ResponseEntity<Object> downloadImage(HttpServletRequest request, @PathVariable Long id) throws SQLException {
+    @GetMapping("/users/{id}/profile/image")
+    public ResponseEntity<Object> downloadProfileImage(@PathVariable long id)
+            throws MalformedURLException {
+        return imgService.createResponseFromImage(imgService.getFilesFolder(), id);
+    }
+
+    @GetMapping("/users/{id}/profile/image/old")
+    public ResponseEntity<Object> downloadImage(@PathVariable Long id) throws SQLException {
 
         Optional<UserE> user = userService.findById(id);
         if (user.isPresent() && user.get().getImageFile() != null) {
+            UserE foundUser = user.get();
 
-            Resource file = new InputStreamResource(user.get().getImageFile().getBinaryStream());
+            Resource file = new InputStreamResource(foundUser.getImageFile().getBinaryStream());
 
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
-                    .contentLength(user.get().getImageFile().length()).body(file);
+                    .contentLength(foundUser.getImageFile().length()).body(file);
         } else {
             return ResponseEntity.notFound().build();
-            // return "/error";
         }
     }
 
@@ -383,14 +392,14 @@ public class UserRest {
 
     // returns 400 if not all needed attributes are included on the body request
     @PostMapping("/users/register")
-    public ResponseEntity<UserE> registerClient(@RequestBody UserE newUser,@RequestHeader("type") Integer type)
+    public ResponseEntity<UserE> registerClient(@RequestBody UserE newUser, @RequestHeader("type") Integer type)
             throws IOException {
 
         if (type == null || (type != 0 && type != 1) || newUser.getNick() == null || newUser.getPass() == null
-        || newUser.getEmail() == null || newUser.getName() == null || newUser.getLastname() == null){
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                || newUser.getEmail() == null || newUser.getName() == null || newUser.getLastname() == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        
+
         if (userService.existNick(newUser.getNick())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         } else {

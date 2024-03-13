@@ -65,11 +65,16 @@ public class SecurityConfiguration {
 			.authorizeHttpRequests(authorize -> authorize
                     //ADMIN ENDPOINTS
                     /*.requestMatchers(HttpMethod.POST,"/api/managers/validation").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/api/users/{id}/managers/rejection").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/api/users/{id}/managers/validation").hasRole("ADMIN")
 
 					//USER ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/api/users/managers/list").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/update").hasRole("USER")*/
-                   
+                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/update").hasRole("USER")
+                    .requestMatchers(HttpMethod.GET,"/api/users/register").hasRole("USER")
+                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/profile/image").hasRole("USER")*/
+                    
+
                     // PUBLIC ENDPOINTS
 					.anyRequest().permitAll()
 
