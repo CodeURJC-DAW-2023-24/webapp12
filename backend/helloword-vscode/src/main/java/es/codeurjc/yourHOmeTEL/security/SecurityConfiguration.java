@@ -63,10 +63,13 @@ public class SecurityConfiguration {
 		
 		http
 			.authorizeHttpRequests(authorize -> authorize
-                    // ADMIN ENDPOINTS
-                    .requestMatchers(HttpMethod.POST,"/api/managers/validation").hasRole("ADMIN")
+                    //ADMIN ENDPOINTS
+                    /*.requestMatchers(HttpMethod.POST,"/api/managers/validation").hasRole("ADMIN")
+
 					//USER ENDPOINTS
-                    //.requestMatchers(HttpMethod.GET,"/api/users/managers/list").hasRole("USER")
+                    .requestMatchers(HttpMethod.GET,"/api/users/managers/list").hasRole("USER")
+                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/update").hasRole("USER")*/
+                   
                     // PUBLIC ENDPOINTS
 					.anyRequest().permitAll()
 

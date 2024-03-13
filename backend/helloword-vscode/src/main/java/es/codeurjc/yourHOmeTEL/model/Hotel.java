@@ -11,6 +11,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.CascadeType;
@@ -33,12 +34,15 @@ public class Hotel {
     @JsonView({Complete.class, Basic.class})
     private Long id;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private String name;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private String description;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private String location;
 

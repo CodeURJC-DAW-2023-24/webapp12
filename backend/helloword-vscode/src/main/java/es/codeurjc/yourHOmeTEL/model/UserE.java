@@ -12,6 +12,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ClassPathResource;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.CascadeType;
@@ -35,24 +36,31 @@ public class UserE {
     @JsonView({Complete.class, Basic.class})
     private Long id;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private String name;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private String lastname;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private String bio;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private String location;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private String language;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private String phone;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private String email;
 
@@ -66,12 +74,15 @@ public class UserE {
     @JsonView({Complete.class, Basic.class})
     private boolean image;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private String organization;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private Boolean validated;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private Boolean rejected;
 

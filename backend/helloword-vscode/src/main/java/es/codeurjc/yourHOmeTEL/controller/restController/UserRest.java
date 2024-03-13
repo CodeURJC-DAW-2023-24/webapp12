@@ -3,8 +3,14 @@ package es.codeurjc.yourHOmeTEL.controller.restController;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.naming.Binding;
+
 import java.io.IOException;
 import java.nio.file.attribute.UserPrincipal;
 import java.sql.SQLException;
@@ -15,19 +21,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -36,9 +51,11 @@ import es.codeurjc.yourHOmeTEL.model.Room;
 import es.codeurjc.yourHOmeTEL.model.Reservation;
 import es.codeurjc.yourHOmeTEL.model.Review;
 import es.codeurjc.yourHOmeTEL.model.UserE;
+import es.codeurjc.yourHOmeTEL.security.jwt.JwtTokenProvider;
 import es.codeurjc.yourHOmeTEL.service.UserService;
 import es.codeurjc.yourHOmeTEL.service.HotelService;
 import es.codeurjc.yourHOmeTEL.service.UserSecurityService;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,21 +67,28 @@ import java.util.Date;
 @RequestMapping("/api")
 public class UserRest {
 
+
     interface UserDetails
             extends UserE.Complete, Hotel.Basic, Review.Basic, Room.Basic, Reservation.Basic {
     }
 
     @Autowired
-    private UserSecurityService userDetailService;
-
-    @Autowired
     private UserService userService;
+ 
 
     @Autowired
     private HotelService hotelService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @PostConstruct
+    public void setup() {
+        objectMapper.setDefaultMergeable(true);
+    }
 
     // PUBLIC CONTROLLERS
 
@@ -200,7 +224,7 @@ public class UserRest {
 
     }
 
-    @JsonView(UserDetails.class) //esta sin terminar/comprobar aunque veas que tiene el response entity
+    @JsonView(UserDetails.class) // esta sin terminar/comprobar aunque veas que tiene el response entity
     @GetMapping("/managers/validation")
     public ResponseEntity<List<UserE>> managerValidation() {
         List<UserE> unvalidatedManagersList = new ArrayList<>();
@@ -216,29 +240,29 @@ public class UserRest {
 
     // AQUI EMPIEZAN MIS CONTROLADORES
 
-     // sets the selected manager as rejected
+    // sets the selected manager as rejected
     @PutMapping("/users/{id}/managers/rejection")
     public ResponseEntity<UserE> rejectManager(@RequestParam("rejected") Boolean rejected, @PathVariable Long id) {
-       try {
-           UserE manager = userService.findById(id).orElseThrow();
-           if (manager.getRols().contains("MANAGER") && rejected == true) {
-               manager.setRejected(true);
-               manager.setvalidated(false);
-               userService.save(manager);
-               return ResponseEntity.ok(manager);
+        try {
+            UserE manager = userService.findById(id).orElseThrow();
+            if (manager.getRols().contains("MANAGER") && rejected == true) {
+                manager.setRejected(true);
+                manager.setvalidated(false);
+                userService.save(manager);
+                return ResponseEntity.ok(manager);
 
-           }else if (rejected == false){
+            } else if (rejected == false) {
                 return ResponseEntity.badRequest().build();
-           }     
-                          
-            else{
+            }
+
+            else {
                 return ResponseEntity.notFound().build();
             }
-               
-           }catch(NoSuchElementException e){
-                return ResponseEntity.notFound().build();
-            }
-   }
+
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     // sets the selected manager as accepted
     @PutMapping("/users/{id}/managers/verification")
@@ -251,10 +275,10 @@ public class UserRest {
                 userService.save(manager);
                 return ResponseEntity.ok(manager);
 
-            } else if (accepted == false){
+            } else if (accepted == false) {
                 return ResponseEntity.badRequest().build();
 
-            }else{
+            } else {
                 return ResponseEntity.notFound().build();
             }
 
@@ -263,64 +287,50 @@ public class UserRest {
         }
     }
 
-    //returns list of all managers
+    // returns list of all managers
     @JsonView(UserDetails.class)
     @GetMapping("/users/managers/list")
-    public ResponseEntity<List<UserE>> managerList(Model model, HttpServletRequest request) {
+    public ResponseEntity<List<UserE>> managerList(/* @RequestHeader("Authorization") String token */) {
+
         try {
+            /*
+             * if (!jwtTokenProvider.validateToken(token)) {
+             * return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+             * }
+             * String tokenUsername = jwtTokenProvider.getUsername(token);
+             * 
+             * UserE foundUser = userService.findByNick(tokenUsername).orElseThrow();
+             * 
+             * //FORBIDDEN IF USER IS NOT ADMIN
+             * if (!foundUser.getRols().contains("ADMIN")) {
+             * return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+             * }
+             */
+
             List<UserE> managersList = userService.findByCollectionRolsContains("MANAGER");
             return ResponseEntity.ok(managersList);
+
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @GetMapping("/editprofile/{id}")
-    public String editProfile(Model model, HttpServletRequest request, @PathVariable Long id) {
-
-        UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-        UserE foundUser = userService.findById(id).orElseThrow(); // need to transform the throw into 404 error. Page
-                                                                  // 25 // database
-
-        if (currentUser.equals(foundUser)) {
-            model.addAttribute("user", foundUser);
-            return "editprofile";
-        } else
-            return "/error";
-
-    }
-
-    @PostMapping("/replace/{id}")
-    public String editProfile(HttpServletRequest request, Model model, @PathVariable Long id,
-
-            @RequestParam String name,
-            @RequestParam String lastname,
-            @RequestParam String location,
-            @RequestParam String org,
-            @RequestParam String language,
-            @RequestParam String phone,
-            @RequestParam String mail,
-            @RequestParam String bio) { // could be changed to construct user automatically
-
-        UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-        UserE foundUser = userService.findById(id).orElseThrow();
-
-        if (currentUser.equals(foundUser)) {
-            foundUser.setName(name);
-            foundUser.setLocation(location);
-            foundUser.setOrganization(org);
-            foundUser.setLanguage(language);
-            foundUser.setPhone(phone);
-            foundUser.setEmail(mail);
-            foundUser.setBio(bio);
-
+    // edit profile using raw json body or x-www-form-urlencoded
+    @PutMapping("/users/{id}/update/")
+    public ResponseEntity<UserE> editProfile(@PathVariable Long id, @RequestParam Map<String, Object> updates)
+            throws JsonMappingException, JsonProcessingException {
+        try {
+            UserE foundUser = userService.findById(id).orElseThrow();
+            // merges the current user with the updates on the request body
+            objectMapper.readerForUpdating(foundUser).readValue(objectMapper.writeValueAsString(updates)); // if it gets
+                                                                                                           // here, user
+                                                                                                           // exists
             userService.save(foundUser);
+            return ResponseEntity.ok(foundUser);
 
-            model.addAttribute("user", foundUser);
-
-            return "redirect:/profile";
-        } else
-            return "/error";
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/profile/{id}/images")
@@ -359,110 +369,66 @@ public class UserRest {
 
     }
 
-    @GetMapping("/profile")
-    public String profile(Model model, HttpServletRequest request) {
+    @JsonView(UserDetails.class)
+    @GetMapping("/users/{id}/profile")
+    public ResponseEntity<UserE> profile(@PathVariable Long id) {
+        try {
+            UserE foundUser = userService.findById(id).orElseThrow();
+            return ResponseEntity.ok(foundUser);
 
-        String usernick = request.getUserPrincipal().getName();
-        UserE currentUser = userService.findByNick(usernick).orElseThrow();
-        if (currentUser.getBio() == null) {
-            model.addAttribute("hasbio", false);
-            currentUser.setBio("");
-        } else
-            model.addAttribute("hasbio", true);
-
-        if (currentUser.getLocation() == null) {
-            model.addAttribute("haslocation", false);
-            currentUser.setLocation("");
-        } else
-            model.addAttribute("haslocation", true);
-
-        if (currentUser.getPhone() == null) {
-            model.addAttribute("hasphone", false);
-            currentUser.setPhone(" ");
-        } else
-            model.addAttribute("hasphone", true);
-
-        if (currentUser.getOrganization() == null) {
-            model.addAttribute("hasorg", false);
-            currentUser.setOrganization(" ");
-        } else
-            model.addAttribute("hasorg", true);
-
-        if (currentUser.getLanguage() == null) {
-            model.addAttribute("haslang", false);
-            currentUser.setLanguage(" ");
-        } else
-            model.addAttribute("haslang", true);
-
-        model.addAttribute("user", currentUser);
-        model.addAttribute("imageFile", currentUser.getImageFile());
-
-        return "profile";
-
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @GetMapping("/login")
-    public String authenticateUser() {
+    // returns 400 if not all needed attributes are included on the body request
+    @PostMapping("/users/register")
+    public ResponseEntity<UserE> registerClient(@RequestBody UserE newUser,@RequestHeader("type") Integer type)
+            throws IOException {
 
-        return "/login";
-    }
-
-    @GetMapping("/loginerror")
-    public String loginError(Model model) {
-        return "loginError";
-    }
-
-    @GetMapping("/register")
-    public String registerClient(Model model) {
-        return "register";
-    }
-
-    @PostMapping("/register")
-    public String registerClient(Model model, UserE user, Integer type) throws IOException {
-        if (!userService.existNick(user.getNick())) {
-            user.setPass(passwordEncoder.encode(user.getPass()));
+        if (type == null || (type != 0 && type != 1) || newUser.getNick() == null || newUser.getPass() == null
+        || newUser.getEmail() == null || newUser.getName() == null || newUser.getLastname() == null){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        
+        if (userService.existNick(newUser.getNick())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        } else {
+            newUser.setPass(passwordEncoder.encode(newUser.getPass()));
             List<String> rols = new ArrayList<>();
             rols.add("USER");
             if (type == 0) {
                 rols.add("CLIENT");
-                user.setvalidated(null);
-                user.setRejected(null);
-            } else {
+                newUser.setvalidated(null);
+                newUser.setRejected(null);
+            } else if (type == 1) {
                 rols.add("MANAGER");
-                user.setvalidated(false);
-                user.setRejected(false);
+                newUser.setvalidated(false);
+                newUser.setRejected(false);
             }
-            user.setRols(rols);
+
+            newUser.setRols(rols);
             List<Reservation> reservations = new ArrayList<>();
-            user.setReservations(reservations);
+            newUser.setReservations(reservations);
             List<Hotel> hotels = new ArrayList<>();
-            user.setHotels(hotels);
+            newUser.setHotels(hotels);
             List<Review> reviews = new ArrayList<>();
-            user.setReviews(reviews);
+            newUser.setReviews(reviews);
 
-            user.setLanguage("");
-            user.setLocation("");
-            user.setBio("");
-            user.setPhone("");
-            user.setOrganization("");
+            newUser.setLanguage("");
+            newUser.setLocation("");
+            newUser.setBio("");
+            newUser.setPhone("");
+            newUser.setOrganization("");
 
-            userService.save(user);
+            userService.save(newUser);
 
             Resource image = new ClassPathResource("/static/images/default-hotel.jpg");
-            user.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
-            user.setImage(true);
+            newUser.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
+            newUser.setImage(true);
 
-            userService.save(user);
-
-            return "redirect:/login";
-        } else {
-            return "redirect:/nickTaken";
+            userService.save(newUser);
+            return ResponseEntity.ok(newUser);
         }
     }
-
-    @GetMapping("/nickTaken")
-    public String takenUserName(Model model, HttpServletRequest request) {
-        return "nickTaken";
-    }
-
 }
