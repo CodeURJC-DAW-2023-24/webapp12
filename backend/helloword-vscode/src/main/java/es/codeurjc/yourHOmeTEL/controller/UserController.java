@@ -384,6 +384,7 @@ public class UserController {
 				user.setRejected(false);
 			}
 			user.setRols(rols);
+			user.setCollectionRols(rols);
 			List<Reservation> reservations= new ArrayList<>();
 			user.setReservations(reservations);
 			List<Hotel> hotels= new ArrayList<>();

@@ -64,9 +64,13 @@ public class SecurityConfiguration {
 		http
 			.authorizeHttpRequests(authorize -> authorize
                     // ADMIN ENDPOINTS
-                    .requestMatchers(HttpMethod.POST,"/api/managervalidation/").hasRole("ADMIN")
-					// PUBLIC ENDPOINTS
+                    .requestMatchers(HttpMethod.POST,"/api/managers/validation").hasRole("ADMIN")
+					//USER ENDPOINTS
+                    //.requestMatchers(HttpMethod.GET,"/api/users/managers/list").hasRole("USER")
+                    // PUBLIC ENDPOINTS
 					.anyRequest().permitAll()
+
+                    
 			);
 		
         // Disable Form login Authentication
@@ -161,9 +165,6 @@ public class SecurityConfiguration {
                         .requestMatchers("/managervalidation").hasAnyRole("ADMIN")
                         .requestMatchers("/acceptance/**").hasAnyRole("ADMIN")
                         .requestMatchers("/rejection/**").hasAnyRole("ADMIN")
-
-                        //REST pages
-                        .requestMatchers("/api/managervalidation").permitAll()
 
                 )
                 .formLogin(formLogin -> formLogin

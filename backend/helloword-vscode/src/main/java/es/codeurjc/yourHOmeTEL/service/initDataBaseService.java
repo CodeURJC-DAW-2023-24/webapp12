@@ -67,37 +67,37 @@ public class initDataBaseService {
                 // init users
                 UserE client1 = new UserE("Jack1", "Wells1", "Bio", "loc", "lan", "phone",
                                 "mail", "org", null, "user", passwordEncoder.encode("pass"), null, null, rolesUser,
-                                new ArrayList<>(),
+                                rolesUser,new ArrayList<>(),
                                 new ArrayList<>(), new ArrayList<>());
 
                 UserE client2 = new UserE("Jack4", "Wells4", "Bio", "loc", "lan", "phone",
                                 "mail", "org", null, "user2", passwordEncoder.encode("pass2"), null, null, rolesUser,
-                                new ArrayList<>(),
+                                rolesUser, new ArrayList<>(),
                                 new ArrayList<>(), new ArrayList<>());
 
                 UserE client3 = new UserE("Jack6", "Wells6", "Bio", "loc", "lan", "phone",
                                 "mail", "org", null, "user3", passwordEncoder.encode("pass3"), null, null, rolesUser,
-                                new ArrayList<>(),
+                                rolesUser, new ArrayList<>(),
                                 new ArrayList<>(), new ArrayList<>());
 
                 UserE manager1 = new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
                                 "mail", "org", null, "manager", passwordEncoder.encode("manager"), true, false,
-                                rolesManager,
+                                rolesManager, rolesManager,
                                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
                 UserE manager2 = new UserE("Jack2", "Wells2", "Bio", "loc", "lan", "phone",
                                 "mail", "org", null, "manager2", passwordEncoder.encode("manager2"), true, false,
-                                rolesManager,
+                                rolesManager, rolesManager,
                                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
                 UserE manager3 = new UserE("Jack5", "Wells5", "Bio", "loc", "lan", "phone",
                                 "mail", "org", null, "manager3", passwordEncoder.encode("manager3"), false, false,
-                                rolesManager,
+                                rolesManager, rolesManager,
                                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
                 UserE admin = new UserE("Jack3", "Wells3", "Bio", "loc", "lan", "phone",
                                 "mail", "org", null, "admin", passwordEncoder.encode("admin"), null, null, rolesAdmin,
-                                new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+                                rolesAdmin, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
                 userRepository.save(manager1);
                 userRepository.save(manager2);

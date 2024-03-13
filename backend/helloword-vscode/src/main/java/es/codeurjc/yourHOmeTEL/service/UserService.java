@@ -92,8 +92,8 @@ public class UserService implements GeneralService<UserE> {
         return userRepository.findByHotelInReservations(hotel);
     }
 
-    public List<UserE> findByRolsContains(String rol){
-        return userRepository.findByRolsContains(rol);
+    public List<UserE> findByCollectionRolsContains(String rol){
+        return userRepository.findByCollectionRolsContains(rol);
     }
 
     public boolean existNick(String nick) {

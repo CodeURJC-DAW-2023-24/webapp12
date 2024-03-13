@@ -200,7 +200,7 @@ public class UserRest {
 
     }
 
-    @JsonView(UserDetails.class)
+    @JsonView(UserDetails.class) //esta sin terminar/comprobar aunque veas que tiene el response entity
     @GetMapping("/managers/validation")
     public ResponseEntity<List<UserE>> managerValidation() {
         List<UserE> unvalidatedManagersList = new ArrayList<>();
@@ -265,10 +265,10 @@ public class UserRest {
 
     //returns list of all managers
     @JsonView(UserDetails.class)
-    @GetMapping("users/managers/list")
+    @GetMapping("/users/managers/list")
     public ResponseEntity<List<UserE>> managerList(Model model, HttpServletRequest request) {
         try {
-            List<UserE> managersList = userService.findByRolsContains("MANAGER");
+            List<UserE> managersList = userService.findByCollectionRolsContains("MANAGER");
             return ResponseEntity.ok(managersList);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

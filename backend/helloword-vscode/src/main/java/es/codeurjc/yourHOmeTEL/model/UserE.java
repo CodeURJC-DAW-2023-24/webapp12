@@ -75,9 +75,12 @@ public class UserE {
     @JsonView({Complete.class, Basic.class})
     private Boolean rejected;
 
-    //@ElementCollection
+    @ElementCollection
     @JsonView({Complete.class, Basic.class})
-    private List<String> rols;
+    private List<String> collectionRols; //necessary to implement queries that requiere a collection of roles
+
+    @JsonView({Complete.class, Basic.class})
+    private List<String> rols; //must stay, even if duplicated, since authorization desnt work correctly with the roles collection
 
     @JsonView({Complete.class, Basic.class})
     private String nick;
@@ -113,7 +116,7 @@ public class UserE {
 
     public UserE(String name, String lastname, String bio, String location, String language, String phone, String email,
             String organization, Blob imageFile, String nick, String pass, Boolean validated, Boolean rejected, 
-            List<String> rols, List<Reservation> reservations, List<Review> reviews, List<Hotel> hotels) {
+            List<String> rols, List<String> collectionRols, List<Reservation> reservations, List<Review> reviews, List<Hotel> hotels) {
 
         this.name = name;
         this.lastname = lastname;
@@ -125,6 +128,7 @@ public class UserE {
         this.organization = organization;
         this.imageFile = imageFile;
         this.rols = rols;
+        this.collectionRols = collectionRols;
         this.nick = nick;
         this.pass = pass;
         this.validated = validated;
@@ -314,6 +318,14 @@ public class UserE {
 
     public void setRols(List<String> rols) {
         this.rols = rols;
+    }
+
+    public List<String> getCollectionRols() {
+        return collectionRols;
+    }
+
+    public void setCollectionRols(List<String> collectionRols) {
+        this.collectionRols = collectionRols;
     }
 
 }
