@@ -43,8 +43,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
-
 import java.security.Key;
 import java.util.Date;
 
@@ -53,8 +51,8 @@ import java.util.Date;
 public class UserRest {
 
     interface UserDetails
-    extends UserE.Complete, Hotel.Basic, Review.Basic, Room.Basic, Reservation.Basic {}
-
+            extends UserE.Complete, Hotel.Basic, Review.Basic, Room.Basic, Reservation.Basic {
+    }
 
     @Autowired
     private UserSecurityService userDetailService;
@@ -216,38 +214,65 @@ public class UserRest {
         }
     }
 
-    @PutMapping("/rejection/{id}")
-    public ResponseEntity<UserE> rejectManager(@RequestBody UserE updatedUser, @PathVariable Long id) {
+    // AQUI EMPIEZAN MIS CONTROLADORES
 
+     // sets the selected manager as rejected
+    @PutMapping("/users/{id}/managers/rejection")
+    public ResponseEntity<UserE> rejectManager(@RequestParam("rejected") Boolean rejected, @PathVariable Long id) {
+       try {
+           UserE manager = userService.findById(id).orElseThrow();
+           if (manager.getRols().contains("MANAGER") && rejected == true) {
+               manager.setRejected(true);
+               manager.setvalidated(false);
+               userService.save(manager);
+               return ResponseEntity.ok(manager);
+
+           }else if (rejected == false){
+                return ResponseEntity.badRequest().build();
+           }     
+                          
+            else{
+                return ResponseEntity.notFound().build();
+            }
+               
+           }catch(NoSuchElementException e){
+                return ResponseEntity.notFound().build();
+            }
+   }
+
+    // sets the selected manager as accepted
+    @PutMapping("/users/{id}/managers/verification")
+    public ResponseEntity<UserE> acceptManager(@RequestParam("accepted") Boolean accepted, @PathVariable Long id) {
         try {
-            userService.findById(id).orElseThrow(); // finds the user to be updated. throws 404 if not found
-            updatedUser.setId(id); // updates id if user is found
-            userService.save(updatedUser);
-            return ResponseEntity.ok(updatedUser);
+            UserE manager = userService.findById(id).orElseThrow();
+            if (manager.getRols().contains("MANAGER") && accepted == true) {
+                manager.setRejected(false);
+                manager.setvalidated(true);
+                userService.save(manager);
+                return ResponseEntity.ok(manager);
+
+            } else if (accepted == false){
+                return ResponseEntity.badRequest().build();
+
+            }else{
+                return ResponseEntity.notFound().build();
+            }
 
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @PostMapping("/acceptance/{id}")
-    public String acceptManager(Model model, @PathVariable Long id) {
-        UserE manager = userService.findById(id).orElseThrow();
-
-        if (manager != null) {
-            manager.setRejected(false);
-            manager.setvalidated(true);
-            userService.save(manager);
+    //returns list of all managers
+    @JsonView(UserDetails.class)
+    @GetMapping("users/managers/list")
+    public ResponseEntity<List<UserE>> managerList(Model model, HttpServletRequest request) {
+        try {
+            List<UserE> managersList = userService.findByRolsContains("MANAGER");
+            return ResponseEntity.ok(managersList);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
         }
-        return "redirect:/managervalidation";
-
-    }
-
-    @GetMapping("/managerlist")
-    public String managerList(Model model, HttpServletRequest request) {
-
-        return "managerlist";
-
     }
 
     @GetMapping("/editprofile/{id}")
@@ -378,11 +403,9 @@ public class UserRest {
 
     @GetMapping("/login")
     public String authenticateUser() {
-    
-        return "/login"; 
-    }
 
-   
+        return "/login";
+    }
 
     @GetMapping("/loginerror")
     public String loginError(Model model) {

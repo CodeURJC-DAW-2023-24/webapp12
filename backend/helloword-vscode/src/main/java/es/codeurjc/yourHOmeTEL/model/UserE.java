@@ -1,15 +1,21 @@
 package es.codeurjc.yourHOmeTEL.model;
 
+import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
+import org.hibernate.engine.jdbc.BlobProxy;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ClassPathResource;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -55,6 +61,9 @@ public class UserE {
     private Blob imageFile;
 
     @JsonView({Complete.class, Basic.class})
+    private String imagePath;
+
+    @JsonView({Complete.class, Basic.class})
     private boolean image;
 
     @JsonView({Complete.class, Basic.class})
@@ -66,13 +75,13 @@ public class UserE {
     @JsonView({Complete.class, Basic.class})
     private Boolean rejected;
 
+    //@ElementCollection
     @JsonView({Complete.class, Basic.class})
     private List<String> rols;
 
     @JsonView({Complete.class, Basic.class})
     private String nick;
 
-    @JsonView({Complete.class, Basic.class})
     private String pass;
 
     @JsonView(Complete.class)
@@ -103,10 +112,8 @@ public class UserE {
     }
 
     public UserE(String name, String lastname, String bio, String location, String language, String phone, String email,
-            String organization,
-            Blob imageFile, String nick, String pass, Boolean validated, Boolean rejected, List<String> rols,
-            List<Reservation> reservations, List<Review> reviews,
-            List<Hotel> hotels) {
+            String organization, Blob imageFile, String nick, String pass, Boolean validated, Boolean rejected, 
+            List<String> rols, List<Reservation> reservations, List<Review> reviews, List<Hotel> hotels) {
 
         this.name = name;
         this.lastname = lastname;
@@ -221,6 +228,20 @@ public class UserE {
 
     public void setImageFile(Blob imageFile) {
         this.imageFile = imageFile;
+    }
+
+    public void generateImage(String staticPath) throws IOException {
+        Resource image = new ClassPathResource(staticPath);
+        this.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
+        this.setImage(true);         
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public boolean isImage() {

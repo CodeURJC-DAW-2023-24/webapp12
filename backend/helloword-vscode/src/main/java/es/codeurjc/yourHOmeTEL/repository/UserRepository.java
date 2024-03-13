@@ -28,6 +28,9 @@ public interface UserRepository extends JpaRepository<UserE, Long> {
 
     List<UserE> findLocationByName(String name);
 
+    @Query(value = "SELECT u.* FROM UserE u JOIN UserE_Rols ur ON u.id = ur.UserE_id WHERE ur.roles = :rol", nativeQuery = true)
+    List<UserE> findByRolsContains(@Param("rol") String rol);
+
     @Query("SELECT DISTINCT u FROM UserE u JOIN u.reservations r WHERE r.hotel = :hotel")
     List<UserE> findByHotelInReservations(@Param("hotel") Hotel hotel);
 

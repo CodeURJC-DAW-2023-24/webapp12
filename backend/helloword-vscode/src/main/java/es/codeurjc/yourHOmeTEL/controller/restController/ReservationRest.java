@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import es.codeurjc.yourHOmeTEL.model.Hotel;
 import es.codeurjc.yourHOmeTEL.model.Reservation;
+import es.codeurjc.yourHOmeTEL.model.Review;
 import es.codeurjc.yourHOmeTEL.model.Room;
 import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.service.HotelService;
@@ -26,6 +27,10 @@ import jakarta.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/api")
 public class ReservationRest {
+
+    interface ReservationDetails
+            extends UserE.Basic, Hotel.Basic, Review.Basic, Room.Basic, Reservation.Complete {
+    }
 
     @Autowired
     private ReservationService reservationService;

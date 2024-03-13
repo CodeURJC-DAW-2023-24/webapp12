@@ -1,9 +1,14 @@
 package es.codeurjc.yourHOmeTEL.model;
 
+import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Base64;
 import java.util.List;
+
+import org.hibernate.engine.jdbc.BlobProxy;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -47,6 +52,9 @@ public class Hotel {
 
     @JsonView({Complete.class, Basic.class})
     private boolean image;
+
+    @JsonView({Complete.class, Basic.class})
+    private String imagePath;
 
     @ManyToOne
     @JsonView(Complete.class)
@@ -144,6 +152,20 @@ public class Hotel {
 
     public void setImageFile(Blob imageFile) {
         this.imageFile = imageFile;
+    }
+
+    public void generateImage(String staticPath) throws IOException {
+        Resource image = new ClassPathResource(staticPath);
+        this.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
+        this.setImage(true);         
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public boolean isImage() {
