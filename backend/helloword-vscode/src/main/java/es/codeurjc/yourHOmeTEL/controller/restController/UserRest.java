@@ -248,7 +248,8 @@ public class UserRest {
 
     // sets the selected manager as rejected
     @PutMapping("/users/{id}/managers/rejection")
-    public ResponseEntity<UserE> rejectManager(@RequestParam("rejected") Boolean rejected, @PathVariable Long id) {
+    public ResponseEntity<UserE> rejectManager(HttpServletRequest request, @RequestParam("rejected") Boolean rejected, 
+    @PathVariable Long id) {
         try {
             UserE manager = userService.findById(id).orElseThrow();
             if (manager.getRols().contains("MANAGER") && rejected == true) {
@@ -272,7 +273,8 @@ public class UserRest {
 
     // sets the selected manager as accepted
     @PutMapping("/users/{id}/managers/verification")
-    public ResponseEntity<UserE> acceptManager(@RequestParam("accepted") Boolean accepted, @PathVariable Long id) {
+    public ResponseEntity<UserE> acceptManager(HttpServletRequest request, @RequestParam("accepted") Boolean accepted, 
+    @PathVariable Long id) {
         try {
             UserE manager = userService.findById(id).orElseThrow();
             if (manager.getRols().contains("MANAGER") && accepted == true) {
@@ -296,7 +298,7 @@ public class UserRest {
     // returns list of all managers
     @JsonView(UserDetails.class)
     @GetMapping("/users/managers/list")
-    public ResponseEntity<List<UserE>> managerList(/* @RequestHeader("Authorization") String token */) {
+    public ResponseEntity<List<UserE>> managerList(HttpServletRequest request) {
 
         try {
             List<UserE> managersList = userService.findByCollectionRolsContains("MANAGER");
@@ -309,8 +311,8 @@ public class UserRest {
 
     // edit profile using raw json body or x-www-form-urlencoded
     @PutMapping("/users/{id}/update/")
-    public ResponseEntity<UserE> editProfile(@PathVariable Long id, @RequestParam Map<String, Object> updates)
-            throws JsonMappingException, JsonProcessingException {
+    public ResponseEntity<UserE> editProfile(HttpServletRequest request, @PathVariable Long id, 
+    @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
         try {
             UserE foundUser = userService.findById(id).orElseThrow();
             // merges the current user with the updates on the request body
@@ -326,13 +328,13 @@ public class UserRest {
     }
 
     @GetMapping("/users/{id}/image")
-    public ResponseEntity<Object> downloadProfileImage(@PathVariable long id)
+    public ResponseEntity<Object> downloadProfileImage(HttpServletRequest request, @PathVariable long id)
             throws MalformedURLException {
         return imgService.createResponseFromImage(imgService.getFilesFolder(), id);
     }
 
     @PostMapping("users/{id}/image/creation")
-    public ResponseEntity<Object> uploadImage(@PathVariable long id,
+    public ResponseEntity<Object> uploadImage(HttpServletRequest request, @PathVariable long id,
             @RequestParam MultipartFile imageFile) throws IOException {
         try {
             UserE foundUser = userService.findById(id).orElseThrow();
@@ -348,7 +350,7 @@ public class UserRest {
     }
 
     @DeleteMapping("/users/{id}/image/removal")
-    public ResponseEntity<Object> deleteImage(@PathVariable long id)
+    public ResponseEntity<Object> deleteImage(HttpServletRequest request, @PathVariable long id)
             throws IOException {
         try{
             UserE foundUser = userService.findById(id).orElseThrow();
@@ -364,7 +366,7 @@ public class UserRest {
 
     @JsonView(UserDetails.class)
     @GetMapping("/users/{id}/profile")
-    public ResponseEntity<UserE> profile(@PathVariable Long id) {
+    public ResponseEntity<UserE> profile(HttpServletRequest request, @PathVariable Long id) {
         try {
             UserE foundUser = userService.findById(id).orElseThrow();
             return ResponseEntity.ok(foundUser);
@@ -376,8 +378,8 @@ public class UserRest {
 
     // returns 400 if not all needed attributes are included on the body request
     @PostMapping("/users/register")
-    public ResponseEntity<UserE> registerClient(@RequestBody UserE newUser, @RequestHeader("type") Integer type)
-            throws IOException {
+    public ResponseEntity<UserE> registerClient(HttpServletRequest request, @RequestBody UserE newUser, 
+    @RequestHeader("type") Integer type) throws IOException {
 
         if (type == null || (type != 0 && type != 1) || newUser.getNick() == null || newUser.getPass() == null
                 || newUser.getEmail() == null || newUser.getName() == null || newUser.getLastname() == null) {
