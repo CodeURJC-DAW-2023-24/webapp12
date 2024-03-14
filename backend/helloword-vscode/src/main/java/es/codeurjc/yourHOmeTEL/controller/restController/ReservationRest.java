@@ -62,7 +62,7 @@ public class ReservationRest {
             UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
             UserE targetUser = reservationService.findById(id).orElseThrow().getUser();
 
-			if (requestUser.getRols().contains("ADMIN") && requestUser.equals(targetUser)) {
+			if (requestUser.getRols().contains("ADMIN") || requestUser.equals(targetUser)) {
 				Reservation targetReservation = reservationService.findById(id).orElseThrow();
                 return ResponseEntity.ok(targetReservation);
 			} else {
@@ -81,9 +81,9 @@ public class ReservationRest {
 
 		try{
 			UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-            UserE targetUser = reservationService.findById(id).orElseThrow().getUser();
+            UserE targetUser = userService.findById(id).orElseThrow();
 
-			if (requestUser.getRols().contains("ADMIN") && requestUser.equals(targetUser)) {
+			if (requestUser.getRols().contains("ADMIN") || requestUser.equals(targetUser)) {
                 List <Reservation> targetReservations = targetUser.getReservations();
 				return ResponseEntity.ok(targetReservations);
 			} else {
@@ -102,9 +102,10 @@ public class ReservationRest {
     Pageable pageable) {
 
 		try{
+            UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
             UserE targetManager = hotelService.findById(id).orElseThrow().getManager();
 
-			if (targetManager.getvalidated()) {
+			if (targetManager.getvalidated() || requestUser.getRols().contains("ADMIN")) {
                 List<Reservation> targetReservations = hotelService.findById(id).orElseThrow().getReservations(); 
 				return ResponseEntity.ok(targetReservations);
 			} else {
@@ -123,9 +124,10 @@ public class ReservationRest {
     Pageable pageable) {
 
 		try{
+            UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
             UserE targetManager = hotelService.findById(id).orElseThrow().getManager();
 
-			if (targetManager.getvalidated()) {
+			if (targetManager.getvalidated() || requestUser.getRols().contains("ADMIN")) {
                 List<Reservation> targetReservations = roomService.findById(id).orElseThrow().getReservations(); 
 				return ResponseEntity.ok(targetReservations);
 			} else {

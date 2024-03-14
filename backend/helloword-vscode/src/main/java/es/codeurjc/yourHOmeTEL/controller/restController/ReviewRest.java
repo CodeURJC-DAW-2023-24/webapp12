@@ -102,11 +102,14 @@ public class ReviewRest {
 
 	@JsonView(ReviewDetails.class)
 	@GetMapping("/reviews/hotels/{id}")
-	public ResponseEntity<List<Review>> hotelReviews(@PathVariable Long id, Pageable pageable) {
+	public ResponseEntity<List<Review>> hotelReviews(HttpServletRequest request, @PathVariable Long id, 
+	Pageable pageable) {
 		
 		try{
+			UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
-			if (hotelManager.getvalidated()) {
+
+			if (hotelManager.getvalidated() || requestUser.getRols().contains("ADMIN")) {
 				Hotel targetHotel = hotelService.findById(id).orElseThrow();
 				return ResponseEntity.ok(targetHotel.getReviews());
 			} else {
