@@ -72,7 +72,9 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET,"/api/users/managers/list").hasRole("USER")
                     .requestMatchers(HttpMethod.GET,"/api/users/{id}/update").hasRole("USER")
                     .requestMatchers(HttpMethod.GET,"/api/users/register").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/profile/image").hasRole("USER")*/
+                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/image").hasRole("USER")
+                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/image/creation").hasRole("USER")
+                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/image/removal").hasRole("USER")*/
                     
 
                     // PUBLIC ENDPOINTS

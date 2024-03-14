@@ -1,5 +1,6 @@
 package es.codeurjc.yourHOmeTEL.controller.restController;
 
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.naming.Binding;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.nio.file.attribute.UserPrincipal;
 import java.sql.SQLException;
 
@@ -29,6 +31,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -296,20 +299,6 @@ public class UserRest {
     public ResponseEntity<List<UserE>> managerList(/* @RequestHeader("Authorization") String token */) {
 
         try {
-            /*
-             * if (!jwtTokenProvider.validateToken(token)) {
-             * return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-             * }
-             * String tokenUsername = jwtTokenProvider.getUsername(token);
-             * 
-             * UserE foundUser = userService.findByNick(tokenUsername).orElseThrow();
-             * 
-             * //FORBIDDEN IF USER IS NOT ADMIN
-             * if (!foundUser.getRols().contains("ADMIN")) {
-             * return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-             * }
-             */
-
             List<UserE> managersList = userService.findByCollectionRolsContains("MANAGER");
             return ResponseEntity.ok(managersList);
 
@@ -336,46 +325,41 @@ public class UserRest {
         }
     }
 
-    @GetMapping("/users/{id}/profile/image")
+    @GetMapping("/users/{id}/image")
     public ResponseEntity<Object> downloadProfileImage(@PathVariable long id)
             throws MalformedURLException {
         return imgService.createResponseFromImage(imgService.getFilesFolder(), id);
     }
 
-    @GetMapping("/users/{id}/profile/image/old")
-    public ResponseEntity<Object> downloadImage(@PathVariable Long id) throws SQLException {
+    @PostMapping("users/{id}/image/creation")
+    public ResponseEntity<Object> uploadImage(@PathVariable long id,
+            @RequestParam MultipartFile imageFile) throws IOException {
+        try {
+            UserE foundUser = userService.findById(id).orElseThrow();
+            URI location = fromCurrentRequest().build().toUri();
+            foundUser.setImagePath(location.toString());
+            userService.save(foundUser);
+            imgService.saveImage(imgService.getFilesFolder(), foundUser.getId(), imageFile);
+            return ResponseEntity.created(location).build();
 
-        Optional<UserE> user = userService.findById(id);
-        if (user.isPresent() && user.get().getImageFile() != null) {
-            UserE foundUser = user.get();
-
-            Resource file = new InputStreamResource(foundUser.getImageFile().getBinaryStream());
-
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
-                    .contentLength(foundUser.getImageFile().length()).body(file);
-        } else {
+        } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @PostMapping("/editprofileimage/{id}")
-    public String editImage(HttpServletRequest request, @RequestParam MultipartFile imageFile,
-            @PathVariable Long id,
-            Model model) throws IOException {
+    @DeleteMapping("/users/{id}/image/removal")
+    public ResponseEntity<Object> deleteImage(@PathVariable long id)
+            throws IOException {
+        try{
+            UserE foundUser = userService.findById(id).orElseThrow();
+            foundUser.setImagePath(null);
+            userService.save(foundUser);
+            this.imgService.deleteImage(imgService.getFilesFolder(), id);
+            return ResponseEntity.noContent().build();
 
-        UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-        UserE foundUser = userService.findById(id).orElseThrow();
-
-        if (currentUser.equals(foundUser)) {
-            if (!imageFile.getOriginalFilename().isBlank()) {
-                currentUser.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-                userService.save(currentUser);
+            } catch (NoSuchElementException e) {
+                return ResponseEntity.notFound().build();
             }
-            return "redirect:/editprofile/" + id;
-
-        } else
-            return "/error";
-
     }
 
     @JsonView(UserDetails.class)
