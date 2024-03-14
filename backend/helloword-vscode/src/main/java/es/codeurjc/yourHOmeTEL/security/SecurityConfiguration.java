@@ -60,23 +60,31 @@ public class SecurityConfiguration {
 		http
 			.securityMatcher("/api/**")
 			.exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandlerJwt));
-		
-		http
+
+        http
 			.authorizeHttpRequests(authorize -> authorize
+                    
+                    //ADMIN AND MANAGER ENDPOINTS
+                    .requestMatchers(HttpMethod.GET,"/api/users/managers/list").hasAnyRole("MANAGER","ADMIN")
+            
                     //ADMIN ENDPOINTS
-                    /*.requestMatchers(HttpMethod.POST,"/api/managers/validation").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET,"/api/managers/validation").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST,"/api/users/{id}/managers/rejection").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST,"/api/users/{id}/managers/validation").hasRole("ADMIN")
+                
+                    //MANAGER ENDPOINTS
+                    
 
 					//USER ENDPOINTS
-                    .requestMatchers(HttpMethod.GET,"/api/users/managers/list").hasRole("USER")
                     .requestMatchers(HttpMethod.GET,"/api/users/{id}/info").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/info/update").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/info/removal").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/users/register").hasRole("USER")
+                    .requestMatchers(HttpMethod.POST,"/api/users/register").hasRole("USER")
+                    .requestMatchers(HttpMethod.PUT,"/api/users/{id}/info/update").hasRole("USER")
+                    .requestMatchers(HttpMethod.DELETE,"/api/users/{id}/info/removal").hasRole("USER")
+                    
+
                     .requestMatchers(HttpMethod.GET,"/api/users/{id}/image").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/image/creation").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/image/removal").hasRole("USER")*/
+                    .requestMatchers(HttpMethod.POST,"/api/users/{id}/image/creation").hasRole("USER")
+                    .requestMatchers(HttpMethod.DELETE,"/api/users/{id}/image/removal").hasRole("USER")
                     
 
                     // PUBLIC ENDPOINTS
