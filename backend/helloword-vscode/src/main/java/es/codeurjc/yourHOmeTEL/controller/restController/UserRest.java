@@ -230,7 +230,7 @@ public class UserRest {
 
     }
 
-    @JsonView(UserDetails.class) // esta sin terminar/comprobar aunque veas que tiene el response entity
+    @JsonView(UserDetails.class) 
     @GetMapping("/managers/validation")
     public ResponseEntity<List<UserE>> managerValidation() {
         List<UserE> unvalidatedManagersList = new ArrayList<>();

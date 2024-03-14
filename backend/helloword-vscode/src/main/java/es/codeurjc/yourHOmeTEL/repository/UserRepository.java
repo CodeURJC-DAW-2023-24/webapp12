@@ -30,7 +30,7 @@ public interface UserRepository extends JpaRepository<UserE, Long> {
 
     List<UserE> findByCollectionRolsContains(String rol);
 
-    @Query("SELECT DISTINCT u FROM UserE u JOIN u.reservations r WHERE r.hotel = :hotel")
+    @Query(value = "SELECT DISTINCT u FROM UserE u JOIN u.reservations r WHERE r.hotel = :hotel",
+    countQuery = "SELECT COUNT(*) FROM UserE u JOIN u.reservations r WHERE r.hotel = :hotel")
     List<UserE> findByHotelInReservations(@Param("hotel") Hotel hotel);
-
 }
