@@ -70,7 +70,9 @@ public class SecurityConfiguration {
 
 					//USER ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/api/users/managers/list").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/update").hasRole("USER")
+                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/info").hasRole("USER")
+                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/info/update").hasRole("USER")
+                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/info/removal").hasRole("USER")
                     .requestMatchers(HttpMethod.GET,"/api/users/register").hasRole("USER")
                     .requestMatchers(HttpMethod.GET,"/api/users/{id}/image").hasRole("USER")
                     .requestMatchers(HttpMethod.GET,"/api/users/{id}/image/creation").hasRole("USER")
@@ -78,7 +80,8 @@ public class SecurityConfiguration {
                     
 
                     // PUBLIC ENDPOINTS
-					.anyRequest().permitAll()
+					.requestMatchers("/api/users/register").permitAll()
+                    .anyRequest().permitAll()
 
                     
 			);

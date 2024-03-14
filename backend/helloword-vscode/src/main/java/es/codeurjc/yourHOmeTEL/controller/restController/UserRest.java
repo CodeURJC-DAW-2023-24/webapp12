@@ -55,7 +55,12 @@ import es.codeurjc.yourHOmeTEL.model.Room;
 import es.codeurjc.yourHOmeTEL.model.Reservation;
 import es.codeurjc.yourHOmeTEL.model.Review;
 import es.codeurjc.yourHOmeTEL.model.UserE;
+import es.codeurjc.yourHOmeTEL.security.jwt.AuthResponse;
 import es.codeurjc.yourHOmeTEL.security.jwt.JwtTokenProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import es.codeurjc.yourHOmeTEL.security.jwt.LoginRequest;
+import es.codeurjc.yourHOmeTEL.security.jwt.Token;
+import es.codeurjc.yourHOmeTEL.security.jwt.UserLoginService;
 import es.codeurjc.yourHOmeTEL.service.UserService;
 import es.codeurjc.yourHOmeTEL.service.HotelService;
 import es.codeurjc.yourHOmeTEL.service.ImageService;
@@ -90,6 +95,12 @@ public class UserRest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private UserLoginService userLoginService;
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @PostConstruct
     public void setup() {
@@ -206,6 +217,7 @@ public class UserRest {
 
     }
 
+    // a manager applies to be validated by an admin
     @PostMapping("/application/{id}")
     public String managerApplication(Model model, HttpServletRequest request, @PathVariable Long id) {
 
@@ -230,7 +242,7 @@ public class UserRest {
 
     }
 
-    @JsonView(UserDetails.class) 
+    @JsonView(UserDetails.class)
     @GetMapping("/managers/validation")
     public ResponseEntity<List<UserE>> managerValidation() {
         List<UserE> unvalidatedManagersList = new ArrayList<>();
@@ -246,10 +258,9 @@ public class UserRest {
 
     // AQUI EMPIEZAN MIS CONTROLADORES
 
-    // sets the selected manager as rejected
     @PutMapping("/users/{id}/managers/rejection")
-    public ResponseEntity<UserE> rejectManager(HttpServletRequest request, @RequestParam("rejected") Boolean rejected, 
-    @PathVariable Long id) {
+    public ResponseEntity<UserE> rejectManager(HttpServletRequest request, @RequestParam("rejected") Boolean rejected,
+            @PathVariable Long id) {
         try {
             UserE manager = userService.findById(id).orElseThrow();
             if (manager.getRols().contains("MANAGER") && rejected == true) {
@@ -273,8 +284,8 @@ public class UserRest {
 
     // sets the selected manager as accepted
     @PutMapping("/users/{id}/managers/verification")
-    public ResponseEntity<UserE> acceptManager(HttpServletRequest request, @RequestParam("accepted") Boolean accepted, 
-    @PathVariable Long id) {
+    public ResponseEntity<UserE> acceptManager(HttpServletRequest request, @RequestParam("accepted") Boolean accepted,
+            @PathVariable Long id) {
         try {
             UserE manager = userService.findById(id).orElseThrow();
             if (manager.getRols().contains("MANAGER") && accepted == true) {
@@ -309,24 +320,6 @@ public class UserRest {
         }
     }
 
-    // edit profile using raw json body or x-www-form-urlencoded
-    @PutMapping("/users/{id}/update/")
-    public ResponseEntity<UserE> editProfile(HttpServletRequest request, @PathVariable Long id, 
-    @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
-        try {
-            UserE foundUser = userService.findById(id).orElseThrow();
-            // merges the current user with the updates on the request body
-            objectMapper.readerForUpdating(foundUser).readValue(objectMapper.writeValueAsString(updates)); // if it gets
-                                                                                                           // here, user
-                                                                                                           // exists
-            userService.save(foundUser);
-            return ResponseEntity.ok(foundUser);
-
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     @GetMapping("/users/{id}/image")
     public ResponseEntity<Object> downloadProfileImage(HttpServletRequest request, @PathVariable long id)
             throws MalformedURLException {
@@ -352,34 +345,42 @@ public class UserRest {
     @DeleteMapping("/users/{id}/image/removal")
     public ResponseEntity<Object> deleteImage(HttpServletRequest request, @PathVariable long id)
             throws IOException {
-        try{
+        try {
             UserE foundUser = userService.findById(id).orElseThrow();
             foundUser.setImagePath(null);
             userService.save(foundUser);
             this.imgService.deleteImage(imgService.getFilesFolder(), id);
             return ResponseEntity.noContent().build();
 
-            } catch (NoSuchElementException e) {
-                return ResponseEntity.notFound().build();
-            }
-    }
-
-    @JsonView(UserDetails.class)
-    @GetMapping("/users/{id}/profile")
-    public ResponseEntity<UserE> profile(HttpServletRequest request, @PathVariable Long id) {
-        try {
-            UserE foundUser = userService.findById(id).orElseThrow();
-            return ResponseEntity.ok(foundUser);
-
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
+    // USERS CRUD CONTROLLERS
+
+    @JsonView(UserDetails.class)
+    @GetMapping("/users/{id}/info")
+    public ResponseEntity<UserE> profile(HttpServletRequest request, @PathVariable Long id) {
+
+        if (request.getUserPrincipal() == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } else {
+
+            try {
+                UserE foundUser = userService.findById(id).orElseThrow();
+                return ResponseEntity.ok(foundUser);
+            } catch (NoSuchElementException e) {
+                return ResponseEntity.notFound().build();
+
+            }
+        }
+    }
+
     // returns 400 if not all needed attributes are included on the body request
     @PostMapping("/users/register")
-    public ResponseEntity<UserE> registerClient(HttpServletRequest request, @RequestBody UserE newUser, 
-    @RequestHeader("type") Integer type) throws IOException {
+    public ResponseEntity<UserE> registerClient(HttpServletRequest request, @RequestBody UserE newUser,
+            @RequestParam("type") Integer type) throws IOException {
 
         if (type == null || (type != 0 && type != 1) || newUser.getNick() == null || newUser.getPass() == null
                 || newUser.getEmail() == null || newUser.getName() == null || newUser.getLastname() == null) {
@@ -426,4 +427,50 @@ public class UserRest {
             return ResponseEntity.ok(newUser);
         }
     }
+
+    // edit profile using raw json body or x-www-form-urlencoded
+    @PutMapping("/users/{id}/info/update")
+    public ResponseEntity<UserE> editProfile(HttpServletRequest request, @PathVariable Long id,
+            @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
+
+        if (request.getUserPrincipal() == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } else {
+
+            try {
+                UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+                UserE foundUser = userService.findById(id).orElseThrow();
+
+                if (requestUser.getRols().contains("ADMIN") || requestUser.equals(foundUser)) {
+                    // merges the current user with the updates on the request body
+                    objectMapper.readerForUpdating(foundUser).readValue(objectMapper.writeValueAsString(updates)); // exists
+                    userService.save(foundUser);
+                    return ResponseEntity.ok(foundUser);
+                } else {
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+                }
+
+            } catch (NoSuchElementException e) {
+                return ResponseEntity.notFound().build();
+            }
+        }
+    }
+
+    @DeleteMapping("/users/{id}/info/removal")
+    public ResponseEntity<UserE> deleteProfile(HttpServletRequest request, @PathVariable Long id) {
+        try {
+            UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+            UserE foundUser = userService.findById(id).orElseThrow();
+
+            if (requestUser.getRols().contains("ADMIN") || requestUser.equals(foundUser)) {
+                userService.delete(foundUser);
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
