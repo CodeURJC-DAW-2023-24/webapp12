@@ -269,6 +269,7 @@ public class UserRest {
      
     
     @PutMapping("/users/{id}/managers/rejection")
+    @JsonView(UserDetails.class)
     public ResponseEntity<UserE> rejectManager(HttpServletRequest request, @RequestParam("rejected") Boolean rejected,
             @PathVariable Long id) {
         try {
@@ -291,6 +292,7 @@ public class UserRest {
     }
 
     // sets the selected manager as accepted
+    @JsonView(UserDetails.class)
     @PutMapping("/users/{id}/managers/validation")
     public ResponseEntity<UserE> acceptManager(HttpServletRequest request, @RequestParam("accepted") Boolean accepted,
             @PathVariable Long id) {
@@ -396,6 +398,7 @@ public class UserRest {
     }
 
     // edit profile using raw json body or x-www-form-urlencoded
+    @JsonView(UserDetails.class)
     @PutMapping("/users/{id}/info/update")
     public ResponseEntity<UserE> editProfile(HttpServletRequest request, @PathVariable Long id,
             @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
