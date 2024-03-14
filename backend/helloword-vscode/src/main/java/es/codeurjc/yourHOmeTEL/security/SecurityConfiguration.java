@@ -66,6 +66,7 @@ public class SecurityConfiguration {
                     
                     //ADMIN AND MANAGER ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/api/users/managers/list").hasAnyRole("MANAGER","ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/api/hotels/{id}").hasAnyRole("MANAGER","ADMIN")
 
                     //ADMIN AND USER ENDPOINTS
                     .requestMatchers(HttpMethod.PUT,"/api/reviews/{reviewId}/users/{userId}/update").hasAnyRole("CLIENT","ADMIN")
@@ -79,12 +80,15 @@ public class SecurityConfiguration {
                 
                     //MANAGER ENDPOINTS
                     
-
+                    
+                    
 					//USER ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/api/users/{id}/info").hasRole("USER")
                     .requestMatchers(HttpMethod.PUT,"/api/users/{id}/info/update").hasRole("USER")
                     .requestMatchers(HttpMethod.DELETE,"/api/users/{id}/info/removal").hasRole("USER")
                     .requestMatchers(HttpMethod.POST,"/api/reviews/users/{userId}/hotels/{hotelId}").hasRole("USER")
+                    .requestMatchers(HttpMethod.GET,"/api/hotels/{id}").hasRole("USER")
+                    
 
                     //USER IMAGE ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/api/users/{id}/image").hasRole("USER")

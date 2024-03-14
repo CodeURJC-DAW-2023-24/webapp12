@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.codeurjc.yourHOmeTEL.model.Hotel;
@@ -75,6 +76,7 @@ public class HotelRest {
 	 * current hotel data in the form
 	 * 
 	 */
+	@JsonView (HotelDetails.class)
 	@GetMapping("/hotels/{id}")
 	public ResponseEntity<Hotel> hotelDataLoadingForEdition(
 			HttpServletRequest request,
@@ -85,11 +87,13 @@ public class HotelRest {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			UserE foundUser = hotelService.findById(id).orElseThrow().getManager();
 
-			if (currentUser.equals(foundUser)) {
+			if (currentUser.equals(foundUser) && foundUser.getvalidated()) {
 				Hotel hotel = hotelService.findById(id).orElseThrow();
 				return ResponseEntity.ok(hotel);
 				
-			} else {
+			} else if (!foundUser.getvalidated()){
+				return ResponseEntity.notFound().build();
+			}else{
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
 
