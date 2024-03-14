@@ -84,6 +84,8 @@ public class ReviewRest {
 
 	}
 
+	
+
 	@JsonView(ReviewDetails.class)
 	@GetMapping("/reviews/users/{id}")
 	public ResponseEntity<List<Review>> userReviews(@PathVariable Long id, Pageable pageable) {
