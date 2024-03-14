@@ -1,16 +1,32 @@
 package es.codeurjc.yourHOmeTEL.controller.restController;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
+
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,7 +38,9 @@ import es.codeurjc.yourHOmeTEL.model.UserE;
 import es.codeurjc.yourHOmeTEL.service.HotelService;
 import es.codeurjc.yourHOmeTEL.service.ReviewService;
 import es.codeurjc.yourHOmeTEL.service.UserService;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/api")
@@ -42,104 +60,145 @@ public class ReviewRest {
 	@Autowired
 	HotelService hotelService;
 
-    /**
-	 * This method adds to the DB the review posted by the client so it is
-	 * displayed in the hotel's reviews page
-	 * 
-	 * @param model
-	 * @param score
-	 * @param comment
-	 * @param date
-	 * @param hotel
-	 * @param user
-	 * @return
-	 */
-	@PostMapping("/posthotelReviews/{id}")
-	public String postReview(
-			Model model, HttpServletRequest request,
-			@RequestParam(required = false) Integer rating,
-			@RequestParam String comment,
-			@PathVariable Long id) {
+	@Autowired
+    private ObjectMapper objectMapper;
 
-		UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
+	@PostConstruct
+    public void setup() {
+        objectMapper.setDefaultMergeable(true);
+    }
 
-		if (hotelManager.getvalidated()) {
-			int score = (rating != null) ? rating : 0;
-			if(score != 0){
-				UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+	//REVIEW CRUD CONTROLLERS
+
+	@JsonView(ReviewDetails.class)
+	@GetMapping("/reviews/{id}")
+	public ResponseEntity <Review> getReview(@PathVariable Long id) {
+
+		try{
+			Review targetReview = reviewService.findById(id).orElseThrow();
+			return ResponseEntity.ok(targetReview);
+		
+		}catch(Exception e){
+			return ResponseEntity.notFound().build();
+		}
+
+	}
+
+	@JsonView(ReviewDetails.class)
+	@GetMapping("/reviews/users/{id}")
+	public ResponseEntity<List<Review>> userReviews(@PathVariable Long id, Pageable pageable) {
+
+		try{
+			UserE targetuser = userService.findById(id).orElseThrow();
+			return ResponseEntity.ok(targetuser.getReviews());
+		
+		}catch(Exception e){
+			return ResponseEntity.notFound().build();
+		}
+
+	}
+
+	@JsonView(ReviewDetails.class)
+	@GetMapping("/reviews/hotels/{id}")
+	public ResponseEntity<List<Review>> hotelReviews(@PathVariable Long id, Pageable pageable) {
+		
+		try{
+			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
+			if (hotelManager.getvalidated()) {
 				Hotel targetHotel = hotelService.findById(id).orElseThrow();
-				targetHotel.getReviews().add(new Review(score, comment, LocalDate.now(), targetHotel, user));
-				hotelService.save(targetHotel);
-
-				return "redirect:/hotelReviews/" + id;
+				return ResponseEntity.ok(targetHotel.getReviews());
+			} else {
+				return ResponseEntity.notFound().build();
 			}
-			else
-				return "redirect:/hotelReviews/"+id;
-
-		} else
-			return "/error";
-	}
-
-	@GetMapping("/hotelReviews/{id}")
-	public String hotelReviews(
-			Model model,
-			@PathVariable Long id) {
-
-		UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
-
-		if (hotelManager.getvalidated()) {
-			Hotel selectedHotel = hotelService.findById(id).orElseThrow();
-			model.addAttribute("hotel", selectedHotel);
-
-			List<Review> reviews = new ArrayList<>();
-			for (int i = 0; i < 6 && i < selectedHotel.getReviews().size(); i++) {
-				reviews.add(selectedHotel.getReviews().get(i));
-			}
-
-			model.addAttribute("hotelreviews", reviews);
-			model.addAttribute("totalreviews", selectedHotel.getReviews().size());
-
-			for (int i = 1; i <= 5; i++) {
-				reviews = reviewService.findByScoreAndHotel(i, selectedHotel);
-				int numReviews = reviews.size();
-
-				model.addAttribute("numreviews" + i, numReviews);
-			}
-
-			for (int i = 5; i >= 1; i--) {
-				int percentageOfIScoreReview = selectedHotel.getPercentageOfNScore(i);
-
-				model.addAttribute("percentageReview" + i, percentageOfIScoreReview);
-			}
-			return "hotelReviews";
-
-		} else {
-			return "/error";
+		
+		}catch(Exception e){
+			return ResponseEntity.notFound().build();
 		}
 
 	}
 
-    @GetMapping("/loadMoreReviews/{id}/{start}/{end}")
-	public String loadMoreReviews(Model model,
-			@PathVariable int id,
-			@PathVariable int start,
-			@PathVariable int end) {
+	@PostMapping("/reviews/users/{userId}/hotels/{hotelId}")
+	public ResponseEntity<Review> postReview(HttpServletRequest request, @RequestBody Review review,
+	 @PathVariable Long userId, @PathVariable Long hotelId) {
+		
+		if(review.getScore() == 0 || review.getScore() > 5) {
+			return ResponseEntity.badRequest().build();
 
-		List<Review> reviews = hotelService.findById((long) id).get().getReviews();
-		int reviewsQuantity = reviews.size();
+		} else{
+			try {
+				UserE hotelManager = hotelService.findById(hotelId).orElseThrow().getManager();
+				Hotel targetHotel = hotelService.findById(hotelId).orElseThrow();
 
-		List<Review> newReviews = new ArrayList<>();
+				if (hotelManager.getvalidated()) {
+					UserE authorUser = userService.findById(userId).orElseThrow();
 
-		if (start <= reviewsQuantity) {
+					Review newReview = new Review(review.getScore(), review.getComment(), LocalDate.now(), targetHotel, authorUser);
+					reviewService.save(newReview);
 
-			for (int i = start; i < end && i <= reviewsQuantity; i++) {
-				newReviews.add(reviews.get(i - 1));
+					targetHotel.getReviews().add(newReview);
+					hotelService.save(targetHotel);
+
+					authorUser.getReviews().add(newReview);
+					userService.save(authorUser);
+
+					 URI location = fromCurrentRequest().build().toUri();
+            		return ResponseEntity.created(location).build(); 
+
+				} else {
+					return ResponseEntity.notFound().build();
+				} 
+
+			} catch (Exception e) {
+				return ResponseEntity.notFound().build();
 			}
-
-			model.addAttribute("hotelreviews", newReviews);
 		}
-
-		return "hotelReviewTemplate";
 	}
+
+	// edit profile using raw json body or x-www-form-urlencoded
+    @JsonView(ReviewDetails.class)
+	@PutMapping("/reviews/{reviewId}/users/{userId}/update")
+    public ResponseEntity<Review> editReview(HttpServletRequest request, @PathVariable Long reviewId, @PathVariable Long userId,
+            @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
+
+        try {
+            UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+            UserE foundUser = userService.findById(userId).orElseThrow();
+
+            if (requestUser.getRols().contains("ADMIN") || requestUser.equals(foundUser)) {
+                Review targetReview = reviewService.findById(reviewId).orElseThrow();
+				// merges the current user with the updates on the request body
+                objectMapper.readerForUpdating(targetReview).readValue(objectMapper.writeValueAsString(updates)); // exists
+                reviewService.save(targetReview);
+                return ResponseEntity.ok(targetReview);
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/reviews/{reviewId}/users/{userId}/removal")
+    public ResponseEntity<Review> deleteReview(HttpServletRequest request, @PathVariable Long reviewId,
+	@PathVariable Long userId) {
+
+        try {
+            UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+            UserE targetUser = userService.findById(userId).orElseThrow();
+
+            if (requestUser.getRols().contains("ADMIN") || requestUser.equals(targetUser)) {
+                Review targetReview = reviewService.findById(reviewId).orElseThrow();
+				reviewService.delete(targetReview);
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    
     
 }

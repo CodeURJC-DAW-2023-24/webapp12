@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import org.springframework.core.io.Resource;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -86,9 +87,6 @@ public class UserRest {
 
     @Autowired
     private HotelService hotelService;
-
-    @Autowired
-    private ImageService imgService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -242,28 +240,41 @@ public class UserRest {
 
     }
 
+    
+
+    // AQUI EMPIEZAN MIS CONTROLADORES
+
+    // ADMIN CONTROLLERS
+
     @JsonView(UserDetails.class)
     @GetMapping("/managers/validation")
-    public ResponseEntity<List<UserE>> managerValidation() {
-        List<UserE> unvalidatedManagersList = new ArrayList<>();
+    public ResponseEntity<List<UserE>> managerValidation(@RequestParam("validated") Boolean validated) {
 
+        List<UserE> requestedManagersList = new ArrayList<>();
         try {
-            unvalidatedManagersList = userService.findByValidatedAndRejected(false, false);
-            return ResponseEntity.ok(unvalidatedManagersList);
+            if (validated == true){
+                requestedManagersList = userService.findByValidatedAndRejected(true, false);
+                return ResponseEntity.ok(requestedManagersList);
+            }else if (validated == false){
+                requestedManagersList = userService.findByValidatedAndRejected(false, false);
+                return ResponseEntity.ok(requestedManagersList);
+            }else{
+                return ResponseEntity.badRequest().build();
+            }
 
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
     }
-
-    // AQUI EMPIEZAN MIS CONTROLADORES
-
+     
+    
     @PutMapping("/users/{id}/managers/rejection")
+    @JsonView(UserDetails.class)
     public ResponseEntity<UserE> rejectManager(HttpServletRequest request, @RequestParam("rejected") Boolean rejected,
             @PathVariable Long id) {
         try {
             UserE manager = userService.findById(id).orElseThrow();
-            if (manager.getRols().contains("MANAGER") && rejected == true) {
+            if (rejected == true && manager.getRols().contains("MANAGER")) {
                 manager.setRejected(true);
                 manager.setvalidated(false);
                 userService.save(manager);
@@ -271,9 +282,7 @@ public class UserRest {
 
             } else if (rejected == false) {
                 return ResponseEntity.badRequest().build();
-            }
-
-            else {
+            } else {
                 return ResponseEntity.notFound().build();
             }
 
@@ -283,7 +292,8 @@ public class UserRest {
     }
 
     // sets the selected manager as accepted
-    @PutMapping("/users/{id}/managers/verification")
+    @JsonView(UserDetails.class)
+    @PutMapping("/users/{id}/managers/validation")
     public ResponseEntity<UserE> acceptManager(HttpServletRequest request, @RequestParam("accepted") Boolean accepted,
             @PathVariable Long id) {
         try {
@@ -306,74 +316,31 @@ public class UserRest {
         }
     }
 
-    // returns list of all managers
+    // returns list of all managers. ADMIN and MANAGER can access
     @JsonView(UserDetails.class)
     @GetMapping("/users/managers/list")
     public ResponseEntity<List<UserE>> managerList(HttpServletRequest request) {
-
         try {
             List<UserE> managersList = userService.findByCollectionRolsContains("MANAGER");
             return ResponseEntity.ok(managersList);
 
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @GetMapping("/users/{id}/image")
-    public ResponseEntity<Object> downloadProfileImage(HttpServletRequest request, @PathVariable long id)
-            throws MalformedURLException {
-        return imgService.createResponseFromImage(imgService.getFilesFolder(), id);
-    }
-
-    @PostMapping("users/{id}/image/creation")
-    public ResponseEntity<Object> uploadImage(HttpServletRequest request, @PathVariable long id,
-            @RequestParam MultipartFile imageFile) throws IOException {
-        try {
-            UserE foundUser = userService.findById(id).orElseThrow();
-            URI location = fromCurrentRequest().build().toUri();
-            foundUser.setImagePath(location.toString());
-            userService.save(foundUser);
-            imgService.saveImage(imgService.getFilesFolder(), foundUser.getId(), imageFile);
-            return ResponseEntity.created(location).build();
-
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @DeleteMapping("/users/{id}/image/removal")
-    public ResponseEntity<Object> deleteImage(HttpServletRequest request, @PathVariable long id)
-            throws IOException {
-        try {
-            UserE foundUser = userService.findById(id).orElseThrow();
-            foundUser.setImagePath(null);
-            userService.save(foundUser);
-            this.imgService.deleteImage(imgService.getFilesFolder(), id);
-            return ResponseEntity.noContent().build();
-
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
 
     // USERS CRUD CONTROLLERS
 
     @JsonView(UserDetails.class)
     @GetMapping("/users/{id}/info")
     public ResponseEntity<UserE> profile(HttpServletRequest request, @PathVariable Long id) {
+        try {
+            UserE foundUser = userService.findById(id).orElseThrow();
+            return ResponseEntity.ok(foundUser);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
 
-        if (request.getUserPrincipal() == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        } else {
-
-            try {
-                UserE foundUser = userService.findById(id).orElseThrow();
-                return ResponseEntity.ok(foundUser);
-            } catch (NoSuchElementException e) {
-                return ResponseEntity.notFound().build();
-
-            }
         }
     }
 
@@ -424,40 +391,39 @@ public class UserRest {
             newUser.setImage(true);
 
             userService.save(newUser);
-            return ResponseEntity.ok(newUser);
+
+            URI location = fromCurrentRequest().build().toUri();
+            return ResponseEntity.created(location).build();
         }
     }
 
     // edit profile using raw json body or x-www-form-urlencoded
+    @JsonView(UserDetails.class)
     @PutMapping("/users/{id}/info/update")
     public ResponseEntity<UserE> editProfile(HttpServletRequest request, @PathVariable Long id,
             @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
 
-        if (request.getUserPrincipal() == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        } else {
+        try {
+            UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+            UserE foundUser = userService.findById(id).orElseThrow();
 
-            try {
-                UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-                UserE foundUser = userService.findById(id).orElseThrow();
-
-                if (requestUser.getRols().contains("ADMIN") || requestUser.equals(foundUser)) {
-                    // merges the current user with the updates on the request body
-                    objectMapper.readerForUpdating(foundUser).readValue(objectMapper.writeValueAsString(updates)); // exists
-                    userService.save(foundUser);
-                    return ResponseEntity.ok(foundUser);
-                } else {
-                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-                }
-
-            } catch (NoSuchElementException e) {
-                return ResponseEntity.notFound().build();
+            if (requestUser.getRols().contains("ADMIN") || requestUser.equals(foundUser)) {
+                // merges the current user with the updates on the request body
+                objectMapper.readerForUpdating(foundUser).readValue(objectMapper.writeValueAsString(updates)); // exists
+                userService.save(foundUser);
+                return ResponseEntity.ok(foundUser);
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
+
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/users/{id}/info/removal")
     public ResponseEntity<UserE> deleteProfile(HttpServletRequest request, @PathVariable Long id) {
+
         try {
             UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
             UserE foundUser = userService.findById(id).orElseThrow();
@@ -466,7 +432,7 @@ public class UserRest {
                 userService.delete(foundUser);
                 return ResponseEntity.noContent().build();
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
