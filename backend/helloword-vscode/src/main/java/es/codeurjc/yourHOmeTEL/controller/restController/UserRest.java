@@ -409,7 +409,7 @@ public class UserRest {
 
             if (requestUser.getRols().contains("ADMIN") || requestUser.equals(foundUser)) {
                 // merges the current user with the updates on the request body
-                objectMapper.readerForUpdating(foundUser).readValue(objectMapper.writeValueAsString(updates)); // exists
+                foundUser = objectMapper.readerForUpdating(foundUser).readValue(objectMapper.writeValueAsString(updates)); // exists
                 userService.save(foundUser);
                 return ResponseEntity.ok(foundUser);
             } else {

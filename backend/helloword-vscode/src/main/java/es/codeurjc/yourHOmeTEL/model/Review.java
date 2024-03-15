@@ -2,6 +2,7 @@ package es.codeurjc.yourHOmeTEL.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.Entity;
@@ -21,12 +22,15 @@ public class Review {
     @JsonView({Complete.class, Basic.class})
     private Long id;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private int score;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private String comment;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private LocalDate date;
 

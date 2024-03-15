@@ -85,7 +85,6 @@ public class ReviewRest {
 	}
 
 	
-
 	@JsonView(ReviewDetails.class)
 	@GetMapping("/reviews/users/{id}")
 	public ResponseEntity<List<Review>> userReviews(@PathVariable Long id, Pageable pageable) {
@@ -122,7 +121,7 @@ public class ReviewRest {
 
 	}
 
-	@PostMapping("/reviews/users/{userId}/hotels/{hotelId}")
+	@PostMapping("/reviews/users/{userId}/hotels/{hotelId}/create")
 	public ResponseEntity<Review> postReview(HttpServletRequest request, @RequestBody Review review,
 	 @PathVariable Long userId, @PathVariable Long hotelId) {
 		
@@ -132,9 +131,9 @@ public class ReviewRest {
 		} else{
 			try {
 				UserE hotelManager = hotelService.findById(hotelId).orElseThrow().getManager();
-				Hotel targetHotel = hotelService.findById(hotelId).orElseThrow();
 
 				if (hotelManager.getvalidated()) {
+					Hotel targetHotel = hotelService.findById(hotelId).orElseThrow();
 					UserE authorUser = userService.findById(userId).orElseThrow();
 
 					Review newReview = new Review(review.getScore(), review.getComment(), LocalDate.now(), targetHotel, authorUser);
@@ -171,8 +170,8 @@ public class ReviewRest {
 
             if (requestUser.getRols().contains("ADMIN") || requestUser.equals(foundUser)) {
                 Review targetReview = reviewService.findById(reviewId).orElseThrow();
-				// merges the current user with the updates on the request body
-                objectMapper.readerForUpdating(targetReview).readValue(objectMapper.writeValueAsString(updates)); // exists
+				// merges the current review with the updates on the request body
+                targetReview = objectMapper.readerForUpdating(targetReview).readValue(objectMapper.writeValueAsString(updates)); // exists
                 reviewService.save(targetReview);
                 return ResponseEntity.ok(targetReview);
             } else {

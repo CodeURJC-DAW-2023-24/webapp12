@@ -2,6 +2,7 @@ package es.codeurjc.yourHOmeTEL.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.Entity;
@@ -21,9 +22,11 @@ public class Reservation {
     @JsonView({Complete.class, Basic.class})
     private Long id;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private LocalDate checkIn;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private LocalDate checkOut;
 

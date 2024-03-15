@@ -75,30 +75,32 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET,"/api/reservations/users/{id}").hasAnyRole("CLIENT","ADMIN")
                     .requestMatchers(HttpMethod.GET,"/api/reservations/hotels/{id}").hasAnyRole("CLIENT","ADMIN")
                     .requestMatchers(HttpMethod.GET,"/api/reservations/rooms/{id}").hasAnyRole("CLIENT","ADMIN")
-                    
+                    .requestMatchers(HttpMethod.PUT,"/api/reservations/{reservationId}/users/{userId}/hotels/{hotelId}/rooms/{roomId}/update").hasAnyRole("CLIENT","ADMIN")
+                    .requestMatchers(HttpMethod.PUT,"/api/reservations/{reservationId}/users/{userId}/hotels/{hotelId}/rooms/{roomId}/removal").hasAnyRole("CLIENT","ADMIN")
+
                     //ADMIN ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/api/managers/validation").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST,"/api/users/{id}/managers/rejection").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST,"/api/users/{id}/managers/validation").hasRole("ADMIN")
                 
                     //MANAGER ENDPOINTS
-                    
-                    
-                    
+
+                    //MANAGER AND CLIENT ENDPOINTS
+                    .requestMatchers(HttpMethod.POST,"/api/reviews/users/{userId}/hotels/{hotelId}/create").hasAnyRole("MANAGER","CLIENT")
+                                
 					//USER ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/api/users/{id}/info").hasRole("USER")
                     .requestMatchers(HttpMethod.PUT,"/api/users/{id}/info/update").hasRole("USER")
                     .requestMatchers(HttpMethod.DELETE,"/api/users/{id}/info/removal").hasRole("USER")
-                    .requestMatchers(HttpMethod.POST,"/api/reviews/users/{userId}/hotels/{hotelId}").hasRole("USER")
                     .requestMatchers(HttpMethod.GET,"/api/hotels/{id}").hasRole("USER")
-                    
-                    
 
                     //USER IMAGE ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/api/users/{id}/image").hasRole("USER")
                     .requestMatchers(HttpMethod.POST,"/api/users/{id}/image/creation").hasRole("USER")
                     .requestMatchers(HttpMethod.DELETE,"/api/users/{id}/image/removal").hasRole("USER")
                     
+                    //CLIENT ENDPOINTS
+                    .requestMatchers(HttpMethod.POST,"/api/reservations/users/{userId}/hotels/{hotelId}/rooms/{roomId}/creation").hasRole("CLIENT")
 
                     // PUBLIC ENDPOINTS
                     .requestMatchers(HttpMethod.POST,"/api/users/register").permitAll()

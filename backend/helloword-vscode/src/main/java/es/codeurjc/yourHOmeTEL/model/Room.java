@@ -3,6 +3,7 @@ package es.codeurjc.yourHOmeTEL.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.CascadeType;
@@ -24,9 +25,11 @@ public class Room {
     @JsonView({Complete.class, Basic.class})
     private Long id;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private int maxClients;
 
+    @JsonMerge
     @JsonView({Complete.class, Basic.class})
     private float cost;
 
