@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
 import yourHOmeTEL.model.Hotel;
@@ -41,20 +42,25 @@ public class ReservationController {
 
 
     @PostMapping("/addReservation/{id}")
-	public String addReservation(Model model, @PathVariable Long id, HttpServletRequest request, String checkIn,
-			String checkOut, Integer numPeople) {
+	public String addReservation(Model model, @PathVariable Long id, HttpServletRequest request, @RequestParam String checkIn,
+	@RequestParam String checkOut, @RequestParam Integer numPeople) {
 
-		LocalDate checkInDate = reservationService.toLocalDate(checkIn);
-		LocalDate checkOutDate = reservationService.toLocalDate(checkOut);
-		Room room = hotelService.checkRooms(id, checkInDate, checkOutDate, numPeople);
-		if (room != null) {
-			UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			Hotel hotel = hotelService.findById(id).orElseThrow();
-			Reservation newRe = new Reservation(checkInDate, checkOutDate, numPeople, hotel, room, user);
-			reservationService.save(newRe);
-			return "redirect:/clientreservations";
-		} else
-			return "redirect:/notRooms/{id}";
+		if (checkIn.isEmpty() || checkOut.isEmpty() || numPeople == null)
+			return "redirect:/hotelinformation/{id}";
+		else{
+
+			LocalDate checkInDate = reservationService.toLocalDate(checkIn);
+			LocalDate checkOutDate = reservationService.toLocalDate(checkOut);
+			Room room = hotelService.checkRooms(id, checkInDate, checkOutDate, numPeople);
+			if (room != null) {
+				UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+				Hotel hotel = hotelService.findById(id).orElseThrow();
+				Reservation newRe = new Reservation(checkInDate, checkOutDate, numPeople, hotel, room, user);
+				reservationService.save(newRe);
+				return "redirect:/clientreservations";
+			} else
+				return "redirect:/notRooms/{id}";
+		}
 	}
 
 	@GetMapping("/notRooms/{id}")
