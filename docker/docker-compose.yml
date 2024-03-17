@@ -4,7 +4,7 @@ services:
     build: .
     #image: daarling/yourhometel
     ports:
-      - 8443:8443
+      - "8444:8443"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db/yourHOmeTEL?serverTimezone=UTC
       - SPRING_DATASOURCE_USERNAME=root
