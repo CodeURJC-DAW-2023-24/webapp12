@@ -4,11 +4,11 @@ FROM maven:3.8.4-openjdk-17 as builder
 
 WORKDIR /project
 
-COPY ./backend/pom.xml /project/
+COPY backend/pom.xml /project/
 
 RUN mvn clean verify --fail-never
 
-COPY ./backend/src /project/src
+COPY backend/src /project/src
 
 RUN mvn package -DskipTests
 

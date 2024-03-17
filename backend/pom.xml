@@ -12,7 +12,7 @@
 	<groupId>es.codeurjc</groupId>
 	<artifactId>yourHOmeTEL</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>yourHOmeTEL</name>
+	<name>yourhometel</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
