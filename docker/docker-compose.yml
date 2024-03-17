@@ -3,6 +3,10 @@ services:
   web:
     build: .
     #image: daarling/yourhometel
+    #build:
+      #context: ..
+      #dockerfile: docker/Dockerfile
+    #image: daarling/yourhometel
     ports:
       - "8444:8443"
     environment:
