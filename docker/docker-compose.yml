@@ -1,13 +1,11 @@
 version: "3.9"
 services:
-  web:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
+  web:  
+    image: daarling/yourhometel
     ports:
       - "8443:8443"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/yourhometel/?serverTimezone=UTC
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/yourhometel
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=password
       - JWT_SECRET=change_me
@@ -16,7 +14,7 @@ services:
     restart: on-failure
 
   db:
-    container_name: db
+#    container_name: db
     image: mysql:8.0.22
     restart: always
     ports:
@@ -26,5 +24,7 @@ services:
       - MYSQL_DATABASE=yourhometel
       - MYSQL_ROOT_PASSWORD=password
     volumes:
-      - ../backend/mysql:/var/lib/mysql
+      - mysql:/var/lib/mysql
       #- ./my.cnf:/etc/mysql/my.cnf
+volumes:
+  mysql:
