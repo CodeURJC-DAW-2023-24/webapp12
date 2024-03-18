@@ -38,6 +38,7 @@ import yourHOmeTEL.model.Review;
 import yourHOmeTEL.model.Room;
 import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.service.HotelService;
+import yourHOmeTEL.service.ReservationService;
 import yourHOmeTEL.service.ReviewService;
 import yourHOmeTEL.service.UserService;
 
@@ -59,9 +60,11 @@ public class RoomRest {
     @Autowired
 	UserService userService;
 
-
 	@Autowired
 	HotelService hotelService;
+
+	@Autowired
+	ReservationService reservationService;
 
 	@Autowired
     private ObjectMapper objectMapper;
@@ -73,6 +76,8 @@ public class RoomRest {
 
 
     //TIENES QUE CAMBIAR LOS NOMBRES PARA QUE TRABAJEN CON ROOM, Y HACER LAS COMPROBACIONES DE SEGURIDAD NECESARIAS
+	//ej: que la room sea de un hotel con manager validado. hago cosas similares en reserva creo.
+	//ej2: que la persona que accede a la room de una reserva, sea la misma persona de la reserva o un admin.
     //REVIEW CRUD CONTROLLERS
 
 	@JsonView(RoomDetails.class)
@@ -104,27 +109,31 @@ public class RoomRest {
 
 	}
 
-	/*@JsonView(RoomDetails.class)
+	@JsonView(RoomDetails.class) //ESTE YA ESTA IMPLEMENTADO EN TEORIA. TIENES QUE PROBAR QUE FUNCIONA BIEN, Y QUIZA
+	//AÑADIRLO AL SECURITY CONFIG		
 	@GetMapping("/rooms/reservations/{id}")
 	public ResponseEntity<Room> reservationRoom(HttpServletRequest request, @PathVariable Long id, 
 	Pageable pageable) {
 		
 		try{
 			UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
+			Reservation targetReservation = reservationService.findById(id).orElseThrow();
 
-			if (hotelManager.getvalidated() || requestUser.getRols().contains("ADMIN")) {
-				Hotel targetHotel = hotelService.findById(id).orElseThrow();
-				return ResponseEntity.ok(targetHotel.getReviews());
+			UserE targetUser = targetReservation.getUser();	
+			UserE hotelManager = targetReservation.getRooms().getHotel().getManager();
+
+			if ((hotelManager.getvalidated() && requestUser.equals(targetUser)) || requestUser.getRols().contains("ADMIN")) {		
+				Room targetRoom = targetReservation.getRooms();
+				return ResponseEntity.ok(targetRoom);
 			} else {
-				return ResponseEntity.notFound().build();
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
 		
 		}catch(Exception e){
 			return ResponseEntity.notFound().build();
 		}
 
-	}*/
+	}
 
 	@PostMapping("/rooms/hotels/{hotelId}/create")
 	public ResponseEntity<Review> postRoom(HttpServletRequest request, @RequestBody Review review,
