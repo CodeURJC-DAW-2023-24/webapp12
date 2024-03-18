@@ -109,29 +109,34 @@ public class UserRest {
     // PUBLIC CONTROLLERS
 
     // ADVANCED RECOMMENDATION ALGORITHM
-    @GetMapping("/index")
-    public String index(Model model, HttpServletRequest request) {
+    @JsonView(UserDetails.class)
+    @GetMapping("/hotels/index/recomended")
+    public ResponseEntity<List<Hotel>> index (HttpServletRequest request) {
         List<Hotel> recomendedHotels = new ArrayList<>();
         try {
             String nick = request.getUserPrincipal().getName();
             UserE user = userService.findByNick(nick).orElseThrow();
             List<Reservation> userReservations = user.getReservations();
             recomendedHotels = userService.findRecomendedHotels(6, userReservations, user);
-
-        } catch (NullPointerException e) {
-
+        } catch (NullPointerException e) {  
         } finally {
             if (recomendedHotels.size() < 6) {
                 // size +1 to avoid looking for id = 0 if size = 0
-                for (int i = recomendedHotels.size() + 1; i < 7; i++) {
-                    Hotel hotel = hotelService.findById((long) i).orElseThrow();
-                    if (hotel != null && hotel.getManager().getvalidated())
-                        recomendedHotels.add(hotel);
+                int i = 1;
+                int sizeAllHotels = hotelService.findAll().size();
+                while (recomendedHotels.size() < 7 && i <= sizeAllHotels) {
+                    // if there's a gap in the id sequence, it will throw an exception and continue the loop
+                    try{
+                        Hotel hotel = hotelService.findById((long) i).orElseThrow();
+                        if (hotel != null && hotel.getManager().getvalidated())
+                            recomendedHotels.add(hotel);
+                    }
+                    catch(NoSuchElementException e){}
+                    i++;
                 }
             }
         }
-        model.addAttribute("hotels", recomendedHotels);
-        return "index";
+        return ResponseEntity.ok(recomendedHotels);    
     }
 
     @GetMapping("/indexsearch")
@@ -144,7 +149,7 @@ public class UserRest {
     }
 
     @GetMapping("/error")
-    public String Error(Model model, HttpServletRequest request) {
+    public String error(Model model, HttpServletRequest request) {
         return "/error";
 
     }
@@ -175,16 +180,6 @@ public class UserRest {
         model.addAttribute("hotels", hotels);
 
         return "viewhotelsmanager";
-
-    }
-
-    @GetMapping("/testChart")
-    public String testChart(Model model) {
-
-        List<Integer> info = new ArrayList<>();
-        model.addAttribute("info", info);
-
-        return "testChart";
 
     }
 
@@ -232,16 +227,6 @@ public class UserRest {
         } else
             return "/error";
     }
-
-    // ADMIN CONTROLLERS
-    @GetMapping("/chartsadmin")
-    public String chartsAdmin(Model model, HttpServletRequest request) {
-
-        return "chartsadmin";
-
-    }
-
-    
 
     // AQUI EMPIEZAN MIS CONTROLADORES
 

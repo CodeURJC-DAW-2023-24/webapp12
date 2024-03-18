@@ -127,7 +127,10 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET,"/api/reviews/{id}").permitAll()
                     .requestMatchers(HttpMethod.GET,"/api/reviews/users/{id}").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/reviews/hotels/{id}").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/hotels/index/recomended").permitAll()
                     .anyRequest().permitAll()
+
+                    
 
                     
 			);
