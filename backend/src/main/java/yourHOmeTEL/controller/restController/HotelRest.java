@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -76,7 +77,7 @@ public class HotelRest {
 	 * current hotel data in the form
 	 * 
 	 */
-	@JsonView (HotelDetails.class)
+	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/{id}")
 	public ResponseEntity<Hotel> hotelDataLoadingForEdition(
 			HttpServletRequest request,
@@ -90,18 +91,17 @@ public class HotelRest {
 			if (currentUser.equals(foundUser) && foundUser.getvalidated()) {
 				Hotel hotel = hotelService.findById(id).orElseThrow();
 				return ResponseEntity.ok(hotel);
-				
-			} else if (!foundUser.getvalidated()){
+
+			} else if (!foundUser.getvalidated()) {
 				return ResponseEntity.notFound().build();
-			}else{
+			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
 
 		} catch (NoSuchElementException e) {
 			return ResponseEntity.notFound().build();
 		}
-		
-		
+
 	}
 
 	/**
@@ -128,7 +128,6 @@ public class HotelRest {
 				hotel.setName(newHotel.getName());
 				hotel.setLocation(newHotel.getLocation());
 				hotel.setDescription(newHotel.getDescription());
-
 
 			} else {
 				return ResponseEntity.badRequest().build();
@@ -178,4 +177,27 @@ public class HotelRest {
 
 	}
 
+	@DeleteMapping("/hotels/{id}")
+	public ResponseEntity<Hotel> deleteHotel(HttpServletRequest request, @PathVariable Long id) {
+		try {
+			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			UserE foundUser = hotelService.findById(id).orElseThrow().getManager();
+
+			if (currentUser.equals(foundUser)) {
+				Optional<Hotel> hotel = hotelService.findById(id);
+				if (hotel.isPresent()) {
+					hotelService.deleteById(id);
+					return ResponseEntity.noContent().build();
+				} else {
+					return ResponseEntity.notFound().build();
+				}
+
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+
+	}
 }

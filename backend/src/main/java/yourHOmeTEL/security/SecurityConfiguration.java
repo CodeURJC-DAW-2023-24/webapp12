@@ -72,6 +72,7 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.POST,"/api/rooms/hotels/{hotelId}/create").hasAnyRole("MANAGER","ADMIN")
                     .requestMatchers(HttpMethod.PUT,"/api/rooms/{roomId}/hotels/{hotelId}/update").hasAnyRole("MANAGER","ADMIN")
                     .requestMatchers(HttpMethod.DELETE,"/api/rooms/{roomId}/hotels/{hotelId}/removal").hasAnyRole("MANAGER","ADMIN")
+                    .requestMatchers(HttpMethod.DELETE,"/api/hotels/{id}").hasAnyRole("MANAGER","ADMIN")
 
 
                     //ADMIN AND USER ENDPOINTS
