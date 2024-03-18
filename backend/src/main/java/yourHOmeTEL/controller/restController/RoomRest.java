@@ -110,7 +110,7 @@ public class RoomRest {
 	}
 
 	@JsonView(RoomDetails.class) //ESTE YA ESTA IMPLEMENTADO EN TEORIA. TIENES QUE PROBAR QUE FUNCIONA BIEN, Y QUIZA
-	//AÑADIRLO AL SECURITY CONFIG		
+	//AÑADIRLO AL SECURITY CONFIG DE USUARIOS + ADMIN (LOS MANAGER NO PORQUE NO RESERVAN)		
 	@GetMapping("/rooms/reservations/{id}")
 	public ResponseEntity<Room> reservationRoom(HttpServletRequest request, @PathVariable Long id, 
 	Pageable pageable) {
