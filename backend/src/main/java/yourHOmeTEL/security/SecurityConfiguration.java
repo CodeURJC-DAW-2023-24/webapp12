@@ -89,6 +89,8 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.POST,"/api/users/{id}/managers/validation").hasRole("ADMIN")
                 
                     //MANAGER ENDPOINTS
+                    .requestMatchers(HttpMethod.GET,"/api/hotels/manager/{id}/view").hasRole("MANAGER")
+                    .requestMatchers(HttpMethod.PUT, "/api/manager/{id}/application").hasRole("MANAGER")
 
                     //MANAGER AND CLIENT ENDPOINTS
                     
@@ -128,7 +130,8 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET,"/api/reviews/{id}").permitAll()
                     .requestMatchers(HttpMethod.GET,"/api/reviews/users/{id}").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/reviews/hotels/{id}").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/hotels/index/recomended").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/hotels/index/recomended").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/hotels/index/search").permitAll()
                     .anyRequest().permitAll()
 
                     

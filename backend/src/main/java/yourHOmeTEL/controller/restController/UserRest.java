@@ -135,99 +135,59 @@ public class UserRest {
         return ResponseEntity.ok(recomendedHotels);    
     }
 
-    @GetMapping("/indexsearch")
-    public String indexSearch(Model model, @RequestParam String searchValue) {
-        List<Hotel> hotels = hotelService.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(true,
-                searchValue);
-        model.addAttribute("hotels", hotels);
-        return "index";
-
+    @JsonView(UserDetails.class)
+    @GetMapping("/hotels/index/search")
+    public ResponseEntity<List<Hotel>> indexSearch(@RequestParam String searchValue) {
+        try { 
+            List<Hotel> hotels = hotelService.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(true,
+                    searchValue);
+            return ResponseEntity.ok(hotels);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
-
-    /*@GetMapping("/error")
-    public String error(Model model, HttpServletRequest request) {
-        return "/error";
-
-    }
-
-    @GetMapping("/returnMainPage")
-    public String returnMainPage(Model model, HttpServletRequest request) {
-        return "redirect:/index";
-
-    }
-
-    // CLIENT CONTROLLERS
 
     // MANAGER CONTROLLERS
 
     // Loads the first 6 hotels of a manager
-    @GetMapping("/viewHotelsManager")
-    public String viewHotelsManager(Model model, HttpServletRequest request) {
+    @JsonView(UserDetails.class)
+    @GetMapping("/hotels/manager/{id}/view")
+    public ResponseEntity<List<Hotel>> viewHotelsManager(HttpServletRequest request, @PathVariable Long id) {
+        try{
+            String managernick = request.getUserPrincipal().getName();
+            UserE currentManager = userService.findByNick(managernick).orElseThrow();
 
-        String managernick = request.getUserPrincipal().getName();
-        UserE currentManager = userService.findByNick(managernick).orElseThrow();
+            List<Hotel> hotels = currentManager.getHotels();
 
-        List<Hotel> hotels = currentManager.getHotels();
-
-        if (hotels.size() > 6) {
-            hotels = hotels.subList(0, 6);
+            if (hotels.size() > 6) {
+                hotels = hotels.subList(0, 6);
+            }
+            return ResponseEntity.ok(hotels);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
         }
-
-        model.addAttribute("hotels", hotels);
-
-        return "viewHotelsManager";
-
-    }
-
-    /**
-     * Loads the data of all hotels owned by a manager to be viewed in a graph
-     * 
-     * @param model
-     * @param request
-     * @return The chart template
-     */
-    @GetMapping("/chartsManager")
-    public String chartsManager(Model model, HttpServletRequest request) {
-
-        String managernick = request.getUserPrincipal().getName();
-        UserE currentManager = userService.findByNick(managernick).orElseThrow();
-
-        var reviewsAverage = new ArrayList<String>();
-        var hotelNames = new ArrayList<String>();
-
-        for (Hotel hotel : currentManager.getHotels()) {
-            hotelNames.add(hotel.getName());
-            reviewsAverage.add("%.1f".formatted((hotel.getAverageRating())));
-        }
-
-        model.addAttribute("reviewsAverage", reviewsAverage);
-        model.addAttribute("hotelNames", hotelNames);
-
-        return "chartsManager";
-
     }
 
     // a manager applies to be validated by an admin
-    @PostMapping("/application/{id}")
-    public String managerApplication(Model model, HttpServletRequest request, @PathVariable Long id) {
+    @JsonView(UserDetails.class)
+    @PutMapping("/manager/{id}/application")
+    public ResponseEntity<UserE> managerApplication(HttpServletRequest request, @PathVariable Long id) {
+        try {
+            UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+            UserE foundManager = userService.findById(id).orElseThrow();
 
-        UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-        UserE foundManager = userService.findById(id).orElseThrow();
-
-        if (currentUser.equals(foundManager)) {
-            foundManager.setRejected(false);
-            userService.save(foundManager);
-            model.addAttribute("user", foundManager);
-            return "redirect:/profile";
-
-        } else
-            return "/error";
+            if (currentUser.equals(foundManager)) {
+                foundManager.setRejected(false);
+                userService.save(foundManager);
+                return ResponseEntity.ok(foundManager);
+            } else
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    // AQUI EMPIEZAN MIS CONTROLADORES
-
     // ADMIN CONTROLLERS
-
     @JsonView(UserDetails.class)
     @GetMapping("/managers/validation")
     public ResponseEntity<List<UserE>> managerValidation(@RequestParam("validated") Boolean validated) {
