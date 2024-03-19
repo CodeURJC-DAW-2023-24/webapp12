@@ -172,19 +172,17 @@ public class RoomRest {
 	// edit profile using raw json body or x-www-form-urlencoded
     @JsonView(RoomDetails.class)
 	@PutMapping("/rooms/{roomId}/hotels/{hotelId}/update")
-    public ResponseEntity<Review> editRoom(HttpServletRequest request, @PathVariable Long reviewId, @PathVariable Long userId,
-            @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
+    public ResponseEntity<Room> editRoom(HttpServletRequest request, @PathVariable Long roomId, @RequestParam Long hotelId,@RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
 
         try {
             UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-            UserE foundUser = userService.findById(userId).orElseThrow();
-
-            if (requestUser.getRols().contains("ADMIN") || requestUser.equals(foundUser)) {
-                Review targetReview = reviewService.findById(reviewId).orElseThrow();
+			UserE hotelManager = hotelService.findById(hotelId).orElseThrow().getManager();
+            if (requestUser.getRols().contains("ADMIN") || requestUser.equals(hotelManager)) {
+                Room targetRoom = roomService.findById(roomId).orElseThrow();
 				// merges the current review with the updates on the request body
-                targetReview = objectMapper.readerForUpdating(targetReview).readValue(objectMapper.writeValueAsString(updates)); // exists
-                reviewService.save(targetReview);
-                return ResponseEntity.ok(targetReview);
+                targetRoom = objectMapper.readerForUpdating(targetRoom).readValue(objectMapper.writeValueAsString(updates)); // exists
+                roomService.save(targetRoom);
+                return ResponseEntity.ok(targetRoom);
             } else {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
@@ -195,16 +193,14 @@ public class RoomRest {
     }
 
     @DeleteMapping("/rooms/{roomId}/hotels/{hotelId}/removal")
-    public ResponseEntity<Review> deleteRoom(HttpServletRequest request, @PathVariable Long reviewId,
-	@PathVariable Long userId) {
-
+    public ResponseEntity<Room> deleteRoom(HttpServletRequest request, @PathVariable Long roomId, @PathVariable Long hotelId) {
         try {
             UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-            UserE targetUser = userService.findById(userId).orElseThrow();
+            UserE hotelManager = hotelService.findById(hotelId).orElseThrow().getManager();
 
-            if (requestUser.getRols().contains("ADMIN") || requestUser.equals(targetUser)) {
-                Review targetReview = reviewService.findById(reviewId).orElseThrow();
-				reviewService.delete(targetReview);
+            if (requestUser.getRols().contains("ADMIN") || requestUser.equals(hotelManager)) {
+                Room targetRoom = roomService.findById(roomId).orElseThrow();
+				roomService.delete(targetRoom);
                 return ResponseEntity.noContent().build();
             } else {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
