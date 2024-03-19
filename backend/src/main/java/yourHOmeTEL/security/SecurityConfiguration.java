@@ -73,6 +73,8 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.PUT,"/api/rooms/{roomId}/hotels/{hotelId}/update").hasAnyRole("MANAGER","ADMIN")
                     .requestMatchers(HttpMethod.DELETE,"/api/rooms/{roomId}/hotels/{hotelId}/removal").hasAnyRole("MANAGER","ADMIN")
                     .requestMatchers(HttpMethod.DELETE,"/api/hotels/{id}").hasAnyRole("MANAGER","ADMIN")
+                    .requestMatchers(HttpMethod.GET,"/api/hotels/manager/{id}/view").hasAnyRole("MANAGER", "ADMIN")
+                    .requestMatchers(HttpMethod.GET,"/api/rooms/hotels/{hotelId}/create").hasAnyRole("MANAGER","ADMIN")
 
 
                     //ADMIN AND USER ENDPOINTS
@@ -82,6 +84,7 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET,"/api/reservations/{id}").hasAnyRole("CLIENT","ADMIN")
                     .requestMatchers(HttpMethod.PUT,"/api/reservations/{reservationId}/users/{userId}/hotels/{hotelId}/rooms/{roomId}/update").hasAnyRole("CLIENT","ADMIN")
                     .requestMatchers(HttpMethod.PUT,"/api/reservations/{reservationId}/users/{userId}/hotels/{hotelId}/rooms/{roomId}/removal").hasAnyRole("CLIENT","ADMIN")
+                    .requestMatchers(HttpMethod.GET,"/api/rooms/reservations/{id}").hasAnyRole("CLIENT","ADMIN")
 
                     //ADMIN ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/api/managers/validation").hasRole("ADMIN")
@@ -89,7 +92,6 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.POST,"/api/users/{id}/managers/validation").hasRole("ADMIN")
                 
                     //MANAGER ENDPOINTS
-                    .requestMatchers(HttpMethod.GET,"/api/hotels/manager/{id}/view").hasRole("MANAGER")
                     .requestMatchers(HttpMethod.PUT, "/api/manager/{id}/application").hasRole("MANAGER")
 
                     //MANAGER AND CLIENT ENDPOINTS
@@ -132,6 +134,8 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET, "/api/reviews/hotels/{id}").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/hotels/index/recomended").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/hotels/index/search").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/rooms/{id}").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/rooms/hotels/{id}").permitAll()
                     .anyRequest().permitAll()
 
                     

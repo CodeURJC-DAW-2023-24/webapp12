@@ -41,6 +41,7 @@ import yourHOmeTEL.service.HotelService;
 import yourHOmeTEL.service.ReservationService;
 import yourHOmeTEL.service.ReviewService;
 import yourHOmeTEL.service.UserService;
+import yourHOmeTEL.service.RoomService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -48,14 +49,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping("/api")
 public class RoomRest {
 
-    /*@Autowired
-    private RoomService roomService;*/
+    
 
     interface RoomDetails
             extends UserE.Basic, Hotel.Basic, Review.Basic, Room.Complete, Reservation.Basic {
     }
-
-    private ReviewService reviewService;
 
     @Autowired
 	UserService userService;
@@ -65,6 +63,12 @@ public class RoomRest {
 
 	@Autowired
 	ReservationService reservationService;
+
+	@Autowired
+	RoomService roomService;
+
+	@Autowired
+	ReviewService reviewService;
 
 	@Autowired
     private ObjectMapper objectMapper;
@@ -82,39 +86,40 @@ public class RoomRest {
 
 	@JsonView(RoomDetails.class)
 	@GetMapping("/rooms/{id}")
-	public ResponseEntity <Review> getRooms(@PathVariable Long id) {
-
+	public ResponseEntity <Room> getRooms(@PathVariable Long id) {
 		try{
-			Review targetReview = reviewService.findById(id).orElseThrow();
-			return ResponseEntity.ok(targetReview);
-		
+			UserE manager = roomService.findById(id).orElseThrow().getHotel().getManager();
+			if (manager.getvalidated()) {
+				Room targetRoom = roomService.findById(id).orElseThrow();
+				return ResponseEntity.ok(targetRoom);
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
 		}catch(Exception e){
 			return ResponseEntity.notFound().build();
 		}
-
 	}
 
 	
 	@JsonView(RoomDetails.class)
 	@GetMapping("/rooms/hotels/{id}")
-	public ResponseEntity<List<Review>> hotelRooms(@PathVariable Long id, Pageable pageable) {
-
+	public ResponseEntity<List<Room>> hotelRooms(@PathVariable Long id, Pageable pageable) {
 		try{
-			UserE targetuser = userService.findById(id).orElseThrow();
-			return ResponseEntity.ok(targetuser.getReviews());
+			Hotel targetHotel = hotelService.findById(id).orElseThrow();
+			if (targetHotel.getManager().getvalidated()) {
+				return ResponseEntity.ok(targetHotel.getRooms());
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
 		
 		}catch(Exception e){
 			return ResponseEntity.notFound().build();
 		}
-
 	}
 
-	@JsonView(RoomDetails.class) //ESTE YA ESTA IMPLEMENTADO EN TEORIA. TIENES QUE PROBAR QUE FUNCIONA BIEN, Y QUIZA
-	//AÑADIRLO AL SECURITY CONFIG DE USUARIOS + ADMIN (LOS MANAGER NO PORQUE NO RESERVAN)		
+	@JsonView(RoomDetails.class)		
 	@GetMapping("/rooms/reservations/{id}")
-	public ResponseEntity<Room> reservationRoom(HttpServletRequest request, @PathVariable Long id, 
-	Pageable pageable) {
-		
+	public ResponseEntity<Room> reservationRoom(HttpServletRequest request, @PathVariable Long id, Pageable pageable) {
 		try{
 			UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			Reservation targetReservation = reservationService.findById(id).orElseThrow();
@@ -136,39 +141,30 @@ public class RoomRest {
 	}
 
 	@PostMapping("/rooms/hotels/{hotelId}/create")
-	public ResponseEntity<Review> postRoom(HttpServletRequest request, @RequestBody Review review,
-	 @PathVariable Long userId, @PathVariable Long hotelId) {
-		
-		if(review.getScore() == 0 || review.getScore() > 5) {
-			return ResponseEntity.badRequest().build();
-
-		} else{
-			try {
-				UserE hotelManager = hotelService.findById(hotelId).orElseThrow().getManager();
-
+	public ResponseEntity<Room> postRoom(HttpServletRequest request, @RequestBody Room room, @PathVariable Long hotelId) {
+		try {
+			UserE hotelManager = hotelService.findById(hotelId).orElseThrow().getManager();
+			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			if(currentUser.equals(hotelManager) || currentUser.getRols().contains("ADMIN")) {
 				if (hotelManager.getvalidated()) {
 					Hotel targetHotel = hotelService.findById(hotelId).orElseThrow();
-					UserE authorUser = userService.findById(userId).orElseThrow();
 
-					Review newReview = new Review(review.getScore(), review.getComment(), LocalDate.now(), targetHotel, authorUser);
-					reviewService.save(newReview);
+					Room newRoom = new Room(room.getMaxClients(), room.getcost(), room.getReservations(), room.getHotel());
+					roomService.save(newRoom);
 
-					targetHotel.getReviews().add(newReview);
+					targetHotel.getRooms().add(newRoom);
 					hotelService.save(targetHotel);
 
-					authorUser.getReviews().add(newReview);
-					userService.save(authorUser);
-
-					 URI location = fromCurrentRequest().build().toUri();
-            		return ResponseEntity.created(location).build(); 
-
+					URI location = fromCurrentRequest().build().toUri();
+					return ResponseEntity.created(location).build(); 
 				} else {
 					return ResponseEntity.notFound().build();
 				} 
-
-			} catch (Exception e) {
-				return ResponseEntity.notFound().build();
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
 		}
 	}
 
@@ -216,7 +212,4 @@ public class RoomRest {
             return ResponseEntity.notFound().build();
         }
     }
-
-    
-
 }
