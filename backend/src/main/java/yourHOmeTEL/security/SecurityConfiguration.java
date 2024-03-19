@@ -93,6 +93,7 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.PUT, "/api/manager/{id}/application").hasRole("MANAGER")
 
                     //MANAGER AND CLIENT ENDPOINTS
+                    .requestMatchers(HttpMethod.GET,"/clients/{id}").hasRole("MANAGER")
                     
                                 
 					//USER ENDPOINTS

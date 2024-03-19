@@ -201,6 +201,25 @@ public class HotelRest {
 		}
 
 	}
+
+	@GetMapping("/clients/{id}")
+	public ResponseEntity<List<UserE>> clientlist(HttpServletRequest request, @PathVariable Long id) {
+		try {
+			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			UserE foundUser = hotelService.findById(id).orElseThrow().getManager();
+	
+			if (currentUser.equals(foundUser)) {
+				Hotel hotel = hotelService.findById(id).orElseThrow();
+				List<UserE> validClients = hotelService.getValidClients(hotel);
+				return ResponseEntity.ok(validClients);
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
 	
 	// PUBLIC CONTROLLERS
 
