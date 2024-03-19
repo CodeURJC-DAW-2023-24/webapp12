@@ -291,19 +291,19 @@ public class initDataBaseService {
 
                 // images for all type of users that we created
                 client1.generateImage("/static/images/userPhoto.jpg");
-                client1.setImagePath(("https://localhost:8443/api/users/" + client1.getId() + "/image").toString());
+                client1.setImagePath(("/api/users/" + client1.getId() + "/image").toString());
                 client2.generateImage("/static/images/client2.jpg");
-                client2.setImagePath(("https://localhost:8443/api/users/" + client2.getId() + "/image").toString());
+                client2.setImagePath(("/api/users/" + client2.getId() + "/image").toString());
                 client3.generateImage("/static/images/client3.jpg");
-                client3.setImagePath(("https://localhost:8443/api/users/" + client3.getId() + "/image").toString());
+                client3.setImagePath(("/api/users/" + client3.getId() + "/image").toString());
                 manager1.generateImage("/static/images/manager.jpg");
-                manager1.setImagePath(("https://localhost:8443/api/users/" + manager1.getId() + "/image").toString());
+                manager1.setImagePath(("/api/users/" + manager1.getId() + "/image").toString());
                 manager2.generateImage("/static/images/manager2.jpg");
-                manager2.setImagePath(("https://localhost:8443/api/users/" + manager2.getId() + "/image").toString());
+                manager2.setImagePath(("/api/users/" + manager2.getId() + "/image").toString());
                 manager3.generateImage("/static/images/manager3.jpg");
-                manager3.setImagePath(("https://localhost:8443/api/users/" + manager3.getId() + "/image").toString());
+                manager3.setImagePath(("/api/users/" + manager3.getId() + "/image").toString());
                 admin.generateImage("/static/images/admin.jpg");
-                admin.setImagePath(("https://localhost:8443/api/users/" + admin.getId() + "/image").toString());
+                admin.setImagePath(("/api/users/" + admin.getId() + "/image").toString());
                 userRepository.save(client1);
                 userRepository.save(client2);
                 userRepository.save(client3);
@@ -315,27 +315,27 @@ public class initDataBaseService {
                 // images for hotels
 
                 hotel1.generateImage("/static/images/hotel.jpg");
-                hotel1.setImagePath("https://localhost:8443/api/hotels/" + hotel1.getId() + "/image");
+                hotel1.setImagePath("/api/hotels/" + hotel1.getId() + "/image");
                 hotel2.generateImage("/static/images/hotel1.jpg");
-                hotel2.setImagePath("https://localhost:8443/api/hotels/" + hotel2.getId() + "/image");
+                hotel2.setImagePath("/api/hotels/" + hotel2.getId() + "/image");
                 hotel3.generateImage("/static/images/hotel2.jpg");
-                hotel3.setImagePath("https://localhost:8443/api/hotels/" + hotel3.getId() + "/image");
+                hotel3.setImagePath("/api/hotels/" + hotel3.getId() + "/image");
                 hotel4.generateImage("/static/images/hotel4.jpg");
-                hotel4.setImagePath("https://localhost:8443/api/hotels/" + hotel4.getId() + "/image");
+                hotel4.setImagePath("/api/hotels/" + hotel4.getId() + "/image");
                 hotel5.generateImage("/static/images/hotel3.jpg");
-                hotel5.setImagePath("https://localhost:8443/api/hotels/" + hotel5.getId() + "/image");
+                hotel5.setImagePath("/api/hotels/" + hotel5.getId() + "/image");
                 hotel6.generateImage("/static/images/hotel4.jpg");
-                hotel6.setImagePath("https://localhost:8443/api/hotels/" + hotel6.getId() + "/image");
+                hotel6.setImagePath("/api/hotels/" + hotel6.getId() + "/image");
                 hotel7.generateImage("/static/images/hotel6.jpg");
-                hotel7.setImagePath("https://localhost:8443/api/hotels/" + hotel7.getId() + "/image");
+                hotel7.setImagePath("/api/hotels/" + hotel7.getId() + "/image");
                 hotel8.generateImage("/static/images/hortel5.jpg");
-                hotel8.setImagePath("https://localhost:8443/api/hotels/" + hotel8.getId() + "/image");
+                hotel8.setImagePath("/api/hotels/" + hotel8.getId() + "/image");
                 hotel9.generateImage("/static/images/hotel6.jpg");
-                hotel9.setImagePath("https://localhost:8443/api/hotels/" + hotel9.getId() + "/image");
+                hotel9.setImagePath("/api/hotels/" + hotel9.getId() + "/image");
                 hotel10.generateImage("/static/images/hotel4.jpg");
-                hotel10.setImagePath("https://localhost:8443/api/hotels/" + hotel10.getId() + "/image");
+                hotel10.setImagePath("/api/hotels/" + hotel10.getId() + "/image");
                 hotel11.generateImage("/static/images/hotel.jpg");
-                hotel11.setImagePath("https://localhost:8443/api/hotels/" + hotel11.getId() + "/image");
+                hotel11.setImagePath("/api/hotels/" + hotel11.getId() + "/image");
                 hotelRepository.save(hotel1);
                 hotelRepository.save(hotel2);
                 hotelRepository.save(hotel3);

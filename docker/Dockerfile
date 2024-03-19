@@ -1,6 +1,6 @@
 #COMPILE ON CONTAINER
 
-FROM maven:3.8.4-openjdk-17 as builder
+FROM maven:3.9.6-eclipse-temurin-21 as builder
 
 WORKDIR /project
 
@@ -15,7 +15,7 @@ RUN mvn package -DskipTests
 
 #COPY AND RUN ON APP CONTAINER
 
-FROM openjdk:17
+FROM eclipse-temurin:21-jdk
 
 WORKDIR /usr/src/app
 

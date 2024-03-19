@@ -225,7 +225,7 @@ public class SecurityConfiguration {
                         // Admin pages
                         .requestMatchers("/managerlist").hasAnyRole("ADMIN")
                         .requestMatchers("/chartsadmin").hasAnyRole("ADMIN")
-                        .requestMatchers("/managervalidation").hasAnyRole("ADMIN")
+                        .requestMatchers("/managerValidation").hasAnyRole("ADMIN")
                         .requestMatchers("/acceptance/**").hasAnyRole("ADMIN")
                         .requestMatchers("/rejection/**").hasAnyRole("ADMIN")
 

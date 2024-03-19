@@ -144,7 +144,7 @@ public class UserRest {
 
     }
 
-    @GetMapping("/error")
+    /*@GetMapping("/error")
     public String error(Model model, HttpServletRequest request) {
         return "/error";
 

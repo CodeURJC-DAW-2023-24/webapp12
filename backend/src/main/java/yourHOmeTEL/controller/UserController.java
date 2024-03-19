@@ -180,7 +180,7 @@ public class UserController {
 
 	}
 
-	@GetMapping("/managervalidation")
+	@GetMapping("/managerValidation")
 	public String managerValidation(Model model) {
 		List<UserE> unvalidatedManagersList = new ArrayList<>();
 		unvalidatedManagersList = userService.findByValidatedAndRejected(false, false);
@@ -189,7 +189,7 @@ public class UserController {
 			model.addAttribute("unvalidatedManagers", unvalidatedManagersList);
 		}
 
-		return "managervalidation";
+		return "managerValidation";
 	}
 
 	@PostMapping("/rejection/{id}")
