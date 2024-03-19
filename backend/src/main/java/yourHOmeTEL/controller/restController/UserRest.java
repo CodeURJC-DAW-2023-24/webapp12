@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import org.springframework.core.io.Resource;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
@@ -101,72 +102,7 @@ public class UserRest {
     public void setup() {
         objectMapper.setDefaultMergeable(true);
     }
-
-    // PUBLIC CONTROLLERS
-
-    // ADVANCED RECOMMENDATION ALGORITHM
-    @JsonView(UserDetails.class)
-    @GetMapping("/hotels/index/recomended")
-    public ResponseEntity<List<Hotel>> index (HttpServletRequest request) {
-        List<Hotel> recomendedHotels = new ArrayList<>();
-        try {
-            String nick = request.getUserPrincipal().getName();
-            UserE user = userService.findByNick(nick).orElseThrow();
-            List<Reservation> userReservations = user.getReservations();
-            recomendedHotels = userService.findRecomendedHotels(6, userReservations, user);
-        } catch (NullPointerException e) {  
-        } finally {
-            if (recomendedHotels.size() < 6) {
-                // size +1 to avoid looking for id = 0 if size = 0
-                int i = 1;
-                int sizeAllHotels = hotelService.findAll().size();
-                while (recomendedHotels.size() < 7 && i <= sizeAllHotels) {
-                    // if there's a gap in the id sequence, it will throw an exception and continue the loop
-                    try{
-                        Hotel hotel = hotelService.findById((long) i).orElseThrow();
-                        if (hotel != null && hotel.getManager().getvalidated())
-                            recomendedHotels.add(hotel);
-                    }
-                    catch(NoSuchElementException e){}
-                    i++;
-                }
-            }
-        }
-        return ResponseEntity.ok(recomendedHotels);    
-    }
-
-    @JsonView(UserDetails.class)
-    @GetMapping("/hotels/index/search")
-    public ResponseEntity<List<Hotel>> indexSearch(@RequestParam String searchValue) {
-        try { 
-            List<Hotel> hotels = hotelService.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(true,
-                    searchValue);
-            return ResponseEntity.ok(hotels);
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    // MANAGER CONTROLLERS
-
-    // Loads the first 6 hotels of a manager
-    @JsonView(UserDetails.class)
-    @GetMapping("/hotels/manager/{id}/view")
-    public ResponseEntity<List<Hotel>> viewHotelsManager(HttpServletRequest request, @PathVariable Long id) {
-        try{
-            String managernick = request.getUserPrincipal().getName();
-            UserE currentManager = userService.findByNick(managernick).orElseThrow();
-
-            List<Hotel> hotels = currentManager.getHotels();
-
-            if (hotels.size() > 6) {
-                hotels = hotels.subList(0, 6);
-            }
-            return ResponseEntity.ok(hotels);
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+    
 
     // a manager applies to be validated by an admin
     @JsonView(UserDetails.class)
@@ -190,7 +126,8 @@ public class UserRest {
     // ADMIN CONTROLLERS
     @JsonView(UserDetails.class)
     @GetMapping("/managers/validation")
-    public ResponseEntity<List<UserE>> managerValidation(@RequestParam("validated") Boolean validated) {
+    public ResponseEntity<List<UserE>> managerValidation(@RequestParam("validated") Boolean validated, 
+    Pageable pageable) {
 
         List<UserE> requestedManagersList = new ArrayList<>();
         try {
@@ -261,7 +198,7 @@ public class UserRest {
     // returns list of all managers. ADMIN and MANAGER can access
     @JsonView(UserDetails.class)
     @GetMapping("/users/managers/list")
-    public ResponseEntity<List<UserE>> managerList(HttpServletRequest request) {
+    public ResponseEntity<List<UserE>> managerList(HttpServletRequest request, Pageable pageable) {
         try {
             List<UserE> managersList = userService.findByCollectionRolsContains("MANAGER");
             return ResponseEntity.ok(managersList);
