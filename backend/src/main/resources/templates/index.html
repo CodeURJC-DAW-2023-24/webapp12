@@ -17,7 +17,7 @@
         <!--Search bar-->
         <div class="collapse navbar-collapse" id="ftco-nav">
           <div class="sidebar-box mt-3">
-            <form method="get" action="/indexsearch" class="search-form">
+            <form method="get" action="/indexSearch" class="search-form">
               <div class="form-group">
                 <input type="search" class="form-control" placeholder="Type..." name="searchValue">
                 <button class="icon ion-ios-search" type="submit">
@@ -65,10 +65,10 @@
               <h3 class="heading">{{name}}</h3>
               <p>{{description}}</p>
               {{#isClient}}
-              <a href="/hotelinformation/{{id}}" class="btn btn-secondary rounded">Book now</a>
+              <a href="/hotelInformation/{{id}}" class="btn btn-secondary rounded">Book now</a>
               {{/isClient}}
               {{^isClient}}
-              <a href="/hotelinformation/{{id}}" class="btn btn-secondary rounded">View information</a>
+              <a href="/hotelInformation/{{id}}" class="btn btn-secondary rounded">View information</a>
               {{/isClient}}
               <a href="/hotelReviews/{{id}}" class="btn btn-secondary rounded">Reviews</a>
             </div>

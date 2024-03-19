@@ -7,10 +7,10 @@
       <h3 class="heading">{{name}}</h3>
       <p>{{description}}</p>
       {{#isClient}}
-      <a href="/hotelinformation/{{id}}" class="btn btn-secondary rounded">Book now</a>
+      <a href="/hotelInformation/{{id}}" class="btn btn-secondary rounded">Book now</a>
       {{/isClient}}
       {{^isClient}}
-      <a href="/hotelinformation/{{id}}" class="btn btn-secondary rounded">View information</a>
+      <a href="/hotelInformation/{{id}}" class="btn btn-secondary rounded">View information</a>
       {{/isClient}}
       <a href="/hotelReview/{{id}}" class="btn btn-secondary rounded">Reviews</a>
     </div>

@@ -46,7 +46,7 @@ public class ReservationController {
 	@RequestParam String checkOut, @RequestParam Integer numPeople) {
 
 		if (checkIn.isEmpty() || checkOut.isEmpty() || numPeople == null)
-			return "redirect:/hotelinformation/{id}";
+			return "redirect:/hotelInformation/{id}";
 		else{
 
 			LocalDate checkInDate = reservationService.toLocalDate(checkIn);
@@ -57,7 +57,7 @@ public class ReservationController {
 				Hotel hotel = hotelService.findById(id).orElseThrow();
 				Reservation newRe = new Reservation(checkInDate, checkOutDate, numPeople, hotel, room, user);
 				reservationService.save(newRe);
-				return "redirect:/clientreservations";
+				return "redirect:/clientReservations";
 			} else
 				return "redirect:/notRooms/{id}";
 		}
@@ -76,7 +76,7 @@ public class ReservationController {
 	 * @param request
 	 * @return
 	 */
-	@GetMapping("/clientreservations")
+	@GetMapping("/clientReservations")
 	public String clientreservation(Model model, HttpServletRequest request) {
 		UserE currentClient = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 
@@ -166,7 +166,7 @@ public class ReservationController {
 
 				reservationService.deleteById(id);
 			}
-			return "redirect:/clientreservations";
+			return "redirect:/clientReservations";
 		} else
 			return "/error";
 	}

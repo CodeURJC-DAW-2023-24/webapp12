@@ -150,8 +150,8 @@ public class UserRest {
 
     }
 
-    @GetMapping("/returnmainpage")
-    public String returnmainpage(Model model, HttpServletRequest request) {
+    @GetMapping("/returnMainPage")
+    public String returnMainPage(Model model, HttpServletRequest request) {
         return "redirect:/index";
 
     }
@@ -161,7 +161,7 @@ public class UserRest {
     // MANAGER CONTROLLERS
 
     // Loads the first 6 hotels of a manager
-    @GetMapping("/viewhotelsmanager")
+    @GetMapping("/viewHotelsManager")
     public String viewHotelsManager(Model model, HttpServletRequest request) {
 
         String managernick = request.getUserPrincipal().getName();
@@ -175,7 +175,7 @@ public class UserRest {
 
         model.addAttribute("hotels", hotels);
 
-        return "viewhotelsmanager";
+        return "viewHotelsManager";
 
     }
 

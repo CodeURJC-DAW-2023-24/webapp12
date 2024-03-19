@@ -37,7 +37,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-
 	@Autowired
 	private HotelService hotelService;
 
@@ -72,7 +71,7 @@ public class UserController {
 		return "index";
 	}
 
-	@GetMapping("/indexsearch")
+	@GetMapping("/indexSearch")
 	public String indexSearch(Model model, @RequestParam String searchValue) {
 		List<Hotel> hotels = hotelService.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(true,
 				searchValue);
@@ -87,20 +86,20 @@ public class UserController {
 
 	}
 
-	@GetMapping("/returnmainpage")
-	public String returnmainpage(Model model, HttpServletRequest request) {
+	@GetMapping("/returnMainPage")
+	public String returnMainPage(Model model, HttpServletRequest request) {
 		return "redirect:/index";
 
 	}
 
 	// CLIENT CONTROLLERS
-	
+
 	// MANAGER CONTROLLERS
 
 	/**
 	 * Loads the first 6 hotels of a manager
 	 */
-	@GetMapping("/viewhotelsmanager")
+	@GetMapping("/viewHotelsManager")
 	public String viewHotelsManager(Model model, HttpServletRequest request) {
 
 		String managernick = request.getUserPrincipal().getName();
@@ -114,7 +113,7 @@ public class UserController {
 
 		model.addAttribute("hotels", hotels);
 
-		return "viewhotelsmanager";
+		return "viewHotelsManager";
 
 	}
 
@@ -173,10 +172,10 @@ public class UserController {
 	}
 
 	// ADMIN CONTROLLERS
-	@GetMapping("/chartsadmin")
+	@GetMapping("/chartsAdmin")
 	public String chartsAdmin(Model model, HttpServletRequest request) {
 
-		return "chartsadmin";
+		return "chartsAdmin";
 
 	}
 
@@ -218,23 +217,23 @@ public class UserController {
 
 	}
 
-	@GetMapping("/managerlist")
+	@GetMapping("/managerList")
 	public String managerList(Model model, HttpServletRequest request) {
 
-		return "managerlist";
+		return "managerList";
 
 	}
 
-	@GetMapping("/editprofile/{id}")
+	@GetMapping("/editProfile/{id}")
 	public String editProfile(Model model, HttpServletRequest request, @PathVariable Long id) {
 
 		UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 		UserE foundUser = userService.findById(id).orElseThrow(); // need to transform the throw into 404 error. Page
-																		// 25 // database
+																	// 25 // database
 
 		if (currentUser.equals(foundUser)) {
 			model.addAttribute("user", foundUser);
-			return "editprofile";
+			return "editProfile";
 		} else
 			return "/error";
 
@@ -289,7 +288,7 @@ public class UserController {
 		}
 	}
 
-	@PostMapping("/editprofileimage/{id}")
+	@PostMapping("/editProfileimage/{id}")
 	public String editImage(HttpServletRequest request, @RequestParam MultipartFile imageFile,
 			@PathVariable Long id,
 			Model model) throws IOException {
@@ -302,7 +301,7 @@ public class UserController {
 				currentUser.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
 				userService.save(currentUser);
 			}
-			return "redirect:/editprofile/" + id;
+			return "redirect:/editProfile/" + id;
 
 		} else
 			return "/error";
@@ -357,7 +356,7 @@ public class UserController {
 		return "login";
 	}
 
-	@GetMapping("/loginerror")
+	@GetMapping("/loginError")
 	public String loginError(Model model) {
 		return "loginError";
 	}
@@ -373,23 +372,22 @@ public class UserController {
 			user.setPass(passwordEncoder.encode(user.getPass()));
 			List<String> rols = new ArrayList<>();
 			rols.add("USER");
-			if (type == 0){
+			if (type == 0) {
 				rols.add("CLIENT");
 				user.setvalidated(null);
 				user.setRejected(null);
-			}
-			else{
+			} else {
 				rols.add("MANAGER");
 				user.setvalidated(false);
 				user.setRejected(false);
 			}
 			user.setRols(rols);
 			user.setCollectionRols(rols);
-			List<Reservation> reservations= new ArrayList<>();
+			List<Reservation> reservations = new ArrayList<>();
 			user.setReservations(reservations);
-			List<Hotel> hotels= new ArrayList<>();
+			List<Hotel> hotels = new ArrayList<>();
 			user.setHotels(hotels);
-			List<Review> reviews= new ArrayList<>();
+			List<Review> reviews = new ArrayList<>();
 			user.setReviews(reviews);
 
 			user.setLanguage("");
@@ -401,8 +399,8 @@ public class UserController {
 			userService.save(user);
 
 			Resource image = new ClassPathResource("/static/images/default-hotel.jpg");
-        	user.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
-        	user.setImage(true);
+			user.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
+			user.setImage(true);
 
 			userService.save(user);
 

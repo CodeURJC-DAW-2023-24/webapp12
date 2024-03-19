@@ -40,7 +40,7 @@
         <div class="card p-2">
           <div class="e-navlist e-navlist--active-bg">
             <ul class="nav">
-              <li class="nav-item"><a class="nav-link px-1 active" href="/viewhotelsmanager"><i
+              <li class="nav-item"><a class="nav-link px-1 active" href="/viewHotelsManager"><i
                     class="fa fa-fw fa-bar-chart mr-1"></i><span>Go to hotel list</span></a></li>
             </ul>
           </div>
@@ -62,7 +62,7 @@
                       </div>
                     </div>
                     <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                      <form action="/edithotelimage/{{hotel.id}}" method="post" enctype="multipart/form-data">
+                      <form action="/editHotelImage/{{hotel.id}}" method="post" enctype="multipart/form-data">
                         <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{hotel.name}}</h4>
                         <div class="text-center text-sm-left mb-2 mb-sm-0">
                           <div class="mt-2">
@@ -88,7 +88,7 @@
                   </ul>
                   <div class="tab-content pt-3">
                     <div class="tab-pane active">
-                      <form method="post" action="/edithotel/{{hotel.id}}">
+                      <form method="post" action="/editHotel/{{hotel.id}}">
                         <div class="row">
                           <div class="col">
                             <div class="row">

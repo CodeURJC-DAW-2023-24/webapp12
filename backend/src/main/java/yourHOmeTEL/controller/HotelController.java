@@ -35,7 +35,7 @@ public class HotelController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	HotelService hotelService;
 
@@ -45,8 +45,8 @@ public class HotelController {
 	@Autowired
 	RoomService roomService;
 
-	@GetMapping("/edithotel/{id}")
-	public String edithotel(HttpServletRequest request, Model model, @PathVariable Long id) {
+	@GetMapping("/editHotel/{id}")
+	public String editHotel(HttpServletRequest request, Model model, @PathVariable Long id) {
 
 		UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 		UserE foundUser = hotelService.findById(id).orElseThrow().getManager();
@@ -60,8 +60,8 @@ public class HotelController {
 			return "/error";
 	}
 
-	@PostMapping("/edithotel/{id}")
-	public String edithotel(Model model, HttpServletRequest request, Hotel newHotel, Integer room1, Integer cost1,
+	@PostMapping("/editHotel/{id}")
+	public String editHotel(Model model, HttpServletRequest request, Hotel newHotel, Integer room1, Integer cost1,
 			Integer room2,
 			Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable Long id)
 			throws IOException {
@@ -75,7 +75,6 @@ public class HotelController {
 			hotel.setName(newHotel.getName());
 			hotel.setLocation(newHotel.getLocation());
 			hotel.setDescription(newHotel.getDescription());
-
 
 			if (room1 != null)
 				for (int i = 0; i < room1; i++) {
@@ -109,7 +108,7 @@ public class HotelController {
 
 			model.addAttribute("hotel", hotel);
 
-			return "redirect:/viewhotelsmanager";
+			return "redirect:/viewHotelsManager";
 
 		} else
 			return "/error";
@@ -128,7 +127,7 @@ public class HotelController {
 				hotelService.deleteById(id);
 			}
 
-			return "redirect:/viewhotelsmanager";
+			return "redirect:/viewHotelsManager";
 
 		} else
 			return "/error";
@@ -150,7 +149,7 @@ public class HotelController {
 		}
 	}
 
-	@PostMapping("/edithotelimage/{id}")
+	@PostMapping("/editHotelImage/{id}")
 	public String editImage(HttpServletRequest request, @RequestParam MultipartFile imageFile,
 			@PathVariable Long id,
 			Model model) throws IOException {
@@ -166,13 +165,13 @@ public class HotelController {
 				hotelService.save(hotel);
 			}
 			model.addAttribute("hotel", hotel);
-			return "redirect:/edithotel/" + id;
+			return "redirect:/editHotel/" + id;
 
 		} else
 			return "/error";
 	}
 
-	@PostMapping("/selecthotelimage/{imgName}")
+	@PostMapping("/selectHotelImage/{imgName}")
 	public String editImage(@RequestParam MultipartFile imageFile,
 			Model model, HttpServletRequest request, @PathVariable String imgName) throws IOException {
 
@@ -182,8 +181,8 @@ public class HotelController {
 			return "redirect:/addHotelPhoto/" + imgName;
 	}
 
-	@GetMapping("/hotelinformation/{id}")
-	public String hotelinformation(Model model, @PathVariable Long id) {
+	@GetMapping("/hotelInformation/{id}")
+	public String hotelInformation(Model model, @PathVariable Long id) {
 
 		UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
 
@@ -194,14 +193,12 @@ public class HotelController {
 			model.addAttribute("hotel", hotel);
 			model.addAttribute("numRooms", hotel.getNumRooms());
 
-			return "/hotelinformation";
+			return "/hotelInformation";
 
 		} else
 			return "/error";
 
 	}
-
-	
 
 	@GetMapping("/addHotel/{imgName}")
 	public String addHotelWithPhoto(Model model, HttpServletRequest request, @PathVariable String imgName) {
@@ -254,7 +251,7 @@ public class HotelController {
 				newHotel.getRooms().add(new Room(4, cost4, new ArrayList<>(), newHotel));
 			}
 		hotelService.save(newHotel);
-		return "redirect:/viewhotelsmanager";
+		return "redirect:/viewHotelsManager";
 	}
 
 	@GetMapping("/addHotelPhoto/{imgName}")
@@ -263,8 +260,8 @@ public class HotelController {
 		return "addHotelPhoto";
 	}
 
-	@GetMapping("/clientlist/{id}")
-	public String clientlist(Model model, HttpServletRequest request, @PathVariable Long id) {
+	@GetMapping("/clientList/{id}")
+	public String clientList(Model model, HttpServletRequest request, @PathVariable Long id) {
 
 		UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 		UserE foundUser = hotelService.findById(id).orElseThrow().getManager();
@@ -275,7 +272,7 @@ public class HotelController {
 			validClients = hotelService.getValidClients(hotel);
 			model.addAttribute("clients", validClients);
 
-			return "clientlist";
+			return "clientList";
 
 		} else
 			return "/error";
@@ -350,8 +347,6 @@ public class HotelController {
 		return "hotelTemplate";
 	}
 
-	
-
 	/**
 	 * Using AJAX, loads the next 6 hotels in the page, or none if all are loaded
 	 * 
@@ -362,13 +357,13 @@ public class HotelController {
 	 */
 	@GetMapping("/loadMoreHotelsManagerView/{start}/{end}")
 	public String loadMoreHotelsManagerView(
-		Model model,
-		HttpServletRequest request,
+			Model model,
+			HttpServletRequest request,
 			@PathVariable Long start,
 			@PathVariable Long end) {
 
-
-		var hotelsQuantity = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow().getHotels().size();
+		var hotelsQuantity = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow().getHotels()
+				.size();
 
 		if (start <= hotelsQuantity) {
 
