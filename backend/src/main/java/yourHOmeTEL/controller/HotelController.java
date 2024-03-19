@@ -279,36 +279,6 @@ public class HotelController {
 	}
 
 	/**
-	 * Loads the next 6 hotels
-	 */
-	/*
-	 * @GetMapping("/loadMoreHotels/{start}/{end}")
-	 * public String loadMoreHotels(
-	 * Model model,
-	 * 
-	 * @PathVariable Long start,
-	 * 
-	 * @PathVariable Long end) {
-	 * 
-	 * var hotelsQuantity = hotelService.count();
-	 * 
-	 * if (start <= hotelsQuantity) {
-	 * 
-	 * var hotels = new ArrayList<>();
-	 * 
-	 * // we get the next 6 hotels or the remaining ones
-	 * for (Long index = start; index < end && index < hotelsQuantity; index++) {
-	 * hotels.add(hotelService.findById(index));
-	 * }
-	 * 
-	 * model.addAttribute("hotels", hotels);
-	 * }
-	 * 
-	 * return "/hotelTemplate";
-	 * }
-	 */
-
-	/**
 	 * Using AJAX, loads the next 6 hotels in the page, or none if all are loaded
 	 * 
 	 * @param model
