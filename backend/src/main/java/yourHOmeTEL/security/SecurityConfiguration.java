@@ -87,6 +87,8 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET,"/api/reservations/{id}").hasAnyRole("CLIENT","ADMIN")
                     .requestMatchers(HttpMethod.PUT,"/api/reservations/{reservationId}/users/{userId}/hotels/{hotelId}/rooms/{roomId}/update").hasAnyRole("CLIENT","ADMIN")
                     .requestMatchers(HttpMethod.PUT,"/api/reservations/{reservationId}/users/{userId}/hotels/{hotelId}/rooms/{roomId}/removal").hasAnyRole("CLIENT","ADMIN")
+
+                    .requestMatchers(HttpMethod.GET,"/api/rooms/reservations/{id}").hasAnyRole("CLIENT","ADMIN")
                     .requestMatchers(HttpMethod.GET,"/api/rooms/reservations/{id}").hasAnyRole("CLIENT","ADMIN")
 
                     //ADMIN ENDPOINTS
@@ -114,7 +116,7 @@ public class SecurityConfiguration {
 
                     .requestMatchers(HttpMethod.GET,"/api/rooms/{id}").hasRole("USER")
                     .requestMatchers(HttpMethod.GET,"/api/rooms/hotels/{id}").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/rooms/reservations/{id}").hasRole("USER")
+                    
 
                     //USER IMAGE ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/api/users/{id}/image").hasAnyRole("USER", "ADMIN")

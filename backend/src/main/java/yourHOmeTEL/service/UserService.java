@@ -95,7 +95,6 @@ public class UserService implements GeneralService<UserE> {
         return userRepository.findByCollectionRolsContains(rol, pageable);
     }
 
-
     public List<UserE> findByValidatedAndRejected(Boolean validated, Boolean rejected){
         return userRepository.findByValidatedAndRejected(validated, rejected);
     }

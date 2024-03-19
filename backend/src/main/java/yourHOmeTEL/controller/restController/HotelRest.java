@@ -256,7 +256,7 @@ public class HotelRest {
         return ResponseEntity.ok(recomendedHotels);    
     }
 
-	@JsonView(HotelDetails.class) //this is not done
+	@JsonView(HotelDetails.class) //check if this is done correctly. I just added pageable
     @GetMapping("/hotels/index/search")
     public ResponseEntity<PageResponse<Hotel>> indexSearch(@RequestParam String searchValue, Pageable pageable) {
         try { 
@@ -281,7 +281,7 @@ public class HotelRest {
 
 	// MANAGER CONTROLLERS
 
-    // this one is aready dont, dont touch it
+    // this one is done already, dont touch it
 
     @JsonView(HotelDetails.class)
     @GetMapping("/hotels/manager/{id}")

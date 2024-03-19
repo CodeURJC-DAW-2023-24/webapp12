@@ -29,7 +29,7 @@ public class RoomService implements GeneralService<Room> {
         return roomRepository.findByMaxClients(maxClients, pageable);
     }
 
-    public Page<Room> findByUser_Id(Long hotelId, Pageable pageable){
+    public Page<Room> findByHotel_Id(Long hotelId, Pageable pageable){
         return roomRepository.findByHotel_Id(hotelId, pageable);
     }
 

@@ -64,6 +64,8 @@ import yourHOmeTEL.security.jwt.Token;
 import yourHOmeTEL.security.jwt.UserLoginService;
 import yourHOmeTEL.service.HotelService;
 import yourHOmeTEL.service.ImageService;
+import yourHOmeTEL.service.ReservationService;
+import yourHOmeTEL.service.ReviewService;
 import yourHOmeTEL.service.UserSecurityService;
 import yourHOmeTEL.service.UserService;
 
@@ -86,6 +88,12 @@ public class UserRest {
 
     @Autowired
     private HotelService hotelService;
+
+    @Autowired
+    private ReservationService reservationService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -248,8 +256,47 @@ public class UserRest {
     @GetMapping("/users/{id}/info")
     public ResponseEntity<UserE> profile(HttpServletRequest request, @PathVariable Long id) {
         try {
-            UserE foundUser = userService.findById(id).orElseThrow();
-            return ResponseEntity.ok(foundUser);
+            UserE targetUser = userService.findById(id).orElseThrow();
+            return ResponseEntity.ok(targetUser);
+
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+
+        }
+    }
+
+    @JsonView(UserDetails.class)
+    @GetMapping("/users/reservations/{id}")
+    public ResponseEntity<UserE> reservationUser(HttpServletRequest request, @PathVariable Long id) {
+        try {
+            UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+            Reservation targetResevation = reservationService.findById(id).orElseThrow();
+            UserE targetUser = targetResevation.getUser();
+            
+            if(requestUser.equals(targetUser) || requestUser.getRols().contains("ADMIN")){
+                return ResponseEntity.ok(targetUser);
+            }else{
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+
+        }
+    }
+
+    @JsonView(UserDetails.class)
+    @GetMapping("/users/reviews/{id}")
+    public ResponseEntity<UserE> reviewUser(HttpServletRequest request, @PathVariable Long id) {
+        try {
+            UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+            Review targetReview = reviewService.findById(id).orElseThrow();
+            UserE targetUser = targetReview.getUser();
+            
+            if(requestUser.equals(targetUser) || requestUser.getRols().contains("ADMIN")){
+                return ResponseEntity.ok(targetUser);
+            }else{
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
 

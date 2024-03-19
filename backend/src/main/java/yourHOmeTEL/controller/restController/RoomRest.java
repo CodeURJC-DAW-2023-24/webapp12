@@ -87,7 +87,7 @@ public class RoomRest {
 
 	@JsonView(RoomDetails.class)
 	@GetMapping("/rooms/{id}")
-	public ResponseEntity <Room> getRooms(@PathVariable Long id) {
+	public ResponseEntity <Room> getRooms(HttpServletRequest request, @PathVariable Long id) {
 		try{
 			UserE manager = roomService.findById(id).orElseThrow().getHotel().getManager();
 			if (manager.getvalidated()) {
@@ -104,11 +104,25 @@ public class RoomRest {
 	
 	@JsonView(RoomDetails.class)
 	@GetMapping("/rooms/hotels/{id}")
-	public ResponseEntity<List<Room>> hotelRooms(@PathVariable Long id, Pageable pageable) {
+	public ResponseEntity<PageResponse<Room>> hotelRooms(HttpServletRequest request, @PathVariable Long id, 
+	Pageable pageable) {
 		try{
+			UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			Hotel targetHotel = hotelService.findById(id).orElseThrow();
-			if (targetHotel.getManager().getvalidated()) {
-				return ResponseEntity.ok(targetHotel.getRooms());
+			if (targetHotel.getManager().getvalidated() || requestUser.getRols().contains("ADMIN")) {
+				Page<Room> targetRooms = roomService.findByHotel_Id(id, pageable);
+				if (targetRooms.hasContent()) {
+					PageResponse<Room> response = new PageResponse<>();
+					response.setContent(targetRooms.getContent());
+					response.setPageNumber(targetRooms.getNumber());
+					response.setPageSize(targetRooms.getSize());
+					response.setTotalElements(targetRooms.getTotalElements());
+					response.setTotalPages(targetRooms.getTotalPages());
+
+					return ResponseEntity.ok(response);
+				}else{
+					return ResponseEntity.notFound().build();
+				}
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
