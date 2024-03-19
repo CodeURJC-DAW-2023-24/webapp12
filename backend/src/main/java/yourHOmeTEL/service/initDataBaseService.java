@@ -126,19 +126,19 @@ public class initDataBaseService {
                                 new ArrayList<>(),
                                 new ArrayList<>());
 
-                Hotel hotel3 = new Hotel("Hotel3", "hotel ", "loc2", 0F, null, manager3, new ArrayList<>(),
+                Hotel hotel3 = new Hotel("Hotel3", "hotel ", "loc2", 0F, null, manager2, new ArrayList<>(),
                                 new ArrayList<>(),
                                 new ArrayList<>());
 
-                Hotel hotel4 = new Hotel("Hotel4", "hotel ", "loc2", 0F, null, manager3, new ArrayList<>(),
+                Hotel hotel4 = new Hotel("Hotel4", "hotel ", "loc2", 0F, null, manager2, new ArrayList<>(),
                                 new ArrayList<>(),
                                 new ArrayList<>());
 
-                Hotel hotel5 = new Hotel("Hotel5", "hotel ", "loc2", 0F, null, manager3, new ArrayList<>(),
+                Hotel hotel5 = new Hotel("Hotel5", "hotel ", "loc2", 0F, null, manager2, new ArrayList<>(),
                                 new ArrayList<>(),
                                 new ArrayList<>());
 
-                Hotel hotel6 = new Hotel("Hotel6", "hotel ", "loc2", 0F, null, manager3, new ArrayList<>(),
+                Hotel hotel6 = new Hotel("Hotel6", "hotel ", "loc2", 0F, null, manager2, new ArrayList<>(),
                                 new ArrayList<>(),
                                 new ArrayList<>());
 
