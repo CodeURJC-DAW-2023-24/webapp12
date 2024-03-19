@@ -5,12 +5,17 @@ import java.util.List;
 import java.util.Optional;
 import java.time.LocalDate;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import yourHOmeTEL.model.Hotel;
 import yourHOmeTEL.model.Reservation;
+import yourHOmeTEL.model.Review;
 import yourHOmeTEL.model.Room;
 import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.repository.HotelRepository;
@@ -20,6 +25,8 @@ public class HotelService implements GeneralService<Hotel> {
 
     @Autowired
     HotelRepository hotelRepository;
+
+    private static final Logger log = LoggerFactory.getLogger(HotelService.class);
 
     @Override
     public void save(Hotel hotel) {
@@ -43,6 +50,24 @@ public class HotelService implements GeneralService<Hotel> {
 
     public List<Hotel> findByLocation(String location){
         return hotelRepository.findByLocation(location);
+    }
+
+    public Page<Hotel> findByManager_Id(Long managerId, Pageable pageable) {
+        log.info("Manager ID: {}", managerId);
+    
+        Page<Hotel> hotels = hotelRepository.findByManager_Id(managerId, pageable);
+        log.info("Hotels: {}", hotels);
+    
+        return hotels;
+    }
+
+    public Page<Hotel> findTop6ByManager_Validated(Boolean validated, Pageable pageable){
+        return hotelRepository.findTop6ByManager_Validated(validated, pageable);
+    }
+
+    public Page<Hotel> findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(Boolean validated,
+            String searchValue, Pageable pageable){
+                return hotelRepository.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(validated, searchValue, pageable);
     }
 
     public List<Hotel> findTop6ByManager_Validated(Boolean validated){

@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import yourHOmeTEL.model.Hotel;
 import yourHOmeTEL.model.Reservation;
+import yourHOmeTEL.model.Review;
 import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.repository.UserRepository;
 
@@ -71,6 +74,27 @@ public class UserService implements GeneralService<UserE> {
     public Optional<UserE> findByName(String name) {
         return userRepository.findByName(name);
     }
+
+    public Page<UserE> findByValidatedAndRejected(Boolean validated, Boolean rejected, Pageable pageable){
+        return userRepository.findByValidatedAndRejected(validated, rejected, pageable);
+    }
+
+    public Page<UserE> findByRejected(Boolean validated, Pageable pageable){
+        return userRepository.findByRejected(validated, pageable);
+    }
+
+    public Page<UserE> findByPhone(String phone,Pageable pageable){
+        return userRepository.findByPhone(phone, pageable);
+    }
+
+    public Page<UserE> findLocationByName(String name, Pageable pageable){
+        return userRepository.findLocationByName(name, pageable);
+    }
+
+    public Page<UserE> findByCollectionRolsContains(String rol, Pageable pageable){
+        return userRepository.findByCollectionRolsContains(rol, pageable);
+    }
+
 
     public List<UserE> findByValidatedAndRejected(Boolean validated, Boolean rejected){
         return userRepository.findByValidatedAndRejected(validated, rejected);

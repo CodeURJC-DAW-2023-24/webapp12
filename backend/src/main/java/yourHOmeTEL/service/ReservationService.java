@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,26 @@ public class ReservationService implements GeneralService<Reservation> {
     @Override
     public Optional<Reservation> findById(Long id) {
         return reservationRepository.findById(id);
+    }
+
+    public Page<Reservation> findByUser_Name(String name, Pageable pageable){
+        return reservationRepository.findByUser_Name(name, pageable);
+    }
+
+    public Page<Reservation> findByHotel_Name(String name, Pageable pageable){
+        return reservationRepository.findByHotel_Name(name, pageable);
+    }
+
+    public Page<Reservation> findByUser_Id(Long userId, Pageable pageable){
+        return reservationRepository.findByUser_Id(userId, pageable);
+    }
+
+    public Page<Reservation> findByHotel_Id(Long hotelId, Pageable pageable){
+        return reservationRepository.findByHotel_Id(hotelId, pageable);
+    }
+
+    public Page<Reservation> findByRoom_Id(Long roomId, Pageable pageable){
+        return reservationRepository.findByRoom_Id(roomId, pageable);
     }
 
     public List<Reservation> findByUser_Name(String name){

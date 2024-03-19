@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -60,7 +61,7 @@ public class Hotel {
     @JsonView({Complete.class, Basic.class})
     private String imagePath;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonView(Complete.class)
     private UserE manager;
 

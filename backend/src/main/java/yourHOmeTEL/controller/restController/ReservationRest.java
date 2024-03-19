@@ -15,8 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -98,7 +99,7 @@ public class ReservationRest {
 
 	@JsonView(ReservationDetails.class)
 	@GetMapping("/reservations/users/{id}")
-	public ResponseEntity<List<Reservation>> getUserReservations(@PathVariable Long id, HttpServletRequest request,
+	public ResponseEntity<PageResponse<Reservation>> getUserReservations(@PathVariable Long id, HttpServletRequest request,
 			Pageable pageable) {
 
 		try {
@@ -106,8 +107,19 @@ public class ReservationRest {
 			UserE targetUser = userService.findById(id).orElseThrow();
 
 			if (requestUser.getRols().contains("ADMIN") || requestUser.equals(targetUser)) {
-				List<Reservation> targetReservations = targetUser.getReservations();
-				return ResponseEntity.ok(targetReservations);
+				Page<Reservation> targetReservations = reservationService.findByUser_Id(id, pageable);
+				if (targetReservations.hasContent()) {
+					PageResponse<Reservation> response = new PageResponse<>();
+					response.setContent(targetReservations.getContent());
+					response.setPageNumber(targetReservations.getNumber());
+					response.setPageSize(targetReservations.getSize());
+					response.setTotalElements(targetReservations.getTotalElements());
+					response.setTotalPages(targetReservations.getTotalPages());
+
+					return ResponseEntity.ok(response);
+				}else{
+					return ResponseEntity.notFound().build();
+				}
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
@@ -120,7 +132,7 @@ public class ReservationRest {
 
 	@JsonView(ReservationDetails.class)
 	@GetMapping("/reservations/hotels/{id}")
-	public ResponseEntity<List<Reservation>> getHotelReservations(@PathVariable Long id, HttpServletRequest request,
+	public ResponseEntity<PageResponse<Reservation>> getHotelReservations(@PathVariable Long id, HttpServletRequest request,
 			Pageable pageable) {
 
 		try {
@@ -128,8 +140,19 @@ public class ReservationRest {
 			UserE targetManager = hotelService.findById(id).orElseThrow().getManager();
 
 			if (targetManager.getvalidated() || requestUser.getRols().contains("ADMIN")) {
-				List<Reservation> targetReservations = hotelService.findById(id).orElseThrow().getReservations();
-				return ResponseEntity.ok(targetReservations);
+				Page<Reservation> targetReservations = reservationService.findByHotel_Id(id, pageable);
+				if (targetReservations.hasContent()) {
+					PageResponse<Reservation> response = new PageResponse<>();
+					response.setContent(targetReservations.getContent());
+					response.setPageNumber(targetReservations.getNumber());
+					response.setPageSize(targetReservations.getSize());
+					response.setTotalElements(targetReservations.getTotalElements());
+					response.setTotalPages(targetReservations.getTotalPages());
+
+					return ResponseEntity.ok(response);
+				}else{
+					return ResponseEntity.notFound().build();
+				}
 			} else {
 				return ResponseEntity.notFound().build();
 			}
@@ -142,7 +165,7 @@ public class ReservationRest {
 
 	@JsonView(ReservationDetails.class)
 	@GetMapping("/reservations/rooms/{id}")
-	public ResponseEntity<List<Reservation>> getRoomReservations(@PathVariable Long id, HttpServletRequest request,
+	public ResponseEntity<PageResponse<Reservation>> getRoomReservations(@PathVariable Long id, HttpServletRequest request,
 			Pageable pageable) {
 
 		try {
@@ -150,8 +173,19 @@ public class ReservationRest {
 			UserE targetManager = hotelService.findById(id).orElseThrow().getManager();
 
 			if (targetManager.getvalidated() || requestUser.getRols().contains("ADMIN")) {
-				List<Reservation> targetReservations = roomService.findById(id).orElseThrow().getReservations();
-				return ResponseEntity.ok(targetReservations);
+				Page<Reservation> targetReservations = reservationService.findByRoom_Id(id, pageable);
+				if (targetReservations.hasContent()) {
+					PageResponse<Reservation> response = new PageResponse<>();
+					response.setContent(targetReservations.getContent());
+					response.setPageNumber(targetReservations.getNumber());
+					response.setPageSize(targetReservations.getSize());
+					response.setTotalElements(targetReservations.getTotalElements());
+					response.setTotalPages(targetReservations.getTotalPages());
+
+					return ResponseEntity.ok(response);
+				}else{
+					return ResponseEntity.notFound().build();
+				}
 			} else {
 				return ResponseEntity.notFound().build();
 			}
