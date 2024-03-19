@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import yourHOmeTEL.model.Hotel;
 import yourHOmeTEL.model.Reservation;
+import yourHOmeTEL.model.Review;
 import yourHOmeTEL.model.Room;
 import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.repository.HotelRepository;
@@ -67,7 +68,7 @@ public class HotelService implements GeneralService<Hotel> {
     public Page<Hotel> findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(Boolean validated,
             String searchValue, Pageable pageable){
                 return hotelRepository.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(validated, searchValue, pageable);
-            }
+    }
 
     public List<Hotel> findTop6ByManager_Validated(Boolean validated){
         return hotelRepository.findTop6ByManager_Validated(validated);

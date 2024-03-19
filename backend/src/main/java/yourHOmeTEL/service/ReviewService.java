@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import yourHOmeTEL.model.Hotel;
+import yourHOmeTEL.model.Reservation;
 import yourHOmeTEL.model.Review;
 import yourHOmeTEL.repository.ReviewRepository;
 
@@ -60,6 +61,14 @@ public class ReviewService implements GeneralService<Review> {
 
     public Page<Review> findByScoreAndHotel(int score, Hotel hotel, Pageable pageable){
         return reviewRepository.findByScoreAndHotel(score, hotel, pageable);
+    }
+
+    public Page<Review> findByUser_Id(Long userId, Pageable pageable){
+        return reviewRepository.findByUser_Id(userId, pageable);
+    }
+
+    public Page<Review> findByHotel_Id(Long hotelId, Pageable pageable){
+        return reviewRepository.findByHotel_Id(hotelId, pageable);
     }
 
     public List<Review> findByUser_Name(String name){

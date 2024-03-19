@@ -5,17 +5,21 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import yourHOmeTEL.controller.restController.HotelRest.HotelDetails;
+import yourHOmeTEL.controller.restController.ReservationRest.ReservationDetails;
+import yourHOmeTEL.controller.restController.ReviewRest.ReviewDetails;
+import yourHOmeTEL.controller.restController.RoomRest.RoomDetails;
+import yourHOmeTEL.controller.restController.UserRest.UserDetails;
 
 public class PageResponse<T> {
-    @JsonView(HotelDetails.class)
+    @JsonView({HotelDetails.class, UserDetails.class, ReviewDetails.class, ReservationDetails.class, RoomDetails.class})
     private List<T> content;
-    @JsonView(HotelDetails.class)
+    @JsonView({HotelDetails.class, UserDetails.class, ReviewDetails.class, ReservationDetails.class, RoomDetails.class})
     private int pageNumber;
-    @JsonView(HotelDetails.class)
+    @JsonView({HotelDetails.class, UserDetails.class, ReviewDetails.class, ReservationDetails.class, RoomDetails.class})
     private int pageSize;
-    @JsonView(HotelDetails.class)
+    @JsonView({HotelDetails.class, UserDetails.class, ReviewDetails.class, ReservationDetails.class, RoomDetails.class})
     private long totalElements;
-    @JsonView(HotelDetails.class)
+    @JsonView({HotelDetails.class, UserDetails.class, ReviewDetails.class, ReservationDetails.class, RoomDetails.class})
     private int totalPages;
 
     public List<T> getContent() {

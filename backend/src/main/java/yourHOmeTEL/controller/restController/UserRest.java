@@ -15,9 +15,10 @@ import java.nio.file.attribute.UserPrincipal;
 import java.sql.SQLException;
 
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
@@ -126,17 +127,38 @@ public class UserRest {
     // ADMIN CONTROLLERS
     @JsonView(UserDetails.class)
     @GetMapping("/managers/validation")
-    public ResponseEntity<List<UserE>> managerValidation(@RequestParam("validated") Boolean validated, 
+    public ResponseEntity<PageResponse<UserE>> managerValidation(@RequestParam("validated") Boolean validated, 
     Pageable pageable) {
 
-        List<UserE> requestedManagersList = new ArrayList<>();
         try {
             if (validated == true){
-                requestedManagersList = userService.findByValidatedAndRejected(true, false);
-                return ResponseEntity.ok(requestedManagersList);
+                Page<UserE> requestedManagersList = userService.findByValidatedAndRejected(true, false, pageable);
+                if (requestedManagersList.hasContent()) {
+                    PageResponse<UserE> response = new PageResponse<>();
+                    response.setContent(requestedManagersList.getContent());
+                    response.setPageNumber(requestedManagersList.getNumber());
+                    response.setPageSize(requestedManagersList.getSize());
+                    response.setTotalElements(requestedManagersList.getTotalElements());
+                    response.setTotalPages(requestedManagersList.getTotalPages());
+
+                    return ResponseEntity.ok(response);
+                }else{
+                    return ResponseEntity.notFound().build();
+                }
             }else if (validated == false){
-                requestedManagersList = userService.findByValidatedAndRejected(false, false);
-                return ResponseEntity.ok(requestedManagersList);
+                Page<UserE> requestedManagersList = userService.findByValidatedAndRejected(false, false, pageable);
+                if (requestedManagersList.hasContent()) {
+                    PageResponse<UserE> response = new PageResponse<>();
+                    response.setContent(requestedManagersList.getContent());
+                    response.setPageNumber(requestedManagersList.getNumber());
+                    response.setPageSize(requestedManagersList.getSize());
+                    response.setTotalElements(requestedManagersList.getTotalElements());
+                    response.setTotalPages(requestedManagersList.getTotalPages());
+
+                    return ResponseEntity.ok(response);
+                }else{
+                    return ResponseEntity.notFound().build();
+                }
             }else{
                 return ResponseEntity.badRequest().build();
             }
@@ -198,10 +220,21 @@ public class UserRest {
     // returns list of all managers. ADMIN and MANAGER can access
     @JsonView(UserDetails.class)
     @GetMapping("/users/managers/list")
-    public ResponseEntity<List<UserE>> managerList(HttpServletRequest request, Pageable pageable) {
+    public ResponseEntity<PageResponse<UserE>> managerList(HttpServletRequest request, Pageable pageable) {
         try {
-            List<UserE> managersList = userService.findByCollectionRolsContains("MANAGER");
-            return ResponseEntity.ok(managersList);
+            Page<UserE> managersList = userService.findByCollectionRolsContains("MANAGER", pageable);
+            if (managersList.hasContent()) {
+                PageResponse<UserE> response = new PageResponse<>();
+                response.setContent(managersList.getContent());
+                response.setPageNumber(managersList.getNumber());
+                response.setPageSize(managersList.getSize());
+                response.setTotalElements(managersList.getTotalElements());
+                response.setTotalPages(managersList.getTotalPages());
+
+                return ResponseEntity.ok(response);
+            }else{
+                return ResponseEntity.notFound().build();
+            }
 
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();

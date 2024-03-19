@@ -16,7 +16,9 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -88,11 +90,22 @@ public class ReviewRest {
 	
 	@JsonView(ReviewDetails.class)
 	@GetMapping("/reviews/users/{id}")
-	public ResponseEntity<List<Review>> userReviews(@PathVariable Long id, Pageable pageable) {
+	public ResponseEntity<PageResponse<Review>> userReviews(@PathVariable Long id, Pageable pageable) {
 
 		try{
-			UserE targetuser = userService.findById(id).orElseThrow();
-			return ResponseEntity.ok(targetuser.getReviews());
+			Page<Review> targetReviews = reviewService.findByUser_Id(id, pageable);
+			if (targetReviews.hasContent()) {
+					PageResponse<Review> response = new PageResponse<>();
+					response.setContent(targetReviews.getContent());
+					response.setPageNumber(targetReviews.getNumber());
+					response.setPageSize(targetReviews.getSize());
+					response.setTotalElements(targetReviews.getTotalElements());
+					response.setTotalPages(targetReviews.getTotalPages());
+
+					return ResponseEntity.ok(response);
+				}else{
+					return ResponseEntity.notFound().build();
+				}
 		
 		}catch(Exception e){
 			return ResponseEntity.notFound().build();
@@ -102,7 +115,7 @@ public class ReviewRest {
 
 	@JsonView(ReviewDetails.class)
 	@GetMapping("/reviews/hotels/{id}")
-	public ResponseEntity<List<Review>> hotelReviews(HttpServletRequest request, @PathVariable Long id, 
+	public ResponseEntity<PageResponse<Review>> hotelReviews(HttpServletRequest request, @PathVariable Long id, 
 	Pageable pageable) {
 		
 		try{
@@ -110,8 +123,19 @@ public class ReviewRest {
 			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
 
 			if (hotelManager.getvalidated() || requestUser.getRols().contains("ADMIN")) {
-				Hotel targetHotel = hotelService.findById(id).orElseThrow();
-				return ResponseEntity.ok(targetHotel.getReviews());
+				Page<Review> targetReviews = reviewService.findByHotel_Id(hotelManager.getId(), pageable);
+				if (targetReviews.hasContent()) {
+					PageResponse<Review> response = new PageResponse<>();
+					response.setContent(targetReviews.getContent());
+					response.setPageNumber(targetReviews.getNumber());
+					response.setPageSize(targetReviews.getSize());
+					response.setTotalElements(targetReviews.getTotalElements());
+					response.setTotalPages(targetReviews.getTotalPages());
+
+					return ResponseEntity.ok(response);
+				}else{
+					return ResponseEntity.notFound().build();
+				}
 			} else {
 				return ResponseEntity.notFound().build();
 			}

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import yourHOmeTEL.model.Hotel;
 import yourHOmeTEL.model.Reservation;
+import yourHOmeTEL.model.Review;
 import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.repository.UserRepository;
 
@@ -93,6 +94,7 @@ public class UserService implements GeneralService<UserE> {
     public Page<UserE> findByCollectionRolsContains(String rol, Pageable pageable){
         return userRepository.findByCollectionRolsContains(rol, pageable);
     }
+
 
     public List<UserE> findByValidatedAndRejected(Boolean validated, Boolean rejected){
         return userRepository.findByValidatedAndRejected(validated, rejected);

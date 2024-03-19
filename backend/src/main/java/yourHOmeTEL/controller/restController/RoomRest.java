@@ -16,7 +16,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -112,8 +113,7 @@ public class RoomRest {
 	@JsonView(RoomDetails.class) //ESTE YA ESTA IMPLEMENTADO EN TEORIA. TIENES QUE PROBAR QUE FUNCIONA BIEN, Y QUIZA
 	//AÑADIRLO AL SECURITY CONFIG DE USUARIOS + ADMIN (LOS MANAGER NO PORQUE NO RESERVAN)		
 	@GetMapping("/rooms/reservations/{id}")
-	public ResponseEntity<Room> reservationRoom(HttpServletRequest request, @PathVariable Long id, 
-	Pageable pageable) {
+	public ResponseEntity<Room> reservationRoom(HttpServletRequest request, @PathVariable Long id) {
 		
 		try{
 			UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();

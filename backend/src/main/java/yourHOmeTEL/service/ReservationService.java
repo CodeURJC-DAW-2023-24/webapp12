@@ -42,6 +42,18 @@ public class ReservationService implements GeneralService<Reservation> {
         return reservationRepository.findByHotel_Name(name, pageable);
     }
 
+    public Page<Reservation> findByUser_Id(Long userId, Pageable pageable){
+        return reservationRepository.findByUser_Id(userId, pageable);
+    }
+
+    public Page<Reservation> findByHotel_Id(Long hotelId, Pageable pageable){
+        return reservationRepository.findByHotel_Id(hotelId, pageable);
+    }
+
+    public Page<Reservation> findByRoom_Id(Long roomId, Pageable pageable){
+        return reservationRepository.findByRoom_Id(roomId, pageable);
+    }
+
     public List<Reservation> findByUser_Name(String name){
         return reservationRepository.findByUser_Name(name);
     }

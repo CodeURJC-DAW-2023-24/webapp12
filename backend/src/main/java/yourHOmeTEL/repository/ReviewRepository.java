@@ -25,6 +25,10 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Page<Review> findByHotel(Hotel hotel, Pageable pageable);
 
     Page<Review> findByScoreAndHotel(int score, Hotel hotel, Pageable pageable);
+
+    Page<Review> findByUser_Id(Long userId, Pageable pageable);
+
+    Page<Review> findByHotel_Id(Long hotelId, Pageable pageable);
     
     List<Review> findByUser_Name(String name);
 
