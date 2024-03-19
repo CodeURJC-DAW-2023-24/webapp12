@@ -142,11 +142,11 @@ public class initDataBaseService {
                                 new ArrayList<>(),
                                 new ArrayList<>());
 
-                Hotel hotel7 = new Hotel("Hotel7", "hotel ", "loc2", 0F, null, manager3, new ArrayList<>(),
+                Hotel hotel7 = new Hotel("Hotel7", "hotel ", "loc2", 0F, null, manager2, new ArrayList<>(),
                                 new ArrayList<>(),
                                 new ArrayList<>());
 
-                Hotel hotel8 = new Hotel("Hotel8", "hotel ", "loc2", 0F, null, manager3, new ArrayList<>(),
+                Hotel hotel8 = new Hotel("Hotel8", "hotel ", "loc2", 0F, null, manager2, new ArrayList<>(),
                                 new ArrayList<>(),
                                 new ArrayList<>());
 

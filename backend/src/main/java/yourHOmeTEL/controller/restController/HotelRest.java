@@ -10,7 +10,9 @@ import java.sql.SQLException;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -235,13 +237,24 @@ public class HotelRest {
         return ResponseEntity.ok(recomendedHotels);    
     }
 
-	@JsonView(HotelDetails.class)
+	@JsonView(HotelDetails.class) //this is not done
     @GetMapping("/hotels/index/search")
-    public ResponseEntity<List<Hotel>> indexSearch(@RequestParam String searchValue, Pageable pageable) {
+    public ResponseEntity<PageResponse<Hotel>> indexSearch(@RequestParam String searchValue, Pageable pageable) {
         try { 
-            List<Hotel> hotels = hotelService.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(true,
-                    searchValue);
-            return ResponseEntity.ok(hotels);
+            Page<Hotel> hotels = hotelService.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(true,
+                    searchValue, pageable);
+					if (hotels.hasContent()) {
+						PageResponse<Hotel> response = new PageResponse<>();
+						response.setContent(hotels.getContent());
+						response.setPageNumber(hotels.getNumber());
+						response.setPageSize(hotels.getSize());
+						response.setTotalElements(hotels.getTotalElements());
+						response.setTotalPages(hotels.getTotalPages());
+	
+						return ResponseEntity.ok(response);
+					}else{
+						return ResponseEntity.notFound().build();
+					}
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
@@ -249,23 +262,35 @@ public class HotelRest {
 
 	// MANAGER CONTROLLERS
 
-    // Loads the first 6 hotels of a manager
+    // this one is aready dont, dont touch it
+
     @JsonView(HotelDetails.class)
-    @GetMapping("/hotels/manager/{id}/view")
-    public ResponseEntity<List<Hotel>> viewHotelsManager(HttpServletRequest request, @PathVariable Long id,
+    @GetMapping("/hotels/manager/{id}")
+    public ResponseEntity <PageResponse<Hotel>> viewHotelsManager(HttpServletRequest request, @PathVariable Long id,
      Pageable pageable) {
         try{
-            String managernick = request.getUserPrincipal().getName();
-            UserE currentManager = userService.findByNick(managernick).orElseThrow();
+            UserE requestManager = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			UserE targetManager = userService.findById(id).orElseThrow();
 
-            List<Hotel> hotels = currentManager.getHotels();
+			if ((requestManager.equals(targetManager) && requestManager.getvalidated())|| requestManager.getRols().contains("ADMIN")){
+				Page <Hotel> hotels = hotelService.findByManager_Id(id, pageable);
+				if (hotels.hasContent()) {
+					PageResponse<Hotel> response = new PageResponse<>();
+					response.setContent(hotels.getContent());
+					response.setPageNumber(hotels.getNumber());
+					response.setPageSize(hotels.getSize());
+					response.setTotalElements(hotels.getTotalElements());
+					response.setTotalPages(hotels.getTotalPages());
 
-            if (hotels.size() > 6) {
-                hotels = hotels.subList(0, 6);
-            }
-            return ResponseEntity.ok(hotels);
+					return ResponseEntity.ok(response);
+				}else{
+					return ResponseEntity.notFound().build();
+				}
+			}else{
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}           
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
-    }
+	}
 }

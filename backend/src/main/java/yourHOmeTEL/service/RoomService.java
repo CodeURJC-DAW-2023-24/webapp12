@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,10 @@ public class RoomService implements GeneralService<Room> {
     public Optional<Room> findById(Long id) {
         return roomRepository.findById(id);
 
+    }
+
+    public Page<Room> findByMaxClients(int maxClients, Pageable pageable){
+        return roomRepository.findByMaxClients(maxClients, pageable);
     }
 
     public List<Room> findByMaxClients(int maxClients){

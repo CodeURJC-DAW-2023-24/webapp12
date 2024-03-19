@@ -65,6 +65,7 @@ public class SecurityConfiguration {
 			.authorizeHttpRequests(authorize -> authorize
                     
                     //ADMIN AND MANAGER ENDPOINTS
+                    .requestMatchers(HttpMethod.GET,"/api/hotels/manager/{id}").hasAnyRole("MANAGER", "ADMIN")
                     .requestMatchers(HttpMethod.GET,"/api/users/managers/list").hasAnyRole("MANAGER","ADMIN")
 
                     .requestMatchers(HttpMethod.POST,"/api/hotels/{id}").hasAnyRole("MANAGER","ADMIN")
@@ -89,7 +90,6 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.POST,"/api/users/{id}/managers/validation").hasRole("ADMIN")
                 
                     //MANAGER ENDPOINTS
-                    .requestMatchers(HttpMethod.GET,"/api/hotels/manager/{id}/view").hasRole("MANAGER")
                     .requestMatchers(HttpMethod.PUT, "/api/manager/{id}/application").hasRole("MANAGER")
 
                     //MANAGER AND CLIENT ENDPOINTS

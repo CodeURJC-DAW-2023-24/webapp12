@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,30 @@ public class ReviewService implements GeneralService<Review> {
     public Optional<Review> findById(Long id) {
         return reviewRepository.findById(id);
 
+    }
+
+    public Page<Review> findByUser_Name(String name, Pageable pageable){
+        return reviewRepository.findByUser_Name(name, pageable);
+    }
+
+    public Page<Review> findByHotel_Name(String name, Pageable pageable){
+        return reviewRepository.findByHotel_Name(name, pageable);
+    }
+
+    public Page<Review> findByDate(Date date, Pageable pageable){
+        return reviewRepository.findByDate(date, pageable);
+    }
+
+    public Page<Review> findByScore(int score, Pageable pageable){
+        return reviewRepository.findByScore(score, pageable);
+    }
+
+    public Page<Review> findByHotel(Hotel hotel, Pageable pageable){
+        return reviewRepository.findByHotel(hotel, pageable);
+    }
+
+    public Page<Review> findByScoreAndHotel(int score, Hotel hotel, Pageable pageable){
+        return reviewRepository.findByScoreAndHotel(score, hotel, pageable);
     }
 
     public List<Review> findByUser_Name(String name){
