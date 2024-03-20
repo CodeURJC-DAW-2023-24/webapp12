@@ -10,9 +10,29 @@
   - Grafics
   - Complementary technologies
   - Advanced query
+    
 - Phase 1
   - Pages
   - Diagram
+    
+- Phase 2
+  - Pages
+  - Execution instructions
+  - Configuration
+  - Database Entity diagram
+  - Class and templates diagram
+  - Group Members Participation
+
+- Phase 3
+  - 1.API REST documentation
+    - 1.1.OpenAPI
+    - 1.2.HTML  
+  - 2.Class and templates diagram
+  - 3.Execution instructions
+  - 4.Docker image documentation
+  - 5.Virtual Machine deployment
+  - 6.URL to Virtual Machine
+  - 7.Group Members Participation
 
 # Phase 0: Team creation and definition of website functionalities
 ### App name: yourHOmeTEL
@@ -365,7 +385,7 @@ The code for the application is developed in Visual Studio Code. To execute the 
 ![classAndTemplates](https://github.com/CodeURJC-DAW-2023-24/webapp12/assets/80918031/c7cdb1af-a1b2-461c-9a78-fd93ccec1a6e)
 
 
-# Group Members Participation
+# GROUP MEMBERS PARTICIPATION
 
 ### Paula Monrobel Ugidos
 
@@ -469,4 +489,139 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
 | #2 | hotelReview.html         |
 | #3 | loadHotels.js            |
 | #4 | loadMoreReservations.js  |
-| #5 |     HotelController      |
+| #5 | HotelController          |
+
+
+# Phase 3: API REST and Docker images
+  ## 1.API REST documentation
+  ### 1.1OpenAPI:
+  ### 1.2HTML:
+    
+  ## 2.Class and templates diagram
+  
+  ## 3.Execution instructions
+  
+  1. Clone the repository with
+  ```
+  git clone https://github.com/CodeURJC-DAW-2023-24/webapp12.git
+  ```
+  2. Switch to "docker" directory 
+  ```
+  cd webapp12/docker
+  ```
+  3. Install docker on your system [here](https://docs.docker.com/engine/install/)
+  4. Find the installed docker, and run it
+  5. While being on the directory webapp12/docker, excute on terminal:
+  ```
+  docker-compose up
+  ```
+  6. Once the previous step is finished, open an internet browser, and search for [https://localhost:8443](https://localhost:8443)
+  
+  ## 4.Docker image documentation
+  
+  1. Use a browser to create an account on [Dockerhub](https://hub.docker.com/)
+  2. Clone the repository with
+  ```
+  git clone https://github.com/CodeURJC-DAW-2023-24/webapp12.git
+  ```
+  3. Switch to "docker" directory 
+  ```
+  cd webapp12/docker
+  ```
+  4. Install docker on your system [here](https://docs.docker.com/engine/install/)
+  5. Find the installed docker, and run it
+  6. Connect your account to Docker. You can use:
+  ```
+  docker login
+  ```
+  And then type your credentials   
+  
+  7. While being on the directory webapp12/docker, excute on terminal:
+  ```
+  ./create_image.sh
+  ```
+  
+  ## 5.Virtual Machine deployment
+  
+  1. Connect to virtual machine with
+  ```
+  mv prAppWeb12.key ~/ 
+  chmod 600 ~/prAppWeb12.key
+  ssh -i ~/prAppWeb12.key vmuser@10.100.139.161
+  ```
+
+  2. Install Docker on Virtual Machine 
+
+  ### 2.1 Install Docker
+  ```
+  sudo apt-get update
+  sudo apt-get install ca-certificates curl
+  sudo install -m 0755 -d /etc/apt/keyrings
+  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+  sudo chmod a+r /etc/apt/keyrings/docker.asc
+  
+  echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  sudo apt-get update
+  ```
+  
+  ### 2.2 Install Docker-Compose plugin
+  ```
+  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  ```
+  
+  ### 2.3 Test Docker is correctly instaled running
+  ```
+  sudo docker run hello-world
+  ```
+  ### 2.4. Clone the repository with
+  ```
+  git clone https://github.com/CodeURJC-DAW-2023-24/webapp12.git
+  ```
+  ### 2.5 Prepare Docker Compose
+  ```
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
+  ```
+ ### 2.6 Switch to directory and grant premissions
+  ```
+  cd webapp12/docker
+  chmod +x create_image.sh
+  ```
+ ### 2.7 Execute the script
+  ```
+  ./create_image.sh
+  ```
+ ### 2.8 Open a browser and access [https://10.100.139.161:8443](https://10.100.139.161:8443)
+
+
+## 6.URL to Virtual Machine: [https://10.100.139.161:8443](https://10.100.139.161:8443)
+  
+## 7.Group Members Participation
+
+  ### Name
+
+  - Description: Desc
+
+
+  - Five most important commits
+
+| Commit Number | Description | Link |
+|:--:|:----------------------------------------:|:------------------------------------------------------------------------------------------------:|
+| #1 |                                          |                                                                                                  |
+| #2 |                                          |                                                                                                  |
+| #3 |                                          |                                                                                                  |
+| #4 |                                          |                                                                                                  |
+| #5 |                                          |                                                                                                  |
+
+- Five most participation files
+
+| File number | File |
+|:--:|:------------------------:|
+| #1 |                          |
+| #2 |                          |
+| #3 |                          |
+| #4 |                          |
+| #5 |                          |
