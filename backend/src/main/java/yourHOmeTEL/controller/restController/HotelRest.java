@@ -247,6 +247,35 @@ public class HotelRest {
 		}
 	}
 
+	@GetMapping("/moreHotelsManagerView/{start}/{end}")
+	public ResponseEntity<List<Hotel>> loadMoreHotelsManagerView(
+			HttpServletRequest request,
+			@PathVariable Long start,
+			@PathVariable Long end) {
+
+		var hotelsQuantity = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow().getHotels()
+				.size();
+		var hotels = new ArrayList<Hotel>();
+
+		if (start <= hotelsQuantity) {
+			// We obtain the hotels IDs for the actual page
+			List<Long> hotelIds = new ArrayList<>();
+			for (long index = start; index < end && index <= hotelsQuantity; index++) {
+				hotelIds.add(index);
+			}
+
+			// We look for the Hotel objects related to the IDs
+			for (Long hotelId : hotelIds) {
+				Hotel hotel = hotelService.findById(hotelId).orElse(null);
+				if (hotel != null) {
+					hotels.add(hotel);
+				}
+			}
+		}
+
+		return ResponseEntity.ok(hotels);
+	}
+
 	// PUBLIC CONTROLLERS
 
 	// ADVANCED RECOMMENDATION ALGORITHM
