@@ -186,7 +186,7 @@ public class RoomRest {
 	// edit profile using raw json body or x-www-form-urlencoded
     @JsonView(RoomDetails.class)
 	@PutMapping("/rooms/{roomId}/hotels/{hotelId}/update")
-    public ResponseEntity<Room> editRoom(HttpServletRequest request, @PathVariable Long roomId, @RequestParam Long hotelId,@RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
+    public ResponseEntity<Room> editRoom(HttpServletRequest request, @PathVariable Long roomId, @PathVariable Long hotelId, @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
 
         try {
             UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
@@ -209,11 +209,12 @@ public class RoomRest {
     @DeleteMapping("/rooms/{roomId}/hotels/{hotelId}/removal")
     public ResponseEntity<Room> deleteRoom(HttpServletRequest request, @PathVariable Long roomId, @PathVariable Long hotelId) {
         try {
+			Hotel targetHotel = hotelService.findById(hotelId).orElseThrow();
             UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-            UserE hotelManager = hotelService.findById(hotelId).orElseThrow().getManager();
+            UserE hotelManager = targetHotel.getManager();
+			Room targetRoom = roomService.findById(roomId).orElseThrow();
 
-            if (requestUser.getRols().contains("ADMIN") || requestUser.equals(hotelManager)) {
-                Room targetRoom = roomService.findById(roomId).orElseThrow();
+            if (requestUser.getRols().contains("ADMIN") || (requestUser.equals(hotelManager) && targetHotel.equals(targetRoom.getHotel()))) {
 				roomService.delete(targetRoom);
                 return ResponseEntity.noContent().build();
             } else {
