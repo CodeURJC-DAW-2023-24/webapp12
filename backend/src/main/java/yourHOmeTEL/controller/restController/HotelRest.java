@@ -126,35 +126,18 @@ public class HotelRest {
 			hotelService.save(newHotel);
 
 			// PENDIENTE -> Refactorizar si se puede
-			{
-				if (room1 != null)
-					for (int i = 0; i < room1; i++) {
-						Room room = new Room(1, cost1, new ArrayList<>(), newHotel);
-						newHotel.getRooms().add(room);
-						roomService.save(room);
-					}
 
-				if (room2 != null)
-					for (int i = 0; i < room2; i++) {
-						Room room = new Room(2, cost2, new ArrayList<>(), newHotel);
-						newHotel.getRooms().add(room);
-						roomService.save(room);
-					}
+			Integer[] rooms = { room1, room2, room3, room4 };
+			Integer[] costs = { cost1, cost2, cost3, cost4 };
 
-				if (room3 != null)
-					for (int i = 0; i < room3; i++) {
-						Room room = new Room(3, cost3, new ArrayList<>(), newHotel);
-						newHotel.getRooms().add(room);
-						roomService.save(room);
+			for (int i = 0; i < rooms.length; i++) {
+				if (rooms[i] != null) {
+					for (int j = 0; j < rooms[i]; j++) {
+						Room roomForJPeople = new Room(rooms[i], costs[i], new ArrayList<>(), newHotel);
+						newHotel.getRooms().add(roomForJPeople);
+						roomService.save(roomForJPeople);
 					}
-
-				if (room4 != null)
-					for (int i = 0; i < room4; i++) {
-						Room room = new Room(4, cost4, new ArrayList<>(), newHotel);
-						newHotel.getRooms().add(room);
-						roomService.save(room);
-					}
-
+				}
 			}
 
 			hotelService.save(newHotel);
@@ -258,6 +241,7 @@ public class HotelRest {
 		}
 
 	}
+
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/clients/{id}")
 	public ResponseEntity<List<UserE>> clientlist(HttpServletRequest request, @PathVariable Long id) {
@@ -277,9 +261,6 @@ public class HotelRest {
 		}
 	}
 
-
-
-	
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotelsInfo/{id}")
 	public ResponseEntity<Map<String, Object>> hotelInformation(@PathVariable Long id) {
