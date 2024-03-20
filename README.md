@@ -493,13 +493,14 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
 
 
 # Phase 3: API REST and Docker images
-  ## 1.API REST documentation
-  ### 1.1OpenAPI:
-  ### 1.2HTML:
+  ## 1. API REST documentation
+  ### 1.1. OpenAPI:
+  ### 1.2. HTML:
     
-  ## 2.Class and templates diagram
+  ## 2. Class and templates diagram 
+  ![REST DIAGRAM](https://github.com/CodeURJC-DAW-2023-24/webapp12/blob/7a6ecfc4698ca8a85c34dae51c09af332d429d72/assets/diagramaRest.jpeg)
   
-  ## 3.Execution instructions
+  ## 3. Execution instructions
   
   1. Clone the repository with
   ```
@@ -517,7 +518,7 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
   ```
   6. Once the previous step is finished, open an internet browser, and search for [https://localhost:8443](https://localhost:8443)
   
-  ## 4.Docker image documentation
+  ## 4. Docker image documentation
   
   1. Use a browser to create an account on [Dockerhub](https://hub.docker.com/)
   2. Clone the repository with
@@ -541,7 +542,7 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
   ./create_image.sh
   ```
   
-  ## 5.Virtual Machine deployment
+  ## 5. Virtual Machine deployment
   
   1. Connect to virtual machine with
   ```
@@ -597,9 +598,9 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
  ### 2.8 Open a browser and access [https://10.100.139.161:8443](https://10.100.139.161:8443)
 
 
-## 6.URL to Virtual Machine: [https://10.100.139.161:8443](https://10.100.139.161:8443)
+## 6. URL to Virtual Machine: [https://10.100.139.161:8443](https://10.100.139.161:8443)
   
-## 7.Group Members Participation
+## 7. Group Members Participation
 
   ### Name
 
