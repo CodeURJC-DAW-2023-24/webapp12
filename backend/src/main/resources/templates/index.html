@@ -5,7 +5,7 @@
   <script src="/js/loadHotels.js"></script>
   <link href="/css/index.css" rel="stylesheet">
   <title>Index</title>
-  {{>headerindex}}
+  {{>headerIndex}}
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
       <a class="navbar-brand" href="/index">Your<span>HOmeTEL</span></a>
@@ -43,7 +43,7 @@
       <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
         <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
           <div class="text">
-            <p class="breadcrumbs mb-2"><span class="mr-2"><a href="/index.html">Home</a></span> <span>About Us</span>
+            <p class="breadcrumbs mb-2"><span class="mr-2"><a href="/index">Home</a></span> <span>About Us</span>
             </p>
             <h1 class="mb-4 bread">Our Hotels</h1>
           </div>
@@ -77,12 +77,8 @@
         {{/hotels}}
       </div>
       <div class="mt-5">
-        <a onclick='loadMoreHotels()' class="btn btn-secondary rounded" id ="moreHotels">Más hoteles</a>
+        <a onclick='loadMoreHotels()' class="btn btn-secondary rounded" id ="moreHotels">More hotels</a>
       </div>
     </div>
   </section>
-
-  
-
-
-  {{>footerindex}}
+  {{>footerIndex}}

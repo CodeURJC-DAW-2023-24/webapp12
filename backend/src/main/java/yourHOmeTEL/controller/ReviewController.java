@@ -88,8 +88,8 @@ public class ReviewController {
 				reviews.add(selectedHotel.getReviews().get(i));
 			}
 
-			model.addAttribute("hotelreviews", reviews);
-			model.addAttribute("totalreviews", selectedHotel.getReviews().size());
+			model.addAttribute("hotelReviews", reviews);
+			model.addAttribute("totalReviews", selectedHotel.getReviews().size());
 
 			for (int i = 1; i <= 5; i++) {
 				reviews = reviewService.findByScoreAndHotel(i, selectedHotel);
@@ -128,7 +128,7 @@ public class ReviewController {
 				newReviews.add(reviews.get(i - 1));
 			}
 
-			model.addAttribute("hotelreviews", newReviews);
+			model.addAttribute("hotelReviews", newReviews);
 		}
 
 		return "hotelReviewTemplate";

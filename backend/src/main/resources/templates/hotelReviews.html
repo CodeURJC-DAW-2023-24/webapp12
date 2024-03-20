@@ -1,5 +1,5 @@
 {{>headerReviews}}
-{{>navindex}}
+{{>navIndex}}
 
 <script src="/js/loadReviews.js"></script>
 
@@ -55,7 +55,7 @@
       </div>
       <div id="reviews" class="review-section">
         <div class="d-flex align-items-center justify-content-between mb-4">
-          <h4 class="m-0">Total reviews: {{totalreviews}}</h4>
+          <h4 class="m-0">Total reviews: {{totalReviews}}</h4>
           <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2"
             style="width: 188px;">
             <span class="selection">
@@ -314,7 +314,7 @@
     <!-- List of all the reviews -->
     <div class="review-list">
       <ul id="reviewList">
-        {{#hotelreviews}}
+        {{#hotelReviews}}
 
         <!-- Here begins a review -->
         <li>
@@ -353,10 +353,10 @@
             </div>
           </div>
         </li>
-        {{/hotelreviews}}
-        {{^hotelreviews}}
+        {{/hotelReviews}}
+        {{^hotelReviews}}
         <h2>No reviews for this hotel so far</h2>
-        {{/hotelreviews}}
+        {{/hotelReviews}}
       </ul>
     </div>
 
@@ -365,7 +365,7 @@
     </div>
   </div>
 </div>
-{{>footerindex}}
+{{>footerIndex}}
 
 <!-- General scripts -->
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
