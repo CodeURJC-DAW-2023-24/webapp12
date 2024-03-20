@@ -69,9 +69,6 @@ public class RoomRest {
 	RoomService roomService;
 
 	@Autowired
-	ReviewService reviewService;
-
-	@Autowired
     private ObjectMapper objectMapper;
 
 	@PostConstruct

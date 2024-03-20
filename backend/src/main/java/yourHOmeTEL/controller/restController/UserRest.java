@@ -87,9 +87,6 @@ public class UserRest {
     private UserService userService;
 
     @Autowired
-    private HotelService hotelService;
-
-    @Autowired
     private ReservationService reservationService;
 
     @Autowired
@@ -100,12 +97,6 @@ public class UserRest {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @Autowired
-    private UserLoginService userLoginService;
-
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
 
     @PostConstruct
     public void setup() {
