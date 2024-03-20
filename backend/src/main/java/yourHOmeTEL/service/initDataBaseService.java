@@ -179,6 +179,11 @@ public class initDataBaseService {
                 room2.setHotel(hotel2);
                 room3.setHotel(hotel3);
 
+                //add room to hotel
+                hotel1.getRooms().add(room1);
+                hotel2.getRooms().add(room2);
+                hotel3.getRooms().add(room3);
+
                 // save rooms
                 roomRepository.save(room1);
                 roomRepository.save(room2);
