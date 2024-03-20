@@ -205,7 +205,7 @@ public class HotelRest {
 		}
 
 	}
-
+	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/clients/{id}")
 	public ResponseEntity<List<UserE>> clientlist(HttpServletRequest request, @PathVariable Long id) {
 		try {

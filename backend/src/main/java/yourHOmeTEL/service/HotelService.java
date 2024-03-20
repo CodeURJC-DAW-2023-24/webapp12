@@ -108,7 +108,7 @@ public class HotelService implements GeneralService<Hotel> {
         List<Reservation> hotelReservations = hotel.getReservations();
 
         for (Reservation reservation : hotelReservations) {
-            if (reservation.getCheckOut().isAfter(today)) {
+            if (!reservation.getCheckOut().isAfter(today)) {
                 UserE user = reservation.getUser();
                 if (!validClients.contains(user))
                     validClients.add(user);
