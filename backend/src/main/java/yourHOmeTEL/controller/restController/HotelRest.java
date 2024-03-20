@@ -206,7 +206,7 @@ public class HotelRest {
 
 	}
 
-	@GetMapping("/clients/{id}")
+	@GetMapping("/hotels/clients/{id}")
 	public ResponseEntity<List<UserE>> clientlist(HttpServletRequest request, @PathVariable Long id) {
 		try {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
