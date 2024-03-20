@@ -426,4 +426,32 @@ public class HotelRest {
 			return ResponseEntity.notFound().build();
 		}
 	}
+
+
+
+	
+	@JsonView(HotelDetails.class)
+	@GetMapping("/reviews/{id}/hotel")
+	public ResponseEntity<Review> getHotelFromReview (
+		HttpServletRequest request,
+		@PathVariable Long id){
+
+		try {
+			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			Review review = reviewService.findByHotel_Id(id);
+
+			UserE hotelManager = review.getHotel().getManager();
+ 
+			if (currentUser.equals(hotelManager)){
+
+				return ResponseEntity.ok(review);
+
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
 }
