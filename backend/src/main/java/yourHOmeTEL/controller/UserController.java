@@ -200,7 +200,7 @@ public class UserController {
 			manager.setvalidated(false);
 			userService.save(manager);
 		}
-		return "redirect:/managervalidation";
+		return "redirect:/managerValidation";
 
 	}
 
@@ -213,7 +213,7 @@ public class UserController {
 			manager.setvalidated(true);
 			userService.save(manager);
 		}
-		return "redirect:/managervalidation";
+		return "redirect:/managerValidation";
 
 	}
 
@@ -314,34 +314,34 @@ public class UserController {
 		String usernick = request.getUserPrincipal().getName();
 		UserE currentUser = userService.findByNick(usernick).orElseThrow();
 		if (currentUser.getBio() == null) {
-			model.addAttribute("hasbio", false);
+			model.addAttribute("hasBio", false);
 			currentUser.setBio("");
 		} else
-			model.addAttribute("hasbio", true);
+			model.addAttribute("hasBio", true);
 
 		if (currentUser.getLocation() == null) {
-			model.addAttribute("haslocation", false);
+			model.addAttribute("hasLocation", false);
 			currentUser.setLocation("");
 		} else
-			model.addAttribute("haslocation", true);
+			model.addAttribute("hasLocation", true);
 
 		if (currentUser.getPhone() == null) {
-			model.addAttribute("hasphone", false);
+			model.addAttribute("hasPhone", false);
 			currentUser.setPhone(" ");
 		} else
-			model.addAttribute("hasphone", true);
+			model.addAttribute("hasPhone", true);
 
 		if (currentUser.getOrganization() == null) {
-			model.addAttribute("hasorg", false);
+			model.addAttribute("hasOrg", false);
 			currentUser.setOrganization(" ");
 		} else
-			model.addAttribute("hasorg", true);
+			model.addAttribute("hasOrg", true);
 
 		if (currentUser.getLanguage() == null) {
-			model.addAttribute("haslang", false);
+			model.addAttribute("hasLang", false);
 			currentUser.setLanguage(" ");
 		} else
-			model.addAttribute("haslang", true);
+			model.addAttribute("hasLang", true);
 
 		model.addAttribute("user", currentUser);
 		model.addAttribute("imageFile", currentUser.getImageFile());

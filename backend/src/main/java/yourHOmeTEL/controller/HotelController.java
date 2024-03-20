@@ -193,7 +193,7 @@ public class HotelController {
 			model.addAttribute("hotel", hotel);
 			model.addAttribute("numRooms", hotel.getNumRooms());
 
-			return "/hotelInformation";
+			return "hotelInformation";
 
 		} else
 			return "/error";

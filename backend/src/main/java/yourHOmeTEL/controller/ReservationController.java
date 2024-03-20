@@ -77,7 +77,7 @@ public class ReservationController {
 	 * @return
 	 */
 	@GetMapping("/clientReservations")
-	public String clientreservation(Model model, HttpServletRequest request) {
+	public String clientReservation(Model model, HttpServletRequest request) {
 		UserE currentClient = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 
 		List<Reservation> bookings = currentClient.getReservations();
@@ -131,7 +131,7 @@ public class ReservationController {
 	}
 
 	@GetMapping("/reservationInfo/{id}")
-	public String clientreservation(Model model, HttpServletRequest request, @PathVariable Long id) {
+	public String clientReservation(Model model, HttpServletRequest request, @PathVariable Long id) {
 		UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 		UserE foundUser = reservationService.findById(id).orElseThrow().getUser();
 
