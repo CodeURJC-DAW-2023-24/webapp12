@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import yourHOmeTEL.model.Hotel;
+import yourHOmeTEL.model.Reservation;
 import yourHOmeTEL.model.Review;
 
 @Repository
@@ -29,6 +30,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Page<Review> findByUser_Id(Long userId, Pageable pageable);
 
     Page<Review> findByHotel_Id(Long hotelId, Pageable pageable);
+
+    Review findByHotel_Id(Long hotelId);
     
     List<Review> findByUser_Name(String name);
 

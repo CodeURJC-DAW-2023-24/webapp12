@@ -50,6 +50,10 @@ public class ReservationService implements GeneralService<Reservation> {
         return reservationRepository.findByHotel_Id(hotelId, pageable);
     }
 
+    public Reservation findByHotel_Id(Long hotelId){
+        return reservationRepository.findByHotel_Id(hotelId);
+    }
+
     public Page<Reservation> findByRoom_Id(Long roomId, Pageable pageable){
         return reservationRepository.findByRoom_Id(roomId, pageable);
     }

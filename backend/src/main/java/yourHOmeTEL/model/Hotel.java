@@ -3,6 +3,7 @@ package yourHOmeTEL.model;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -85,6 +86,9 @@ public class Hotel {
         this.name = name;
         this.location = location;
         this.description = description;
+        this.rooms = new ArrayList<Room>();
+        this.reservations = new ArrayList<Reservation>();
+        this.reviews = new ArrayList<Review>();
     }
 
     public Hotel(String name, String description, String location, float rating, Blob imageHotel,
@@ -164,6 +168,8 @@ public class Hotel {
         this.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
         this.setImage(true);         
     }
+
+    // PENDIENTE -> Se añade un getClientes a esta clase? 
 
     public String getImagePath() {
         return imagePath;
