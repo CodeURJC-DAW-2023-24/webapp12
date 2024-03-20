@@ -454,4 +454,30 @@ public class HotelRest {
 			return ResponseEntity.notFound().build();
 		}
 	}
+
+
+	@JsonView(HotelDetails.class)
+	@GetMapping("/rooms/{id}/hotel")
+	public ResponseEntity<Room> getHotelFromRoom (
+		HttpServletRequest request,
+		@PathVariable Long id){
+
+		try {
+			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			Room room = roomService.findByHotel_Id(id);
+
+			UserE hotelManager = room.getHotel().getManager();
+ 
+			if (currentUser.equals(hotelManager)){
+
+				return ResponseEntity.ok(room);
+
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
 }

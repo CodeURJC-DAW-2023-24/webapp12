@@ -33,6 +33,10 @@ public class RoomService implements GeneralService<Room> {
         return roomRepository.findByHotel_Id(hotelId, pageable);
     }
 
+    public Room findByHotel_Id(Long hotelId ){
+        return roomRepository.findByHotel_Id(hotelId);
+    }
+
     public List<Room> findByMaxClients(int maxClients){
         return roomRepository.findByMaxClients(maxClients);
     }

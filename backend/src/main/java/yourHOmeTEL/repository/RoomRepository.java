@@ -15,6 +15,8 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     Page<Room> findByMaxClients(int maxClients, Pageable pageable);
 
     Page<Room> findByHotel_Id(Long hotelIdLong, Pageable pageable);
+
+    Room findByHotel_Id(Long hotelIdLong);
     
     List<Room> findByMaxClients(int maxClients); 
 }

@@ -103,6 +103,7 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET,"/hotelsInfo/{id}").hasRole("MANAGER")
                     .requestMatchers(HttpMethod.GET,"/reservations/{id}/hotel").hasRole("MANAGER")
                     .requestMatchers(HttpMethod.GET,"/reviews/{id}/hotel").hasRole("MANAGER")
+                    .requestMatchers(HttpMethod.GET,"/rooms/{id}/hotel").hasRole("MANAGER")
 
                     //MANAGER AND CLIENT ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/moreHotelsManagerView/{start}/{end}").hasRole("MANAGER")
