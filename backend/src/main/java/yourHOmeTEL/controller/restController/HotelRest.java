@@ -40,15 +40,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
-import yourHOmeTEL.model.Hotel;
-import yourHOmeTEL.model.Reservation;
-import yourHOmeTEL.model.Review;
-import yourHOmeTEL.model.Room;
-import yourHOmeTEL.model.UserE;
-import yourHOmeTEL.service.HotelService;
-import yourHOmeTEL.service.ReviewService;
-import yourHOmeTEL.service.RoomService;
-import yourHOmeTEL.service.UserService;
+
+import yourHOmeTEL.model.*;
+import yourHOmeTEL.service.*;
 
 @RestController
 @RequestMapping("/api")
@@ -77,6 +71,9 @@ public class HotelRest {
 
 	@Autowired
 	RoomService roomService;
+
+	@Autowired
+	ReservationService reservationService;
 
 	/**
 	 * Goes to the edit page of a hotel so you can edit the values. It loads the
@@ -124,8 +121,6 @@ public class HotelRest {
 			UserE manager = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			newHotel.setManager(manager);
 			hotelService.save(newHotel);
-
-			// PENDIENTE -> Refactorizar si se puede
 
 			Integer[] rooms = { room1, room2, room3, room4 };
 			Integer[] costs = { cost1, cost2, cost3, cost4 };
@@ -406,4 +401,24 @@ public class HotelRest {
 			return ResponseEntity.notFound().build();
 		}
 	}
+
+	@JsonView(HotelDetails.class)
+	@GetMapping("/reservations/{id}/hotel")
+	public ResponseEntity<Reservation> getHotelFromReservation (
+		HttpServletRequest request,
+		@PathVariable Long id){
+
+		try {
+			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			Reservation reservation = reservationService.findByHotel_Id(id);
+
+			UserE hotelManager = reservation.getHotel().getManager();
+
+			if (currentUser) {
+				
+			}
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
 }

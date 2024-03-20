@@ -36,7 +36,6 @@ public class HotelService implements GeneralService<Hotel> {
     @Override
     public void delete(Hotel hotel) {
         hotelRepository.delete(hotel);
-        ;
     }
     
     @Override

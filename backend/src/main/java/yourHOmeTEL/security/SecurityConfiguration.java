@@ -98,10 +98,11 @@ public class SecurityConfiguration {
                 
                     //MANAGER ENDPOINTS
                     .requestMatchers(HttpMethod.PUT, "/api/manager/{id}/application").hasRole("MANAGER")
-
-                    //MANAGER AND CLIENT ENDPOINTS
+                    .requestMatchers(HttpMethod.POST, "/api/hotels").hasRole("MANAGER")
                     .requestMatchers(HttpMethod.GET,"/hotels/clients/{id}").hasRole("MANAGER")
                     .requestMatchers(HttpMethod.GET,"/hotelsInfo/{id}").hasRole("MANAGER")
+
+                    //MANAGER AND CLIENT ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/moreHotelsManagerView/{start}/{end}").hasRole("MANAGER")
                     
                                 
