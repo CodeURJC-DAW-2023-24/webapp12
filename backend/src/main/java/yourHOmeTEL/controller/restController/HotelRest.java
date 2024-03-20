@@ -2,7 +2,9 @@ package yourHOmeTEL.controller.restController;
 
 import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.io.IOException;
@@ -209,7 +211,7 @@ public class HotelRest {
 		try {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			UserE foundUser = hotelService.findById(id).orElseThrow().getManager();
-	
+
 			if (currentUser.equals(foundUser)) {
 				Hotel hotel = hotelService.findById(id).orElseThrow();
 				List<UserE> validClients = hotelService.getValidClients(hotel);
@@ -222,77 +224,102 @@ public class HotelRest {
 		}
 	}
 
-	
+	@GetMapping("/hotelsInfo/{id}")
+	public ResponseEntity<Map<String, Object>> hotelInformation(@PathVariable Long id) {
+		try {
+			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
+
+			if (hotelManager.getvalidated()) {
+				Hotel hotel = hotelService.findById(id).orElseThrow();
+				if (hotel.getManager().getvalidated() == false)
+					return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
+				Map<String, Object> hotelInformation = new HashMap<>();
+				hotelInformation.put("hotel", hotel);
+				hotelInformation.put("numRooms", hotel.getRooms().size());
+
+				return ResponseEntity.ok(hotelInformation);
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
 	// PUBLIC CONTROLLERS
 
 	// ADVANCED RECOMMENDATION ALGORITHM
-    @JsonView(HotelDetails.class)
-    @GetMapping("/hotels/index/recomended")
-    public ResponseEntity<List<Hotel>> index (HttpServletRequest request, Pageable pageable) {
-        List<Hotel> recomendedHotels = new ArrayList<>();
-        try {
-            String nick = request.getUserPrincipal().getName();
-            UserE user = userService.findByNick(nick).orElseThrow();
-            List<Reservation> userReservations = user.getReservations();
-            recomendedHotels = userService.findRecomendedHotels(6, userReservations, user);
-        } catch (NullPointerException e) {  
-        } finally {
-            if (recomendedHotels.size() < 6) {
-                // size +1 to avoid looking for id = 0 if size = 0
-                int i = 1;
-                int sizeAllHotels = hotelService.findAll().size();
-                while (recomendedHotels.size() < 7 && i <= sizeAllHotels) {
-                    // if there's a gap in the id sequence, it will throw an exception and continue the loop
-                    try{
-                        Hotel hotel = hotelService.findById((long) i).orElseThrow();
-                        if (hotel != null && hotel.getManager().getvalidated())
-                            recomendedHotels.add(hotel);
-                    }
-                    catch(NoSuchElementException e){}
-                    i++;
-                }
-            }
-        }
-        return ResponseEntity.ok(recomendedHotels);    
-    }
-
-	@JsonView(HotelDetails.class) //check if this is done correctly. I just added pageable
-    @GetMapping("/hotels/index/search")
-    public ResponseEntity<PageResponse<Hotel>> indexSearch(@RequestParam String searchValue, Pageable pageable) {
-        try { 
-            Page<Hotel> hotels = hotelService.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(true,
-                    searchValue, pageable);
-					if (hotels.hasContent()) {
-						PageResponse<Hotel> response = new PageResponse<>();
-						response.setContent(hotels.getContent());
-						response.setPageNumber(hotels.getNumber());
-						response.setPageSize(hotels.getSize());
-						response.setTotalElements(hotels.getTotalElements());
-						response.setTotalPages(hotels.getTotalPages());
-	
-						return ResponseEntity.ok(response);
-					}else{
-						return ResponseEntity.notFound().build();
+	@JsonView(HotelDetails.class)
+	@GetMapping("/hotels/index/recomended")
+	public ResponseEntity<List<Hotel>> index(HttpServletRequest request, Pageable pageable) {
+		List<Hotel> recomendedHotels = new ArrayList<>();
+		try {
+			String nick = request.getUserPrincipal().getName();
+			UserE user = userService.findByNick(nick).orElseThrow();
+			List<Reservation> userReservations = user.getReservations();
+			recomendedHotels = userService.findRecomendedHotels(6, userReservations, user);
+		} catch (NullPointerException e) {
+		} finally {
+			if (recomendedHotels.size() < 6) {
+				// size +1 to avoid looking for id = 0 if size = 0
+				int i = 1;
+				int sizeAllHotels = hotelService.findAll().size();
+				while (recomendedHotels.size() < 7 && i <= sizeAllHotels) {
+					// if there's a gap in the id sequence, it will throw an exception and continue
+					// the loop
+					try {
+						Hotel hotel = hotelService.findById((long) i).orElseThrow();
+						if (hotel != null && hotel.getManager().getvalidated())
+							recomendedHotels.add(hotel);
+					} catch (NoSuchElementException e) {
 					}
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+					i++;
+				}
+			}
+		}
+		return ResponseEntity.ok(recomendedHotels);
+	}
+
+	@JsonView(HotelDetails.class) // check if this is done correctly. I just added pageable
+	@GetMapping("/hotels/index/search")
+	public ResponseEntity<PageResponse<Hotel>> indexSearch(@RequestParam String searchValue, Pageable pageable) {
+		try {
+			Page<Hotel> hotels = hotelService.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(
+					true,
+					searchValue, pageable);
+			if (hotels.hasContent()) {
+				PageResponse<Hotel> response = new PageResponse<>();
+				response.setContent(hotels.getContent());
+				response.setPageNumber(hotels.getNumber());
+				response.setPageSize(hotels.getSize());
+				response.setTotalElements(hotels.getTotalElements());
+				response.setTotalPages(hotels.getTotalPages());
+
+				return ResponseEntity.ok(response);
+			} else {
+				return ResponseEntity.notFound().build();
+			}
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
 
 	// MANAGER CONTROLLERS
 
-    // this one is done already, dont touch it
+	// this one is done already, dont touch it
 
-    @JsonView(HotelDetails.class)
-    @GetMapping("/hotels/manager/{id}")
-    public ResponseEntity <PageResponse<Hotel>> viewHotelsManager(HttpServletRequest request, @PathVariable Long id,
-     Pageable pageable) {
-        try{
-            UserE requestManager = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+	@JsonView(HotelDetails.class)
+	@GetMapping("/hotels/manager/{id}")
+	public ResponseEntity<PageResponse<Hotel>> viewHotelsManager(HttpServletRequest request, @PathVariable Long id,
+			Pageable pageable) {
+		try {
+			UserE requestManager = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			UserE targetManager = userService.findById(id).orElseThrow();
 
-			if ((requestManager.equals(targetManager) && requestManager.getvalidated())|| requestManager.getRols().contains("ADMIN")){
-				Page <Hotel> hotels = hotelService.findByManager_Id(id, pageable);
+			if ((requestManager.equals(targetManager) && requestManager.getvalidated())
+					|| requestManager.getRols().contains("ADMIN")) {
+				Page<Hotel> hotels = hotelService.findByManager_Id(id, pageable);
 				if (hotels.hasContent()) {
 					PageResponse<Hotel> response = new PageResponse<>();
 					response.setContent(hotels.getContent());
@@ -302,14 +329,14 @@ public class HotelRest {
 					response.setTotalPages(hotels.getTotalPages());
 
 					return ResponseEntity.ok(response);
-				}else{
+				} else {
 					return ResponseEntity.notFound().build();
 				}
-			}else{
+			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-			}           
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
+			}
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
 	}
 }

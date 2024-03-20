@@ -101,6 +101,7 @@ public class SecurityConfiguration {
 
                     //MANAGER AND CLIENT ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/clients/{id}").hasRole("MANAGER")
+                    .requestMatchers(HttpMethod.GET,"/hotelsInfo/{id}").hasRole("MANAGER")
                     
                                 
 					//USER ENDPOINTS
