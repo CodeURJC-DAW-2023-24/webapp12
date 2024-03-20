@@ -413,12 +413,17 @@ public class HotelRest {
 			Reservation reservation = reservationService.findByHotel_Id(id);
 
 			UserE hotelManager = reservation.getHotel().getManager();
+ 
+			if (currentUser.equals(hotelManager)){
 
-			if (currentUser) {
-				
+				return ResponseEntity.ok(reservation);
+
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
 
 		} catch (NoSuchElementException e) {
 			return ResponseEntity.notFound().build();
 		}
+	}
 }
