@@ -490,4 +490,40 @@ public class HotelRest {
 			return ResponseEntity.notFound().build();
 		}
 	}
+
+	/**
+	 * Returns data of all hotels in the database
+	 */
+	@JsonView(HotelDetails.class)
+	@GetMapping("/hotels")
+	public ResponseEntity<PageResponse<Hotel>> loadAllHotels(
+			HttpServletRequest request,
+			Pageable pageable) {
+
+		try {
+			UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+
+			if (user.getRols().contains("ADMIN")) {
+
+				Page<Hotel> hotels = new PageImpl<>(hotelService.findAll(), pageable, hotelService.findAll().size());
+
+				PageResponse<Hotel> response = new PageResponse<>();
+				response.setContent(hotels.getContent());
+				response.setPageNumber(hotels.getNumber());
+				response.setPageSize(hotels.getSize());
+				response.setTotalElements(hotels.getTotalElements());
+				response.setTotalPages(hotels.getTotalPages());
+
+				return ResponseEntity.ok(response);
+
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+
+		}
+	}
+
 }

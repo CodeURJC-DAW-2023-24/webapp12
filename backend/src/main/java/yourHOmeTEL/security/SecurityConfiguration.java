@@ -95,6 +95,8 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET,"/api/managers/validation").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST,"/api/users/{id}/managers/rejection").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST,"/api/users/{id}/managers/validation").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET,"/api/hotels").hasRole("ADMIN")
+
                 
                     //MANAGER ENDPOINTS
                     .requestMatchers(HttpMethod.PUT, "/api/manager/{id}/application").hasRole("MANAGER")
