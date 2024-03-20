@@ -15,6 +15,7 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
@@ -280,33 +281,46 @@ public class HotelRest {
 		}
 	}
 
-	@GetMapping("/moreHotelsManagerView/{start}/{end}")
-	public ResponseEntity<List<Hotel>> loadMoreHotelsManagerView(
+	@JsonView(HotelDetails.class)
+	@GetMapping("/manager/hotels/{start}/{end}")
+	public ResponseEntity<PageResponse<Hotel>> loadMoreHotelsManagerView(
 			HttpServletRequest request,
 			@PathVariable Long start,
-			@PathVariable Long end) {
+			@PathVariable Long end,
+			Pageable pageable) {
 
-		var hotelsQuantity = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow().getHotels()
-				.size();
-		var hotels = new ArrayList<Hotel>();
+		try {
+			UserE manager = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			Integer numHotelsManager = manager.getHotels().size();
 
-		if (start <= hotelsQuantity) {
-			// We obtain the hotels IDs for the actual page
-			List<Long> hotelIds = new ArrayList<>();
-			for (long index = start; index < end && index <= hotelsQuantity; index++) {
-				hotelIds.add(index);
+			Integer startInt = start.intValue();
+			Integer endInt = end.intValue();
+
+			if (startInt < 0 || endInt < 0 || startInt > numHotelsManager || startInt > endInt) {
+				return ResponseEntity.badRequest().build();
+			} else if (endInt > numHotelsManager) {
+				endInt = numHotelsManager;
 			}
 
-			// We look for the Hotel objects related to the IDs
-			for (Long hotelId : hotelIds) {
-				Hotel hotel = hotelService.findById(hotelId).orElse(null);
-				if (hotel != null) {
-					hotels.add(hotel);
-				}
-			}
+			// we get the next 6 hotels from the manager in a sublist, or less if there are
+			// less than 6
+			Page<Hotel> hotels = hotelService.findByManager_Id(manager.getId(), pageable);
+
+			List<Hotel> hotelsList = hotels.getContent().subList(startInt, endInt);
+			hotels = new PageImpl<>(hotelsList, pageable, hotels.getTotalElements());
+
+			PageResponse<Hotel> response = new PageResponse<>();
+			response.setContent(hotels.getContent());
+			response.setPageNumber(hotels.getNumber());
+			response.setPageSize(hotels.getSize());
+			response.setTotalElements(hotels.getTotalElements());
+			response.setTotalPages(hotels.getTotalPages());
+
+			return ResponseEntity.ok(response);
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
 		}
-
-		return ResponseEntity.ok(hotels);
 	}
 
 	// PUBLIC CONTROLLERS
@@ -404,17 +418,17 @@ public class HotelRest {
 
 	@JsonView(HotelDetails.class)
 	@GetMapping("/reservations/{id}/hotel")
-	public ResponseEntity<Reservation> getHotelFromReservation (
-		HttpServletRequest request,
-		@PathVariable Long id){
+	public ResponseEntity<Reservation> getHotelFromReservation(
+			HttpServletRequest request,
+			@PathVariable Long id) {
 
 		try {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			Reservation reservation = reservationService.findByHotel_Id(id);
 
 			UserE hotelManager = reservation.getHotel().getManager();
- 
-			if (currentUser.equals(hotelManager)){
+
+			if (currentUser.equals(hotelManager)) {
 
 				return ResponseEntity.ok(reservation);
 
@@ -427,22 +441,19 @@ public class HotelRest {
 		}
 	}
 
-
-
-	
 	@JsonView(HotelDetails.class)
 	@GetMapping("/reviews/{id}/hotel")
-	public ResponseEntity<Review> getHotelFromReview (
-		HttpServletRequest request,
-		@PathVariable Long id){
+	public ResponseEntity<Review> getHotelFromReview(
+			HttpServletRequest request,
+			@PathVariable Long id) {
 
 		try {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			Review review = reviewService.findByHotel_Id(id);
 
 			UserE hotelManager = review.getHotel().getManager();
- 
-			if (currentUser.equals(hotelManager)){
+
+			if (currentUser.equals(hotelManager)) {
 
 				return ResponseEntity.ok(review);
 
@@ -455,20 +466,19 @@ public class HotelRest {
 		}
 	}
 
-
 	@JsonView(HotelDetails.class)
 	@GetMapping("/rooms/{id}/hotel")
-	public ResponseEntity<Room> getHotelFromRoom (
-		HttpServletRequest request,
-		@PathVariable Long id){
+	public ResponseEntity<Room> getHotelFromRoom(
+			HttpServletRequest request,
+			@PathVariable Long id) {
 
 		try {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			Room room = roomService.findByHotel_Id(id);
 
 			UserE hotelManager = room.getHotel().getManager();
- 
-			if (currentUser.equals(hotelManager)){
+
+			if (currentUser.equals(hotelManager)) {
 
 				return ResponseEntity.ok(room);
 

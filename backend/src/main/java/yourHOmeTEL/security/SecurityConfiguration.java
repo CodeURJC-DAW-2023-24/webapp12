@@ -104,9 +104,9 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET,"/reservations/{id}/hotel").hasRole("MANAGER")
                     .requestMatchers(HttpMethod.GET,"/reviews/{id}/hotel").hasRole("MANAGER")
                     .requestMatchers(HttpMethod.GET,"/rooms/{id}/hotel").hasRole("MANAGER")
+                    .requestMatchers(HttpMethod.GET,"/manager/hotels/{start}/{end}").hasRole("MANAGER")
 
                     //MANAGER AND CLIENT ENDPOINTS
-                    .requestMatchers(HttpMethod.GET,"/moreHotelsManagerView/{start}/{end}").hasRole("MANAGER")
                     
                                 
 					//USER ENDPOINTS
