@@ -86,7 +86,6 @@ public class HotelRest {
 	@GetMapping("/hotels/{id}")
 	public ResponseEntity<Hotel> hotelDataLoadingForEdition(
 			HttpServletRequest request,
-			Model model,
 			@PathVariable Long id) {
 
 		try {
@@ -224,6 +223,10 @@ public class HotelRest {
 		}
 	}
 
+
+
+	
+	@JsonView(HotelDetails.class)
 	@GetMapping("/hotelsInfo/{id}")
 	public ResponseEntity<Map<String, Object>> hotelInformation(@PathVariable Long id) {
 		try {
