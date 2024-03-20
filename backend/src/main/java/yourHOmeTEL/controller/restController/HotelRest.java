@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.io.IOException;
+import java.sql.Blob;
 import java.sql.SQLException;
 
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -109,11 +110,64 @@ public class HotelRest {
 
 	}
 
-	/**
-	 * Replaces the old hotel data for the new one received from the form
-	 * 
-	 * @throws IOException
-	 */
+	// PENDIENTE -> Pasar las habitaciones y los costes como un array
+	@PostMapping("/hotels")
+	public ResponseEntity<Hotel> createHotel(
+			HttpServletRequest request,
+			String name, String description, String location,
+			Integer room1, Integer cost1,
+			Integer room2, Integer cost2,
+			Integer room3, Integer cost3,
+			Integer room4, Integer cost4) throws NoSuchElementException {
+
+		try {
+			Hotel newHotel = new Hotel(name, location, description);
+			UserE manager = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			newHotel.setManager(manager);
+			hotelService.save(newHotel);
+
+			// PENDIENTE -> Refactorizar si se puede
+			{
+				if (room1 != null)
+					for (int i = 0; i < room1; i++) {
+						Room room = new Room(1, cost1, new ArrayList<>(), newHotel);
+						newHotel.getRooms().add(room);
+						roomService.save(room);
+					}
+
+				if (room2 != null)
+					for (int i = 0; i < room2; i++) {
+						Room room = new Room(2, cost2, new ArrayList<>(), newHotel);
+						newHotel.getRooms().add(room);
+						roomService.save(room);
+					}
+
+				if (room3 != null)
+					for (int i = 0; i < room3; i++) {
+						Room room = new Room(3, cost3, new ArrayList<>(), newHotel);
+						newHotel.getRooms().add(room);
+						roomService.save(room);
+					}
+
+				if (room4 != null)
+					for (int i = 0; i < room4; i++) {
+						Room room = new Room(4, cost4, new ArrayList<>(), newHotel);
+						newHotel.getRooms().add(room);
+						roomService.save(room);
+					}
+
+			}
+
+			hotelService.save(newHotel);
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+
+		return ResponseEntity.ok().build();
+
+	}
+
 	@PutMapping("/hotels/{id}")
 	public ResponseEntity<Hotel> editHotel(Model model, HttpServletRequest request, Hotel newHotel, Integer room1,
 			Integer cost1,
