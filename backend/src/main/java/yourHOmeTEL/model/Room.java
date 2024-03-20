@@ -33,7 +33,7 @@ public class Room {
     @JsonView({Complete.class, Basic.class})
     private float cost;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room",  cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonView(Complete.class)
     private List<Reservation> reservations;
 

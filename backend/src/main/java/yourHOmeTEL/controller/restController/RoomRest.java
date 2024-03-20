@@ -158,13 +158,14 @@ public class RoomRest {
 	@PostMapping("/rooms/hotels/{hotelId}/create")
 	public ResponseEntity<Room> postRoom(HttpServletRequest request, @RequestBody Room room, @PathVariable Long hotelId) {
 		try {
-			UserE hotelManager = hotelService.findById(hotelId).orElseThrow().getManager();
+			Hotel currentHotel = hotelService.findById(hotelId).orElseThrow();
+			UserE hotelManager = currentHotel.getManager();
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			if(currentUser.equals(hotelManager) || currentUser.getRols().contains("ADMIN")) {
 				if (hotelManager.getvalidated()) {
 					Hotel targetHotel = hotelService.findById(hotelId).orElseThrow();
 
-					Room newRoom = new Room(room.getMaxClients(), room.getcost(), room.getReservations(), room.getHotel());
+					Room newRoom = new Room(room.getMaxClients(), room.getcost(), room.getReservations(), currentHotel);
 					roomService.save(newRoom);
 
 					targetHotel.getRooms().add(newRoom);
