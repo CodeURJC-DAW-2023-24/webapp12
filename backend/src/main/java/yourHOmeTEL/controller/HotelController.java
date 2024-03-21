@@ -90,28 +90,28 @@ public class HotelController {
 			hotel.setLocation(newHotel.getLocation());
 			hotel.setDescription(newHotel.getDescription());
 
-			if (room1 != null)
+			if (room1 != null && cost1 != null)
 				for (int i = 0; i < room1; i++) {
 					Room room = new Room(1, cost1, new ArrayList<>(), newHotel);
 					hotel.getRooms().add(room);
 					roomService.save(room);
 				}
 
-			if (room2 != null)
+			if (room2 != null && cost2 != null)
 				for (int i = 0; i < room2; i++) {
 					Room room = new Room(2, cost2, new ArrayList<>(), newHotel);
 					hotel.getRooms().add(room);
 					roomService.save(room);
 				}
 
-			if (room3 != null)
+			if (room3 != null && cost3 != null)
 				for (int i = 0; i < room3; i++) {
 					Room room = new Room(3, cost3, new ArrayList<>(), newHotel);
 					hotel.getRooms().add(room);
 					roomService.save(room);
 				}
 
-			if (room4 != null)
+			if (room4 != null && cost4 != null)
 				for (int i = 0; i < room4; i++) {
 					Room room = new Room(4, cost4, new ArrayList<>(), newHotel);
 					hotel.getRooms().add(room);
@@ -241,8 +241,7 @@ public class HotelController {
 			Path imagePath = Paths.get("uploaded-images", imgName);
 			Resource imageResource;
 			if (!Files.exists(imagePath)) {
-				// If the requested image is not found, load the default image from the
-				// classpath
+				// If the requested image is not found, load the default image from the classpath
 				imageResource = new ClassPathResource("/static/images/default-hotel.jpg");
 			} else {
 				imageResource = new UrlResource(imagePath.toUri());
@@ -260,31 +259,40 @@ public class HotelController {
 	public String addHotelPost(HttpServletRequest request, Hotel newHotel, Integer room1, Integer cost1, Integer room2,
 			Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable String imgName)
 			throws IOException {
-
+	
 		UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-
+	
 		newHotel.setManager(user);
 		newHotel.setRooms(new ArrayList<>());
 		newHotel.setReservations(new ArrayList<>());
 		newHotel.setReviews(new ArrayList<>());
-
+	
 		Path imagePath = Paths.get("uploaded-images", imgName);
+		byte[] imageBytes;
 		if (!Files.exists(imagePath)) {
-			// Handle the error
+			// If the requested image is not found, load the default image from the classpath
+			Resource imageResource = new ClassPathResource("/static/images/default-hotel.jpg");
+			try (InputStream imageStream = imageResource.getInputStream()) {
+				imageBytes = imageStream.readAllBytes();
+			}
+		} else {
+			imageBytes = Files.readAllBytes(imagePath);
 		}
-		byte[] imageBytes = Files.readAllBytes(imagePath);
-
+	
 		newHotel.setImageFile(BlobProxy.generateProxy(imageBytes));
 		newHotel.setImage(true);
-
+	
 		// ... rest of the code ...
-
+	
 		hotelService.save(newHotel);
-
-		try {
-			Files.delete(imagePath);
-		} catch (Exception e) {
-			e.printStackTrace();
+	
+		// Only delete the image if it's not the default image
+		if (Files.exists(imagePath)) {
+			try {
+				Files.delete(imagePath);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return "redirect:/viewHotelsManager";
 	}
