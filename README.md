@@ -602,27 +602,27 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
   
 ## 7. Group Members Participation
 
-  ### Name
+  ### MARIO RECIO MONTERO
 
-  - Description: Desc
+  - Description: Implemented various rest controllers for all entities, created docker files and functionality and configurated Virtual Machine deployment, alongside images and controllers adaptations for Linux environment, bug fixes and testing.
 
 
   - Five most important commits
 
 | Commit Number | Description | Link |
 |:--:|:----------------------------------------:|:------------------------------------------------------------------------------------------------:|
-| #1 |                                          |                                                                                                  |
-| #2 |                                          |                                                                                                  |
-| #3 |                                          |                                                                                                  |
-| #4 |                                          |                                                                                                  |
-| #5 |                                          |                                                                                                  |
+| #1 | JSON view and multiple REST controllers  | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/2ec3897df735bec20d0d53c9e9b544edd2fc7a8f |
+| #2 | Impelemented User REST controllers       | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0bcb19efcd5c70da1dd49a7b2723eb3cd4c78c75 |
+| #3 | Docker implementation                    | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0f916430fa90e97931845863ac2eacdd5d7d7401 |
+| #4 | Implemented Reservation REST controllers | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/8dcde4fbd9569384269039e40f3ad90e59c21950 |
+| #5 | Hotel image REST implementation          | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/00757925520e0064bf1fc109c974afb74f3bbda1 |
 
 - Five most participation files
 
 | File number | File |
 |:--:|:------------------------:|
-| #1 |                          |
-| #2 |                          |
-| #3 |                          |
-| #4 |                          |
-| #5 |                          |
+| #1 | UserRest.java            |
+| #2 | ReviewRest.java          |
+| #3 | Dockerfile               |
+| #4 | docker-compose.yml       |
+| #5 | HotelImageRest.java      |
