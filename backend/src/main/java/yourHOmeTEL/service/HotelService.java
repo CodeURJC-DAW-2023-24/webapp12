@@ -3,6 +3,7 @@ package yourHOmeTEL.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.io.IOException;
 import java.time.LocalDate;
 
 import org.slf4j.Logger;
@@ -12,6 +13,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.hibernate.engine.jdbc.BlobProxy;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import java.sql.Blob;
 
 import yourHOmeTEL.model.Hotel;
 import yourHOmeTEL.model.Reservation;
@@ -141,6 +146,11 @@ public class HotelService implements GeneralService<Hotel> {
 
     public long count(){
         return hotelRepository.count();
+    }
+
+    public Blob generateImage(String staticPath) throws IOException {
+        Resource image = new ClassPathResource(staticPath);
+        return (BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));     
     }
 
 }

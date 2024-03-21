@@ -233,6 +233,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/testChart/**").hasAnyRole("MANAGER")
                         .requestMatchers("/application/**").hasAnyRole("MANAGER")
                         .requestMatchers("/index/*/images/**").hasAnyRole("MANAGER")
+                        .requestMatchers("/loadHotelImage/**").hasAnyRole("MANAGER")
                         .requestMatchers("/editHotelImage/**").hasAnyRole("MANAGER")
                         .requestMatchers("/addHotelPhoto/**").hasAnyRole("MANAGER")
                         .requestMatchers("/selectHotelImage/**").hasAnyRole("MANAGER")

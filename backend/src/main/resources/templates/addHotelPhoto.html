@@ -40,7 +40,7 @@
                 <div class="card p-2">
                     <div class="e-navlist e-navlist--active-bg">
                         <ul class="nav">
-                            <li class="nav-item"><a class="nav-link px-1 active" href=/addHotel/{{photo}}>
+                            <li class="nav-item"><a class="nav-link px-1 active" href=/addHotel/{{imgName}}>
                                     <i class="fa fa-fw fa-bar-chart mr-1"></i><span>Go back</span></a></li>
                         </ul>
                     </div>
@@ -58,12 +58,12 @@
                                                 <div class="d-flex justify-content-center align-items-center rounded"
                                                     style="height: 140px; background-color: rgb(233, 236, 239);">
                                                     <img class="hotel-preview-image"
-                                                        src="/images/{{photo}}">
+                                                        src="/loadHotelImage/{{imgName}}">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                                            <form action="/selectHotelImage/{{photo}}" method="post"
+                                            <form action="/selectHotelImage/{{imgName}}" method="post"
                                             enctype="multipart/form-data">
                                             <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">Hotel name</h4>
                                             <div class="text-center text-sm-left mb-2 mb-sm-0">

@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ImageService {
 
 	private static final Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"),
-     "backend", "helloword-vscode", "src", "main", "resources", "static", "images");
+     "backend", "src", "main", "resources", "static", "images");
 
     public String getFilesFolder() {
         return FILES_FOLDER.toString();

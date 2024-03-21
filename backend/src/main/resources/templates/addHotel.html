@@ -58,7 +58,7 @@
                                                 <div class="d-flex justify-content-center align-items-center rounded"
                                                     style="height: 140px; background-color: rgb(233, 236, 239);">
                                                     <img class="hotel-preview-image"
-                                                        src=/images/{{photo}}>
+                                                        src=/loadHotelImage/{{imgName}}>
                                                 </div>
                                             </div>
                                         </div>
@@ -66,7 +66,7 @@
                                             <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">Hotel name</h4>
                                             <div class="text-center text-sm-left mb-2 mb-sm-0">
                                                 <div class="mt-2">
-                                                    <form action="/addHotelPhoto/{{photo}}" method="get">
+                                                    <form action="/addHotelPhoto/{{imgName}}" method="get">
                                                         <input type="submit" value="Change photo" class="btn btn-primary"/>
                                                         <input type="hidden" name="_csrf" value="{{token}}"/>
                                                     </form>                                                   
@@ -82,7 +82,7 @@
                                     </ul>
                                     <div class="tab-content pt-3">
                                         <div class="tab-pane active">
-                                            <form class="form" action="/createHotel/{{photo}}" method="post">
+                                            <form class="form" action="/createHotel/{{imgName}}" method="post">
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="row">
