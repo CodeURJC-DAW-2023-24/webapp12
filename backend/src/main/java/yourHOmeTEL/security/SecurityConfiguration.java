@@ -113,8 +113,8 @@ public class SecurityConfiguration {
                                 
 					//USER ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/api/users/{id}").hasRole("USER")
-                    .requestMatchers(HttpMethod.PUT,"/api/users/{id}/info").hasRole("USER")
-                    .requestMatchers(HttpMethod.DELETE,"/api/users/{id}/info").hasRole("USER")
+                    .requestMatchers(HttpMethod.PUT,"/api/users/{id}").hasRole("USER")
+                    .requestMatchers(HttpMethod.DELETE,"/api/users/{id}").hasRole("USER")
 
                     .requestMatchers(HttpMethod.GET,"/api/hotels/{id}").hasRole("USER")
 

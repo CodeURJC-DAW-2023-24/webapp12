@@ -349,7 +349,7 @@ public class UserRest {
 
     // edit profile using raw json body or x-www-form-urlencoded
     @JsonView(UserDetails.class)
-    @PutMapping("/users/{id}/info")
+    @PutMapping("/users/{id}")
     public ResponseEntity<UserE> editProfile(HttpServletRequest request, @PathVariable Long id,
             @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
 
@@ -371,7 +371,7 @@ public class UserRest {
         }
     }
 
-    @DeleteMapping("/users/{id}/info")
+    @DeleteMapping("/users/{id}")
     public ResponseEntity<UserE> deleteProfile(HttpServletRequest request, @PathVariable Long id) {
 
         try {
