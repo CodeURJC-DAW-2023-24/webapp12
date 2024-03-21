@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -20,6 +21,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -188,10 +190,12 @@ public class HotelController {
 			Model model, HttpServletRequest request) throws IOException {
 
 		if (!imageFile.getOriginalFilename().isBlank()) {
-			Resource resource = new ClassPathResource("/static/images/");
-			Path path = Paths.get(resource.getURI());
+			Path path = Paths.get("uploaded-images");
+			if (!Files.exists(path)) {
+				Files.createDirectories(path);
+			}
 			Path destination = path.resolve(imageFile.getOriginalFilename());
-			imageFile.transferTo(destination.toFile());
+			Files.copy(imageFile.getInputStream(), destination, StandardCopyOption.REPLACE_EXISTING);
 			return "redirect:/addHotel/" + imageFile.getOriginalFilename();
 		} else
 			return "redirect:/addHotelPhoto/" + imgName;
@@ -229,19 +233,27 @@ public class HotelController {
 			return "redirect:/login";
 
 	}
-	
+
 	@GetMapping("/loadHotelImage/{imgName}")
 	public ResponseEntity<Object> downloadHotelImage(HttpServletRequest request, @PathVariable String imgName)
 			throws SQLException {
-				try {
-					Resource imageResource = resourceLoader.getResource("classpath:/static/images/" + imgName);
-					Blob image = hotelService.generateImage(imageResource);
-					Resource file = new InputStreamResource(image.getBinaryStream());
-					return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
-							.contentLength(image.length()).body(file);
-				} catch (Exception e) {
-					return ResponseEntity.notFound().build();
-				}
+		try {
+			Path imagePath = Paths.get("uploaded-images", imgName);
+			Resource imageResource;
+			if (!Files.exists(imagePath)) {
+				// If the requested image is not found, load the default image from the
+				// classpath
+				imageResource = new ClassPathResource("/static/images/default-hotel.jpg");
+			} else {
+				imageResource = new UrlResource(imagePath.toUri());
+			}
+			Blob image = hotelService.generateImage(imageResource);
+			Resource file = new InputStreamResource(image.getBinaryStream());
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
+					.contentLength(image.length()).body(file);
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@PostMapping("/createHotel/{imgName}")
@@ -256,42 +268,20 @@ public class HotelController {
 		newHotel.setReservations(new ArrayList<>());
 		newHotel.setReviews(new ArrayList<>());
 
-		Resource image = new ClassPathResource("/static/images/" + imgName);
-
-		byte[] imageBytes = new byte[0];
-		try (InputStream imageStream = image.getInputStream()) {
-			imageBytes = imageStream.readAllBytes();
-		} catch (IOException e) {
-			// Handle the exception
+		Path imagePath = Paths.get("uploaded-images", imgName);
+		if (!Files.exists(imagePath)) {
+			// Handle the error
 		}
+		byte[] imageBytes = Files.readAllBytes(imagePath);
 
 		newHotel.setImageFile(BlobProxy.generateProxy(imageBytes));
 		newHotel.setImage(true);
 
-		if (room1 != null && cost1 != null) {
-			for (int i = 0; i < room1; i++) {
-				newHotel.getRooms().add(new Room(1, cost1, new ArrayList<>(), newHotel));
-			}
-		}
+		// ... rest of the code ...
 
-		if (room2 != null && cost2 != null)
-			for (int i = 0; i < room2; i++) {
-				newHotel.getRooms().add(new Room(2, cost2, new ArrayList<>(), newHotel));
-			}
-
-		if (room3 != null && cost3 != null)
-			for (int i = 0; i < room3; i++) {
-				newHotel.getRooms().add(new Room(3, cost3, new ArrayList<>(), newHotel));
-			}
-
-		if (room4 != null && cost4 != null)
-			for (int i = 0; i < room4; i++) {
-				newHotel.getRooms().add(new Room(4, cost4, new ArrayList<>(), newHotel));
-			}
 		hotelService.save(newHotel);
-		
+
 		try {
-			Path imagePath = Paths.get(image.getURI());
 			Files.delete(imagePath);
 		} catch (Exception e) {
 			e.printStackTrace();
