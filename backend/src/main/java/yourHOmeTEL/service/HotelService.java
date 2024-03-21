@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StreamUtils;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -151,6 +152,11 @@ public class HotelService implements GeneralService<Hotel> {
     public Blob generateImage(String staticPath) throws IOException {
         Resource image = new ClassPathResource(staticPath);
         return (BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));     
+    }
+
+    public Blob generateImage(Resource imageResource) throws IOException {
+        byte[] imageBytes = StreamUtils.copyToByteArray(imageResource.getInputStream());
+        return BlobProxy.generateProxy(imageBytes);
     }
 
 }

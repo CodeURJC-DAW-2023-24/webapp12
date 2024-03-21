@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
@@ -17,6 +19,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -52,7 +55,7 @@ public class HotelController {
 	RoomService roomService;
 
 	@Autowired
-	private ApplicationContext appContext;
+	private ResourceLoader resourceLoader;
 
 	@GetMapping("/editHotel/{id}")
 	public String editHotel(HttpServletRequest request, Model model, @PathVariable Long id) {
@@ -184,14 +187,13 @@ public class HotelController {
 	public String editImage(@RequestParam MultipartFile imageFile, @PathVariable String imgName,
 			Model model, HttpServletRequest request) throws IOException {
 
-		if (!imageFile.getOriginalFilename().isBlank()){
-			Resource resource = new ClassPathResource("/static/images");
+		if (!imageFile.getOriginalFilename().isBlank()) {
+			Resource resource = new ClassPathResource("/static/images/");
 			Path path = Paths.get(resource.getURI());
 			Path destination = path.resolve(imageFile.getOriginalFilename());
 			imageFile.transferTo(destination.toFile());
 			return "redirect:/addHotel/" + imageFile.getOriginalFilename();
-		}
-		else
+		} else
 			return "redirect:/addHotelPhoto/" + imgName;
 	}
 
@@ -221,31 +223,30 @@ public class HotelController {
 		if (user.isPresent()) {
 			model.addAttribute("name", user.get().getName());
 			model.addAttribute("imgName", imgName);
-			return "addHotel";		
-			
+			return "addHotel";
+
 		} else
 			return "redirect:/login";
 
 	}
-
+	
 	@GetMapping("/loadHotelImage/{imgName}")
-	public ResponseEntity<Object> downloadHotelImage(HttpServletRequest request, @PathVariable String imgName) throws SQLException {
-		try{
-			Blob image = hotelService.generateImage("/static/images/" + imgName);
-			Resource file = new InputStreamResource(image.getBinaryStream());
-			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
-					.contentLength(image.length()).body(file);
-		}			
-		catch (Exception e){
-			return ResponseEntity.notFound().build();
-		
-		}
+	public ResponseEntity<Object> downloadHotelImage(HttpServletRequest request, @PathVariable String imgName)
+			throws SQLException {
+				try {
+					Resource imageResource = resourceLoader.getResource("classpath:/static/images/" + imgName);
+					Blob image = hotelService.generateImage(imageResource);
+					Resource file = new InputStreamResource(image.getBinaryStream());
+					return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
+							.contentLength(image.length()).body(file);
+				} catch (Exception e) {
+					return ResponseEntity.notFound().build();
+				}
 	}
 
 	@PostMapping("/createHotel/{imgName}")
 	public String addHotelPost(HttpServletRequest request, Hotel newHotel, Integer room1, Integer cost1, Integer room2,
-			Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable String imgName/*,
-			@RequestParam("imageFile") MultipartFile imageFile*/)
+			Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable String imgName)
 			throws IOException {
 
 		UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
@@ -257,18 +258,23 @@ public class HotelController {
 
 		Resource image = new ClassPathResource("/static/images/" + imgName);
 
-		newHotel.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
+		byte[] imageBytes = new byte[0];
+		try (InputStream imageStream = image.getInputStream()) {
+			imageBytes = imageStream.readAllBytes();
+		} catch (IOException e) {
+			// Handle the exception
+		}
+
+		newHotel.setImageFile(BlobProxy.generateProxy(imageBytes));
 		newHotel.setImage(true);
 
-		//newHotel.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-		//newHotel.setImage(true);
-
-		if (room1 != null && cost1 != null)
+		if (room1 != null && cost1 != null) {
 			for (int i = 0; i < room1; i++) {
 				newHotel.getRooms().add(new Room(1, cost1, new ArrayList<>(), newHotel));
 			}
+		}
 
-		if (room2 != null && cost2 != null)	
+		if (room2 != null && cost2 != null)
 			for (int i = 0; i < room2; i++) {
 				newHotel.getRooms().add(new Room(2, cost2, new ArrayList<>(), newHotel));
 			}
@@ -283,6 +289,13 @@ public class HotelController {
 				newHotel.getRooms().add(new Room(4, cost4, new ArrayList<>(), newHotel));
 			}
 		hotelService.save(newHotel);
+		
+		try {
+			Path imagePath = Paths.get(image.getURI());
+			Files.delete(imagePath);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "redirect:/viewHotelsManager";
 	}
 
