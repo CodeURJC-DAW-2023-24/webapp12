@@ -59,7 +59,6 @@ public class ReviewRest {
     @Autowired
 	UserService userService;
 
-
 	@Autowired
 	HotelService hotelService;
 
@@ -228,6 +227,44 @@ public class ReviewRest {
         }
     }
 
-    
+    /*@GetMapping("/hotels/{id}/reviews/size")
+	public String hotelReviews(
+			Model model,
+			@PathVariable Long id) {
+
+		UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
+
+		if (hotelManager.getvalidated()) {
+			Hotel selectedHotel = hotelService.findById(id).orElseThrow();
+
+			model.addAttribute("totalReviews", selectedHotel.getReviews().size());
+
+		} else {
+			return "/error";
+		}
+
+	} */
+
+	/*@GetMapping("/hotels/{id}/reviews/percentage")
+	public String hotelReviews(
+			Model model,
+			@PathVariable Long id) {
+
+		UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
+
+		if (hotelManager.getvalidated()) {
+			Hotel selectedHotel = hotelService.findById(id).orElseThrow();
+
+			for (int i = 5; i >= 1; i--) {
+				int percentageOfIScoreReview = selectedHotel.getPercentageOfNScore(i);
+
+				model.addAttribute("percentageReview" + i, percentageOfIScoreReview);
+			}
+
+		} else {
+			return "/error";
+		}
+
+	} */
     
 }

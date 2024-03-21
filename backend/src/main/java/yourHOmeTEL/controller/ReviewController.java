@@ -29,7 +29,6 @@ public class ReviewController {
     @Autowired
 	UserService userService;
 
-
 	@Autowired
 	HotelService hotelService;
 

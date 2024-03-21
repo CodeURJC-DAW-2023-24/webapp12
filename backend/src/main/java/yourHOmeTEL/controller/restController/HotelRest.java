@@ -239,7 +239,7 @@ public class HotelRest {
 	}
 
 	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/clients/{id}")
+	@GetMapping("/hotels/{id}/clients")
 	public ResponseEntity<List<UserE>> clientlist(HttpServletRequest request, @PathVariable Long id) {
 		try {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();

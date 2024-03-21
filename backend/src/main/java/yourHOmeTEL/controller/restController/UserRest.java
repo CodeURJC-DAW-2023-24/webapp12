@@ -125,7 +125,7 @@ public class UserRest {
 
     // ADMIN CONTROLLERS
     @JsonView(UserDetails.class)
-    @GetMapping("/managers/validation")
+    @GetMapping("/managers/validated")
     public ResponseEntity<PageResponse<UserE>> managerValidation(@RequestParam("validated") Boolean validated, 
     Pageable pageable) {
 
@@ -166,9 +166,23 @@ public class UserRest {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /*@GetMapping("/managers/unvalidated")
+	public String managerValidation(Model model) {
+		List<UserE> unvalidatedManagersList = new ArrayList<>();
+		unvalidatedManagersList = userService.findByValidatedAndRejected(false, false);
+
+		if (unvalidatedManagersList != null) {
+			model.addAttribute("unvalidatedManagers", unvalidatedManagersList);
+		}
+
+		return "managerValidation";
+	} */
+
+    
      
     
-    @PutMapping("/users/{id}/managers/rejection")
+    @PutMapping("/users/{id}/managers/rejected")
     @JsonView(UserDetails.class)
     public ResponseEntity<UserE> rejectManager(HttpServletRequest request, @RequestParam("rejected") Boolean rejected,
             @PathVariable Long id) {
@@ -193,7 +207,7 @@ public class UserRest {
 
     // sets the selected manager as accepted
     @JsonView(UserDetails.class)
-    @PutMapping("/users/{id}/managers/validation")
+    @PutMapping("/users/{id}/managers/validated")
     public ResponseEntity<UserE> acceptManager(HttpServletRequest request, @RequestParam("accepted") Boolean accepted,
             @PathVariable Long id) {
         try {
@@ -388,5 +402,82 @@ public class UserRest {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /*@PutMapping("users/{id}/applied")
+	public String managerApplication(Model model, HttpServletRequest request, @RequestParam Boolean state) {
+
+		UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		UserE foundManager = userService.findById(id).orElseThrow();
+
+		if (currentUser.equals(foundManager)) {
+			foundManager.setRejected(false);
+			userService.save(foundManager);
+			model.addAttribute("user", foundManager);
+			return "redirect:/profile";
+
+		} else
+			return "/error";
+	} */
+
+    /*@GetMapping("/index")
+	public String index(Model model, HttpServletRequest request) {
+		List<Hotel> recomendedHotels = new ArrayList<>();
+		try {
+			String nick = request.getUserPrincipal().getName();
+			UserE user = userService.findByNick(nick).orElseThrow();
+			List<Reservation> userReservations = user.getReservations();
+			recomendedHotels = userService.findRecomendedHotels(6, userReservations, user);
+
+		} catch (NullPointerException e) {
+
+		} finally {
+			if (recomendedHotels.size() < 6) {
+				// size +1 to avoid looking for id = 0 if size = 0
+				for (int i = recomendedHotels.size() + 1; i < 7; i++) {
+					Hotel hotel = hotelService.findById((long) i).orElseThrow();
+					if (hotel != null && hotel.getManager().getvalidated())
+						recomendedHotels.add(hotel);
+				}
+			}
+		}
+		model.addAttribute("hotels", recomendedHotels);
+		return "index";
+	} */
+
+    
+    /*@GetMapping("/users/{id}/type")
+    public ResponseEntity<String> userType(HttpServletRequest request) {
+          if (request.isUserInRole("ADMIN"))
+               return "Admin";
+          else if (request.isUserInRole("CLIENT"))
+               return "Client";
+          else
+               return "Manager";
+     }
+
+     @GetMapping("/users/{id}/admin")
+     public ResponseEntity<Boolean> isAdmin(HttpServletRequest request) {
+          return request.isUserInRole("ADMIN");
+     }
+
+     @GetMapping("/users/{id}/manager")
+     public ResponseEntity<Boolean> isManager(HttpServletRequest request) {
+          return request.isUserInRole("MANAGER");
+     }
+
+     @GetMapping("/users/{id}/client")
+     public ResponseEntity<Boolean> isClient(HttpServletRequest request) {
+          return request.isUserInRole("CLIENT");
+     }
+
+     @GetMapping("/users/{id}/user")
+     public ResponseEntity<Boolean> isUser(HttpServletRequest request) {
+          return request.isUserInRole("USER");
+     }
+
+     @GetMapping("/request/path")
+     public ResponseEntity<String> getPath(HttpServletRequest request) {
+          return request.getServletPath();
+     } */
 
 }
