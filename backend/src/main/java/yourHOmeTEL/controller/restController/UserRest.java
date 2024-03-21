@@ -244,7 +244,7 @@ public class UserRest {
     // USERS CRUD CONTROLLERS
 
     @JsonView(UserDetails.class)
-    @GetMapping("/users/{id}/info")
+    @GetMapping("/users/{id}")
     public ResponseEntity<UserE> profile(HttpServletRequest request, @PathVariable Long id) {
         try {
             UserE targetUser = userService.findById(id).orElseThrow();
@@ -295,7 +295,7 @@ public class UserRest {
     }
 
     // returns 400 if not all needed attributes are included on the body request
-    @PostMapping("/users/register")
+    @PostMapping("/users")
     public ResponseEntity<UserE> registerClient(HttpServletRequest request, @RequestBody UserE newUser,
             @RequestParam("type") Integer type) throws IOException {
 
@@ -349,7 +349,7 @@ public class UserRest {
 
     // edit profile using raw json body or x-www-form-urlencoded
     @JsonView(UserDetails.class)
-    @PutMapping("/users/{id}/info/update")
+    @PutMapping("/users/{id}/info")
     public ResponseEntity<UserE> editProfile(HttpServletRequest request, @PathVariable Long id,
             @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
 
@@ -371,7 +371,7 @@ public class UserRest {
         }
     }
 
-    @DeleteMapping("/users/{id}/info/removal")
+    @DeleteMapping("/users/{id}/info")
     public ResponseEntity<UserE> deleteProfile(HttpServletRequest request, @PathVariable Long id) {
 
         try {

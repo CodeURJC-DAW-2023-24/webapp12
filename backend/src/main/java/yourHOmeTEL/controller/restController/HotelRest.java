@@ -281,6 +281,7 @@ public class HotelRest {
 		}
 	}
 
+	//PENDIENTE ELIMINAR PAGEABLE
 	@JsonView(HotelDetails.class)
 	@GetMapping("/manager/hotels/{start}/{end}")
 	public ResponseEntity<PageResponse<Hotel>> loadMoreHotelsManagerView(
