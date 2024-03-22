@@ -137,14 +137,14 @@ public class SecurityConfiguration {
 
                     //USER IMAGE ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/api/users/{id}/image").hasAnyRole("USER", "ADMIN")
-                    .requestMatchers(HttpMethod.POST,"/api/users/{id}/image/creation").hasAnyRole("USER", "ADMIN")
-                    .requestMatchers(HttpMethod.DELETE,"/api/users/{id}/image/removal").hasAnyRole("USER", "ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/api/users/{id}/image").hasAnyRole("USER", "ADMIN")
+                    .requestMatchers(HttpMethod.DELETE,"/api/users/{id}/image").hasAnyRole("USER", "ADMIN")
                     
                     
                     //HOTEL IMAGE ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/api/hotels/{id}/image").hasAnyRole("USER","ADMIN")
-                    .requestMatchers(HttpMethod.POST,"/api/hotels/{id}/image/creation").hasAnyRole("USER","ADMIN")
-                    .requestMatchers(HttpMethod.PUT,"/api/hotels/{id}/image/removal").hasAnyRole("USER","ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/api/hotels/{id}/image").hasAnyRole("USER","ADMIN")
+                    .requestMatchers(HttpMethod.DELETE,"/api/hotels/{id}/image").hasAnyRole("USER","ADMIN")
                     
                     //CLIENT ENDPOINTS
                     .requestMatchers(HttpMethod.POST,"/api/reservations/users/{userId}/hotels/{hotelId}/rooms/{roomId}/creation").hasRole("CLIENT")

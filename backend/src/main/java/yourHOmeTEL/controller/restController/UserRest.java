@@ -9,47 +9,28 @@ import java.util.NoSuchElementException;
 
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.nio.file.attribute.UserPrincipal;
-import java.sql.SQLException;
-
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import yourHOmeTEL.model.Hotel;
@@ -57,23 +38,11 @@ import yourHOmeTEL.model.Reservation;
 import yourHOmeTEL.model.Review;
 import yourHOmeTEL.model.Room;
 import yourHOmeTEL.model.UserE;
-import yourHOmeTEL.security.jwt.AuthResponse;
-import yourHOmeTEL.security.jwt.JwtTokenProvider;
-import yourHOmeTEL.security.jwt.LoginRequest;
-import yourHOmeTEL.security.jwt.Token;
-import yourHOmeTEL.security.jwt.UserLoginService;
-import yourHOmeTEL.service.HotelService;
-import yourHOmeTEL.service.ImageService;
 import yourHOmeTEL.service.ReservationService;
 import yourHOmeTEL.service.ReviewService;
-import yourHOmeTEL.service.UserSecurityService;
 import yourHOmeTEL.service.UserService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.security.Key;
-import java.util.Date;
 
 @RestController
 @RequestMapping("/api")

@@ -42,7 +42,7 @@ public class UserImageRest {
         return imgService.createResponseFromImage(imgService.getFilesFolder(), id);
     }
 
-    @PostMapping("users/{id}/image/creation")
+    @PostMapping("users/{id}/image")
     public ResponseEntity<Object> uploadImage(HttpServletRequest request, @PathVariable long id,
             @RequestParam MultipartFile imageFile) throws IOException {
         try {
@@ -63,7 +63,7 @@ public class UserImageRest {
         }
     }
 
-    @DeleteMapping("/users/{id}/image/removal")
+    @DeleteMapping("/users/{id}/image")
     public ResponseEntity<Object> deleteImage(HttpServletRequest request, @PathVariable long id)
             throws IOException {
         try {
