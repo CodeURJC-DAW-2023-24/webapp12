@@ -221,7 +221,11 @@ public class SecurityConfiguration {
                         .requestMatchers("/profile/*/images/").permitAll()
                         .requestMatchers("/static/images/**").permitAll()
                         .requestMatchers("/index/*/images/**").permitAll()
+                        .requestMatchers("/v3/**").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        
 
+                        
                         // User pages
                         .requestMatchers("/profile/**").hasAnyRole("USER")
                         .requestMatchers("/editProfile/**").hasAnyRole("USER")
@@ -229,6 +233,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/editProfileimage/**").hasAnyRole("USER")
                         .requestMatchers("/postHotelReviews/**").hasAnyRole("USER")
                         .requestMatchers("/replace/**").hasAnyRole("USER")
+                        
 
                         // Client pages
                         .requestMatchers("/clientReservations/**").hasAnyRole("CLIENT")
