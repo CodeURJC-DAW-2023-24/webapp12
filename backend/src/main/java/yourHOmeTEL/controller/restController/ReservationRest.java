@@ -1,17 +1,11 @@
 package yourHOmeTEL.controller.restController;
 
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException.Forbidden;
-
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import java.net.URI;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -20,8 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -196,7 +188,7 @@ public class ReservationRest {
 
 	}
 
-	@PostMapping("/reservations/users/{userId}/hotels/{hotelId}/rooms/{roomId}/creation")
+	@PostMapping("/reservations/users/{userId}/hotels/{hotelId}/rooms/{roomId}")
 	public ResponseEntity<Reservation> addReservation(HttpServletRequest request, @RequestBody Reservation reservation,
 	 @PathVariable Long userId, @PathVariable Long hotelId, @PathVariable Long roomId) {
 
@@ -249,16 +241,16 @@ public class ReservationRest {
 
 	// edit profile using raw json body or x-www-form-urlencoded
     @JsonView(ReservationDetails.class)
-	@PutMapping("/reservations/{reservationId}/users/{userId}/hotels/{hotelId}/rooms/{roomId}/update")
-    public ResponseEntity<Reservation> editReservation(HttpServletRequest request, @PathVariable Long reservationId, @PathVariable Long userId,
+	@PutMapping("/reservations/{reservationId}/users")
+    public ResponseEntity<Reservation> editReservation(HttpServletRequest request, @PathVariable Long reservationId,
             @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
 
         try {
-            UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-            UserE foundUser = userService.findById(userId).orElseThrow();
+			Reservation targetReservation = reservationService.findById(reservationId).orElseThrow();
+            UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+            UserE reservationUser = targetReservation.getUser();
 
-            if (requestUser.getRols().contains("ADMIN") || requestUser.equals(foundUser)) {
-                Reservation targetReservation = reservationService.findById(reservationId).orElseThrow();
+            if (currentUser.getRols().contains("ADMIN") || currentUser.equals(reservationUser)) {
 				// merges the current reservation with the updates on the request body
 				targetReservation = objectMapper.readerForUpdating(targetReservation).readValue(objectMapper.writeValueAsString(updates)); // exists
 				targetReservation.setCheckIn(targetReservation.getCheckIn().plusDays(1));
@@ -276,16 +268,15 @@ public class ReservationRest {
         }
     }
 
-   @DeleteMapping("/reservations/{reservationId}/users/{userId}/hotels/{hotelId}/rooms/{roomId}/removal")
-    public ResponseEntity<Reservation> deleteReservation(HttpServletRequest request, @PathVariable Long reservationId,
-	@PathVariable Long userId, @PathVariable Long hotelId, @PathVariable Long roomId) {
+   @DeleteMapping("/reservations/{reservationId}/users")
+    public ResponseEntity<Reservation> deleteReservation(HttpServletRequest request, @PathVariable Long reservationId) {
 
         try {
+			Reservation targetReservation = reservationService.findById(reservationId).orElseThrow();
             UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-            UserE targetUser = userService.findById(userId).orElseThrow();
+            UserE targetUser = targetReservation.getUser();
 
             if (requestUser.getRols().contains("ADMIN") || requestUser.equals(targetUser)) {
-                Reservation targetReservation = reservationService.findById(reservationId).orElseThrow();
 				reservationService.delete(targetReservation);
                 return ResponseEntity.noContent().build();
             } else {

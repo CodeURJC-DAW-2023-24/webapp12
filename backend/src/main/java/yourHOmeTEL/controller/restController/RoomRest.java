@@ -9,9 +9,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 import java.net.URI;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -20,8 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,7 +35,6 @@ import yourHOmeTEL.model.Room;
 import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.service.HotelService;
 import yourHOmeTEL.service.ReservationService;
-import yourHOmeTEL.service.ReviewService;
 import yourHOmeTEL.service.UserService;
 import yourHOmeTEL.service.RoomService;
 
@@ -76,10 +70,6 @@ public class RoomRest {
         objectMapper.setDefaultMergeable(true);
     }
 
-
-    //TIENES QUE CAMBIAR LOS NOMBRES PARA QUE TRABAJEN CON ROOM, Y HACER LAS COMPROBACIONES DE SEGURIDAD NECESARIAS
-	//ej: que la room sea de un hotel con manager validado. hago cosas similares en reserva creo.
-	//ej2: que la persona que accede a la room de una reserva, sea la misma persona de la reserva o un admin.
     //REVIEW CRUD CONTROLLERS
 
 	@JsonView(RoomDetails.class)
@@ -100,7 +90,7 @@ public class RoomRest {
 
 	
 	@JsonView(RoomDetails.class)
-	@GetMapping("/rooms/hotels/{id}")
+	@GetMapping("rooms/hotels/{id}")
 	public ResponseEntity<PageResponse<Room>> hotelRooms(HttpServletRequest request, @PathVariable Long id, 
 	Pageable pageable) {
 		try{
@@ -152,7 +142,7 @@ public class RoomRest {
 
 	}
 
-	@PostMapping("/rooms/hotels/{hotelId}/create")
+	@PostMapping("/rooms/hotels/{hotelId}")
 	public ResponseEntity<Room> postRoom(HttpServletRequest request, @RequestBody Room room, @PathVariable Long hotelId) {
 		try {
 			Hotel currentHotel = hotelService.findById(hotelId).orElseThrow();
@@ -183,7 +173,7 @@ public class RoomRest {
 
 	// edit profile using raw json body or x-www-form-urlencoded
     @JsonView(RoomDetails.class)
-	@PutMapping("/rooms/{roomId}/hotels/{hotelId}/update")
+	@PutMapping("/rooms/{roomId}/hotels/{hotelId}")
     public ResponseEntity<Room> editRoom(HttpServletRequest request, @PathVariable Long roomId, @PathVariable Long hotelId, @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
 
         try {
@@ -204,15 +194,14 @@ public class RoomRest {
         }
     }
 
-    @DeleteMapping("/rooms/{roomId}/hotels/{hotelId}/removal")
-    public ResponseEntity<Room> deleteRoom(HttpServletRequest request, @PathVariable Long roomId, @PathVariable Long hotelId) {
+    @DeleteMapping("/rooms/{roomId}")
+    public ResponseEntity<Room> deleteRoom(HttpServletRequest request, @PathVariable Long roomId) {
         try {
-			Hotel targetHotel = hotelService.findById(hotelId).orElseThrow();
-            UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-            UserE hotelManager = targetHotel.getManager();
 			Room targetRoom = roomService.findById(roomId).orElseThrow();
-
-            if (requestUser.getRols().contains("ADMIN") || (requestUser.equals(hotelManager) && targetHotel.equals(targetRoom.getHotel()))) {
+            UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+            UserE hotelManager = targetRoom.getHotel().getManager();
+			
+            if (requestUser.getRols().contains("ADMIN") || (requestUser.equals(hotelManager))) {
 				roomService.delete(targetRoom);
                 return ResponseEntity.noContent().build();
             } else {

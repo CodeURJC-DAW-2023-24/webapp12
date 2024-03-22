@@ -48,7 +48,7 @@ public class HotelImageRest {
         return imgService.createResponseFromImage(imgService.getFilesFolder(), id);
     }
 
-    @PostMapping("hotels/{id}/image/creation")
+    @PostMapping("hotels/{id}/image")
     public ResponseEntity<Object> uploadImage(HttpServletRequest request, @PathVariable long id,
             @RequestParam MultipartFile imageFile) throws IOException {
         try {
@@ -71,7 +71,7 @@ public class HotelImageRest {
         }
     }
 
-    @DeleteMapping("/hotels/{id}/image/removal")
+    @DeleteMapping("/hotels/{id}/image")
     public ResponseEntity<Object> deleteImage(HttpServletRequest request, @PathVariable long id)
             throws IOException {
         try {
