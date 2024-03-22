@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URI;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +36,13 @@ import io.micrometer.core.ipc.http.HttpSender.Response;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import yourHOmeTEL.controller.restController.HotelRest.HotelDetails;
 import yourHOmeTEL.model.Hotel;
 import yourHOmeTEL.model.Reservation;
 import yourHOmeTEL.model.Review;
 import yourHOmeTEL.model.Room;
 import yourHOmeTEL.model.UserE;
+import yourHOmeTEL.service.HotelService;
 import yourHOmeTEL.service.ReservationService;
 import yourHOmeTEL.service.ReviewService;
 import yourHOmeTEL.service.UserService;
@@ -56,6 +59,9 @@ public class UserRest {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private HotelService hotelService;
 
     @Autowired
     private ReservationService reservationService;
@@ -78,7 +84,7 @@ public class UserRest {
     // a manager applies to be validated by an admin
     @JsonView(UserDetails.class)
     @PutMapping("users/{id}/applied")
-	public ResponseEntity<UserE> managerApplication(Model model, HttpServletRequest request, @PathVariable Long id,
+	public ResponseEntity<UserE> managerApplication(HttpServletRequest request, @PathVariable Long id,
     @RequestParam Boolean state) {
         try{
             UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
@@ -197,6 +203,38 @@ public class UserRest {
 
 
     // USERS CRUD CONTROLLERS
+
+    @JsonView(HotelDetails.class)
+	@GetMapping("/users")
+	public ResponseEntity<PageResponse<UserE>> loadAllUsers(
+			HttpServletRequest request,
+			Pageable pageable) {
+
+		try {
+			UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+
+			if (user.getRols().contains("ADMIN")) {
+
+				Page<UserE> users = userService.findAll(pageable);
+
+				PageResponse<UserE> response = new PageResponse<>();
+				response.setContent(users.getContent());
+				response.setPageNumber(users.getNumber());
+				response.setPageSize(users.getSize());
+				response.setTotalElements(users.getTotalElements());
+				response.setTotalPages(users.getTotalPages());
+
+				return ResponseEntity.ok(response);
+
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+
+		}
+	}
 
     @JsonView(UserDetails.class)
     @GetMapping("/users/{id}")
@@ -344,59 +382,33 @@ public class UserRest {
         }
     }
  
-
-    /*@GetMapping("/index")
-	public String index(Model model, HttpServletRequest request) {
-		List<Hotel> recomendedHotels = new ArrayList<>();
-		try {
-			String nick = request.getUserPrincipal().getName();
-			UserE user = userService.findByNick(nick).orElseThrow();
-			List<Reservation> userReservations = user.getReservations();
-			recomendedHotels = userService.findRecomendedHotels(6, userReservations, user);
-
-		} catch (NullPointerException e) {
-
-		} finally {
-			if (recomendedHotels.size() < 6) {
-				// size +1 to avoid looking for id = 0 if size = 0
-				for (int i = recomendedHotels.size() + 1; i < 7; i++) {
-					Hotel hotel = hotelService.findById((long) i).orElseThrow();
-					if (hotel != null && hotel.getManager().getvalidated())
-						recomendedHotels.add(hotel);
-				}
-			}
-		}
-		model.addAttribute("hotels", recomendedHotels);
-		return "index";
-	} */
-
     
-    /*@GetMapping("/users/{id}/type")
+    @GetMapping("/users/{id}/type")
     public ResponseEntity<String> userType(HttpServletRequest request) {
           if (request.isUserInRole("ADMIN"))
-               return "Admin";
+               return ResponseEntity.ok("ADMIN");
           else if (request.isUserInRole("CLIENT"))
-               return "Client";
+               return ResponseEntity.ok("CLIENT");
           else
-               return "Manager";
-     }*/
+               return ResponseEntity.ok("MANAGER");
+     }
 
-     @GetMapping("/users/{id}/admin")
+     @GetMapping("/users/{id}/type/admin")
      public ResponseEntity<Boolean> isAdmin(HttpServletRequest request) {
           return ResponseEntity.ok(request.isUserInRole("ADMIN"));
      }
 
-     @GetMapping("/users/{id}/manager")
+     @GetMapping("/users/{id}/type/manager")
      public ResponseEntity<Boolean> isManager(HttpServletRequest request) {
         return ResponseEntity.ok(request.isUserInRole("MANAGER"));
      }
 
-     @GetMapping("/users/{id}/client")
+     @GetMapping("/users/{id}/type/client")
      public ResponseEntity<Boolean> isClient(HttpServletRequest request) {
         return ResponseEntity.ok(request.isUserInRole("CLIENT"));
      }
 
-     @GetMapping("/users/{id}/user")
+     @GetMapping("/users/{id}/type/user")
      public ResponseEntity<Boolean> isUser(HttpServletRequest request) {
         return ResponseEntity.ok(request.isUserInRole("USER"));
      }

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import yourHOmeTEL.controller.restController.HotelRest.HotelDetails;
 import yourHOmeTEL.model.Hotel;
 import yourHOmeTEL.model.Reservation;
 import yourHOmeTEL.model.Review;
@@ -66,6 +67,38 @@ public class ReservationRest {
     public void setup() {
         objectMapper.setDefaultMergeable(true);
     }
+
+	@JsonView(HotelDetails.class)
+	@GetMapping("/reservations")
+	public ResponseEntity<PageResponse<Reservation>> loadAllReservations(
+			HttpServletRequest request,
+			Pageable pageable) {
+
+		try {
+			UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+
+			if (user.getRols().contains("ADMIN")) {
+
+				Page<Reservation> reservations = reservationService.findAll(pageable);
+
+				PageResponse<Reservation> response = new PageResponse<>();
+				response.setContent(reservations.getContent());
+				response.setPageNumber(reservations.getNumber());
+				response.setPageSize(reservations.getSize());
+				response.setTotalElements(reservations.getTotalElements());
+				response.setTotalPages(reservations.getTotalPages());
+
+				return ResponseEntity.ok(response);
+
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+
+		}
+	}
 
 	@JsonView(ReservationDetails.class)
 	@GetMapping("/reservations/{id}")

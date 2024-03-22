@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import yourHOmeTEL.controller.restController.HotelRest.HotelDetails;
 import yourHOmeTEL.model.Hotel;
 import yourHOmeTEL.model.Reservation;
 import yourHOmeTEL.model.Review;
@@ -68,6 +69,39 @@ public class ReviewRest {
     }
 
 	//REVIEW CRUD CONTROLLERS
+
+
+	@JsonView(HotelDetails.class)
+	@GetMapping("/reviews")
+	public ResponseEntity<PageResponse<Review>> loadAllReviews(
+			HttpServletRequest request,
+			Pageable pageable) {
+
+		try {
+			UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+
+			if (user.getRols().contains("ADMIN")) {
+
+				Page<Review> reviews = reviewService.findAll(pageable);
+
+				PageResponse<Review> response = new PageResponse<>();
+				response.setContent(reviews.getContent());
+				response.setPageNumber(reviews.getNumber());
+				response.setPageSize(reviews.getSize());
+				response.setTotalElements(reviews.getTotalElements());
+				response.setTotalPages(reviews.getTotalPages());
+
+				return ResponseEntity.ok(response);
+
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+
+		}
+	}
 
 	@JsonView(ReviewDetails.class)
 	@GetMapping("/reviews/{id}")

@@ -57,6 +57,10 @@ public class HotelService implements GeneralService<Hotel> {
         return hotelRepository.findByLocation(location);
     }
 
+    public Page<Hotel> findAll(Pageable pageable){
+        return hotelRepository.findAll(pageable);
+    }
+
     public Page<Hotel> findByManager_Id(Long managerId, Pageable pageable) {
         log.info("Manager ID: {}", managerId);
     
@@ -70,9 +74,9 @@ public class HotelService implements GeneralService<Hotel> {
         return hotelRepository.findTop6ByManager_Validated(validated, pageable);
     }
 
-    public Page<Hotel> findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(Boolean validated,
+    public Page<Hotel> findAllByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(Boolean validated,
             String searchValue, Pageable pageable){
-                return hotelRepository.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(validated, searchValue, pageable);
+                return hotelRepository.findAllByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(validated, searchValue, pageable);
     }
 
     public List<Hotel> findTop6ByManager_Validated(Boolean validated){
@@ -82,7 +86,7 @@ public class HotelService implements GeneralService<Hotel> {
     public List<Hotel> findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(Boolean validated,
             String searchValue){
                 return hotelRepository.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(validated, searchValue);
-            }
+    }
 
     @Override
     public List<Hotel> findAll() {

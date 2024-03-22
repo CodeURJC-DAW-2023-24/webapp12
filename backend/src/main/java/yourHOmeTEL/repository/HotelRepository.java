@@ -21,7 +21,7 @@ public interface HotelRepository extends JpaRepository<Hotel, Long> {
 
     Page<Hotel> findTop6ByManager_Validated(Boolean validated, Pageable pageable);
 
-    Page<Hotel> findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(Boolean validated,
+    Page<Hotel> findAllByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(Boolean validated,
             String searchValue, Pageable pageable);
 
     List<Hotel> findTop6ByManager_Validated(Boolean validated);

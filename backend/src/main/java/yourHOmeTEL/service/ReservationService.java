@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import yourHOmeTEL.model.Reservation;
+import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.repository.ReservationRepository;
 
 @Service
@@ -32,6 +33,10 @@ public class ReservationService implements GeneralService<Reservation> {
     @Override
     public Optional<Reservation> findById(Long id) {
         return reservationRepository.findById(id);
+    }
+
+    public Page<Reservation> findAll(Pageable pageable){
+        return reservationRepository.findAll(pageable);
     }
 
     public Page<Reservation> findByUser_Name(String name, Pageable pageable){

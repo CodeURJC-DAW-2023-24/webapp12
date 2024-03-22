@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import yourHOmeTEL.model.Hotel;
 import yourHOmeTEL.model.Reservation;
 import yourHOmeTEL.model.Review;
+import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.repository.ReviewRepository;
 
 @Service
@@ -37,6 +38,10 @@ public class ReviewService implements GeneralService<Review> {
     public Optional<Review> findById(Long id) {
         return reviewRepository.findById(id);
 
+    }
+
+    public Page<Review> findAll(Pageable pageable){
+        return reviewRepository.findAll(pageable);
     }
 
     public Page<Review> findByUser_Name(String name, Pageable pageable){
@@ -74,8 +79,6 @@ public class ReviewService implements GeneralService<Review> {
     public Review findByHotel_Id(Long hotelId){
         return reviewRepository.findByHotel_Id(hotelId);
     }
-
-
 
     public List<Review> findByUser_Name(String name){
         return reviewRepository.findByUser_Name(name);

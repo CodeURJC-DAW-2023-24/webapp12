@@ -53,5 +53,4 @@ public class PageResponse<T> {
         this.totalPages = totalPages;
     }
 
-    // Getters and setters...
 }

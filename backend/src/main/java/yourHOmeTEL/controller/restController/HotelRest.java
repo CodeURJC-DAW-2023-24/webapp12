@@ -358,11 +358,11 @@ public class HotelRest {
 		return ResponseEntity.ok(recomendedHotels);
 	}
 
-	@JsonView(HotelDetails.class) // check if this is done correctly. I just added pageable
+	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/index/search")
 	public ResponseEntity<PageResponse<Hotel>> indexSearch(@RequestParam String searchValue, Pageable pageable) {
 		try {
-			Page<Hotel> hotels = hotelService.findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(
+			Page<Hotel> hotels = hotelService.findAllByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(
 					true,
 					searchValue, pageable);
 			if (hotels.hasContent()) {
@@ -418,7 +418,7 @@ public class HotelRest {
 	}
 
 	@JsonView(HotelDetails.class)
-	@GetMapping("/reservations/{id}/hotel")
+	@GetMapping("/hotels/reservations/{id}")
 	public ResponseEntity<Reservation> getHotelFromReservation(
 			HttpServletRequest request,
 			@PathVariable Long id) {
@@ -443,7 +443,7 @@ public class HotelRest {
 	}
 
 	@JsonView(HotelDetails.class)
-	@GetMapping("/reviews/{id}/hotel")
+	@GetMapping("/hotels/reviews/{id}")
 	public ResponseEntity<Review> getHotelFromReview(
 			HttpServletRequest request,
 			@PathVariable Long id) {
@@ -468,7 +468,7 @@ public class HotelRest {
 	}
 
 	@JsonView(HotelDetails.class)
-	@GetMapping("/rooms/{id}/hotel")
+	@GetMapping("/hotels/rooms/{id}")
 	public ResponseEntity<Room> getHotelFromRoom(
 			HttpServletRequest request,
 			@PathVariable Long id) {
@@ -506,8 +506,7 @@ public class HotelRest {
 
 			if (user.getRols().contains("ADMIN")) {
 
-				Page<Hotel> hotels = new PageImpl<>(hotelService.findAll(), pageable, hotelService.findAll().size());
-
+				Page<Hotel> hotels = hotelService.findAll(pageable);
 				PageResponse<Hotel> response = new PageResponse<>();
 				response.setContent(hotels.getContent());
 				response.setPageNumber(hotels.getNumber());

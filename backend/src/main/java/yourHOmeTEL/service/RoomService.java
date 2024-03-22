@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import yourHOmeTEL.model.Reservation;
 import yourHOmeTEL.model.Room;
+import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.repository.RoomRepository;
 
 @Service
@@ -23,6 +24,10 @@ public class RoomService implements GeneralService<Room> {
     public Optional<Room> findById(Long id) {
         return roomRepository.findById(id);
 
+    }
+
+    public Page<Room> findAll(Pageable pageable){
+        return roomRepository.findAll(pageable);
     }
 
     public Page<Room> findByMaxClients(int maxClients, Pageable pageable){

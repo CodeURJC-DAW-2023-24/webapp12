@@ -75,6 +75,10 @@ public class UserService implements GeneralService<UserE> {
         return userRepository.findByName(name);
     }
 
+    public Page<UserE> findAll(Pageable pageable){
+        return userRepository.findAll(pageable);
+    }
+
     public Page<UserE> findByValidatedAndRejected(Boolean validated, Boolean rejected, Pageable pageable){
         return userRepository.findByValidatedAndRejected(validated, rejected, pageable);
     }
