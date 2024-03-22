@@ -30,6 +30,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.micrometer.core.ipc.http.HttpSender.Response;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
@@ -75,22 +77,28 @@ public class UserRest {
 
     // a manager applies to be validated by an admin
     @JsonView(UserDetails.class)
-    @PutMapping("/manager/{id}/application")
-    public ResponseEntity<UserE> managerApplication(HttpServletRequest request, @PathVariable Long id) {
-        try {
+    @PutMapping("users/{id}/applied")
+	public ResponseEntity<UserE> managerApplication(Model model, HttpServletRequest request, @PathVariable Long id,
+    @RequestParam Boolean state) {
+        try{
             UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
             UserE foundManager = userService.findById(id).orElseThrow();
 
-            if (currentUser.equals(foundManager)) {
-                foundManager.setRejected(false);
-                userService.save(foundManager);
+            if (currentUser.equals(foundManager) || currentUser.getRols().contains("ADMIN")) {
+                if (currentUser.getvalidated() == false){
+                    foundManager.setRejected(!state);
+                    userService.save(foundManager);
+                }      
                 return ResponseEntity.ok(foundManager);
-            } else
+            }else{
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+                    
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
-    }
+	}
+    
 
     // ADMIN CONTROLLERS
     @JsonView(UserDetails.class)
@@ -135,69 +143,33 @@ public class UserRest {
             return ResponseEntity.notFound().build();
         }
     }
-
-    /*@GetMapping("/managers/unvalidated")
-	public String managerValidation(Model model) {
-		List<UserE> unvalidatedManagersList = new ArrayList<>();
-		unvalidatedManagersList = userService.findByValidatedAndRejected(false, false);
-
-		if (unvalidatedManagersList != null) {
-			model.addAttribute("unvalidatedManagers", unvalidatedManagersList);
-		}
-
-		return "managerValidation";
-	} */
-
     
-     
-    
-    @PutMapping("/users/{id}/managers/rejected")
+    @PutMapping("/users/{id}/rejected/state")
     @JsonView(UserDetails.class)
     public ResponseEntity<UserE> rejectManager(HttpServletRequest request, @RequestParam("rejected") Boolean rejected,
             @PathVariable Long id) {
         try {
+            UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
             UserE manager = userService.findById(id).orElseThrow();
-            if (rejected == true && manager.getRols().contains("MANAGER")) {
+            if (manager.getRols().contains("MANAGER") && currentUser.getRols().contains("ADMIN") && rejected == true){
                 manager.setRejected(true);
                 manager.setvalidated(false);
-                userService.save(manager);
-                return ResponseEntity.ok(manager);
 
             } else if (rejected == false) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    // sets the selected manager as accepted
-    @JsonView(UserDetails.class)
-    @PutMapping("/users/{id}/managers/validated")
-    public ResponseEntity<UserE> acceptManager(HttpServletRequest request, @RequestParam("accepted") Boolean accepted,
-            @PathVariable Long id) {
-        try {
-            UserE manager = userService.findById(id).orElseThrow();
-            if (manager.getRols().contains("MANAGER") && accepted == true) {
                 manager.setRejected(false);
                 manager.setvalidated(true);
-                userService.save(manager);
-                return ResponseEntity.ok(manager);
-
-            } else if (accepted == false) {
-                return ResponseEntity.badRequest().build();
-
             } else {
                 return ResponseEntity.notFound().build();
             }
+
+            userService.save(manager);
+            return ResponseEntity.ok(manager);
 
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
     }
+
 
     // returns list of all managers. ADMIN and MANAGER can access
     @JsonView(UserDetails.class)
@@ -371,22 +343,7 @@ public class UserRest {
             return ResponseEntity.notFound().build();
         }
     }
-
-    /*@PutMapping("users/{id}/applied")
-	public String managerApplication(Model model, HttpServletRequest request, @RequestParam Boolean state) {
-
-		UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-		UserE foundManager = userService.findById(id).orElseThrow();
-
-		if (currentUser.equals(foundManager)) {
-			foundManager.setRejected(false);
-			userService.save(foundManager);
-			model.addAttribute("user", foundManager);
-			return "redirect:/profile";
-
-		} else
-			return "/error";
-	} */
+ 
 
     /*@GetMapping("/index")
 	public String index(Model model, HttpServletRequest request) {
@@ -422,31 +379,31 @@ public class UserRest {
                return "Client";
           else
                return "Manager";
-     }
+     }*/
 
      @GetMapping("/users/{id}/admin")
      public ResponseEntity<Boolean> isAdmin(HttpServletRequest request) {
-          return request.isUserInRole("ADMIN");
+          return ResponseEntity.ok(request.isUserInRole("ADMIN"));
      }
 
      @GetMapping("/users/{id}/manager")
      public ResponseEntity<Boolean> isManager(HttpServletRequest request) {
-          return request.isUserInRole("MANAGER");
+        return ResponseEntity.ok(request.isUserInRole("MANAGER"));
      }
 
      @GetMapping("/users/{id}/client")
      public ResponseEntity<Boolean> isClient(HttpServletRequest request) {
-          return request.isUserInRole("CLIENT");
+        return ResponseEntity.ok(request.isUserInRole("CLIENT"));
      }
 
      @GetMapping("/users/{id}/user")
      public ResponseEntity<Boolean> isUser(HttpServletRequest request) {
-          return request.isUserInRole("USER");
+        return ResponseEntity.ok(request.isUserInRole("USER"));
      }
 
      @GetMapping("/request/path")
      public ResponseEntity<String> getPath(HttpServletRequest request) {
-          return request.getServletPath();
-     } */
+          return ResponseEntity.ok(request.getServletPath());
+     } 
 
 }

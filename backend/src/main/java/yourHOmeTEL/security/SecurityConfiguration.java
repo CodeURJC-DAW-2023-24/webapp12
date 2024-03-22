@@ -93,14 +93,11 @@ public class SecurityConfiguration {
 
                     //ADMIN ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/api/managers/validated").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET,"/api/managers/unvalidated").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.POST,"/api/users/{id}/managers/rejected").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.POST,"/api/users/{id}/managers/validated").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/api/users/{id}/rejected/state").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET,"/api/hotels").hasRole("ADMIN")
 
                 
                     //MANAGER ENDPOINTS
-                    .requestMatchers(HttpMethod.PUT, "/api/manager/{id}/application").hasRole("MANAGER")
                     .requestMatchers(HttpMethod.POST, "/api/hotels").hasRole("MANAGER")
                     .requestMatchers(HttpMethod.GET,"/api/hotels/{id}/clients").hasRole("MANAGER")
                     .requestMatchers(HttpMethod.GET,"/api/hotelsInfo/{id}").hasRole("MANAGER")
