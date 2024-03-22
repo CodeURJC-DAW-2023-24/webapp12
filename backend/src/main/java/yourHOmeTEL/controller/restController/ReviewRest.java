@@ -18,11 +18,8 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -145,7 +142,48 @@ public class ReviewRest {
 
 	}
 
-	@PostMapping("/reviews/users/{userId}/hotels/{hotelId}/create")
+	@GetMapping("/hotels/{id}/reviews/size")
+	public ResponseEntity<Integer> hotelReviews(HttpServletRequest request, @PathVariable Long id) {
+		try {
+			Hotel selectedHotel = hotelService.findById(id).orElseThrow();
+			UserE hotelManager = selectedHotel.getManager();
+			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			if (hotelManager.getvalidated() || currentUser.getRols().contains("ADMIN")) {
+				int size = selectedHotel.getReviews().size();
+				return ResponseEntity.ok(size);
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+
+	} 
+
+	@GetMapping("/hotels/{id}/reviews/percentage")
+	public ResponseEntity<List<Integer>> hotelReviews(@PathVariable Long id) {
+		try {
+			Hotel selectedHotel = hotelService.findById(id).orElseThrow();
+			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
+
+			if (hotelManager.getvalidated()) {
+				List<Integer> percentageReviews = new ArrayList<>();
+				for (int i = 5; i >= 1; i--) {
+					int percentageOfIScoreReview = selectedHotel.getPercentageOfNScore(i);
+					percentageReviews.add(percentageOfIScoreReview);
+				}
+				return ResponseEntity.ok(percentageReviews);
+
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+
+	}
+
+	@PostMapping("/reviews/users/hotels/{hotelId}")
 	public ResponseEntity<Review> postReview(HttpServletRequest request, @RequestBody Review review,
 	 @PathVariable Long userId, @PathVariable Long hotelId) {
 		
@@ -158,7 +196,7 @@ public class ReviewRest {
 
 				if (hotelManager.getvalidated()) {
 					Hotel targetHotel = hotelService.findById(hotelId).orElseThrow();
-					UserE authorUser = userService.findById(userId).orElseThrow();
+					UserE authorUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 
 					Review newReview = new Review(review.getScore(), review.getComment(), LocalDate.now(), targetHotel, authorUser);
 					reviewService.save(newReview);
@@ -184,7 +222,7 @@ public class ReviewRest {
 
 	// edit profile using raw json body or x-www-form-urlencoded
     @JsonView(ReviewDetails.class)
-	@PutMapping("/reviews/{reviewId}/users/{userId}/update")
+	@PutMapping("/reviews/{reviewId}/users/{userId}")
     public ResponseEntity<Review> editReview(HttpServletRequest request, @PathVariable Long reviewId, @PathVariable Long userId,
             @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
 
@@ -207,16 +245,16 @@ public class ReviewRest {
         }
     }
 
-    @DeleteMapping("/reviews/{reviewId}/users/{userId}/removal")
-    public ResponseEntity<Review> deleteReview(HttpServletRequest request, @PathVariable Long reviewId,
-	@PathVariable Long userId) {
+    @DeleteMapping("/reviews/{reviewId}")
+    public ResponseEntity<Review> deleteReview(HttpServletRequest request, @PathVariable Long reviewId) {
 
         try {
-            UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-            UserE targetUser = userService.findById(userId).orElseThrow();
+			Review targetReview = reviewService.findById(reviewId).orElseThrow();
+            UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			UserE reviewUser = targetReview.getUser();
 
-            if (requestUser.getRols().contains("ADMIN") || requestUser.equals(targetUser)) {
-                Review targetReview = reviewService.findById(reviewId).orElseThrow();
+            if (currentUser.getRols().contains("ADMIN") || currentUser.equals(reviewUser)) {
+                
 				reviewService.delete(targetReview);
                 return ResponseEntity.noContent().build();
             } else {
@@ -226,45 +264,5 @@ public class ReviewRest {
             return ResponseEntity.notFound().build();
         }
     }
-
-    /*@GetMapping("/hotels/{id}/reviews/size")
-	public String hotelReviews(
-			Model model,
-			@PathVariable Long id) {
-
-		UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
-
-		if (hotelManager.getvalidated()) {
-			Hotel selectedHotel = hotelService.findById(id).orElseThrow();
-
-			model.addAttribute("totalReviews", selectedHotel.getReviews().size());
-
-		} else {
-			return "/error";
-		}
-
-	} */
-
-	/*@GetMapping("/hotels/{id}/reviews/percentage")
-	public String hotelReviews(
-			Model model,
-			@PathVariable Long id) {
-
-		UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
-
-		if (hotelManager.getvalidated()) {
-			Hotel selectedHotel = hotelService.findById(id).orElseThrow();
-
-			for (int i = 5; i >= 1; i--) {
-				int percentageOfIScoreReview = selectedHotel.getPercentageOfNScore(i);
-
-				model.addAttribute("percentageReview" + i, percentageOfIScoreReview);
-			}
-
-		} else {
-			return "/error";
-		}
-
-	} */
     
 }
