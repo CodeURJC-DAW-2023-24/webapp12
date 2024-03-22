@@ -150,7 +150,6 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.POST,"/api/reservations/users/{userId}/hotels/{hotelId}/rooms/{roomId}/creation").hasRole("CLIENT")
 
                     .requestMatchers(HttpMethod.POST,"/api/reviews/users/hotels/{hotelId}").hasRole("CLIENT")
-                    .requestMatchers(HttpMethod.GET,"/api/hotels/{id}/reviews/percentage").hasRole("CLIENT")
                     
                     // PUBLIC ENDPOINTS
                     .requestMatchers(HttpMethod.POST,"/api/users").permitAll()
@@ -162,7 +161,7 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET, "/api/rooms/{id}").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/rooms/hotels/{id}").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/index").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/hotels/{id}/reviews/size").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/hotels/{id}/reviews/size").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/hotels/{id}/reviews/percentage").permitAll()
                     .anyRequest().permitAll()
 

@@ -164,7 +164,7 @@ public class ReviewRest {
 	public ResponseEntity<List<Integer>> hotelReviews(@PathVariable Long id) {
 		try {
 			Hotel selectedHotel = hotelService.findById(id).orElseThrow();
-			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
+			UserE hotelManager = selectedHotel.getManager();
 
 			if (hotelManager.getvalidated()) {
 				List<Integer> percentageReviews = new ArrayList<>();
