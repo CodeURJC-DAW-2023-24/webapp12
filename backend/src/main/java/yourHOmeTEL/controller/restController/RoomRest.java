@@ -35,6 +35,7 @@ import yourHOmeTEL.model.Review;
 import yourHOmeTEL.model.Room;
 import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.service.HotelService;
+import yourHOmeTEL.service.PageResponse;
 import yourHOmeTEL.service.ReservationService;
 import yourHOmeTEL.service.UserService;
 import yourHOmeTEL.service.RoomService;
@@ -47,7 +48,7 @@ public class RoomRest {
 
     
 
-    interface RoomDetails
+    public interface RoomDetails
             extends UserE.Basic, Hotel.Basic, Review.Basic, Room.Complete, Reservation.Basic {
     }
 
@@ -123,7 +124,7 @@ public class RoomRest {
 
 	
 	@JsonView(RoomDetails.class)
-	@GetMapping("rooms/hotels/{id}")
+	@GetMapping("/rooms/hotels/{id}")
 	public ResponseEntity<PageResponse<Room>> hotelRooms(HttpServletRequest request, @PathVariable Long id, 
 	Pageable pageable) {
 		try{

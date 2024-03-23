@@ -29,7 +29,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     Page<Review> findByUser_Id(Long userId, Pageable pageable);
 
-    Page<Review> findByHotel_Id(Long hotelId, Pageable pageable);
+    Page<Review> findAllByHotel_Id(Long hotelId, Pageable pageable);
 
     Review findByHotel_Id(Long hotelId);
     

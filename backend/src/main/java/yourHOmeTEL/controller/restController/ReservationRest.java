@@ -32,6 +32,7 @@ import yourHOmeTEL.model.Review;
 import yourHOmeTEL.model.Room;
 import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.service.HotelService;
+import yourHOmeTEL.service.PageResponse;
 import yourHOmeTEL.service.ReservationService;
 import yourHOmeTEL.service.RoomService;
 import yourHOmeTEL.service.UserService;
@@ -44,7 +45,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping("/api")
 public class ReservationRest {
 
-	interface ReservationDetails
+	public interface ReservationDetails
 			extends UserE.Basic, Hotel.Basic, Review.Basic, Room.Basic, Reservation.Complete {
 	}
 
@@ -274,7 +275,7 @@ public class ReservationRest {
 
 	// edit profile using raw json body or x-www-form-urlencoded
     @JsonView(ReservationDetails.class)
-	@PutMapping("/reservations/{reservationId}/users")
+	@PutMapping("/reservations/{reservationId}")
     public ResponseEntity<Reservation> editReservation(HttpServletRequest request, @PathVariable Long reservationId,
             @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
 

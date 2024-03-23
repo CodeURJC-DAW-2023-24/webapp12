@@ -38,6 +38,7 @@ import yourHOmeTEL.model.Review;
 import yourHOmeTEL.model.Room;
 import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.service.HotelService;
+import yourHOmeTEL.service.PageResponse;
 import yourHOmeTEL.service.ReviewService;
 import yourHOmeTEL.service.UserService;
 
@@ -47,7 +48,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping("/api")
 public class ReviewRest {
 
-    interface ReviewDetails
+    public interface ReviewDetails
             extends UserE.Basic, Hotel.Basic, Review.Complete, Room.Basic, Reservation.Basic {
     }
 
@@ -78,25 +79,15 @@ public class ReviewRest {
 			Pageable pageable) {
 
 		try {
-			UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			Page<Review> reviews = reviewService.findAll(pageable);
+			PageResponse<Review> response = new PageResponse<>();
+			response.setContent(reviews.getContent());
+			response.setPageNumber(reviews.getNumber());
+			response.setPageSize(reviews.getSize());
+			response.setTotalElements(reviews.getTotalElements());
+			response.setTotalPages(reviews.getTotalPages());
 
-			if (user.getRols().contains("ADMIN")) {
-
-				Page<Review> reviews = reviewService.findAll(pageable);
-
-				PageResponse<Review> response = new PageResponse<>();
-				response.setContent(reviews.getContent());
-				response.setPageNumber(reviews.getNumber());
-				response.setPageSize(reviews.getSize());
-				response.setTotalElements(reviews.getTotalElements());
-				response.setTotalPages(reviews.getTotalPages());
-
-				return ResponseEntity.ok(response);
-
-			} else {
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-			}
-
+			return ResponseEntity.ok(response);
 		} catch (NoSuchElementException e) {
 			return ResponseEntity.notFound().build();
 
@@ -153,7 +144,7 @@ public class ReviewRest {
 			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
 
 			if (hotelManager.getvalidated() || requestUser.getRols().contains("ADMIN")) {
-				Page<Review> targetReviews = reviewService.findByHotel_Id(hotelManager.getId(), pageable);
+				Page<Review> targetReviews = reviewService.findAllByHotel_Id(hotelManager.getId(), pageable);
 				if (targetReviews.hasContent()) {
 					PageResponse<Review> response = new PageResponse<>();
 					response.setContent(targetReviews.getContent());
@@ -176,7 +167,7 @@ public class ReviewRest {
 
 	}
 
-	@GetMapping("/hotels/{id}/reviews/size")
+	@GetMapping("reviews/size/hotels/{id}")
 	public ResponseEntity<Integer> hotelReviews(HttpServletRequest request, @PathVariable Long id) {
 		try {
 			Hotel selectedHotel = hotelService.findById(id).orElseThrow();
@@ -194,7 +185,7 @@ public class ReviewRest {
 
 	} 
 
-	@GetMapping("/hotels/{id}/reviews/percentage")
+	@GetMapping("/reviews/percentage/hotels/{id}")
 	public ResponseEntity<List<Integer>> hotelReviews(@PathVariable Long id) {
 		try {
 			Hotel selectedHotel = hotelService.findById(id).orElseThrow();
@@ -218,8 +209,7 @@ public class ReviewRest {
 	}
 
 	@PostMapping("/reviews/users/hotels/{hotelId}")
-	public ResponseEntity<Review> postReview(HttpServletRequest request, @RequestBody Review review,
-	 @PathVariable Long userId, @PathVariable Long hotelId) {
+	public ResponseEntity<Review> postReview(HttpServletRequest request, @RequestBody Review review, @PathVariable Long hotelId) {
 		
 		if(review.getScore() == 0 || review.getScore() > 5) {
 			return ResponseEntity.badRequest().build();
@@ -241,7 +231,7 @@ public class ReviewRest {
 					authorUser.getReviews().add(newReview);
 					userService.save(authorUser);
 
-					 URI location = fromCurrentRequest().build().toUri();
+					URI location = fromCurrentRequest().build().toUri();
             		return ResponseEntity.created(location).build(); 
 
 				} else {

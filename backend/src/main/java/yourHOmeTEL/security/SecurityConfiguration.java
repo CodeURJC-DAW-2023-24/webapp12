@@ -82,9 +82,6 @@ public class SecurityConfiguration {
                     
 
                     //ADMIN AND USER ENDPOINTS
-                    .requestMatchers(HttpMethod.PUT,"/api/reviews/{reviewId}/users/{userId}").hasAnyRole("CLIENT","ADMIN")
-                    .requestMatchers(HttpMethod.DELETE,"/api/reviews/{reviewId}").hasAnyRole("CLIENT","ADMIN")
-
                     .requestMatchers(HttpMethod.GET,"/api/reservations/{id}").hasAnyRole("CLIENT","ADMIN")
                     .requestMatchers(HttpMethod.PUT,"/api/reservations/{reservationId}/users/{userId}/hotels/{hotelId}/rooms/{roomId}/update").hasAnyRole("CLIENT","ADMIN")
                     .requestMatchers(HttpMethod.PUT,"/api/reservations/{reservationId}/users/{userId}/hotels/{hotelId}/rooms/{roomId}/removal").hasAnyRole("CLIENT","ADMIN")
@@ -97,7 +94,6 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET,"/api/users").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET,"/api/hotels").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET,"/api/reservations").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET,"/api/reviews").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET,"/api/rooms").hasRole("ADMIN")
 
                 
@@ -161,8 +157,9 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET, "/api/hotels/index/search").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/rooms/{id}").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/rooms/hotels/{id}").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/hotels/{id}/reviews/size").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/hotels/{id}/reviews/percentage").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/reviews/size/hotels/{id}").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/reviews/percentage/hotels/{id}").permitAll()
+                    .requestMatchers(HttpMethod.GET,"/api/reviews").permitAll()
                     .anyRequest().permitAll()
 
                     

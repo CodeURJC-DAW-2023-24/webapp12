@@ -72,8 +72,8 @@ public class ReviewService implements GeneralService<Review> {
         return reviewRepository.findByUser_Id(userId, pageable);
     }
 
-    public Page<Review> findByHotel_Id(Long hotelId, Pageable pageable){
-        return reviewRepository.findByHotel_Id(hotelId, pageable);
+    public Page<Review> findAllByHotel_Id(Long hotelId, Pageable pageable){
+        return reviewRepository.findAllByHotel_Id(hotelId, pageable);
     }
     
     public Review findByHotel_Id(Long hotelId){
