@@ -237,7 +237,7 @@ public class HotelRest {
 		}
 
 	}
-
+	//PENDIENTE EL CÓMO TRATAR EL getValidClients
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/{id}/clients")
 	public ResponseEntity<List<UserE>> clientlist(HttpServletRequest request, @PathVariable Long id) {
@@ -258,7 +258,7 @@ public class HotelRest {
 	}
 
 	@JsonView(HotelDetails.class)
-	@GetMapping("/hotelsInfo/{id}")
+	@GetMapping("/hotels/{id}")
 	public ResponseEntity<Map<String, Object>> hotelInformation(@PathVariable Long id) {
 		try {
 			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
@@ -281,7 +281,7 @@ public class HotelRest {
 		}
 	}
 
-	//PENDIENTE ELIMINAR PAGEABLE
+	//PENDIENTE ELIMINAR PAGEABLE Y VER SI SE PUEDEN COMBINAR EL LOADMOREHOTELS DE USER Y MANAGER EN UN MISMO CONTROLADOR
 	@JsonView(HotelDetails.class)
 	@GetMapping("/manager/hotels/{start}/{end}")
 	public ResponseEntity<PageResponse<Hotel>> loadMoreHotelsManagerView(
@@ -418,7 +418,7 @@ public class HotelRest {
 	}
 
 	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/reservations/{id}")
+	@GetMapping("/hotels/{id}/reservations")
 	public ResponseEntity<Reservation> getHotelFromReservation(
 			HttpServletRequest request,
 			@PathVariable Long id) {
@@ -443,7 +443,7 @@ public class HotelRest {
 	}
 
 	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/reviews/{id}")
+	@GetMapping("/hotels/{id}/reviews")
 	public ResponseEntity<Review> getHotelFromReview(
 			HttpServletRequest request,
 			@PathVariable Long id) {
@@ -468,7 +468,7 @@ public class HotelRest {
 	}
 
 	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/rooms/{id}")
+	@GetMapping("/hotels/{id}/rooms")
 	public ResponseEntity<Room> getHotelFromRoom(
 			HttpServletRequest request,
 			@PathVariable Long id) {
