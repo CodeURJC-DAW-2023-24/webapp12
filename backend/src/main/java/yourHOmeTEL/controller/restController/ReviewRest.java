@@ -78,25 +78,15 @@ public class ReviewRest {
 			Pageable pageable) {
 
 		try {
-			UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			Page<Review> reviews = reviewService.findAll(pageable);
+			PageResponse<Review> response = new PageResponse<>();
+			response.setContent(reviews.getContent());
+			response.setPageNumber(reviews.getNumber());
+			response.setPageSize(reviews.getSize());
+			response.setTotalElements(reviews.getTotalElements());
+			response.setTotalPages(reviews.getTotalPages());
 
-			if (user.getRols().contains("ADMIN")) {
-
-				Page<Review> reviews = reviewService.findAll(pageable);
-
-				PageResponse<Review> response = new PageResponse<>();
-				response.setContent(reviews.getContent());
-				response.setPageNumber(reviews.getNumber());
-				response.setPageSize(reviews.getSize());
-				response.setTotalElements(reviews.getTotalElements());
-				response.setTotalPages(reviews.getTotalPages());
-
-				return ResponseEntity.ok(response);
-
-			} else {
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-			}
-
+			return ResponseEntity.ok(response);
 		} catch (NoSuchElementException e) {
 			return ResponseEntity.notFound().build();
 
