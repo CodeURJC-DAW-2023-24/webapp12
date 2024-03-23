@@ -1,4 +1,4 @@
-package yourHOmeTEL.controller.restController;
+package yourHOmeTEL.service;
 
 import java.util.List;
 

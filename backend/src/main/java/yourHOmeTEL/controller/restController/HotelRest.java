@@ -49,7 +49,7 @@ import yourHOmeTEL.service.*;
 @RequestMapping("/api")
 public class HotelRest {
 
-	interface HotelDetails
+	public interface HotelDetails
 			extends UserE.Basic, Hotel.Complete, Review.Basic, Room.Basic, Reservation.Basic {
 	}
 

@@ -43,6 +43,7 @@ import yourHOmeTEL.model.Review;
 import yourHOmeTEL.model.Room;
 import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.service.HotelService;
+import yourHOmeTEL.service.PageResponse;
 import yourHOmeTEL.service.ReservationService;
 import yourHOmeTEL.service.ReviewService;
 import yourHOmeTEL.service.UserService;
@@ -53,7 +54,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/api")
 public class UserRest {
 
-    interface UserDetails
+    public interface UserDetails
             extends UserE.Complete, Hotel.Basic, Review.Basic, Room.Basic, Reservation.Basic {
     }
 

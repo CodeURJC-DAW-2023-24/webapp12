@@ -38,6 +38,7 @@ import yourHOmeTEL.model.Review;
 import yourHOmeTEL.model.Room;
 import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.service.HotelService;
+import yourHOmeTEL.service.PageResponse;
 import yourHOmeTEL.service.ReviewService;
 import yourHOmeTEL.service.UserService;
 
@@ -47,7 +48,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping("/api")
 public class ReviewRest {
 
-    interface ReviewDetails
+    public interface ReviewDetails
             extends UserE.Basic, Hotel.Basic, Review.Complete, Room.Basic, Reservation.Basic {
     }
 
@@ -143,7 +144,7 @@ public class ReviewRest {
 			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
 
 			if (hotelManager.getvalidated() || requestUser.getRols().contains("ADMIN")) {
-				Page<Review> targetReviews = reviewService.findByHotel_Id(hotelManager.getId(), pageable);
+				Page<Review> targetReviews = reviewService.findAllByHotel_Id(hotelManager.getId(), pageable);
 				if (targetReviews.hasContent()) {
 					PageResponse<Review> response = new PageResponse<>();
 					response.setContent(targetReviews.getContent());
