@@ -59,6 +59,39 @@ public class HotelRest {
 	@Autowired
 	ReservationService reservationService;
 
+	// CRUD OPERATIONS
+
+	@JsonView(HotelDetails.class)
+	@GetMapping("/hotels")
+	public ResponseEntity<PageResponse<Hotel>> loadAllHotels(
+			HttpServletRequest request,
+			Pageable pageable) {
+
+		try {
+			UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+
+			if (user.getRols().contains("ADMIN")) {
+
+				Page<Hotel> hotels = hotelService.findAll(pageable);
+				PageResponse<Hotel> response = new PageResponse<>();
+				response.setContent(hotels.getContent());
+				response.setPageNumber(hotels.getNumber());
+				response.setPageSize(hotels.getSize());
+				response.setTotalElements(hotels.getTotalElements());
+				response.setTotalPages(hotels.getTotalPages());
+
+				return ResponseEntity.ok(response);
+
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+
+		}
+	}
+
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/{id}")
 	public ResponseEntity<Hotel> getHotelData(
@@ -81,6 +114,116 @@ public class HotelRest {
 		}
 
 	}
+
+
+	@JsonView(HotelDetails.class)
+	@GetMapping("/hotels/manager/{id}")
+	public ResponseEntity<PageResponse<Hotel>> viewHotelsManager(HttpServletRequest request, @PathVariable Long id,
+			Pageable pageable) {
+		try {
+			UserE requestManager = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			UserE targetManager = userService.findById(id).orElseThrow();
+
+			if (requestManager.equals(targetManager) || requestManager.getRols().contains("ADMIN")) {
+				Page<Hotel> hotels = hotelService.findByManager_Id(id, pageable);
+				if (hotels.hasContent()) {
+					PageResponse<Hotel> response = new PageResponse<>();
+					response.setContent(hotels.getContent());
+					response.setPageNumber(hotels.getNumber());
+					response.setPageSize(hotels.getSize());
+					response.setTotalElements(hotels.getTotalElements());
+					response.setTotalPages(hotels.getTotalPages());
+
+					return ResponseEntity.ok(response);
+				} else {
+					return ResponseEntity.notFound().build();
+				}
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@JsonView(HotelDetails.class)
+	@GetMapping("/hotels/reservations/{id}")
+	public ResponseEntity<Hotel> getReservationsFromHotel(
+			HttpServletRequest request,
+			@PathVariable Long id) {
+
+		try {
+			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			Reservation reservation = reservationService.findById(id).orElseThrow();
+			UserE reservationClient = reservation.getUser();
+			Hotel targetHotel = reservation.getHotel();
+			UserE hotelManager = targetHotel.getManager();
+
+			if ((currentUser.equals(reservationClient) && hotelManager.getvalidated() 
+			|| currentUser.getRols().contains("ADMIN"))) {
+
+				return ResponseEntity.ok(targetHotel);
+
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@JsonView(HotelDetails.class)
+	@GetMapping("/hotels/reviews/{id}")
+	public ResponseEntity<Hotel> getReviewsFromHotel(
+			HttpServletRequest request,
+			@PathVariable Long id) {
+
+		try {
+			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			Review requestReview = reviewService.findById(id).orElseThrow();
+			Hotel targetHotel = requestReview.getHotel();
+			UserE hotelManager = targetHotel.getManager();
+
+			if (hotelManager.getvalidated() || currentUser.getRols().contains("ADMIN")) {
+
+				return ResponseEntity.ok(targetHotel);
+
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@JsonView(HotelDetails.class)
+	@GetMapping("/hotels/rooms/{id}")
+	public ResponseEntity<Hotel> getHotelFromRoom(
+			HttpServletRequest request,
+			@PathVariable Long id) {
+
+		try {
+			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			Room requestRoom = roomService.findById(id).orElseThrow();
+			Hotel targetHotel = requestRoom.getHotel();
+			UserE hotelManager = targetHotel.getManager();
+
+			if (hotelManager.getvalidated() || currentUser.getRols().contains("ADMIN")) {
+
+				return ResponseEntity.ok(targetHotel);
+
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	
 
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/{id}/clients")
@@ -324,150 +467,4 @@ public class HotelRest {
 			return ResponseEntity.notFound().build();
 		}
 	}
-
-	// MANAGER CONTROLLERS
-
-	// this one is done already, dont touch it
-
-	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/manager/{id}")
-	public ResponseEntity<PageResponse<Hotel>> viewHotelsManager(HttpServletRequest request, @PathVariable Long id,
-			Pageable pageable) {
-		try {
-			UserE requestManager = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			UserE targetManager = userService.findById(id).orElseThrow();
-
-			if (requestManager.equals(targetManager) || requestManager.getRols().contains("ADMIN")) {
-				Page<Hotel> hotels = hotelService.findByManager_Id(id, pageable);
-				if (hotels.hasContent()) {
-					PageResponse<Hotel> response = new PageResponse<>();
-					response.setContent(hotels.getContent());
-					response.setPageNumber(hotels.getNumber());
-					response.setPageSize(hotels.getSize());
-					response.setTotalElements(hotels.getTotalElements());
-					response.setTotalPages(hotels.getTotalPages());
-
-					return ResponseEntity.ok(response);
-				} else {
-					return ResponseEntity.notFound().build();
-				}
-			} else {
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-			}
-		} catch (NoSuchElementException e) {
-			return ResponseEntity.notFound().build();
-		}
-	}
-
-	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/reservations/{id}")
-	public ResponseEntity<Hotel> getReservationsFromHotel(
-			HttpServletRequest request,
-			@PathVariable Long id) {
-
-		try {
-			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			Reservation reservation = reservationService.findById(id).orElseThrow();
-			UserE reservationClient = reservation.getUser();
-			Hotel targetHotel = reservation.getHotel();
-			UserE hotelManager = targetHotel.getManager();
-
-			if ((currentUser.equals(reservationClient) && hotelManager.getvalidated() 
-			|| currentUser.getRols().contains("ADMIN"))) {
-
-				return ResponseEntity.ok(targetHotel);
-
-			} else {
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-			}
-
-		} catch (NoSuchElementException e) {
-			return ResponseEntity.notFound().build();
-		}
-	}
-
-	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/reviews/{id}")
-	public ResponseEntity<Hotel> getReviewsFromHotel(
-			HttpServletRequest request,
-			@PathVariable Long id) {
-
-		try {
-			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			Review requestReview = reviewService.findById(id).orElseThrow();
-			Hotel targetHotel = requestReview.getHotel();
-			UserE hotelManager = targetHotel.getManager();
-
-			if (hotelManager.getvalidated() || currentUser.getRols().contains("ADMIN")) {
-
-				return ResponseEntity.ok(targetHotel);
-
-			} else {
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-			}
-
-		} catch (NoSuchElementException e) {
-			return ResponseEntity.notFound().build();
-		}
-	}
-
-	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/rooms/{id}")
-	public ResponseEntity<Hotel> getHotelFromRoom(
-			HttpServletRequest request,
-			@PathVariable Long id) {
-
-		try {
-			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			Room requestRoom = roomService.findById(id).orElseThrow();
-			Hotel targetHotel = requestRoom.getHotel();
-			UserE hotelManager = targetHotel.getManager();
-
-			if (hotelManager.getvalidated() || currentUser.getRols().contains("ADMIN")) {
-
-				return ResponseEntity.ok(targetHotel);
-
-			} else {
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-			}
-
-		} catch (NoSuchElementException e) {
-			return ResponseEntity.notFound().build();
-		}
-	}
-
-	/**
-	 * Returns data of all hotels in the database
-	 */
-	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels")
-	public ResponseEntity<PageResponse<Hotel>> loadAllHotels(
-			HttpServletRequest request,
-			Pageable pageable) {
-
-		try {
-			UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-
-			if (user.getRols().contains("ADMIN")) {
-
-				Page<Hotel> hotels = hotelService.findAll(pageable);
-				PageResponse<Hotel> response = new PageResponse<>();
-				response.setContent(hotels.getContent());
-				response.setPageNumber(hotels.getNumber());
-				response.setPageSize(hotels.getSize());
-				response.setTotalElements(hotels.getTotalElements());
-				response.setTotalPages(hotels.getTotalPages());
-
-				return ResponseEntity.ok(response);
-
-			} else {
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-			}
-
-		} catch (NoSuchElementException e) {
-			return ResponseEntity.notFound().build();
-
-		}
-	}
-
 }
