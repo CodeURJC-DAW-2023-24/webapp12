@@ -67,14 +67,11 @@ public class HotelRest {
 
 		try {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			UserE foundUser = hotelService.findById(id).orElseThrow().getManager();
+			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
 
-			if (currentUser.equals(foundUser) && foundUser.getvalidated()) {
+			if (hotelManager.getvalidated() || currentUser.getRols().contains("ADMIN")) {
 				Hotel hotel = hotelService.findById(id).orElseThrow();
 				return ResponseEntity.ok(hotel);
-
-			} else if (!foundUser.getvalidated()) {
-				return ResponseEntity.notFound().build();
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
@@ -92,7 +89,7 @@ public class HotelRest {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			UserE foundUser = hotelService.findById(id).orElseThrow().getManager();
 
-			if (currentUser.equals(foundUser)) {
+			if (currentUser.equals(foundUser) || currentUser.getRols().contains("ADMIN")) {
 				Hotel hotel = hotelService.findById(id).orElseThrow();
 				List<UserE> validClients = hotelService.getValidClients(hotel);
 				return ResponseEntity.ok(validClients);
@@ -340,8 +337,7 @@ public class HotelRest {
 			UserE requestManager = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			UserE targetManager = userService.findById(id).orElseThrow();
 
-			if ((requestManager.equals(targetManager) && requestManager.getvalidated())
-					|| requestManager.getRols().contains("ADMIN")) {
+			if (requestManager.equals(targetManager) || requestManager.getRols().contains("ADMIN")) {
 				Page<Hotel> hotels = hotelService.findByManager_Id(id, pageable);
 				if (hotels.hasContent()) {
 					PageResponse<Hotel> response = new PageResponse<>();
@@ -372,10 +368,12 @@ public class HotelRest {
 		try {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			Reservation reservation = reservationService.findById(id).orElseThrow();
+			UserE reservationClient = reservation.getUser();
 			Hotel targetHotel = reservation.getHotel();
 			UserE hotelManager = targetHotel.getManager();
 
-			if (currentUser.equals(hotelManager) || currentUser.getRols().contains("ADMIN")) {
+			if ((currentUser.equals(reservationClient) && hotelManager.getvalidated() 
+			|| currentUser.getRols().contains("ADMIN"))) {
 
 				return ResponseEntity.ok(targetHotel);
 
@@ -400,7 +398,7 @@ public class HotelRest {
 			Hotel targetHotel = requestReview.getHotel();
 			UserE hotelManager = targetHotel.getManager();
 
-			if (currentUser.equals(hotelManager) || currentUser.getRols().contains("ADMIN")) {
+			if (hotelManager.getvalidated() || currentUser.getRols().contains("ADMIN")) {
 
 				return ResponseEntity.ok(targetHotel);
 
@@ -425,7 +423,7 @@ public class HotelRest {
 			Hotel targetHotel = requestRoom.getHotel();
 			UserE hotelManager = targetHotel.getManager();
 
-			if (currentUser.equals(hotelManager) || currentUser.getRols().contains("ADMIN")) {
+			if (hotelManager.getvalidated() || currentUser.getRols().contains("ADMIN")) {
 
 				return ResponseEntity.ok(targetHotel);
 
