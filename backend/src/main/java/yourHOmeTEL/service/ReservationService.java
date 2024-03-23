@@ -11,7 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import yourHOmeTEL.model.Reservation;
-import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.repository.ReservationRepository;
 
 @Service

@@ -1798,7 +1798,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"checkIn\":\"2024-05-06\",\r\n\"checkOut\":\"2024-06-06\",\r\n\"numPeople\":2\r\n}",
+							"raw": "{\r\n\"checkIn\":\"2025-11-06\",\r\n\"checkOut\":\"2025-12-06\",\r\n\"numPeople\":2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

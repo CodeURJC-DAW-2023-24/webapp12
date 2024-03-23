@@ -223,51 +223,64 @@ public class ReservationRest {
 	}
 
 	@PostMapping("/reservations/users/{userId}/hotels/{hotelId}/rooms/{roomId}")
-	public ResponseEntity<Reservation> addReservation(HttpServletRequest request, @RequestBody Reservation reservation,
+	public ResponseEntity<Object> addReservation(HttpServletRequest request, @RequestBody Reservation reservation,
 	 @PathVariable Long userId, @PathVariable Long hotelId, @PathVariable Long roomId) {
 
+		Room targetRoom = new Room();
+		try{
+			targetRoom = roomService.findById(roomId).orElseThrow();
+
+		}catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+
 		if (reservation.getCheckIn().isAfter(reservation.getCheckOut()) || reservation.getNumPeople() <= 0 ||
-		(reservation.getCheckIn() == null || reservation.getCheckOut() == null)) {
+		(reservation.getCheckIn() == null || reservation.getCheckOut() == null) 
+		|| reservation.getNumPeople() > targetRoom.getMaxClients()){
 			return ResponseEntity.badRequest().build();
-		
+				
 		}else{
-			UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			UserE targetUser = userService.findById(userId).orElseThrow();
-			if (requestUser.equals(targetUser)){ //left to check if date is valid
-				try {
-					UserE hotelManager = hotelService.findById(hotelId).orElseThrow().getManager();
-					Room targetRoom = roomService.findById(roomId).orElseThrow();
-					Hotel targetHotel = hotelService.findById(hotelId).orElseThrow();
+			Room room = hotelService.checkRooms(hotelId, reservation.getCheckIn(), reservation.getCheckOut(), reservation.getNumPeople());
+			if (room != null){
+				UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+				UserE targetUser = userService.findById(userId).orElseThrow();
+				
+				if (requestUser.equals(targetUser)){
+					try {
+						UserE hotelManager = hotelService.findById(hotelId).orElseThrow().getManager();
+						Hotel targetHotel = hotelService.findById(hotelId).orElseThrow();
 
-					if (hotelManager.getvalidated() && targetHotel.getRooms().contains(targetRoom)) {
-						reservation.setCheckIn(reservation.getCheckIn().plusDays(1));
-						reservation.setCheckOut(reservation.getCheckOut().plusDays(1));
-						reservation.setHotel(targetHotel);
-						reservation.setRooms(targetRoom);
-						reservation.setUser(targetUser);
-						reservationService.save(reservation);
+						if (hotelManager.getvalidated() && targetHotel.getRooms().contains(targetRoom)) {
+							reservation.setCheckIn(reservation.getCheckIn().plusDays(1));
+							reservation.setCheckOut(reservation.getCheckOut().plusDays(1));
+							reservation.setHotel(targetHotel);
+							reservation.setRooms(targetRoom);
+							reservation.setUser(targetUser);
+							reservationService.save(reservation);
 
-						targetRoom.getReservations().add(reservation);
-						roomService.save(targetRoom);
+							targetRoom.getReservations().add(reservation);
+							roomService.save(targetRoom);
 
-						targetHotel.getReservations().add(reservation);
-						hotelService.save(targetHotel);
+							targetHotel.getReservations().add(reservation);
+							hotelService.save(targetHotel);
 
-						targetUser.getReservations().add(reservation);
-						userService.save(targetUser);
+							targetUser.getReservations().add(reservation);
+							userService.save(targetUser);
 
-						URI location = fromCurrentRequest().build().toUri();
-						return ResponseEntity.created(location).build(); 
+							URI location = fromCurrentRequest().build().toUri();
+							return ResponseEntity.created(location).build(); 
 
-					} else {
+						} else {
+							return ResponseEntity.notFound().build();
+						}
+					} catch (NoSuchElementException e) {
 						return ResponseEntity.notFound().build();
-					} 
-
-				} catch (NoSuchElementException e) {
-					return ResponseEntity.notFound().build();
+					}
+				}else{
+					return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 				}
 			}else{
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("No rooms available for the specified number of people or date.");
 			} 
 		}
 	}
