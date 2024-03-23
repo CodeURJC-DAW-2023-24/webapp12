@@ -176,7 +176,7 @@ public class ReviewRest {
 
 	}
 
-	@GetMapping("/hotels/{id}/reviews/size")
+	@GetMapping("reviews/size/hotels/{id}")
 	public ResponseEntity<Integer> hotelReviews(HttpServletRequest request, @PathVariable Long id) {
 		try {
 			Hotel selectedHotel = hotelService.findById(id).orElseThrow();
