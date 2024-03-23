@@ -83,8 +83,8 @@ public class SecurityConfiguration {
 
                     //ADMIN AND USER ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/api/reservations/{id}").hasAnyRole("CLIENT","ADMIN")
-                    .requestMatchers(HttpMethod.PUT,"/api/reservations/{reservationId}/users/{userId}/hotels/{hotelId}/rooms/{roomId}/update").hasAnyRole("CLIENT","ADMIN")
-                    .requestMatchers(HttpMethod.PUT,"/api/reservations/{reservationId}/users/{userId}/hotels/{hotelId}/rooms/{roomId}/removal").hasAnyRole("CLIENT","ADMIN")
+                    .requestMatchers(HttpMethod.PUT,"/api/reservations/{reservationId}").hasAnyRole("CLIENT","ADMIN")
+                    .requestMatchers(HttpMethod.DELETE,"/api/reservations/{reservationId}").hasAnyRole("CLIENT","ADMIN")
 
                     .requestMatchers(HttpMethod.GET,"/api/rooms/reservations/{id}").hasAnyRole("CLIENT","ADMIN")
 
@@ -146,7 +146,7 @@ public class SecurityConfiguration {
                     //CLIENT ENDPOINTS
                     .requestMatchers(HttpMethod.POST,"/api/reservations/users/{userId}/hotels/{hotelId}/rooms/{roomId}/creation").hasRole("CLIENT")
 
-                    .requestMatchers(HttpMethod.POST,"/api/reviews/users/hotels/{hotelId}").hasRole("CLIENT")
+                    .requestMatchers(HttpMethod.POST,"/api/reviews/hotels/{hotelId}").hasRole("CLIENT")
                     
                     // PUBLIC ENDPOINTS
                     .requestMatchers(HttpMethod.POST,"/api/users").permitAll()

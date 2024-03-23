@@ -48,7 +48,7 @@ public class Reservation {
     public Reservation() {
 
     }
-
+    
     public Reservation(LocalDate checkIn, LocalDate checkOut, int numPeople, Hotel hotel, Room room, UserE user) {
         this.checkIn = checkIn;
         this.checkOut = checkOut;

@@ -208,7 +208,7 @@ public class ReviewRest {
 
 	}
 
-	@PostMapping("/reviews/users/hotels/{hotelId}")
+	@PostMapping("/reviews/hotels/{hotelId}")
 	public ResponseEntity<Review> postReview(HttpServletRequest request, @RequestBody Review review, @PathVariable Long hotelId) {
 		
 		if(review.getScore() == 0 || review.getScore() > 5) {

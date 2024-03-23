@@ -302,7 +302,7 @@ public class ReservationRest {
         }
     }
 
-   @DeleteMapping("/reservations/{reservationId}/users")
+   @DeleteMapping("/reservations/{reservationId}")
     public ResponseEntity<Reservation> deleteReservation(HttpServletRequest request, @PathVariable Long reservationId) {
 
         try {

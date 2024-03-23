@@ -62,9 +62,6 @@ public class UserRest {
     private UserService userService;
 
     @Autowired
-    private HotelService hotelService;
-
-    @Autowired
     private ReservationService reservationService;
 
     @Autowired
