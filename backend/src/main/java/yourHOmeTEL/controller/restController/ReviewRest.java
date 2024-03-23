@@ -194,7 +194,7 @@ public class ReviewRest {
 
 	} 
 
-	@GetMapping("/hotels/{id}/reviews/percentage")
+	@GetMapping("/reviews/percentage/hotels/{id}")
 	public ResponseEntity<List<Integer>> hotelReviews(@PathVariable Long id) {
 		try {
 			Hotel selectedHotel = hotelService.findById(id).orElseThrow();
@@ -218,8 +218,7 @@ public class ReviewRest {
 	}
 
 	@PostMapping("/reviews/users/hotels/{hotelId}")
-	public ResponseEntity<Review> postReview(HttpServletRequest request, @RequestBody Review review,
-	 @PathVariable Long userId, @PathVariable Long hotelId) {
+	public ResponseEntity<Review> postReview(HttpServletRequest request, @RequestBody Review review, @PathVariable Long hotelId) {
 		
 		if(review.getScore() == 0 || review.getScore() > 5) {
 			return ResponseEntity.badRequest().build();
@@ -241,7 +240,7 @@ public class ReviewRest {
 					authorUser.getReviews().add(newReview);
 					userService.save(authorUser);
 
-					 URI location = fromCurrentRequest().build().toUri();
+					URI location = fromCurrentRequest().build().toUri();
             		return ResponseEntity.created(location).build(); 
 
 				} else {
