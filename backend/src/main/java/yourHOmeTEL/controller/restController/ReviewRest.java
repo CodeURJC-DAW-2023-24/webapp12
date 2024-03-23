@@ -144,7 +144,7 @@ public class ReviewRest {
 			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
 
 			if (hotelManager.getvalidated() || requestUser.getRols().contains("ADMIN")) {
-				Page<Review> targetReviews = reviewService.findAllByHotel_Id(hotelManager.getId(), pageable);
+				Page<Review> targetReviews = reviewService.findByHotel_Id(id, pageable);
 				if (targetReviews.hasContent()) {
 					PageResponse<Review> response = new PageResponse<>();
 					response.setContent(targetReviews.getContent());
