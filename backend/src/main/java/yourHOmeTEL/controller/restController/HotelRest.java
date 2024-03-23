@@ -108,9 +108,9 @@ public class HotelRest {
 	@GetMapping("/hotels/{id}/information")
 	public ResponseEntity<Map<String, Object>> hotelInformation(@PathVariable Long id) {
 		try {
-			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
+			UserE currentUser = hotelService.findById(id).orElseThrow().getManager();
 
-			if (hotelManager.getvalidated()) {
+			if (currentUser.getvalidated() || currentUser.getRols().contains("ADMIN")) {
 				Hotel hotel = hotelService.findById(id).orElseThrow();
 				if (hotel.getManager().getvalidated() == false)
 					return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -275,7 +275,7 @@ public class HotelRest {
 	//PENDIENTE -> Estos dos controladores llevan pageable o no?
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/index/recommended")
-	public ResponseEntity<List<Hotel>> index(HttpServletRequest request, Pageable pageable) {
+	public ResponseEntity<List<Hotel>> index(HttpServletRequest request) {
 		List<Hotel> recomendedHotels = new ArrayList<>();
 		try {
 			String nick = request.getUserPrincipal().getName();
@@ -288,7 +288,7 @@ public class HotelRest {
 				// size +1 to avoid looking for id = 0 if size = 0
 				int i = 1;
 				int sizeAllHotels = hotelService.findAll().size();
-				while (recomendedHotels.size() < 7 && i <= sizeAllHotels) {
+				while (recomendedHotels.size()+1 < 7 && i <= sizeAllHotels) {
 					// if there's a gap in the id sequence, it will throw an exception and continue
 					// the loop
 					try {
@@ -364,18 +364,20 @@ public class HotelRest {
 	}
 
 	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/{id}/reservations")
-	public ResponseEntity<List<Reservation>> getReservationsFromHotel(
+	@GetMapping("/hotels/reservations/{id}")
+	public ResponseEntity<Hotel> getReservationsFromHotel(
 			HttpServletRequest request,
 			@PathVariable Long id) {
 
 		try {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			Hotel hotel = hotelService.findById(id).orElseThrow();
+			Reservation reservation = reservationService.findById(id).orElseThrow();
+			Hotel targetHotel = reservation.getHotel();
+			UserE hotelManager = targetHotel.getManager();
 
-			if (currentUser.equals(hotel.getManager())) {
+			if (currentUser.equals(hotelManager) || currentUser.getRols().contains("ADMIN")) {
 
-				return ResponseEntity.ok(hotel.getReservations());
+				return ResponseEntity.ok(targetHotel);
 
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -387,18 +389,20 @@ public class HotelRest {
 	}
 
 	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/{id}/reviews")
-	public ResponseEntity<List<Review>> getReviewsFromHotel(
+	@GetMapping("/hotels/reviews/{id}")
+	public ResponseEntity<Hotel> getReviewsFromHotel(
 			HttpServletRequest request,
 			@PathVariable Long id) {
 
 		try {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			Hotel hotel = hotelService.findById(id).orElseThrow();
+			Review requestReview = reviewService.findById(id).orElseThrow();
+			Hotel targetHotel = requestReview.getHotel();
+			UserE hotelManager = targetHotel.getManager();
 
-			if (currentUser.equals(hotel.getManager())) {
+			if (currentUser.equals(hotelManager) || currentUser.getRols().contains("ADMIN")) {
 
-				return ResponseEntity.ok(hotel.getReviews());
+				return ResponseEntity.ok(targetHotel);
 
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -410,20 +414,20 @@ public class HotelRest {
 	}
 
 	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/{id}/rooms")
-	public ResponseEntity<List<Room>> getHotelFromRoom(
+	@GetMapping("/hotels/rooms/{id}")
+	public ResponseEntity<Hotel> getHotelFromRoom(
 			HttpServletRequest request,
 			@PathVariable Long id) {
 
 		try {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			Hotel hotel = hotelService.findById(id).orElseThrow();
+			Room requestRoom = roomService.findById(id).orElseThrow();
+			Hotel targetHotel = requestRoom.getHotel();
+			UserE hotelManager = targetHotel.getManager();
 
-			UserE hotelManager = hotel.getManager();
+			if (currentUser.equals(hotelManager) || currentUser.getRols().contains("ADMIN")) {
 
-			if (currentUser.equals(hotelManager)) {
-
-				return ResponseEntity.ok(hotel.getRooms());
+				return ResponseEntity.ok(targetHotel);
 
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
