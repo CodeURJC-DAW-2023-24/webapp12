@@ -94,7 +94,7 @@ public class HotelRest {
 
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/{id}")
-	public ResponseEntity<Hotel> getHotelData(
+	public ResponseEntity<Map<String, Object>> getHotelData(
 			HttpServletRequest request,
 			@PathVariable Long id) {
 
@@ -104,7 +104,10 @@ public class HotelRest {
 
 			if (hotelManager.getvalidated() || currentUser.getRols().contains("ADMIN")) {
 				Hotel hotel = hotelService.findById(id).orElseThrow();
-				return ResponseEntity.ok(hotel);
+				Map<String, Object> hotelInformation = new HashMap<>();
+				hotelInformation.put("hotel", hotel);
+				hotelInformation.put("numRooms", hotel.getRooms().size());
+				return ResponseEntity.ok(hotelInformation);
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
@@ -236,30 +239,6 @@ public class HotelRest {
 				Hotel hotel = hotelService.findById(id).orElseThrow();
 				List<UserE> validClients = hotelService.getValidClients(hotel);
 				return ResponseEntity.ok(validClients);
-			} else {
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-			}
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	}
-
-	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/{id}/information")
-	public ResponseEntity<Map<String, Object>> hotelInformation(@PathVariable Long id) {
-		try {
-			UserE currentUser = hotelService.findById(id).orElseThrow().getManager();
-
-			if (currentUser.getvalidated() || currentUser.getRols().contains("ADMIN")) {
-				Hotel hotel = hotelService.findById(id).orElseThrow();
-				if (hotel.getManager().getvalidated() == false)
-					return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-
-				Map<String, Object> hotelInformation = new HashMap<>();
-				hotelInformation.put("hotel", hotel);
-				hotelInformation.put("numRooms", hotel.getRooms().size());
-
-				return ResponseEntity.ok(hotelInformation);
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}

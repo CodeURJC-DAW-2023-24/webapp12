@@ -939,38 +939,6 @@
 					"response": []
 				},
 				{
-					"name": "Get hotels information",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:8443/api/hotels/1/information?page=0&size=2",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"hotels",
-								"1",
-								"information"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "size",
-									"value": "2"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Post a new hotel",
 					"request": {
 						"method": "POST",
