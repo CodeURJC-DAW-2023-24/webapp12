@@ -153,7 +153,7 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET,"/api/reviews/{id}").permitAll()
                     .requestMatchers(HttpMethod.GET,"/api/reviews/users/{id}").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/reviews/hotels/{id}").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/hotels/index/recomended").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/hotels/index/recommended").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/hotels/index/search").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/rooms/{id}").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/rooms/hotels/{id}").permitAll()

@@ -1,6 +1,5 @@
 package yourHOmeTEL.controller.restController;
 
-import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,35 +7,19 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.io.IOException;
-import java.sql.Blob;
-import java.sql.SQLException;
-
-import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.annotation.PostConstruct;
@@ -76,14 +59,9 @@ public class HotelRest {
 	@Autowired
 	ReservationService reservationService;
 
-	/**
-	 * Goes to the edit page of a hotel so you can edit the values. It loads the
-	 * current hotel data in the form
-	 * 
-	 */
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/{id}")
-	public ResponseEntity<Hotel> hotelDataLoadingForEdition(
+	public ResponseEntity<Hotel> getHotelData(
 			HttpServletRequest request,
 			@PathVariable Long id) {
 
@@ -105,6 +83,49 @@ public class HotelRest {
 			return ResponseEntity.notFound().build();
 		}
 
+	}
+
+	@JsonView(HotelDetails.class)
+	@GetMapping("/hotels/{id}/clients")
+	public ResponseEntity<List<UserE>> clientsList(HttpServletRequest request, @PathVariable Long id) {
+		try {
+			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			UserE foundUser = hotelService.findById(id).orElseThrow().getManager();
+
+			if (currentUser.equals(foundUser)) {
+				Hotel hotel = hotelService.findById(id).orElseThrow();
+				List<UserE> validClients = hotelService.getValidClients(hotel);
+				return ResponseEntity.ok(validClients);
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	@JsonView(HotelDetails.class)
+	@GetMapping("/hotels/{id}/information")
+	public ResponseEntity<Map<String, Object>> hotelInformation(@PathVariable Long id) {
+		try {
+			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
+
+			if (hotelManager.getvalidated()) {
+				Hotel hotel = hotelService.findById(id).orElseThrow();
+				if (hotel.getManager().getvalidated() == false)
+					return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
+				Map<String, Object> hotelInformation = new HashMap<>();
+				hotelInformation.put("hotel", hotel);
+				hotelInformation.put("numRooms", hotel.getRooms().size());
+
+				return ResponseEntity.ok(hotelInformation);
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 
 	// PENDIENTE -> Pasar las habitaciones y los costes como un array
@@ -148,71 +169,34 @@ public class HotelRest {
 
 	}
 
+	@JsonView(HotelDetails.class)
 	@PutMapping("/hotels/{id}")
-	public ResponseEntity<Hotel> editHotel(Model model, HttpServletRequest request, Hotel newHotel, Integer room1,
-			Integer cost1,
-			Integer room2,
-			Integer cost2, Integer room3, Integer cost3, Integer room4, Integer cost4, @PathVariable Long id)
-			throws IOException {
+	public ResponseEntity<Hotel> editHotel(
+		HttpServletRequest request,
+		@PathVariable Long id,
+		@RequestParam Map<String, Object> updates
+	) throws JsonMappingException, JsonProcessingException {
 
-		Hotel hotel;
 
 		try {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			UserE foundUser = hotelService.findById(id).orElseThrow().getManager();
 
-			if (currentUser.equals(foundUser)) {
-				hotel = hotelService.findById(id).orElseThrow();
+			Hotel originalHotel = hotelService.findById(id).orElseThrow();
 
-				hotel.setName(newHotel.getName());
-				hotel.setLocation(newHotel.getLocation());
-				hotel.setDescription(newHotel.getDescription());
+			if (currentUser.equals(foundUser)) {
+
+				originalHotel = objectMapper.readerForUpdating(originalHotel).readValue(objectMapper.writeValueAsString(updates)); // exists
+				hotelService.save(originalHotel);
+				return ResponseEntity.ok(originalHotel);
 
 			} else {
-				return ResponseEntity.badRequest().build();
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
 
 		} catch (NoSuchElementException e) {
 			return ResponseEntity.notFound().build();
 		}
-
-		// PENDIENTE -> Refactorizar si se puede
-		{
-			if (room1 != null)
-				for (int i = 0; i < room1; i++) {
-					Room room = new Room(1, cost1, new ArrayList<>(), newHotel);
-					hotel.getRooms().add(room);
-					roomService.save(room);
-				}
-
-			if (room2 != null)
-				for (int i = 0; i < room2; i++) {
-					Room room = new Room(2, cost2, new ArrayList<>(), newHotel);
-					hotel.getRooms().add(room);
-					roomService.save(room);
-				}
-
-			if (room3 != null)
-				for (int i = 0; i < room3; i++) {
-					Room room = new Room(3, cost3, new ArrayList<>(), newHotel);
-					hotel.getRooms().add(room);
-					roomService.save(room);
-				}
-
-			if (room4 != null)
-				for (int i = 0; i < room4; i++) {
-					Room room = new Room(4, cost4, new ArrayList<>(), newHotel);
-					hotel.getRooms().add(room);
-					roomService.save(room);
-				}
-
-		}
-
-		hotelService.save(hotel);
-
-		model.addAttribute("hotel", hotel);
-
-		return ResponseEntity.ok().build();
 
 	}
 
@@ -239,52 +223,9 @@ public class HotelRest {
 		}
 
 	}
-	
-	//PENDIENTE EL CÓMO TRATAR EL getValidClients -> Se deja como estaba, con los clientes que ya han salido del hotel
-	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/{id}/clients")
-	public ResponseEntity<List<UserE>> clientlist(HttpServletRequest request, @PathVariable Long id) {
-		try {
-			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			UserE foundUser = hotelService.findById(id).orElseThrow().getManager();
 
-			if (currentUser.equals(foundUser)) {
-				Hotel hotel = hotelService.findById(id).orElseThrow();
-				List<UserE> validClients = hotelService.getValidClients(hotel);
-				return ResponseEntity.ok(validClients);
-			} else {
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-			}
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	}
-
-	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/{id}/information")
-	public ResponseEntity<Map<String, Object>> hotelInformation(@PathVariable Long id) {
-		try {
-			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
-
-			if (hotelManager.getvalidated()) {
-				Hotel hotel = hotelService.findById(id).orElseThrow();
-				if (hotel.getManager().getvalidated() == false)
-					return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-
-				Map<String, Object> hotelInformation = new HashMap<>();
-				hotelInformation.put("hotel", hotel);
-				hotelInformation.put("numRooms", hotel.getRooms().size());
-
-				return ResponseEntity.ok(hotelInformation);
-			} else {
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-			}
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	}
-
-	//PENDIENTE ELIMINAR PAGEABLE Y VER SI SE PUEDEN COMBINAR EL LOADMOREHOTELS DE USER Y MANAGER EN UN MISMO CONTROLADOR
+	// PENDIENTE ELIMINAR PAGEABLE Y VER SI SE PUEDEN COMBINAR EL LOADMOREHOTELS DE
+	// USER Y MANAGER EN UN MISMO CONTROLADOR
 	@JsonView(HotelDetails.class)
 	@GetMapping("/manager/hotels/{start}/{end}")
 	public ResponseEntity<PageResponse<Hotel>> loadMoreHotelsManagerView(
@@ -330,8 +271,10 @@ public class HotelRest {
 	// PUBLIC CONTROLLERS
 
 	// ADVANCED RECOMMENDATION ALGORITHM
+
+	//PENDIENTE -> Estos dos controladores llevan pageable o no?
 	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/index/recomended")
+	@GetMapping("/hotels/index/recommended")
 	public ResponseEntity<List<Hotel>> index(HttpServletRequest request, Pageable pageable) {
 		List<Hotel> recomendedHotels = new ArrayList<>();
 		try {
