@@ -42,7 +42,7 @@ public class UserImageRest {
         return imgService.createResponseFromImage(imgService.getFilesFolder(), id);
     }
 
-    @PostMapping("users/{id}/image")
+    @PostMapping("/users/{id}/image")
     public ResponseEntity<Object> uploadImage(HttpServletRequest request, @PathVariable long id,
             @RequestParam MultipartFile imageFile) throws IOException {
         try {
