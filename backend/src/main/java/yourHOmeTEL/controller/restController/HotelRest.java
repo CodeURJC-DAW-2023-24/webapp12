@@ -258,7 +258,7 @@ public class HotelRest {
 	}
 
 	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/{id}")
+	@GetMapping("/hotels/{id}/information")
 	public ResponseEntity<Map<String, Object>> hotelInformation(@PathVariable Long id) {
 		try {
 			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
