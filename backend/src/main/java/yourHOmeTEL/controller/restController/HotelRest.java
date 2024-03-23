@@ -422,19 +422,17 @@ public class HotelRest {
 
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/{id}/reservations")
-	public ResponseEntity<Reservation> getReservationsFromHotel(
+	public ResponseEntity<List<Reservation>> getReservationsFromHotel(
 			HttpServletRequest request,
 			@PathVariable Long id) {
 
 		try {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			Reservation reservation = reservationService.findByHotel_Id(id);
+			Hotel hotel = hotelService.findById(id).orElseThrow();
 
-			UserE hotelManager = reservation.getHotel().getManager();
+			if (currentUser.equals(hotel.getManager())) {
 
-			if (currentUser.equals(hotelManager)) {
-
-				return ResponseEntity.ok(reservation);
+				return ResponseEntity.ok(hotel.getReservations());
 
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -447,19 +445,17 @@ public class HotelRest {
 
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/{id}/reviews")
-	public ResponseEntity<Review> getReviewsFromHotel(
+	public ResponseEntity<List<Review>> getReviewsFromHotel(
 			HttpServletRequest request,
 			@PathVariable Long id) {
 
 		try {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			Review review = reviewService.findByHotel_Id(id);
+			Hotel hotel = hotelService.findById(id).orElseThrow();
 
-			UserE hotelManager = review.getHotel().getManager();
+			if (currentUser.equals(hotel.getManager())) {
 
-			if (currentUser.equals(hotelManager)) {
-
-				return ResponseEntity.ok(review);
+				return ResponseEntity.ok(hotel.getReviews());
 
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
