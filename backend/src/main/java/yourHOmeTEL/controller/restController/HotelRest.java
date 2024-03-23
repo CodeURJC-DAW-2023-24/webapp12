@@ -123,14 +123,16 @@ public class HotelRest {
 			newHotel.setManager(manager);
 			hotelService.save(newHotel);
 
-			Integer[] rooms = { room1, room2, room3, room4 };
-			Integer[] costs = { cost1, cost2, cost3, cost4 };
+			Integer[] roomsCapacities = { room1, room2, room3, room4 };
+			Integer[] roomCosts = { cost1, cost2, cost3, cost4 };
 
-			for (int i = 0; i < rooms.length; i++) {
-				if (rooms[i] != null) {
-					for (int j = 0; j < rooms[i]; j++) {
-						Room roomForJPeople = new Room(rooms[i], costs[i], new ArrayList<>(), newHotel);
-						newHotel.getRooms().add(roomForJPeople);
+			List<Room> hotelRooms = newHotel.getRooms();
+
+			for (int i = 0; i < roomsCapacities.length; i++) {
+				if (roomsCapacities[i] != null) {
+					for (int j = 0; j < roomsCapacities[i]; j++) {
+						Room roomForJPeople = new Room(roomsCapacities[i], roomCosts[i], new ArrayList<>(), newHotel);
+						hotelRooms.add(roomForJPeople);
 						roomService.save(roomForJPeople);
 					}
 				}
@@ -237,7 +239,8 @@ public class HotelRest {
 		}
 
 	}
-	//PENDIENTE EL CÓMO TRATAR EL getValidClients
+	
+	//PENDIENTE EL CÓMO TRATAR EL getValidClients -> Se deja como estaba, con los clientes que ya han salido del hotel
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/{id}/clients")
 	public ResponseEntity<List<UserE>> clientlist(HttpServletRequest request, @PathVariable Long id) {
@@ -419,7 +422,7 @@ public class HotelRest {
 
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/{id}/reservations")
-	public ResponseEntity<Reservation> getHotelFromReservation(
+	public ResponseEntity<Reservation> getReservationsFromHotel(
 			HttpServletRequest request,
 			@PathVariable Long id) {
 
@@ -444,7 +447,7 @@ public class HotelRest {
 
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/{id}/reviews")
-	public ResponseEntity<Review> getHotelFromReview(
+	public ResponseEntity<Review> getReviewsFromHotel(
 			HttpServletRequest request,
 			@PathVariable Long id) {
 
@@ -469,19 +472,19 @@ public class HotelRest {
 
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/{id}/rooms")
-	public ResponseEntity<Room> getHotelFromRoom(
+	public ResponseEntity<List<Room>> getHotelFromRoom(
 			HttpServletRequest request,
 			@PathVariable Long id) {
 
 		try {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			Room room = roomService.findByHotel_Id(id);
+			Hotel hotel = hotelService.findById(id).orElseThrow();
 
-			UserE hotelManager = room.getHotel().getManager();
+			UserE hotelManager = hotel.getManager();
 
 			if (currentUser.equals(hotelManager)) {
 
-				return ResponseEntity.ok(room);
+				return ResponseEntity.ok(hotel.getRooms());
 
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
