@@ -68,7 +68,7 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET,"/api/hotels/manager/{id}").hasAnyRole("MANAGER", "ADMIN")
                     .requestMatchers(HttpMethod.GET,"/api/users/managers/list").hasAnyRole("MANAGER","ADMIN")
 
-                    .requestMatchers(HttpMethod.GET,"/api/manager/hotels/{start}/{end}").hasAnyRole("MANAGER","ADMIN")
+                    .requestMatchers(HttpMethod.GET,"/api//manager/hotels/{pageNumber}").hasAnyRole("MANAGER","ADMIN")
                     .requestMatchers(HttpMethod.POST,"/api/hotels/{id}").hasAnyRole("MANAGER","ADMIN")
                     .requestMatchers(HttpMethod.POST,"/api/hotels/{hotelId}/rooms").hasAnyRole("MANAGER","ADMIN")
                     .requestMatchers(HttpMethod.PUT,"/api/rooms/{roomId}/hotels/{hotelId}").hasAnyRole("MANAGER","ADMIN")
