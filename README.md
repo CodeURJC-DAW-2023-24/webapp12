@@ -544,16 +544,15 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
   
   ## 5. Virtual Machine deployment
   
-  1. Connect to virtual machine with
+  ### 5.1. Connect to virtual machine
+  Make sure to have the SSH key on the directory you execute these commands from:
   ```
   cp prAppWeb12.key ~/ 
   chmod 600 ~/prAppWeb12.key
   ssh -i ~/prAppWeb12.key vmuser@10.100.139.161
   ```
 
-  2. Install Docker on Virtual Machine 
-
-  ### 2.1 Install Docker
+  ### 5.2 Install Docker
   ```
   sudo apt-get update
   sudo apt-get install ca-certificates curl
@@ -568,34 +567,47 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
   sudo apt-get update
   ```
   
-  ### 2.2 Install Docker-Compose plugin
+  ### 5.3 Install Docker-Compose plugin
   ```
   sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
   ```
   
-  ### 2.3 Test Docker is correctly instaled running
+  ### 5.4 Test Docker is correctly instaled running
   ```
   sudo docker run hello-world
   ```
-  ### 2.4. Clone the repository with
-  ```
-  git clone https://github.com/CodeURJC-DAW-2023-24/webapp12.git
-  ```
-  ### 2.5 Prepare Docker Compose
+
+ ### 5.5 Prepare Docker Compose
   ```
   sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
   sudo chmod +x /usr/local/bin/docker-compose
   ```
- ### 2.6 Switch to directory and grant premissions
+
+  ### 5.6 Clone the repository
+  Execute:
+  ```
+  ls
+  ```
+  If you dont see a webapp12 folder, then execute:
+  ```
+  git clone https://github.com/CodeURJC-DAW-2023-24/webapp12.git
+  ```
+
+ ### 5.7 Switch to directory and grant premissions
   ```
   cd webapp12/docker
   chmod +x create_image.sh
   ```
- ### 2.7 Execute the script
+
+ ### 5.8 Execute the script
   ```
   ./create_image.sh
   ```
- ### 2.8 Open a browser and access [https://10.100.139.161:8443/index](https://10.100.139.161:8443)
+
+ ### 5.9 Open a browser and access
+  ```
+  https://10.100.139.161:8443/index
+  ```
 
 
 ## 6. URL to Virtual Machine: [https://10.100.139.161:8443](https://10.100.139.161:8443)
