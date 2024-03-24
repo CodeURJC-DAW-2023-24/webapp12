@@ -1168,6 +1168,28 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get hotels in groups of 6",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8443/api/manager/hotels/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"manager",
+								"hotels",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
