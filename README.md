@@ -595,7 +595,7 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
   ```
   ./create_image.sh
   ```
- ### 2.8 Open a browser and access [https://10.100.139.161:8443](https://10.100.139.161:8443)
+ ### 2.8 Open a browser and access [https://10.100.139.161:8443/index](https://10.100.139.161:8443)
 
 
 ## 6. URL to Virtual Machine: [https://10.100.139.161:8443](https://10.100.139.161:8443)
