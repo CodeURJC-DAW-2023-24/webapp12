@@ -118,7 +118,6 @@ public class HotelRest {
 
 	}
 
-
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/manager/{id}")
 	public ResponseEntity<PageResponse<Hotel>> viewHotelsManager(HttpServletRequest request, @PathVariable Long id,
@@ -162,8 +161,8 @@ public class HotelRest {
 			Hotel targetHotel = reservation.getHotel();
 			UserE hotelManager = targetHotel.getManager();
 
-			if ((currentUser.equals(reservationClient) && hotelManager.getvalidated() 
-			|| currentUser.getRols().contains("ADMIN"))) {
+			if ((currentUser.equals(reservationClient) && hotelManager.getvalidated()
+					|| currentUser.getRols().contains("ADMIN"))) {
 
 				return ResponseEntity.ok(targetHotel);
 
@@ -225,8 +224,6 @@ public class HotelRest {
 			return ResponseEntity.notFound().build();
 		}
 	}
-
-	
 
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/{id}/clients")
@@ -291,11 +288,9 @@ public class HotelRest {
 	@JsonView(HotelDetails.class)
 	@PutMapping("/hotels/{id}")
 	public ResponseEntity<Hotel> editHotel(
-		HttpServletRequest request,
-		@PathVariable Long id,
-		@RequestParam Map<String, Object> updates
-	) throws JsonMappingException, JsonProcessingException {
-
+			HttpServletRequest request,
+			@PathVariable Long id,
+			@RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
 
 		try {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
@@ -305,7 +300,8 @@ public class HotelRest {
 
 			if (currentUser.equals(foundUser)) {
 
-				originalHotel = objectMapper.readerForUpdating(originalHotel).readValue(objectMapper.writeValueAsString(updates)); // exists
+				originalHotel = objectMapper.readerForUpdating(originalHotel)
+						.readValue(objectMapper.writeValueAsString(updates)); // exists
 				hotelService.save(originalHotel);
 				return ResponseEntity.ok(originalHotel);
 
@@ -342,7 +338,7 @@ public class HotelRest {
 		}
 
 	}
-
+/* Old controller (AJAX version)
 	// PENDIENTE ELIMINAR PAGEABLE Y VER SI SE PUEDEN COMBINAR EL LOADMOREHOTELS DE
 	// USER Y MANAGER EN UN MISMO CONTROLADOR
 	@JsonView(HotelDetails.class)
@@ -386,12 +382,43 @@ public class HotelRest {
 			return ResponseEntity.notFound().build();
 		}
 	}
+ */
+
+	@JsonView(HotelDetails.class)
+	@GetMapping("/manager/hotels/{pageNumber}")
+	public ResponseEntity<List<Hotel>> loadMoreHotelsManagerView(
+			HttpServletRequest request,
+			@PathVariable Long pageNumber) {
+
+		try {
+			UserE manager = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			Integer numHotelsManager = manager.getHotels().size();
+
+			// It's multiplied and added by 6 because that's the number of hotels that are loaded each time
+			Integer hotelStart = Math.max(0, (pageNumber.intValue() - 1) * 6);
+			Integer hotelEnd = hotelStart + 6;
+
+			// if we go out of bounds in the hotel List
+			if (pageNumber < 0 || hotelStart > numHotelsManager) {
+				return ResponseEntity.badRequest().build();
+			} else if (hotelEnd > numHotelsManager) {
+				hotelEnd = numHotelsManager;
+			}
+
+			List<Hotel> hotels = manager.getHotels();
+			List<Hotel> hotelsList = hotels.subList(hotelStart, hotelEnd);
+
+			return ResponseEntity.ok(hotelsList);
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
 
 	// PUBLIC CONTROLLERS
 
 	// ADVANCED RECOMMENDATION ALGORITHM
 
-	//PENDIENTE -> Estos dos controladores llevan pageable o no?
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/index/recommended")
 	public ResponseEntity<List<Hotel>> index(HttpServletRequest request) {
@@ -407,7 +434,7 @@ public class HotelRest {
 				// size +1 to avoid looking for id = 0 if size = 0
 				int i = 1;
 				int sizeAllHotels = hotelService.findAll().size();
-				while (recomendedHotels.size()+1 < 7 && i <= sizeAllHotels) {
+				while (recomendedHotels.size() + 1 < 7 && i <= sizeAllHotels) {
 					// if there's a gap in the id sequence, it will throw an exception and continue
 					// the loop
 					try {
