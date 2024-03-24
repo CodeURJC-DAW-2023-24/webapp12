@@ -546,7 +546,7 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
   
   1. Connect to virtual machine with
   ```
-  mv prAppWeb12.key ~/ 
+  cp prAppWeb12.key ~/ 
   chmod 600 ~/prAppWeb12.key
   ssh -i ~/prAppWeb12.key vmuser@10.100.139.161
   ```
