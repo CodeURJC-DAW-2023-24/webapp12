@@ -385,30 +385,34 @@ public class HotelRest {
  */
 
 	@JsonView(HotelDetails.class)
-	@GetMapping("/manager/hotels/{pageNumber}")
+	@GetMapping("/manager/{id}/hotels/{pageNumber}")
 	public ResponseEntity<List<Hotel>> loadMoreHotelsManagerView(
-			HttpServletRequest request,
-			@PathVariable Long pageNumber) {
+			HttpServletRequest request, @PathVariable Long id, @PathVariable Long pageNumber) {
 
 		try {
-			UserE manager = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			Integer numHotelsManager = manager.getHotels().size();
+			UserE targetManager = userService.findById(id).orElseThrow();
+			UserE requestManager = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			if (targetManager.equals(requestManager) || requestManager.getRols().contains("ADMIN")){
+				Integer numHotelsManager = requestManager.getHotels().size();
 
-			// It's multiplied and added by 6 because that's the number of hotels that are loaded each time
-			Integer hotelStart = Math.max(0, (pageNumber.intValue() - 1) * 6);
-			Integer hotelEnd = hotelStart + 6;
+				// It's multiplied and added by 6 because that's the number of hotels that are loaded each time
+				Integer hotelStart = Math.max(0, (pageNumber.intValue() - 1) * 6);
+				Integer hotelEnd = hotelStart + 6;
 
-			// if we go out of bounds in the hotel List
-			if (pageNumber < 0 || hotelStart > numHotelsManager) {
-				return ResponseEntity.badRequest().build();
-			} else if (hotelEnd > numHotelsManager) {
-				hotelEnd = numHotelsManager;
+				// if we go out of bounds in the hotel List
+				if (pageNumber < 0 || hotelStart > numHotelsManager) {
+					return ResponseEntity.badRequest().build();
+				} else if (hotelEnd > numHotelsManager) {
+					hotelEnd = numHotelsManager;
+				}
+
+				List<Hotel> hotels = requestManager.getHotels();
+				List<Hotel> hotelsList = hotels.subList(hotelStart, hotelEnd);
+
+				return ResponseEntity.ok(hotelsList);
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
-
-			List<Hotel> hotels = manager.getHotels();
-			List<Hotel> hotelsList = hotels.subList(hotelStart, hotelEnd);
-
-			return ResponseEntity.ok(hotelsList);
 
 		} catch (NoSuchElementException e) {
 			return ResponseEntity.notFound().build();

@@ -1175,7 +1175,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/manager/hotels/1",
+							"raw": "https://localhost:8443/api/manager/1/hotels/1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1184,6 +1184,7 @@
 							"path": [
 								"api",
 								"manager",
+								"1",
 								"hotels",
 								"1"
 							]
