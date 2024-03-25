@@ -44,36 +44,46 @@ import yourHOmeTEL.service.UserService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping("/api")
 public class ReviewRest {
 
-    public interface ReviewDetails
-            extends UserE.Basic, Hotel.Basic, Review.Complete, Room.Basic, Reservation.Basic {
-    }
+	public interface ReviewDetails
+			extends UserE.Basic, Hotel.Basic, Review.Complete, Room.Basic, Reservation.Basic {
+	}
 
-    @Autowired
-    private ReviewService reviewService;
+	@Autowired
+	private ReviewService reviewService;
 
-    @Autowired
+	@Autowired
 	UserService userService;
 
 	@Autowired
 	HotelService hotelService;
 
 	@Autowired
-    private ObjectMapper objectMapper;
+	private ObjectMapper objectMapper;
 
 	@PostConstruct
-    public void setup() {
-        objectMapper.setDefaultMergeable(true);
-    }
+	public void setup() {
+		objectMapper.setDefaultMergeable(true);
+	}
 
-	//REVIEW CRUD CONTROLLERS
-
+	// REVIEW CRUD CONTROLLERS
 
 	@JsonView(HotelDetails.class)
 	@GetMapping("/reviews")
+	@Operation(summary = "Load all reviews", description = "Load all reviews with pagination.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Reviews retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
+			@ApiResponse(responseCode = "404", description = "Reviews not found", content = @Content(mediaType = "application/json"))
+	})
 	public ResponseEntity<PageResponse<Review>> loadAllReviews(
 			HttpServletRequest request,
 			Pageable pageable) {
@@ -96,39 +106,48 @@ public class ReviewRest {
 
 	@JsonView(ReviewDetails.class)
 	@GetMapping("/reviews/{id}")
-	public ResponseEntity <Review> getReview(@PathVariable Long id) {
+	@Operation(summary = "Get a review", description = "Get a specific review by its ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Review retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Review.class))),
+			@ApiResponse(responseCode = "404", description = "Review not found", content = @Content(mediaType = "application/json"))
+	})
+	public ResponseEntity<Review> getReview(@PathVariable Long id) {
 
-		try{
+		try {
 			Review targetReview = reviewService.findById(id).orElseThrow();
 			return ResponseEntity.ok(targetReview);
-		
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			return ResponseEntity.notFound().build();
 		}
 
 	}
 
-	
 	@JsonView(ReviewDetails.class)
 	@GetMapping("/reviews/users/{id}")
+	@Operation(summary = "Get user reviews", description = "Get all reviews of a specific user by user ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Reviews retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
+			@ApiResponse(responseCode = "404", description = "Reviews not found", content = @Content(mediaType = "application/json"))
+	})
 	public ResponseEntity<PageResponse<Review>> userReviews(@PathVariable Long id, Pageable pageable) {
 
-		try{
+		try {
 			Page<Review> targetReviews = reviewService.findByUser_Id(id, pageable);
 			if (targetReviews.hasContent()) {
-					PageResponse<Review> response = new PageResponse<>();
-					response.setContent(targetReviews.getContent());
-					response.setPageNumber(targetReviews.getNumber());
-					response.setPageSize(targetReviews.getSize());
-					response.setTotalElements(targetReviews.getTotalElements());
-					response.setTotalPages(targetReviews.getTotalPages());
+				PageResponse<Review> response = new PageResponse<>();
+				response.setContent(targetReviews.getContent());
+				response.setPageNumber(targetReviews.getNumber());
+				response.setPageSize(targetReviews.getSize());
+				response.setTotalElements(targetReviews.getTotalElements());
+				response.setTotalPages(targetReviews.getTotalPages());
 
-					return ResponseEntity.ok(response);
-				}else{
-					return ResponseEntity.notFound().build();
-				}
-		
-		}catch(Exception e){
+				return ResponseEntity.ok(response);
+			} else {
+				return ResponseEntity.notFound().build();
+			}
+
+		} catch (Exception e) {
 			return ResponseEntity.notFound().build();
 		}
 
@@ -136,10 +155,15 @@ public class ReviewRest {
 
 	@JsonView(ReviewDetails.class)
 	@GetMapping("/reviews/hotels/{id}")
-	public ResponseEntity<PageResponse<Review>> hotelReviews(HttpServletRequest request, @PathVariable Long id, 
-	Pageable pageable) {
-		
-		try{
+	@Operation(summary = "Get hotel reviews", description = "Get all reviews of a specific hotel by hotel ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Reviews retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
+			@ApiResponse(responseCode = "404", description = "Reviews not found", content = @Content(mediaType = "application/json"))
+	})
+	public ResponseEntity<PageResponse<Review>> hotelReviews(HttpServletRequest request, @PathVariable Long id,
+			Pageable pageable) {
+
+		try {
 			UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
 
@@ -154,20 +178,26 @@ public class ReviewRest {
 					response.setTotalPages(targetReviews.getTotalPages());
 
 					return ResponseEntity.ok(response);
-				}else{
+				} else {
 					return ResponseEntity.notFound().build();
 				}
 			} else {
 				return ResponseEntity.notFound().build();
 			}
-		
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			return ResponseEntity.notFound().build();
 		}
 
 	}
 
 	@GetMapping("reviews/size/hotels/{id}")
+	@Operation(summary = "Get the number of hotel reviews", description = "Get the number of reviews of a specific hotel by hotel ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Number of reviews retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Integer.class))),
+			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Hotel not found", content = @Content(mediaType = "application/json"))
+	})
 	public ResponseEntity<Integer> hotelReviews(HttpServletRequest request, @PathVariable Long id) {
 		try {
 			Hotel selectedHotel = hotelService.findById(id).orElseThrow();
@@ -183,9 +213,15 @@ public class ReviewRest {
 			return ResponseEntity.notFound().build();
 		}
 
-	} 
+	}
 
 	@GetMapping("/reviews/percentage/hotels/{id}")
+	@Operation(summary = "Get the percentage of hotel reviews", description = "Get the percentage of reviews of a specific hotel by hotel ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Percentage of reviews retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = List.class))),
+			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Hotel not found", content = @Content(mediaType = "application/json"))
+	})
 	public ResponseEntity<List<Integer>> hotelReviews(@PathVariable Long id) {
 		try {
 			Hotel selectedHotel = hotelService.findById(id).orElseThrow();
@@ -209,12 +245,19 @@ public class ReviewRest {
 	}
 
 	@PostMapping("/reviews/hotels/{hotelId}")
-	public ResponseEntity<Review> postReview(HttpServletRequest request, @RequestBody Review review, @PathVariable Long hotelId) {
-		
-		if(review.getScore() == 0 || review.getScore() > 5) {
+	@Operation(summary = "Post a hotel review", description = "Post a review for a specific hotel by hotel ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Review created successfully", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "400", description = "Invalid input", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Hotel not found", content = @Content(mediaType = "application/json"))
+	})
+	public ResponseEntity<Review> postReview(HttpServletRequest request, @RequestBody Review review,
+			@PathVariable Long hotelId) {
+
+		if (review.getScore() == 0 || review.getScore() > 5) {
 			return ResponseEntity.badRequest().build();
 
-		} else{
+		} else {
 			try {
 				UserE hotelManager = hotelService.findById(hotelId).orElseThrow().getManager();
 
@@ -222,7 +265,8 @@ public class ReviewRest {
 					Hotel targetHotel = hotelService.findById(hotelId).orElseThrow();
 					UserE authorUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 
-					Review newReview = new Review(review.getScore(), review.getComment(), LocalDate.now(), targetHotel, authorUser);
+					Review newReview = new Review(review.getScore(), review.getComment(), LocalDate.now(), targetHotel,
+							authorUser);
 					reviewService.save(newReview);
 
 					targetHotel.getReviews().add(newReview);
@@ -232,11 +276,11 @@ public class ReviewRest {
 					userService.save(authorUser);
 
 					URI location = fromCurrentRequest().build().toUri();
-            		return ResponseEntity.created(location).build(); 
+					return ResponseEntity.created(location).build();
 
 				} else {
 					return ResponseEntity.notFound().build();
-				} 
+				}
 
 			} catch (Exception e) {
 				return ResponseEntity.notFound().build();
@@ -245,48 +289,62 @@ public class ReviewRest {
 	}
 
 	// edit profile using raw json body or x-www-form-urlencoded
-    @JsonView(ReviewDetails.class)
+	@JsonView(ReviewDetails.class)
 	@PutMapping("/reviews/{reviewId}/users/{userId}")
-    public ResponseEntity<Review> editReview(HttpServletRequest request, @PathVariable Long reviewId, @PathVariable Long userId,
-            @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
+	@Operation(summary = "Edit a review", description = "Edit a review by review ID and user ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Review edited successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Review.class))),
+			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Review or User not found", content = @Content(mediaType = "application/json"))
+	})
+	public ResponseEntity<Review> editReview(HttpServletRequest request, @PathVariable Long reviewId,
+			@PathVariable Long userId,
+			@RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
 
-        try {
-            UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-            UserE foundUser = userService.findById(userId).orElseThrow();
+		try {
+			UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			UserE foundUser = userService.findById(userId).orElseThrow();
 
-            if (requestUser.getRols().contains("ADMIN") || requestUser.equals(foundUser)) {
-                Review targetReview = reviewService.findById(reviewId).orElseThrow();
+			if (requestUser.getRols().contains("ADMIN") || requestUser.equals(foundUser)) {
+				Review targetReview = reviewService.findById(reviewId).orElseThrow();
 				// merges the current review with the updates on the request body
-                targetReview = objectMapper.readerForUpdating(targetReview).readValue(objectMapper.writeValueAsString(updates)); // exists
-                reviewService.save(targetReview);
-                return ResponseEntity.ok(targetReview);
-            } else {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
+				targetReview = objectMapper.readerForUpdating(targetReview)
+						.readValue(objectMapper.writeValueAsString(updates)); // exists
+				reviewService.save(targetReview);
+				return ResponseEntity.ok(targetReview);
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
 
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
 
-    @DeleteMapping("/reviews/{reviewId}")
-    public ResponseEntity<Review> deleteReview(HttpServletRequest request, @PathVariable Long reviewId) {
+	@DeleteMapping("/reviews/{reviewId}")
+	@Operation(summary = "Delete a review", description = "Delete a review by review ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "204", description = "Review deleted successfully", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Review not found", content = @Content(mediaType = "application/json"))
+	})
+	public ResponseEntity<Review> deleteReview(HttpServletRequest request, @PathVariable Long reviewId) {
 
-        try {
+		try {
 			Review targetReview = reviewService.findById(reviewId).orElseThrow();
-            UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			UserE reviewUser = targetReview.getUser();
 
-            if (currentUser.getRols().contains("ADMIN") || currentUser.equals(reviewUser)) {
-                
+			if (currentUser.getRols().contains("ADMIN") || currentUser.equals(reviewUser)) {
+
 				reviewService.delete(targetReview);
-                return ResponseEntity.noContent().build();
-            } else {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-    
+				return ResponseEntity.noContent().build();
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
 }
