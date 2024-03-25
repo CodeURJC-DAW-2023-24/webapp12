@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.*;
+import io.swagger.v3.oas.annotations.media.*;
+
 import jakarta.servlet.http.HttpServletRequest;
 import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.service.ImageService;
@@ -36,12 +40,42 @@ public class UserImageRest {
 
     //USER IMAGE CONTROLLERS
 
+    @Operation(summary = "Download user profile image")
+    @ApiResponses(value = {
+            @ApiResponse(
+                responseCode = "200",
+                description = "User profile image downloaded successfully",
+                content = {@Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation=UserE.class)
+                )}
+            ),
+            @ApiResponse(
+                responseCode = "404",
+                description = "User not found"
+            )
+    })
     @GetMapping("/users/{id}/image")
     public ResponseEntity<Object> downloadProfileImage(HttpServletRequest request, @PathVariable long id)
             throws MalformedURLException {
         return imgService.createResponseFromImage(imgService.getFilesFolder(), id);
     }
 
+    @Operation(summary = "Upload user profile image")
+    @ApiResponses(value = {
+            @ApiResponse(
+                responseCode = "201",
+                description = "User profile image uploaded successfully"
+            ),
+            @ApiResponse(
+                responseCode = "403",
+                description = "Operation only allowed for the user or an admin"
+            ),
+            @ApiResponse(
+                responseCode = "404",
+                description = "User not found"
+            )
+    })
     @PostMapping("/users/{id}/image")
     public ResponseEntity<Object> uploadImage(HttpServletRequest request, @PathVariable long id,
             @RequestParam MultipartFile imageFile) throws IOException {
@@ -63,6 +97,21 @@ public class UserImageRest {
         }
     }
 
+    @Operation(summary = "Delete user profile image")
+    @ApiResponses(value = {
+            @ApiResponse(
+                responseCode = "204",
+                description = "User profile image deleted successfully"
+            ),
+            @ApiResponse(
+                responseCode = "403",
+                description = "Operation only allowed for the user or an admin"
+            ),
+            @ApiResponse(
+                responseCode = "404",
+                description = "User not found"
+            )
+    })
     @DeleteMapping("/users/{id}/image")
     public ResponseEntity<Object> deleteImage(HttpServletRequest request, @PathVariable long id)
             throws IOException {
