@@ -101,7 +101,7 @@ public class UserRest {
         )
     }) 
     @JsonView(UserDetails.class)
-    @PutMapping("users/{id}/applied")
+    @PutMapping("/managers/{id}/applied")
 	public ResponseEntity<UserE> managerApplication(HttpServletRequest request, @PathVariable Long id,
     @RequestParam Boolean state) {
         try{
@@ -211,7 +211,7 @@ public class UserRest {
             content = @Content
         )
     })
-    @PutMapping("/users/{id}/rejected/state")
+    @PutMapping("/managers/{id}/rejected/state")
     @JsonView(UserDetails.class)
     public ResponseEntity<UserE> rejectManager(HttpServletRequest request, @RequestParam("rejected") Boolean rejected,
             @PathVariable Long id) {
@@ -259,7 +259,7 @@ public class UserRest {
         )
     })
     @JsonView(UserDetails.class)
-    @GetMapping("/users/managers/list")
+    @GetMapping("/managers/list")
     public ResponseEntity<PageResponse<UserE>> managerList(HttpServletRequest request, Pageable pageable) {
         try {
             Page<UserE> managersList = userService.findByCollectionRolsContains("MANAGER", pageable);
@@ -606,6 +606,14 @@ public class UserRest {
     }
  
     @Operation(summary = "Returns the type of user")
+    @ApiResponse(
+            responseCode = "200",
+            description = "User role returned correctly",
+            content = {@Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation=String.class)
+            )}
+        )
     @GetMapping("/users/{id}/type")
     public ResponseEntity<String> userType(HttpServletRequest request) {
           if (request.isUserInRole("ADMIN"))
@@ -617,30 +625,70 @@ public class UserRest {
      }
 
      @Operation(summary = "Returns if the user is an admin or not")
+     @ApiResponse(
+            responseCode = "200",
+            description = "Boolean matching user role returned correctly",
+            content = {@Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation=Boolean.class)
+            )}
+        )
      @GetMapping("/users/{id}/type/admin")
      public ResponseEntity<Boolean> isAdmin(HttpServletRequest request) {
           return ResponseEntity.ok(request.isUserInRole("ADMIN"));
      }
 
      @Operation(summary = "Returns if the user is a manager or not")
+     @ApiResponse(
+            responseCode = "200",
+            description = "Boolean matching user role returned correctly",
+            content = {@Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation=Boolean.class)
+            )}
+        )
      @GetMapping("/users/{id}/type/manager")
      public ResponseEntity<Boolean> isManager(HttpServletRequest request) {
         return ResponseEntity.ok(request.isUserInRole("MANAGER"));
      }
 
      @Operation(summary = "Returns if the user is a client or not")
+     @ApiResponse(
+            responseCode = "200",
+            description = "Boolean matching user role returned correctly",
+            content = {@Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation=Boolean.class)
+            )}
+        )
      @GetMapping("/users/{id}/type/client")
      public ResponseEntity<Boolean> isClient(HttpServletRequest request) {
         return ResponseEntity.ok(request.isUserInRole("CLIENT"));
      }
 
      @Operation(summary = "Returns if the user is a user or not")
+     @ApiResponse(
+        responseCode = "200",
+        description = "Boolean matching user role returned correctly",
+        content = {@Content(
+            mediaType = "application/json",
+            schema = @Schema(implementation=Boolean.class)
+        )}
+    )
      @GetMapping("/users/{id}/type/user")
      public ResponseEntity<Boolean> isUser(HttpServletRequest request) {
         return ResponseEntity.ok(request.isUserInRole("USER"));
      }
 
      @Operation(summary = "Returns the path of the request")
+     @ApiResponse(
+            responseCode = "200",
+            description = "User data returned correctly",
+            content = {@Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation=String.class)
+            )}
+        )
      @GetMapping("/request/path")
      public ResponseEntity<String> getPath(HttpServletRequest request) {
           return ResponseEntity.ok(request.getServletPath());

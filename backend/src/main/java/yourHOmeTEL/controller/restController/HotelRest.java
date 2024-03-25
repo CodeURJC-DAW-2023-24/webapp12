@@ -399,64 +399,9 @@ public class HotelRest {
 		}
 
 	}
-	/*
-	 * Old controller (AJAX version)
-	 * // PENDIENTE ELIMINAR PAGEABLE Y VER SI SE PUEDEN COMBINAR EL LOADMOREHOTELS
-	 * DE
-	 * // USER Y MANAGER EN UN MISMO CONTROLADOR
-	 * 
-	 * @JsonView(HotelDetails.class)
-	 * 
-	 * @GetMapping("/manager/hotels/{start}/{end}")
-	 * public ResponseEntity<PageResponse<Hotel>> loadMoreHotelsManagerView(
-	 * HttpServletRequest request,
-	 * 
-	 * @PathVariable Long start,
-	 * 
-	 * @PathVariable Long end,
-	 * Pageable pageable) {
-	 * 
-	 * try {
-	 * UserE manager =
-	 * userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-	 * Integer numHotelsManager = manager.getHotels().size();
-	 * 
-	 * Integer startInt = start.intValue();
-	 * Integer endInt = end.intValue();
-	 * 
-	 * if (startInt < 0 || endInt < 0 || startInt > numHotelsManager || startInt >
-	 * endInt) {
-	 * return ResponseEntity.badRequest().build();
-	 * } else if (endInt > numHotelsManager) {
-	 * endInt = numHotelsManager;
-	 * }
-	 * 
-	 * // we get the next 6 hotels from the manager in a sublist, or less if there
-	 * are
-	 * // less than 6
-	 * Page<Hotel> hotels = hotelService.findByManager_Id(manager.getId(),
-	 * pageable);
-	 * 
-	 * List<Hotel> hotelsList = hotels.getContent().subList(startInt, endInt);
-	 * hotels = new PageImpl<>(hotelsList, pageable, hotels.getTotalElements());
-	 * 
-	 * PageResponse<Hotel> response = new PageResponse<>();
-	 * response.setContent(hotels.getContent());
-	 * response.setPageNumber(hotels.getNumber());
-	 * response.setPageSize(hotels.getSize());
-	 * response.setTotalElements(hotels.getTotalElements());
-	 * response.setTotalPages(hotels.getTotalPages());
-	 * 
-	 * return ResponseEntity.ok(response);
-	 * 
-	 * } catch (NoSuchElementException e) {
-	 * return ResponseEntity.notFound().build();
-	 * }
-	 * }
-	 */
 
 	@JsonView(HotelDetails.class)
-	@GetMapping("/manager/{id}/hotels/{pageNumber}")
+	@GetMapping("/hotels/{pageNumber}/manager/{id}")
 	@Operation(summary = "Load more hotels for a manager", description = "Returns a list of hotels for a specific manager.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Hotels retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hotel.class))),
@@ -502,13 +447,15 @@ public class HotelRest {
 
 	// ADVANCED RECOMMENDATION ALGORITHM
 
-	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/index/recommended")
+	
 	@Operation(summary = "Get recommended hotels", description = "Returns a list of recommended hotels for the current user.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Recommended hotels retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hotel.class))),
 			@ApiResponse(responseCode = "404", description = "User not found", content = @Content(mediaType = "application/json"))
 	})
+	
+	@JsonView(HotelDetails.class)
+	@GetMapping("/hotels/index/recommended")
 	public ResponseEntity<List<Hotel>> index(HttpServletRequest request) {
 		List<Hotel> recomendedHotels = new ArrayList<>();
 		try {
@@ -538,13 +485,14 @@ public class HotelRest {
 		return ResponseEntity.ok(recomendedHotels);
 	}
 
-	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/index/search")
+	
 	@Operation(summary = "Search hotels", description = "Returns a page of hotels that match the search value.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Hotels found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
 			@ApiResponse(responseCode = "404", description = "Hotels not found", content = @Content(mediaType = "application/json"))
 	})
+	@JsonView(HotelDetails.class)
+	@GetMapping("/hotels/index/specific")
 	public ResponseEntity<PageResponse<Hotel>> indexSearch(@RequestParam String searchValue, Pageable pageable) {
 		try {
 			Page<Hotel> hotels = hotelService.findAllByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(

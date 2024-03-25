@@ -46,7 +46,7 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/users/1/applied?state=true",
+							"raw": "https://localhost:8443/api/managers/1/applied?state=true",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -54,7 +54,7 @@
 							"port": "8443",
 							"path": [
 								"api",
-								"users",
+								"managers",
 								"1",
 								"applied"
 							],
@@ -170,7 +170,7 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/users/1/rejected/state?rejected=false",
+							"raw": "https://localhost:8443/api/managers/1/rejected/state?rejected=false",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -178,7 +178,7 @@
 							"port": "8443",
 							"path": [
 								"api",
-								"users",
+								"managers",
 								"1",
 								"rejected",
 								"state"
@@ -194,7 +194,7 @@
 					"response": []
 				},
 				{
-					"name": "Get users manager list",
+					"name": "Get manager list",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -211,7 +211,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/users/managers/list?page=0&size=1",
+							"raw": "https://localhost:8443/api/managers/list?page=0&size=2",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -219,7 +219,6 @@
 							"port": "8443",
 							"path": [
 								"api",
-								"users",
 								"managers",
 								"list"
 							],
@@ -230,7 +229,7 @@
 								},
 								{
 									"key": "size",
-									"value": "1"
+									"value": "2"
 								}
 							]
 						}
@@ -1102,7 +1101,7 @@
 					"response": []
 				},
 				{
-					"name": "Get recommended hotels",
+					"name": "Get recommended hotels for index",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1134,12 +1133,35 @@
 					"response": []
 				},
 				{
+					"name": "Get hotels in groups of 6",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8443/api/hotels/1/manager/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"hotels",
+								"1",
+								"manager",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get hotels with search",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/hotels/index/search?searchValue=2&page=0&size=6",
+							"raw": "https://localhost:8443/api/hotels/index/specific?searchValue=2&page=0&size=6",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1149,7 +1171,7 @@
 								"api",
 								"hotels",
 								"index",
-								"search"
+								"specific"
 							],
 							"query": [
 								{
@@ -1164,29 +1186,6 @@
 									"key": "size",
 									"value": "6"
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get hotels in groups of 6",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:8443/api/manager/1/hotels/1",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"manager",
-								"1",
-								"hotels",
-								"1"
 							]
 						}
 					},
