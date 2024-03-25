@@ -42,17 +42,21 @@ import yourHOmeTEL.service.RoomService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping("/api")
 public class RoomRest {
 
-    
+	public interface RoomDetails
+			extends UserE.Basic, Hotel.Basic, Review.Basic, Room.Complete, Reservation.Basic {
+	}
 
-    public interface RoomDetails
-            extends UserE.Basic, Hotel.Basic, Review.Basic, Room.Complete, Reservation.Basic {
-    }
-
-    @Autowired
+	@Autowired
 	UserService userService;
 
 	@Autowired
@@ -65,17 +69,23 @@ public class RoomRest {
 	RoomService roomService;
 
 	@Autowired
-    private ObjectMapper objectMapper;
+	private ObjectMapper objectMapper;
 
 	@PostConstruct
-    public void setup() {
-        objectMapper.setDefaultMergeable(true);
-    }
+	public void setup() {
+		objectMapper.setDefaultMergeable(true);
+	}
 
-    //REVIEW CRUD CONTROLLERS
+	// REVIEW CRUD CONTROLLERS
 
 	@JsonView(HotelDetails.class)
 	@GetMapping("/rooms")
+	@Operation(summary = "Load all rooms", description = "Load all rooms with pagination.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Rooms retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
+			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Rooms not found", content = @Content(mediaType = "application/json"))
+	})
 	public ResponseEntity<PageResponse<Room>> loadAllRooms(
 			HttpServletRequest request,
 			Pageable pageable) {
@@ -108,8 +118,14 @@ public class RoomRest {
 
 	@JsonView(RoomDetails.class)
 	@GetMapping("/rooms/{id}")
-	public ResponseEntity <Room> getRooms(HttpServletRequest request, @PathVariable Long id) {
-		try{
+	@Operation(summary = "Get a room", description = "Get a room by room ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Room retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Room.class))),
+			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Room not found", content = @Content(mediaType = "application/json"))
+	})
+	public ResponseEntity<Room> getRooms(HttpServletRequest request, @PathVariable Long id) {
+		try {
 			UserE manager = roomService.findById(id).orElseThrow().getHotel().getManager();
 			if (manager.getvalidated()) {
 				Room targetRoom = roomService.findById(id).orElseThrow();
@@ -117,17 +133,22 @@ public class RoomRest {
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			return ResponseEntity.notFound().build();
 		}
 	}
 
-	
 	@JsonView(RoomDetails.class)
 	@GetMapping("/rooms/hotels/{id}")
-	public ResponseEntity<PageResponse<Room>> hotelRooms(HttpServletRequest request, @PathVariable Long id, 
-	Pageable pageable) {
-		try{
+	@Operation(summary = "Get hotel rooms", description = "Get all rooms of a hotel by hotel ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Rooms retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
+			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Rooms not found", content = @Content(mediaType = "application/json"))
+	})
+	public ResponseEntity<PageResponse<Room>> hotelRooms(HttpServletRequest request, @PathVariable Long id,
+			Pageable pageable) {
+		try {
 			UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			Hotel targetHotel = hotelService.findById(id).orElseThrow();
 			if (targetHotel.getManager().getvalidated() || requestUser.getRols().contains("ADMIN")) {
@@ -141,48 +162,62 @@ public class RoomRest {
 					response.setTotalPages(targetRooms.getTotalPages());
 
 					return ResponseEntity.ok(response);
-				}else{
+				} else {
 					return ResponseEntity.notFound().build();
 				}
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
-		
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			return ResponseEntity.notFound().build();
 		}
 	}
 
-	@JsonView(RoomDetails.class)		
+	@JsonView(RoomDetails.class)
 	@GetMapping("/rooms/reservations/{id}")
+	@Operation(summary = "Get reservation room", description = "Get a room by reservation ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Room retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Room.class))),
+			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Room not found", content = @Content(mediaType = "application/json"))
+	})
 	public ResponseEntity<Room> reservationRoom(HttpServletRequest request, @PathVariable Long id, Pageable pageable) {
-		try{
+		try {
 			UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			Reservation targetReservation = reservationService.findById(id).orElseThrow();
 
-			UserE targetUser = targetReservation.getUser();	
+			UserE targetUser = targetReservation.getUser();
 			UserE hotelManager = targetReservation.getRooms().getHotel().getManager();
 
-			if ((hotelManager.getvalidated() && requestUser.equals(targetUser)) || requestUser.getRols().contains("ADMIN")) {		
+			if ((hotelManager.getvalidated() && requestUser.equals(targetUser))
+					|| requestUser.getRols().contains("ADMIN")) {
 				Room targetRoom = targetReservation.getRooms();
 				return ResponseEntity.ok(targetRoom);
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
-		
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			return ResponseEntity.notFound().build();
 		}
 
 	}
 
 	@PostMapping("/rooms/hotels/{hotelId}")
-	public ResponseEntity<Room> postRoom(HttpServletRequest request, @RequestBody Room room, @PathVariable Long hotelId) {
+	@Operation(summary = "Create a room", description = "Create a new room for a specific hotel.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Room created successfully", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Hotel not found", content = @Content(mediaType = "application/json"))
+	})
+	public ResponseEntity<Room> postRoom(HttpServletRequest request, @RequestBody Room room,
+			@PathVariable Long hotelId) {
 		try {
 			Hotel currentHotel = hotelService.findById(hotelId).orElseThrow();
 			UserE hotelManager = currentHotel.getManager();
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			if(currentUser.equals(hotelManager) || currentUser.getRols().contains("ADMIN")) {
+			if (currentUser.equals(hotelManager) || currentUser.getRols().contains("ADMIN")) {
 				if (hotelManager.getvalidated()) {
 					Hotel targetHotel = hotelService.findById(hotelId).orElseThrow();
 
@@ -193,10 +228,10 @@ public class RoomRest {
 					hotelService.save(targetHotel);
 
 					URI location = fromCurrentRequest().build().toUri();
-					return ResponseEntity.created(location).build(); 
+					return ResponseEntity.created(location).build();
 				} else {
 					return ResponseEntity.notFound().build();
-				} 
+				}
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
@@ -206,43 +241,58 @@ public class RoomRest {
 	}
 
 	// edit profile using raw json body or x-www-form-urlencoded
-    @JsonView(RoomDetails.class)
+	@JsonView(RoomDetails.class)
 	@PutMapping("/rooms/{roomId}/hotels/{hotelId}")
-    public ResponseEntity<Room> editRoom(HttpServletRequest request, @PathVariable Long roomId, @PathVariable Long hotelId, @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
+	@Operation(summary = "Edit a room", description = "Edit a room by room ID and hotel ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Room edited successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Room.class))),
+			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Room or hotel not found", content = @Content(mediaType = "application/json"))
+	})
+	public ResponseEntity<Room> editRoom(HttpServletRequest request, @PathVariable Long roomId,
+			@PathVariable Long hotelId, @RequestParam Map<String, Object> updates)
+			throws JsonMappingException, JsonProcessingException {
 
-        try {
-            UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+		try {
+			UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			UserE hotelManager = hotelService.findById(hotelId).orElseThrow().getManager();
-            if (requestUser.getRols().contains("ADMIN") || requestUser.equals(hotelManager)) {
-                Room targetRoom = roomService.findById(roomId).orElseThrow();
+			if (requestUser.getRols().contains("ADMIN") || requestUser.equals(hotelManager)) {
+				Room targetRoom = roomService.findById(roomId).orElseThrow();
 				// merges the current review with the updates on the request body
-                targetRoom = objectMapper.readerForUpdating(targetRoom).readValue(objectMapper.writeValueAsString(updates)); // exists
-                roomService.save(targetRoom);
-                return ResponseEntity.ok(targetRoom);
-            } else {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
+				targetRoom = objectMapper.readerForUpdating(targetRoom)
+						.readValue(objectMapper.writeValueAsString(updates)); // exists
+				roomService.save(targetRoom);
+				return ResponseEntity.ok(targetRoom);
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
 
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
 
-    @DeleteMapping("/rooms/{roomId}")
-    public ResponseEntity<Room> deleteRoom(HttpServletRequest request, @PathVariable Long roomId) {
-        try {
+	@DeleteMapping("/rooms/{roomId}")
+	@Operation(summary = "Delete a room", description = "Delete a room by room ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "204", description = "Room deleted successfully", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Room not found", content = @Content(mediaType = "application/json"))
+	})
+	public ResponseEntity<Room> deleteRoom(HttpServletRequest request, @PathVariable Long roomId) {
+		try {
 			Room targetRoom = roomService.findById(roomId).orElseThrow();
-            UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-            UserE hotelManager = targetRoom.getHotel().getManager();
-			
-            if (requestUser.getRols().contains("ADMIN") || (requestUser.equals(hotelManager))) {
+			UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			UserE hotelManager = targetRoom.getHotel().getManager();
+
+			if (requestUser.getRols().contains("ADMIN") || (requestUser.equals(hotelManager))) {
 				roomService.delete(targetRoom);
-                return ResponseEntity.noContent().build();
-            } else {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+				return ResponseEntity.noContent().build();
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
 }
