@@ -22,6 +22,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -63,6 +68,12 @@ public class HotelRest {
 
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels")
+	@Operation(summary = "Load all hotels", description = "Returns a page of all hotels.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Hotels retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
+			@ApiResponse(responseCode = "403", description = "Forbidden, the user does not have permission to view these hotels", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "User not found", content = @Content(mediaType = "application/json"))
+	})
 	public ResponseEntity<PageResponse<Hotel>> loadAllHotels(
 			HttpServletRequest request,
 			Pageable pageable) {
@@ -338,51 +349,61 @@ public class HotelRest {
 		}
 
 	}
-/* Old controller (AJAX version)
-	// PENDIENTE ELIMINAR PAGEABLE Y VER SI SE PUEDEN COMBINAR EL LOADMOREHOTELS DE
-	// USER Y MANAGER EN UN MISMO CONTROLADOR
-	@JsonView(HotelDetails.class)
-	@GetMapping("/manager/hotels/{start}/{end}")
-	public ResponseEntity<PageResponse<Hotel>> loadMoreHotelsManagerView(
-			HttpServletRequest request,
-			@PathVariable Long start,
-			@PathVariable Long end,
-			Pageable pageable) {
-
-		try {
-			UserE manager = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			Integer numHotelsManager = manager.getHotels().size();
-
-			Integer startInt = start.intValue();
-			Integer endInt = end.intValue();
-
-			if (startInt < 0 || endInt < 0 || startInt > numHotelsManager || startInt > endInt) {
-				return ResponseEntity.badRequest().build();
-			} else if (endInt > numHotelsManager) {
-				endInt = numHotelsManager;
-			}
-
-			// we get the next 6 hotels from the manager in a sublist, or less if there are
-			// less than 6
-			Page<Hotel> hotels = hotelService.findByManager_Id(manager.getId(), pageable);
-
-			List<Hotel> hotelsList = hotels.getContent().subList(startInt, endInt);
-			hotels = new PageImpl<>(hotelsList, pageable, hotels.getTotalElements());
-
-			PageResponse<Hotel> response = new PageResponse<>();
-			response.setContent(hotels.getContent());
-			response.setPageNumber(hotels.getNumber());
-			response.setPageSize(hotels.getSize());
-			response.setTotalElements(hotels.getTotalElements());
-			response.setTotalPages(hotels.getTotalPages());
-
-			return ResponseEntity.ok(response);
-
-		} catch (NoSuchElementException e) {
-			return ResponseEntity.notFound().build();
-		}
-	}
- */
+	/*
+	 * Old controller (AJAX version)
+	 * // PENDIENTE ELIMINAR PAGEABLE Y VER SI SE PUEDEN COMBINAR EL LOADMOREHOTELS
+	 * DE
+	 * // USER Y MANAGER EN UN MISMO CONTROLADOR
+	 * 
+	 * @JsonView(HotelDetails.class)
+	 * 
+	 * @GetMapping("/manager/hotels/{start}/{end}")
+	 * public ResponseEntity<PageResponse<Hotel>> loadMoreHotelsManagerView(
+	 * HttpServletRequest request,
+	 * 
+	 * @PathVariable Long start,
+	 * 
+	 * @PathVariable Long end,
+	 * Pageable pageable) {
+	 * 
+	 * try {
+	 * UserE manager =
+	 * userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+	 * Integer numHotelsManager = manager.getHotels().size();
+	 * 
+	 * Integer startInt = start.intValue();
+	 * Integer endInt = end.intValue();
+	 * 
+	 * if (startInt < 0 || endInt < 0 || startInt > numHotelsManager || startInt >
+	 * endInt) {
+	 * return ResponseEntity.badRequest().build();
+	 * } else if (endInt > numHotelsManager) {
+	 * endInt = numHotelsManager;
+	 * }
+	 * 
+	 * // we get the next 6 hotels from the manager in a sublist, or less if there
+	 * are
+	 * // less than 6
+	 * Page<Hotel> hotels = hotelService.findByManager_Id(manager.getId(),
+	 * pageable);
+	 * 
+	 * List<Hotel> hotelsList = hotels.getContent().subList(startInt, endInt);
+	 * hotels = new PageImpl<>(hotelsList, pageable, hotels.getTotalElements());
+	 * 
+	 * PageResponse<Hotel> response = new PageResponse<>();
+	 * response.setContent(hotels.getContent());
+	 * response.setPageNumber(hotels.getNumber());
+	 * response.setPageSize(hotels.getSize());
+	 * response.setTotalElements(hotels.getTotalElements());
+	 * response.setTotalPages(hotels.getTotalPages());
+	 * 
+	 * return ResponseEntity.ok(response);
+	 * 
+	 * } catch (NoSuchElementException e) {
+	 * return ResponseEntity.notFound().build();
+	 * }
+	 * }
+	 */
 
 	@JsonView(HotelDetails.class)
 	@GetMapping("/manager/{id}/hotels/{pageNumber}")
@@ -392,10 +413,11 @@ public class HotelRest {
 		try {
 			UserE targetManager = userService.findById(id).orElseThrow();
 			UserE requestManager = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-			if (targetManager.equals(requestManager) || requestManager.getRols().contains("ADMIN")){
+			if (targetManager.equals(requestManager) || requestManager.getRols().contains("ADMIN")) {
 				Integer numHotelsManager = requestManager.getHotels().size();
 
-				// It's multiplied and added by 6 because that's the number of hotels that are loaded each time
+				// It's multiplied and added by 6 because that's the number of hotels that are
+				// loaded each time
 				Integer hotelStart = Math.max(0, (pageNumber.intValue() - 1) * 6);
 				Integer hotelEnd = hotelStart + 6;
 
