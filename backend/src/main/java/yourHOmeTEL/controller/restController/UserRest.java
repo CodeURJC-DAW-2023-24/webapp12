@@ -32,6 +32,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.micrometer.core.ipc.http.HttpSender.Response;
+import io.swagger.v3.oas.annotations.*;
+import io.swagger.v3.oas.annotations.responses.*;
+import io.swagger.v3.oas.annotations.media.*;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import jakarta.annotation.PostConstruct;
@@ -79,7 +82,27 @@ public class UserRest {
     }
     
 
-    // a manager applies to be validated by an admin
+    @Operation (summary = "Validates or rejects a manager") 
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Manager rejected or validated correctly",
+            content = {@Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation=UserE.class)
+            )}
+        ),
+        @ApiResponse(
+            responseCode = "403",
+            description = "Operation not allowed for the current user",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "User not found",
+            content = @Content
+        )
+    }) 
     @JsonView(UserDetails.class)
     @PutMapping("users/{id}/applied")
 	public ResponseEntity<UserE> managerApplication(HttpServletRequest request, @PathVariable Long id,
@@ -105,6 +128,27 @@ public class UserRest {
     
 
     // ADMIN CONTROLLERS
+    @Operation (summary = "Returns a list of all managers, validated or pending of validation")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "List of managers returned correctly",
+            content = {@Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation=PageResponse.class)
+            )}
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Bad request",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "No managers found",
+            content = @Content
+        )  
+    })
     @JsonView(UserDetails.class)
     @GetMapping("/managers/validated")
     public ResponseEntity<PageResponse<UserE>> managerValidation(@RequestParam("validated") Boolean validated, 
@@ -148,6 +192,28 @@ public class UserRest {
         }
     }
     
+
+    @Operation (summary = "Validates or rejects a manager")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Manager rejected or validated correctly",
+            content = {@Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation=UserE.class)
+            )}
+        ),
+        @ApiResponse(
+            responseCode = "403",
+            description = "Operation only allowed for admin users",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Manager not found",
+            content = @Content
+        )
+    })
     @PutMapping("/users/{id}/rejected/state")
     @JsonView(UserDetails.class)
     public ResponseEntity<UserE> rejectManager(HttpServletRequest request, @RequestParam("rejected") Boolean rejected,
@@ -155,13 +221,17 @@ public class UserRest {
         try {
             UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
             UserE manager = userService.findById(id).orElseThrow();
-            if (manager.getRols().contains("MANAGER") && currentUser.getRols().contains("ADMIN") && rejected == true){
+            if (manager.getRols().contains("MANAGER") && currentUser.getRols().contains("ADMIN") && rejected){
                 manager.setRejected(true);
                 manager.setvalidated(false);
 
-            } else if (rejected == false) {
+            } else if (!rejected) {
                 manager.setRejected(false);
                 manager.setvalidated(true);
+
+            } else if (!currentUser.getRols().contains("ADMIN")) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); 
+
             } else {
                 return ResponseEntity.notFound().build();
             }
@@ -175,7 +245,22 @@ public class UserRest {
     }
 
 
-    // returns list of all managers. ADMIN and MANAGER can access
+    @Operation (summary = "Returns a list of all managers")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "List of managers returned correctly",
+            content = {@Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation=PageResponse.class)
+            )}
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "No managers found",
+            content = @Content
+        )
+    })
     @JsonView(UserDetails.class)
     @GetMapping("/users/managers/list")
     public ResponseEntity<PageResponse<UserE>> managerList(HttpServletRequest request, Pageable pageable) {
@@ -201,7 +286,27 @@ public class UserRest {
 
 
     // USERS CRUD CONTROLLERS
-
+    @Operation (summary = "Returns a list of all users")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "List of users returned correctly",
+            content = {@Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation=PageResponse.class)
+            )}
+        ),
+        @ApiResponse(
+            responseCode = "403",
+            description = "Operation only allowed for admin users",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "No users found",
+            content = @Content
+        )
+    })
     @JsonView(HotelDetails.class)
 	@GetMapping("/users")
 	public ResponseEntity<PageResponse<UserE>> loadAllUsers(
@@ -234,6 +339,22 @@ public class UserRest {
 		}
 	}
 
+    @Operation (summary = "Returns a specific user")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "User data returned correctly",
+            content = {@Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation=UserE.class)
+            )}
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "User not found",
+            content = @Content
+        )
+    })
     @JsonView(UserDetails.class)
     @GetMapping("/users/{id}")
     public ResponseEntity<UserE> profile(HttpServletRequest request, @PathVariable Long id) {
@@ -247,13 +368,35 @@ public class UserRest {
         }
     }
 
+
+    @Operation (summary = "Returns a specific user from a specific reservation")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "User data returned correctly",
+            content = {@Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation=UserE.class)
+            )}
+        ),
+        @ApiResponse(
+            responseCode = "403",
+            description = "Operation only allowed for admins or the user that made the reservation",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Reservation not found",
+            content = @Content
+        )
+    })
     @JsonView(UserDetails.class)
     @GetMapping("/users/reservations/{id}")
     public ResponseEntity<UserE> reservationUser(HttpServletRequest request, @PathVariable Long id) {
         try {
             UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-            Reservation targetResevation = reservationService.findById(id).orElseThrow();
-            UserE targetUser = targetResevation.getUser();
+            Reservation targetReservation = reservationService.findById(id).orElseThrow();
+            UserE targetUser = targetReservation.getUser();
             
             if(requestUser.equals(targetUser) || requestUser.getRols().contains("ADMIN")){
                 return ResponseEntity.ok(targetUser);
@@ -266,6 +409,27 @@ public class UserRest {
         }
     }
 
+    @Operation (summary = "Returns a specific user from a specific review")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "User data returned correctly",
+            content = {@Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation=UserE.class)
+            )}
+        ),
+        @ApiResponse(
+            responseCode = "403",
+            description = "Operation only allowed for admins or the user that made the review",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Review not found",
+            content = @Content
+        )
+    })
     @JsonView(UserDetails.class)
     @GetMapping("/users/reviews/{id}")
     public ResponseEntity<UserE> reviewUser(HttpServletRequest request, @PathVariable Long id) {
@@ -285,7 +449,25 @@ public class UserRest {
         }
     }
 
-    // returns 400 if not all needed attributes are included on the body request
+
+    @Operation (summary = "Registers a new user")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "201",
+            description = "User registered correctly",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Bad request, maybe one of the user attributes is missing or the type is not valid",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "409",
+            description = "User already exists",
+            content = @Content
+        )
+    })
     @PostMapping("/users")
     public ResponseEntity<UserE> registerClient(HttpServletRequest request, @RequestBody UserE newUser,
             @RequestParam("type") Integer type) throws IOException {
@@ -338,7 +520,33 @@ public class UserRest {
         }
     }
 
-    // edit profile using raw json body or x-www-form-urlencoded
+    
+    @Operation (summary = "Edits a user profile")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "User profile edited correctly",
+            content = {@Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation=UserE.class)
+            )}
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Exception originated from JSON data processing or mapping",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "403",
+            description = "Operation not allowed for the current user",
+            content = @Content
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "User not found",
+            content = @Content
+        )
+    })
     @JsonView(UserDetails.class)
     @PutMapping("/users/{id}")
     public ResponseEntity<UserE> editProfile(HttpServletRequest request, @PathVariable Long id,
@@ -359,9 +567,29 @@ public class UserRest {
 
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
+        } catch (JsonProcessingException e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 
+    @Operation(summary = "Deletes a user profile")
+    @ApiResponses(value = { 
+        @ApiResponse(
+            responseCode = "204",
+            description = "Operation successful", 
+            content = @Content
+        ), 
+        @ApiResponse(
+            responseCode = "403",
+            description = "Operation only allowed to admins or the user itself", 
+            content = @Content
+        ), 
+        @ApiResponse(
+            responseCode = "404",
+            description = "Profile not found", 
+            content = @Content
+        ) 
+    })
     @DeleteMapping("/users/{id}")
     public ResponseEntity<UserE> deleteProfile(HttpServletRequest request, @PathVariable Long id) {
 
@@ -380,7 +608,7 @@ public class UserRest {
         }
     }
  
-    
+    @Operation(summary = "Returns the type of user")
     @GetMapping("/users/{id}/type")
     public ResponseEntity<String> userType(HttpServletRequest request) {
           if (request.isUserInRole("ADMIN"))
@@ -391,26 +619,31 @@ public class UserRest {
                return ResponseEntity.ok("MANAGER");
      }
 
+     @Operation(summary = "Returns if the user is an admin or not")
      @GetMapping("/users/{id}/type/admin")
      public ResponseEntity<Boolean> isAdmin(HttpServletRequest request) {
           return ResponseEntity.ok(request.isUserInRole("ADMIN"));
      }
 
+     @Operation(summary = "Returns if the user is a manager or not")
      @GetMapping("/users/{id}/type/manager")
      public ResponseEntity<Boolean> isManager(HttpServletRequest request) {
         return ResponseEntity.ok(request.isUserInRole("MANAGER"));
      }
 
+     @Operation(summary = "Returns if the user is a client or not")
      @GetMapping("/users/{id}/type/client")
      public ResponseEntity<Boolean> isClient(HttpServletRequest request) {
         return ResponseEntity.ok(request.isUserInRole("CLIENT"));
      }
 
+     @Operation(summary = "Returns if the user is a user or not")
      @GetMapping("/users/{id}/type/user")
      public ResponseEntity<Boolean> isUser(HttpServletRequest request) {
         return ResponseEntity.ok(request.isUserInRole("USER"));
      }
 
+     @Operation(summary = "Returns the path of the request")
      @GetMapping("/request/path")
      public ResponseEntity<String> getPath(HttpServletRequest request) {
           return ResponseEntity.ok(request.getServletPath());
