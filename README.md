@@ -638,3 +638,28 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
 | #3 | Dockerfile               |
 | #4 | docker-compose.yml       |
 | #5 | HotelImageRest.java      |
+
+### PAULA MONROBEL UGIDOS
+  - Description: Implemented various rest controllers for review and review entities, help with the names of the urls and bug fixes and testing.
+
+
+  - Five most important commits
+
+| Commit Number | Description | Link |
+|:--:|:-------------------------------:|:------------------------------------------------------------------------------------------------:|
+| #1 | User Rest Index                 | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/ee368a2f4c392700b8d493210b3f34c636418b10 |
+| #2 | Review Rest Size and Pertentage | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/594342fbdcfb97ce6f015c2f318831b41e7629ec |
+| #3 | Room Rest Put and Delete        | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/595b3f491a7680742d5e05c8d795bd72daa6bfb4 |
+| #4 | Room Rest Getters and Post      | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/d1606e41aa795a823633df9cc4b5abde8e4c2eb4 |
+| #5 | User Rest Getters and Put       | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/c3d660e06b47728791538e2ec4cebd5d27588683 |
+
+- Five most participation files
+
+| File number | File |
+|:--:|:------------------------:|
+| #1 | UserRest.java               |
+| #2 | ReviewRest.java             |
+| #3 | Security Configuration.java |
+| #4 | InitDataBase.java           |
+| #5 | UserImageRest.java          |
+
