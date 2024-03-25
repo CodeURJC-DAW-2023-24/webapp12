@@ -40,6 +40,11 @@ import yourHOmeTEL.service.UserService;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/api")
@@ -62,15 +67,21 @@ public class ReservationRest {
 	private RoomService roomService;
 
 	@Autowired
-    private ObjectMapper objectMapper;
+	private ObjectMapper objectMapper;
 
 	@PostConstruct
-    public void setup() {
-        objectMapper.setDefaultMergeable(true);
-    }
+	public void setup() {
+		objectMapper.setDefaultMergeable(true);
+	}
 
 	@JsonView(HotelDetails.class)
 	@GetMapping("/reservations")
+	@Operation(summary = "Load all reservations", description = "Returns a page of all reservations.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Reservations retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
+			@ApiResponse(responseCode = "403", description = "Forbidden, the user does not have permission to view these reservations", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "User not found", content = @Content(mediaType = "application/json"))
+	})
 	public ResponseEntity<PageResponse<Reservation>> loadAllReservations(
 			HttpServletRequest request,
 			Pageable pageable) {
@@ -103,6 +114,12 @@ public class ReservationRest {
 
 	@JsonView(ReservationDetails.class)
 	@GetMapping("/reservations/{id}")
+	@Operation(summary = "Get a reservation", description = "Returns a specific reservation.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Reservation retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Reservation.class))),
+			@ApiResponse(responseCode = "403", description = "Forbidden, the user does not have permission to view this reservation", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Reservation or user not found", content = @Content(mediaType = "application/json"))
+	})
 	public ResponseEntity<Reservation> getReservation(HttpServletRequest request, @PathVariable Long id) {
 
 		try {
@@ -125,7 +142,14 @@ public class ReservationRest {
 
 	@JsonView(ReservationDetails.class)
 	@GetMapping("/reservations/users/{id}")
-	public ResponseEntity<PageResponse<Reservation>> getUserReservations(@PathVariable Long id, HttpServletRequest request,
+	@Operation(summary = "Get user reservations", description = "Returns a page of reservations for a specific user.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Reservations retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
+			@ApiResponse(responseCode = "403", description = "Forbidden, the user does not have permission to view these reservations", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Reservations or user not found", content = @Content(mediaType = "application/json"))
+	})
+	public ResponseEntity<PageResponse<Reservation>> getUserReservations(@PathVariable Long id,
+			HttpServletRequest request,
 			Pageable pageable) {
 
 		try {
@@ -143,7 +167,7 @@ public class ReservationRest {
 					response.setTotalPages(targetReservations.getTotalPages());
 
 					return ResponseEntity.ok(response);
-				}else{
+				} else {
 					return ResponseEntity.notFound().build();
 				}
 			} else {
@@ -158,7 +182,13 @@ public class ReservationRest {
 
 	@JsonView(ReservationDetails.class)
 	@GetMapping("/reservations/hotels/{id}")
-	public ResponseEntity<PageResponse<Reservation>> getHotelReservations(@PathVariable Long id, HttpServletRequest request,
+	@Operation(summary = "Get hotel reservations", description = "Returns a page of reservations for a specific hotel.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Reservations retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
+			@ApiResponse(responseCode = "404", description = "Reservations, hotel or user not found", content = @Content(mediaType = "application/json"))
+	})
+	public ResponseEntity<PageResponse<Reservation>> getHotelReservations(@PathVariable Long id,
+			HttpServletRequest request,
 			Pageable pageable) {
 
 		try {
@@ -176,7 +206,7 @@ public class ReservationRest {
 					response.setTotalPages(targetReservations.getTotalPages());
 
 					return ResponseEntity.ok(response);
-				}else{
+				} else {
 					return ResponseEntity.notFound().build();
 				}
 			} else {
@@ -191,7 +221,13 @@ public class ReservationRest {
 
 	@JsonView(ReservationDetails.class)
 	@GetMapping("/reservations/rooms/{id}")
-	public ResponseEntity<PageResponse<Reservation>> getRoomReservations(@PathVariable Long id, HttpServletRequest request,
+	@Operation(summary = "Get room reservations", description = "Returns a page of reservations for a specific room.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Reservations retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
+			@ApiResponse(responseCode = "404", description = "Reservations, room or user not found", content = @Content(mediaType = "application/json"))
+	})
+	public ResponseEntity<PageResponse<Reservation>> getRoomReservations(@PathVariable Long id,
+			HttpServletRequest request,
 			Pageable pageable) {
 
 		try {
@@ -209,7 +245,7 @@ public class ReservationRest {
 					response.setTotalPages(targetReservations.getTotalPages());
 
 					return ResponseEntity.ok(response);
-				}else{
+				} else {
 					return ResponseEntity.notFound().build();
 				}
 			} else {
@@ -223,29 +259,38 @@ public class ReservationRest {
 	}
 
 	@PostMapping("/reservations/users/{userId}/hotels/{hotelId}/rooms/{roomId}")
+	@Operation(summary = "Add a reservation", description = "Add a new reservation for a specific user, hotel and room.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Reservation created successfully", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "User, hotel or room not found", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "409", description = "Conflict with existing data", content = @Content(mediaType = "application/json"))
+	})
 	public ResponseEntity<Object> addReservation(HttpServletRequest request, @RequestBody Reservation reservation,
-	 @PathVariable Long userId, @PathVariable Long hotelId, @PathVariable Long roomId) {
+			@PathVariable Long userId, @PathVariable Long hotelId, @PathVariable Long roomId) {
 
 		Room targetRoom = new Room();
-		try{
+		try {
 			targetRoom = roomService.findById(roomId).orElseThrow();
 
-		}catch (NoSuchElementException e) {
+		} catch (NoSuchElementException e) {
 			return ResponseEntity.notFound().build();
 		}
 
 		if (reservation.getCheckIn().isAfter(reservation.getCheckOut()) || reservation.getNumPeople() <= 0 ||
-		(reservation.getCheckIn() == null || reservation.getCheckOut() == null) 
-		|| reservation.getNumPeople() > targetRoom.getMaxClients()){
+				(reservation.getCheckIn() == null || reservation.getCheckOut() == null)
+				|| reservation.getNumPeople() > targetRoom.getMaxClients()) {
 			return ResponseEntity.badRequest().build();
-				
-		}else{
-			Room room = hotelService.checkRooms(hotelId, reservation.getCheckIn(), reservation.getCheckOut(), reservation.getNumPeople());
-			if (room != null){
+
+		} else {
+			Room room = hotelService.checkRooms(hotelId, reservation.getCheckIn(), reservation.getCheckOut(),
+					reservation.getNumPeople());
+			if (room != null) {
 				UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 				UserE targetUser = userService.findById(userId).orElseThrow();
-				
-				if (requestUser.equals(targetUser)){
+
+				if (requestUser.equals(targetUser)) {
 					try {
 						UserE hotelManager = hotelService.findById(hotelId).orElseThrow().getManager();
 						Hotel targetHotel = hotelService.findById(hotelId).orElseThrow();
@@ -268,7 +313,7 @@ public class ReservationRest {
 							userService.save(targetUser);
 
 							URI location = fromCurrentRequest().build().toUri();
-							return ResponseEntity.created(location).build(); 
+							return ResponseEntity.created(location).build();
 
 						} else {
 							return ResponseEntity.notFound().build();
@@ -276,62 +321,75 @@ public class ReservationRest {
 					} catch (NoSuchElementException e) {
 						return ResponseEntity.notFound().build();
 					}
-				}else{
+				} else {
 					return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 				}
-			}else{
-				return ResponseEntity.status(HttpStatus.CONFLICT).body("No rooms available for the specified number of people or date.");
-			} 
+			} else {
+				return ResponseEntity.status(HttpStatus.CONFLICT)
+						.body("No rooms available for the specified number of people or date.");
+			}
 		}
 	}
 
-
 	// edit profile using raw json body or x-www-form-urlencoded
-    @JsonView(ReservationDetails.class)
+	@JsonView(ReservationDetails.class)
 	@PutMapping("/reservations/{reservationId}")
-    public ResponseEntity<Reservation> editReservation(HttpServletRequest request, @PathVariable Long reservationId,
-            @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
+	@Operation(summary = "Edit a reservation", description = "Edit an existing reservation by its ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Reservation edited successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Reservation.class))),
+			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Reservation not found", content = @Content(mediaType = "application/json"))
+	})
+	public ResponseEntity<Reservation> editReservation(HttpServletRequest request, @PathVariable Long reservationId,
+			@RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
 
-        try {
+		try {
 			Reservation targetReservation = reservationService.findById(reservationId).orElseThrow();
-            UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-            UserE reservationUser = targetReservation.getUser();
+			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			UserE reservationUser = targetReservation.getUser();
 
-            if (currentUser.getRols().contains("ADMIN") || currentUser.equals(reservationUser)) {
+			if (currentUser.getRols().contains("ADMIN") || currentUser.equals(reservationUser)) {
 				// merges the current reservation with the updates on the request body
-				targetReservation = objectMapper.readerForUpdating(targetReservation).readValue(objectMapper.writeValueAsString(updates)); // exists
+				targetReservation = objectMapper.readerForUpdating(targetReservation)
+						.readValue(objectMapper.writeValueAsString(updates)); // exists
 				targetReservation.setCheckIn(targetReservation.getCheckIn().plusDays(1));
 				targetReservation.setCheckOut(targetReservation.getCheckOut().plusDays(1));
 				reservationService.save(targetReservation);
-                targetReservation.setCheckIn(targetReservation.getCheckIn().minusDays(1));
+				targetReservation.setCheckIn(targetReservation.getCheckIn().minusDays(1));
 				targetReservation.setCheckOut(targetReservation.getCheckOut().minusDays(1));
 				return ResponseEntity.ok(targetReservation);
-            } else {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
 
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
 
-   @DeleteMapping("/reservations/{reservationId}")
-    public ResponseEntity<Reservation> deleteReservation(HttpServletRequest request, @PathVariable Long reservationId) {
+	@DeleteMapping("/reservations/{reservationId}")
+	@Operation(summary = "Delete a reservation", description = "Delete an existing reservation by its ID.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "204", description = "Reservation deleted successfully", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Reservation not found", content = @Content(mediaType = "application/json"))
+	})
+	public ResponseEntity<Reservation> deleteReservation(HttpServletRequest request, @PathVariable Long reservationId) {
 
-        try {
+		try {
 			Reservation targetReservation = reservationService.findById(reservationId).orElseThrow();
-            UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-            UserE targetUser = targetReservation.getUser();
+			UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			UserE targetUser = targetReservation.getUser();
 
-            if (requestUser.getRols().contains("ADMIN") || requestUser.equals(targetUser)) {
+			if (requestUser.getRols().contains("ADMIN") || requestUser.equals(targetUser)) {
 				reservationService.delete(targetReservation);
-                return ResponseEntity.noContent().build();
-            } else {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+				return ResponseEntity.noContent().build();
+			} else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			}
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
 
 }
