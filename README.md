@@ -663,3 +663,27 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
 | #4 | InitDataBase.java           |
 | #5 | UserImageRest.java          |
 
+
+### Laila El Khattabi El Hassnaoui
+  - Description: Implemented various rest controllers for Hotel entity, I have fixed the urls names and added annotations to the rest controllers in order to generate the documentation with OpenApi.
+
+  - Five most important commits
+
+| Commit Number | Description | Link |
+|:--:|:-------------------------------:|:------------------------------------------------------------------------------------------------:|
+| #1 | Hotel Rest                      | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/d9d24f1510eeb46d5e2f2d03a2d8c94eb8dbec62 |
+| #2 | Annotations OpenApi             | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/dd5d499d76046e318552c24213f179f2d3725a33 |
+| #3 | Hotel Rest                      | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/9da374f1634c6109369c3849ad64c8304f91c869 |
+| #4 | Hotel Rest                      |  https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/79b15040e5884aac4e66bb60a2cae1a637f1b93e|
+| #5 | Hotel Rest                      | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/a45274c295c5dcd1d316d738195ae4bd0526f641  |
+
+- Five highest participation files
+
+| File number | File |
+|:--:|:------------------------:|
+| #1 | HoteRest.java               |
+| #2 | ReviewRest.java             |
+| #3 | Security Configuration.java |
+| #4 | RoomRest.java           |
+| #5 | ReservationRest.java          |
+
