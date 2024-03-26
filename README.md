@@ -629,7 +629,7 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
 | #4 | Implemented Reservation REST controllers | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/8dcde4fbd9569384269039e40f3ad90e59c21950 |
 | #5 | Hotel image REST implementation          | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/00757925520e0064bf1fc109c974afb74f3bbda1 |
 
-- Five most participation files
+- Five highest participation files
 
 | File number | File |
 |:--:|:------------------------:|
@@ -653,7 +653,7 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
 | #4 | Room Rest Getters and Post      | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/d1606e41aa795a823633df9cc4b5abde8e4c2eb4 |
 | #5 | User Rest Getters and Put       | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/c3d660e06b47728791538e2ec4cebd5d27588683 |
 
-- Five most participation files
+- Five highest participation files
 
 | File number | File |
 |:--:|:------------------------:|
