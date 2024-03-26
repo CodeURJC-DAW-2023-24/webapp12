@@ -21,7 +21,6 @@ import java.sql.Blob;
 
 import yourHOmeTEL.model.Hotel;
 import yourHOmeTEL.model.Reservation;
-import yourHOmeTEL.model.Review;
 import yourHOmeTEL.model.Room;
 import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.repository.HotelRepository;

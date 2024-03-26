@@ -9,9 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import yourHOmeTEL.model.Reservation;
 import yourHOmeTEL.model.Room;
-import yourHOmeTEL.model.UserE;
 import yourHOmeTEL.repository.RoomRepository;
 
 @Service

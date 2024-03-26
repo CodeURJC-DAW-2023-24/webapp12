@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -53,8 +52,6 @@ public class HotelController {
 	@Autowired
 	RoomService roomService;
 
-	@Autowired
-	private ResourceLoader resourceLoader;
 
 	@GetMapping("/editHotel/{id}")
 	public String editHotel(HttpServletRequest request, Model model, @PathVariable Long id) {
