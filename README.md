@@ -687,3 +687,26 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
 | #4 | RoomRest.java               |
 | #5 | ReservationRest.java        |
 
+
+### Carlos Hermán Andrés Andrés
+  - Description: Implemented various rest controllers for Hotel entity, discussed about the structure and organization of the REST controllers, and added documentation with OpenAPI to the project.
+
+  - Five most important commits
+
+| Commit Number | Description | Link |
+|:--:|:-------------------------------:|:------------------------------------------------------------------------------------------------:|
+| #1 | Added OpenAPI doc to UserImageRest | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0029c5ff5d0805537a86aa07603129a72a2debbd |
+| #2 | Added edit controllers to HotelRest | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/f06b6441d3a93645adc1b15eb41c2c53333eea7c |
+| #3 | Controller that gets all Hotel | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/20556ed7de87294d856d74a6e4b2134843323c3a |
+| #4 | Several fixes to the hotelRest controllers | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0d779c284a3f252782eb1c1b307dc93dd441964f |
+| #5 | Added OpenAPI documentation to userRest controller | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/1f198a3534e74d4cdd661fc8042298975bff4ab2 |
+
+- Five highest participation files
+
+| File number | File |
+|:--:|:------------------------:|
+| #1 | HoteRest.java               |
+| #2 | UserRest.java             |
+| #3 | SecurityConfiguration.java |
+| #4 | HotelService.java               |
+| #5 | ReviewRest.java        |
