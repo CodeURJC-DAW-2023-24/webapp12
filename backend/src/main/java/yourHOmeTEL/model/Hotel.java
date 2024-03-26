@@ -169,7 +169,6 @@ public class Hotel {
         this.setImage(true);         
     }
 
-    // PENDIENTE -> Se añade un getClientes a esta clase? 
 
     public String getImagePath() {
         return imagePath;

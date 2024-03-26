@@ -5,9 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +21,6 @@ import yourHOmeTEL.repository.ReviewRepository;
 import yourHOmeTEL.repository.RoomRepository;
 import yourHOmeTEL.repository.UserRepository;
 
-import org.springframework.core.io.Resource;
 
 import java.util.Random;
 
@@ -353,23 +350,5 @@ public class initDataBaseService {
                 hotelRepository.save(hotel10);
                 hotelRepository.save(hotel11);
 
-        }
-
-        //for user images
-        /*public void setImage(UserE user, String classpathResource) throws IOException {
-
-                Resource image = new ClassPathResource(classpathResource);
-
-                user.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
-                user.setImage(true);
-        }*/
-
-        // for hotels images
-        public void setImage(Hotel hotel, String classpathResource) throws IOException {
-
-                Resource image = new ClassPathResource(classpathResource);
-
-                hotel.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
-                hotel.setImage(true);
         }
 }
