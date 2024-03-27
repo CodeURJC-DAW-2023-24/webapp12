@@ -1,0 +1,2282 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: https://localhost:8443
+  description: Generated server url
+paths:
+  /api/users/{id}:
+    get:
+      tags:
+      - user-rest
+      operationId: profile
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserE_UserDetails'
+    put:
+      tags:
+      - user-rest
+      operationId: editProfile
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: updates
+        in: query
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: object
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserE_UserDetails'
+    delete:
+      tags:
+      - user-rest
+      operationId: deleteProfile
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserE'
+  /api/users/{id}/rejected/state:
+    put:
+      tags:
+      - user-rest
+      operationId: rejectManager
+      parameters:
+      - name: rejected
+        in: query
+        required: true
+        schema:
+          type: boolean
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserE_UserDetails'
+  /api/users/{id}/applied:
+    put:
+      tags:
+      - user-rest
+      operationId: managerApplication
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: state
+        in: query
+        required: true
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserE_UserDetails'
+  /api/rooms/{roomId}/hotels/{hotelId}:
+    put:
+      tags:
+      - room-rest
+      operationId: editRoom
+      parameters:
+      - name: roomId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: hotelId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: updates
+        in: query
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: object
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Room_RoomDetails'
+  /api/reviews/{reviewId}/users/{userId}:
+    put:
+      tags:
+      - review-rest
+      operationId: editReview
+      parameters:
+      - name: reviewId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: updates
+        in: query
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: object
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Review_ReviewDetails'
+  /api/reservations/{reservationId}:
+    put:
+      tags:
+      - reservation-rest
+      operationId: editReservation
+      parameters:
+      - name: reservationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: updates
+        in: query
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: object
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Reservation_ReservationDetails'
+    delete:
+      tags:
+      - reservation-rest
+      operationId: deleteReservation
+      parameters:
+      - name: reservationId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Reservation'
+  /api/hotels/{id}:
+    get:
+      tags:
+      - hotel-rest
+      operationId: getHotelData
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+    put:
+      tags:
+      - hotel-rest
+      operationId: editHotel
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: updates
+        in: query
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: object
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Hotel_HotelDetails'
+    delete:
+      tags:
+      - hotel-rest
+      operationId: deleteHotel
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Hotel'
+  /api/users:
+    get:
+      tags:
+      - user-rest
+      operationId: loadAllUsers
+      parameters:
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseUserE_HotelDetails'
+    post:
+      tags:
+      - user-rest
+      operationId: registerClient
+      parameters:
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserE'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserE'
+  /api/users/{id}/image:
+    get:
+      tags:
+      - user-image-rest
+      operationId: downloadProfileImage
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    post:
+      tags:
+      - user-image-rest
+      operationId: uploadImage
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - imageFile
+              type: object
+              properties:
+                imageFile:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    delete:
+      tags:
+      - user-image-rest
+      operationId: deleteImage
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/rooms/hotels/{hotelId}:
+    post:
+      tags:
+      - room-rest
+      operationId: postRoom
+      parameters:
+      - name: hotelId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Room'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Room'
+  /api/reviews/hotels/{hotelId}:
+    post:
+      tags:
+      - review-rest
+      operationId: postReview
+      parameters:
+      - name: hotelId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Review'
+  /api/reservations/users/{userId}/hotels/{hotelId}/rooms/{roomId}:
+    post:
+      tags:
+      - reservation-rest
+      operationId: addReservation
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: hotelId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: roomId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reservation'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/refresh:
+    post:
+      tags:
+      - login-controller
+      operationId: refreshToken
+      parameters:
+      - name: refreshToken
+        in: cookie
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+  /api/logout:
+    post:
+      tags:
+      - login-controller
+      operationId: logOut
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+  /api/login:
+    post:
+      tags:
+      - login-controller
+      operationId: loginForm_1
+      parameters:
+      - name: accessToken
+        in: cookie
+        required: false
+        schema:
+          type: string
+      - name: refreshToken
+        in: cookie
+        required: false
+        schema:
+          type: string
+      - name: loginRequest
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/LoginRequest'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+  /api/hotels:
+    get:
+      tags:
+      - hotel-rest
+      operationId: loadAllHotels
+      parameters:
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseHotel_HotelDetails'
+    post:
+      tags:
+      - hotel-rest
+      operationId: createHotel
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: description
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: location
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: room1
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: cost1
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: room2
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: cost2
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: room3
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: cost3
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: room4
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: cost4
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Hotel'
+  /api/hotels/{id}/image:
+    get:
+      tags:
+      - hotel-image-rest
+      operationId: downloadProfileImage_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    post:
+      tags:
+      - hotel-image-rest
+      operationId: uploadImage_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - imageFile
+              type: object
+              properties:
+                imageFile:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    delete:
+      tags:
+      - hotel-image-rest
+      operationId: deleteImage_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/users/{id}/type:
+    get:
+      tags:
+      - user-rest
+      operationId: userType
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/users/{id}/type/user:
+    get:
+      tags:
+      - user-rest
+      operationId: isUser
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: boolean
+  /api/users/{id}/type/manager:
+    get:
+      tags:
+      - user-rest
+      operationId: isManager
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: boolean
+  /api/users/{id}/type/client:
+    get:
+      tags:
+      - user-rest
+      operationId: isClient
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: boolean
+  /api/users/{id}/type/admin:
+    get:
+      tags:
+      - user-rest
+      operationId: isAdmin
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: boolean
+  /api/users/reviews/{id}:
+    get:
+      tags:
+      - user-rest
+      operationId: reviewUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserE_UserDetails'
+  /api/users/reservations/{id}:
+    get:
+      tags:
+      - user-rest
+      operationId: reservationUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserE_UserDetails'
+  /api/users/managers/list:
+    get:
+      tags:
+      - user-rest
+      operationId: managerList
+      parameters:
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseUserE_UserDetails'
+  /api/rooms:
+    get:
+      tags:
+      - room-rest
+      operationId: loadAllRooms
+      parameters:
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseRoom_HotelDetails'
+  /api/rooms/{id}:
+    get:
+      tags:
+      - room-rest
+      operationId: getRooms
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Room_RoomDetails'
+  /api/rooms/reservations/{id}:
+    get:
+      tags:
+      - room-rest
+      operationId: reservationRoom
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Room_RoomDetails'
+  /api/rooms/hotels/{id}:
+    get:
+      tags:
+      - room-rest
+      operationId: hotelRooms
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseRoom_RoomDetails'
+  /api/reviews:
+    get:
+      tags:
+      - review-rest
+      operationId: loadAllReviews
+      parameters:
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseReview_HotelDetails'
+  /api/reviews/{id}:
+    get:
+      tags:
+      - review-rest
+      operationId: getReview
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Review_ReviewDetails'
+  /api/reviews/users/{id}:
+    get:
+      tags:
+      - review-rest
+      operationId: userReviews
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseReview_ReviewDetails'
+  /api/reviews/size/hotels/{id}:
+    get:
+      tags:
+      - review-rest
+      operationId: hotelReviews
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: integer
+                format: int32
+  /api/reviews/percentage/hotels/{id}:
+    get:
+      tags:
+      - review-rest
+      operationId: hotelReviews_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  type: integer
+                  format: int32
+  /api/reviews/hotels/{id}:
+    get:
+      tags:
+      - review-rest
+      operationId: hotelReviews_2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseReview_ReviewDetails'
+  /api/reservations:
+    get:
+      tags:
+      - reservation-rest
+      operationId: loadAllReservations
+      parameters:
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseReservation_HotelDetails'
+  /api/reservations/{id}:
+    get:
+      tags:
+      - reservation-rest
+      operationId: getReservation
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Reservation_ReservationDetails'
+  /api/reservations/users/{id}:
+    get:
+      tags:
+      - reservation-rest
+      operationId: getUserReservations
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseReservation_ReservationDetails'
+  /api/reservations/rooms/{id}:
+    get:
+      tags:
+      - reservation-rest
+      operationId: getRoomReservations
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseReservation_ReservationDetails'
+  /api/reservations/hotels/{id}:
+    get:
+      tags:
+      - reservation-rest
+      operationId: getHotelReservations
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseReservation_ReservationDetails'
+  /api/request/path:
+    get:
+      tags:
+      - user-rest
+      operationId: getPath
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/managers/validated:
+    get:
+      tags:
+      - user-rest
+      operationId: managerValidation
+      parameters:
+      - name: validated
+        in: query
+        required: true
+        schema:
+          type: boolean
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseUserE_UserDetails'
+  /api/manager/hotels/{pageNumber}:
+    get:
+      tags:
+      - hotel-rest
+      summary: Gets the hotels from a certain manager in groups of up to 6
+      operationId: loadMoreHotelsManagerView
+      parameters:
+      - name: pageNumber
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Hotels retrieved wothout errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hotel_HotelDetails'
+        "404":
+          description: Hotel not found
+        "403":
+          description: Operation not allower for current user
+  /api/hotels/{id}/clients:
+    get:
+      tags:
+      - hotel-rest
+      operationId: clientsList
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserE_HotelDetails'
+  /api/hotels/rooms/{id}:
+    get:
+      tags:
+      - hotel-rest
+      operationId: getHotelFromRoom
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Hotel_HotelDetails'
+  /api/hotels/reviews/{id}:
+    get:
+      tags:
+      - hotel-rest
+      operationId: getReviewsFromHotel
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Hotel_HotelDetails'
+  /api/hotels/reservations/{id}:
+    get:
+      tags:
+      - hotel-rest
+      operationId: getReservationsFromHotel
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Hotel_HotelDetails'
+  /api/hotels/manager/{id}:
+    get:
+      tags:
+      - hotel-rest
+      operationId: viewHotelsManager
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseHotel_HotelDetails'
+  /api/hotels/index/search:
+    get:
+      tags:
+      - hotel-rest
+      operationId: indexSearch
+      parameters:
+      - name: searchValue
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseHotel_HotelDetails'
+  /api/hotels/index/recommended:
+    get:
+      tags:
+      - hotel-rest
+      operationId: index
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hotel_HotelDetails'
+  /api/rooms/{roomId}:
+    delete:
+      tags:
+      - room-rest
+      operationId: deleteRoom
+      parameters:
+      - name: roomId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Room'
+  /api/reviews/{reviewId}:
+    delete:
+      tags:
+      - review-rest
+      operationId: deleteReview
+      parameters:
+      - name: reviewId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Review'
+components:
+  schemas:
+    Hotel_UserDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        getrating:
+          type: number
+          format: float
+        image:
+          type: boolean
+        imagePath:
+          type: string
+        numRooms:
+          type: integer
+          format: int32
+        averageRating:
+          type: number
+          format: float
+        imageBase64:
+          type: string
+    Reservation_UserDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        checkIn:
+          type: string
+          format: date
+        checkOut:
+          type: string
+          format: date
+        numPeople:
+          type: integer
+          format: int32
+        rooms:
+          $ref: '#/components/schemas/Room_UserDetails'
+        idReservation:
+          type: integer
+          format: int64
+    Review_UserDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        score:
+          type: integer
+          format: int32
+        comment:
+          type: string
+        date:
+          type: string
+          format: date
+        idReview:
+          type: integer
+          format: int64
+    Room_UserDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        maxClients:
+          type: integer
+          format: int32
+        getcost:
+          type: number
+          format: float
+    UserE_UserDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        lastname:
+          type: string
+        bio:
+          type: string
+        location:
+          type: string
+        language:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        imagePath:
+          type: string
+        image:
+          type: boolean
+        organization:
+          type: string
+        getvalidated:
+          type: boolean
+        rejected:
+          type: boolean
+        collectionRols:
+          type: array
+          items:
+            type: string
+        rols:
+          type: array
+          items:
+            type: string
+        nick:
+          type: string
+        pass:
+          type: string
+        reservations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reservation_UserDetails'
+        reviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/Review_UserDetails'
+        hotels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Hotel_UserDetails'
+        imageBase64:
+          type: string
+    Hotel_RoomDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        getrating:
+          type: number
+          format: float
+        image:
+          type: boolean
+        imagePath:
+          type: string
+        numRooms:
+          type: integer
+          format: int32
+        averageRating:
+          type: number
+          format: float
+        imageBase64:
+          type: string
+    Reservation_RoomDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        checkIn:
+          type: string
+          format: date
+        checkOut:
+          type: string
+          format: date
+        numPeople:
+          type: integer
+          format: int32
+        rooms:
+          $ref: '#/components/schemas/Room_RoomDetails'
+        idReservation:
+          type: integer
+          format: int64
+    Room_RoomDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        maxClients:
+          type: integer
+          format: int32
+        getcost:
+          type: number
+          format: float
+        reservations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reservation_RoomDetails'
+        hotel:
+          $ref: '#/components/schemas/Hotel_RoomDetails'
+    Hotel_ReviewDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        getrating:
+          type: number
+          format: float
+        image:
+          type: boolean
+        imagePath:
+          type: string
+        numRooms:
+          type: integer
+          format: int32
+        averageRating:
+          type: number
+          format: float
+        imageBase64:
+          type: string
+    Review_ReviewDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        score:
+          type: integer
+          format: int32
+        comment:
+          type: string
+        date:
+          type: string
+          format: date
+        hotel:
+          $ref: '#/components/schemas/Hotel_ReviewDetails'
+        user:
+          $ref: '#/components/schemas/UserE_ReviewDetails'
+        idReview:
+          type: integer
+          format: int64
+    UserE_ReviewDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        lastname:
+          type: string
+        bio:
+          type: string
+        location:
+          type: string
+        language:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        imagePath:
+          type: string
+        image:
+          type: boolean
+        organization:
+          type: string
+        getvalidated:
+          type: boolean
+        rejected:
+          type: boolean
+        collectionRols:
+          type: array
+          items:
+            type: string
+        rols:
+          type: array
+          items:
+            type: string
+        nick:
+          type: string
+        pass:
+          type: string
+        imageBase64:
+          type: string
+    Hotel_ReservationDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        getrating:
+          type: number
+          format: float
+        image:
+          type: boolean
+        imagePath:
+          type: string
+        numRooms:
+          type: integer
+          format: int32
+        averageRating:
+          type: number
+          format: float
+        imageBase64:
+          type: string
+    Reservation_ReservationDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        checkIn:
+          type: string
+          format: date
+        checkOut:
+          type: string
+          format: date
+        numPeople:
+          type: integer
+          format: int32
+        hotel:
+          $ref: '#/components/schemas/Hotel_ReservationDetails'
+        room:
+          $ref: '#/components/schemas/Room_ReservationDetails'
+        user:
+          $ref: '#/components/schemas/UserE_ReservationDetails'
+        rooms:
+          $ref: '#/components/schemas/Room_ReservationDetails'
+        idReservation:
+          type: integer
+          format: int64
+    Room_ReservationDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        maxClients:
+          type: integer
+          format: int32
+        getcost:
+          type: number
+          format: float
+    UserE_ReservationDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        lastname:
+          type: string
+        bio:
+          type: string
+        location:
+          type: string
+        language:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        imagePath:
+          type: string
+        image:
+          type: boolean
+        organization:
+          type: string
+        getvalidated:
+          type: boolean
+        rejected:
+          type: boolean
+        collectionRols:
+          type: array
+          items:
+            type: string
+        rols:
+          type: array
+          items:
+            type: string
+        nick:
+          type: string
+        pass:
+          type: string
+        imageBase64:
+          type: string
+    Hotel_HotelDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        getrating:
+          type: number
+          format: float
+        image:
+          type: boolean
+        imagePath:
+          type: string
+        manager:
+          $ref: '#/components/schemas/UserE_HotelDetails'
+        rooms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Room_HotelDetails'
+        reservations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reservation_HotelDetails'
+        reviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/Review_HotelDetails'
+        numRooms:
+          type: integer
+          format: int32
+        averageRating:
+          type: number
+          format: float
+        imageBase64:
+          type: string
+    Reservation_HotelDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        checkIn:
+          type: string
+          format: date
+        checkOut:
+          type: string
+          format: date
+        numPeople:
+          type: integer
+          format: int32
+        rooms:
+          $ref: '#/components/schemas/Room_HotelDetails'
+        idReservation:
+          type: integer
+          format: int64
+    Review_HotelDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        score:
+          type: integer
+          format: int32
+        comment:
+          type: string
+        date:
+          type: string
+          format: date
+        idReview:
+          type: integer
+          format: int64
+    Room_HotelDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        maxClients:
+          type: integer
+          format: int32
+        getcost:
+          type: number
+          format: float
+    UserE_HotelDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        lastname:
+          type: string
+        bio:
+          type: string
+        location:
+          type: string
+        language:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        imagePath:
+          type: string
+        image:
+          type: boolean
+        organization:
+          type: string
+        getvalidated:
+          type: boolean
+        rejected:
+          type: boolean
+        collectionRols:
+          type: array
+          items:
+            type: string
+        rols:
+          type: array
+          items:
+            type: string
+        nick:
+          type: string
+        pass:
+          type: string
+        imageBase64:
+          type: string
+    Hotel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        getrating:
+          type: number
+          format: float
+        image:
+          type: boolean
+        imagePath:
+          type: string
+        manager:
+          $ref: '#/components/schemas/UserE'
+        rooms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Room'
+        reservations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reservation'
+        reviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/Review'
+        numRooms:
+          type: integer
+          format: int32
+        averageRating:
+          type: number
+          format: float
+        imageBase64:
+          type: string
+    Reservation:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        checkIn:
+          type: string
+          format: date
+        checkOut:
+          type: string
+          format: date
+        numPeople:
+          type: integer
+          format: int32
+        hotel:
+          $ref: '#/components/schemas/Hotel'
+        room:
+          $ref: '#/components/schemas/Room'
+        user:
+          $ref: '#/components/schemas/UserE'
+        rooms:
+          $ref: '#/components/schemas/Room'
+        idReservation:
+          type: integer
+          format: int64
+    Review:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        score:
+          type: integer
+          format: int32
+        comment:
+          type: string
+        date:
+          type: string
+          format: date
+        hotel:
+          $ref: '#/components/schemas/Hotel'
+        user:
+          $ref: '#/components/schemas/UserE'
+        idReview:
+          type: integer
+          format: int64
+    Room:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        maxClients:
+          type: integer
+          format: int32
+        getcost:
+          type: number
+          format: float
+        reservations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reservation'
+        hotel:
+          $ref: '#/components/schemas/Hotel'
+    UserE:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        lastname:
+          type: string
+        bio:
+          type: string
+        location:
+          type: string
+        language:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        imagePath:
+          type: string
+        image:
+          type: boolean
+        organization:
+          type: string
+        getvalidated:
+          type: boolean
+        rejected:
+          type: boolean
+        collectionRols:
+          type: array
+          items:
+            type: string
+        rols:
+          type: array
+          items:
+            type: string
+        nick:
+          type: string
+        pass:
+          type: string
+        reservations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reservation'
+        reviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/Review'
+        hotels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Hotel'
+        imageBase64:
+          type: string
+    AuthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - SUCCESS
+          - FAILURE
+        message:
+          type: string
+        error:
+          type: string
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    Pageable:
+      type: object
+      properties:
+        page:
+          minimum: 0
+          type: integer
+          format: int32
+        size:
+          minimum: 1
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            type: string
+    PageResponseUserE_HotelDetails:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserE_HotelDetails'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    PageResponseUserE_UserDetails:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserE_UserDetails'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    PageResponseRoom_HotelDetails:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Room_HotelDetails'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    PageResponseRoom_RoomDetails:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Room_RoomDetails'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    PageResponseReview_HotelDetails:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Review_HotelDetails'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    PageResponseReview_ReviewDetails:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Review_ReviewDetails'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    PageResponseReservation_HotelDetails:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reservation_HotelDetails'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    PageResponseReservation_ReservationDetails:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reservation_ReservationDetails'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    PageResponseHotel_HotelDetails:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Hotel_HotelDetails'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
