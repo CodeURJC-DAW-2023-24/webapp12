@@ -84,7 +84,7 @@ public class RoomRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Rooms retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Rooms not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "User not found")
 	})
 	public ResponseEntity<PageResponse<Room>> loadAllRooms(
 			HttpServletRequest request,
@@ -122,7 +122,7 @@ public class RoomRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Room retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Room.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Room not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Room not found")
 	})
 	public ResponseEntity<Room> getRooms(HttpServletRequest request, @PathVariable Long id) {
 		try {
@@ -144,7 +144,7 @@ public class RoomRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Rooms retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Rooms not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Hotel not found")
 	})
 	public ResponseEntity<PageResponse<Room>> hotelRooms(HttpServletRequest request, @PathVariable Long id,
 			Pageable pageable) {
@@ -180,7 +180,7 @@ public class RoomRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Room retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Room.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Room not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Reservation not found")
 	})
 	public ResponseEntity<Room> reservationRoom(HttpServletRequest request, @PathVariable Long id, Pageable pageable) {
 		try {
@@ -207,9 +207,9 @@ public class RoomRest {
 	@PostMapping("/rooms/hotels/{hotelId}")
 	@Operation(summary = "Create a room", description = "Create a new room for a specific hotel.")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "201", description = "Room created successfully", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "201", description = "Room created successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Room.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Hotel not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Hotel not found")
 	})
 	public ResponseEntity<Room> postRoom(HttpServletRequest request, @RequestBody Room room,
 			@PathVariable Long hotelId) {
@@ -247,7 +247,7 @@ public class RoomRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Room edited successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Room.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Room or hotel not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Room or hotel not found")
 	})
 	public ResponseEntity<Room> editRoom(HttpServletRequest request, @PathVariable Long roomId,
 			@PathVariable Long hotelId, @RequestParam Map<String, Object> updates)
@@ -277,7 +277,7 @@ public class RoomRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "204", description = "Room deleted successfully", content = @Content(mediaType = "application/json")),
 			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Room not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Room not found")
 	})
 	public ResponseEntity<Room> deleteRoom(HttpServletRequest request, @PathVariable Long roomId) {
 		try {
@@ -292,7 +292,7 @@ public class RoomRest {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
 		} catch (NoSuchElementException e) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 	}
 }

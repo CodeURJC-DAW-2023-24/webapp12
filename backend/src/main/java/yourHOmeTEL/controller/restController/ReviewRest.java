@@ -82,7 +82,7 @@ public class ReviewRest {
 	@Operation(summary = "Load all reviews", description = "Load all reviews with pagination.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Reviews retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
-			@ApiResponse(responseCode = "404", description = "Reviews not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "User not found")
 	})
 	public ResponseEntity<PageResponse<Review>> loadAllReviews(
 			HttpServletRequest request,
@@ -109,7 +109,7 @@ public class ReviewRest {
 	@Operation(summary = "Get a review", description = "Get a specific review by its ID.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Review retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Review.class))),
-			@ApiResponse(responseCode = "404", description = "Review not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Review  not found")
 	})
 	public ResponseEntity<Review> getReview(@PathVariable Long id) {
 
@@ -128,7 +128,7 @@ public class ReviewRest {
 	@Operation(summary = "Get user reviews", description = "Get all reviews of a specific user by user ID.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Reviews retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
-			@ApiResponse(responseCode = "404", description = "Reviews not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "User not found")
 	})
 	public ResponseEntity<PageResponse<Review>> userReviews(@PathVariable Long id, Pageable pageable) {
 
@@ -158,7 +158,7 @@ public class ReviewRest {
 	@Operation(summary = "Get hotel reviews", description = "Get all reviews of a specific hotel by hotel ID.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Reviews retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
-			@ApiResponse(responseCode = "404", description = "Reviews not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Hotel not found")
 	})
 	public ResponseEntity<PageResponse<Review>> hotelReviews(HttpServletRequest request, @PathVariable Long id,
 			Pageable pageable) {
@@ -196,7 +196,7 @@ public class ReviewRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Number of reviews retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Integer.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Hotel not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Hotel not found")
 	})
 	public ResponseEntity<Integer> hotelReviews(HttpServletRequest request, @PathVariable Long id) {
 		try {
@@ -220,7 +220,7 @@ public class ReviewRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Percentage of reviews retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = List.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Hotel not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Hotel not found")
 	})
 	public ResponseEntity<List<Integer>> hotelReviews(@PathVariable Long id) {
 		try {
@@ -247,9 +247,9 @@ public class ReviewRest {
 	@PostMapping("/reviews/hotels/{hotelId}")
 	@Operation(summary = "Post a hotel review", description = "Post a review for a specific hotel by hotel ID.")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "201", description = "Review created successfully", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "201", description = "Review created successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Review.class))),
 			@ApiResponse(responseCode = "400", description = "Invalid input", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Hotel not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Hotel not found")
 	})
 	public ResponseEntity<Review> postReview(HttpServletRequest request, @RequestBody Review review,
 			@PathVariable Long hotelId) {
@@ -295,7 +295,7 @@ public class ReviewRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Review edited successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Review.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Review or User not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "User or review not found")
 	})
 	public ResponseEntity<Review> editReview(HttpServletRequest request, @PathVariable Long reviewId,
 			@PathVariable Long userId,
@@ -326,7 +326,7 @@ public class ReviewRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "204", description = "Review deleted successfully", content = @Content(mediaType = "application/json")),
 			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Review not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Review not found")
 	})
 	public ResponseEntity<Review> deleteReview(HttpServletRequest request, @PathVariable Long reviewId) {
 

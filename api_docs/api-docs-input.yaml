@@ -10,6 +10,7 @@ paths:
     get:
       tags:
       - user-rest
+      summary: Returns a specific user
       operationId: profile
       parameters:
       - name: id
@@ -20,7 +21,13 @@ paths:
           format: int64
       responses:
         "200":
-          description: OK
+          description: User data returned correctly
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserE_UserDetails'
+        "404":
+          description: User not found
           content:
             '*/*':
               schema:
@@ -28,6 +35,7 @@ paths:
     put:
       tags:
       - user-rest
+      summary: Edits a user profile
       operationId: editProfile
       parameters:
       - name: id
@@ -44,15 +52,32 @@ paths:
           additionalProperties:
             type: object
       responses:
-        "200":
-          description: OK
+        "403":
+          description: Operation not allowed for the current user
+          content:
+            application/json: {}
+        "400":
+          description: Exception originated from JSON data processing or mapping
           content:
             '*/*':
+              schema:
+                $ref: '#/components/schemas/UserE_UserDetails'
+        "404":
+          description: User not found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserE_UserDetails'
+        "200":
+          description: User profile edited correctly
+          content:
+            application/json:
               schema:
                 $ref: '#/components/schemas/UserE_UserDetails'
     delete:
       tags:
       - user-rest
+      summary: Deletes a user profile
       operationId: deleteProfile
       parameters:
       - name: id
@@ -62,64 +87,24 @@ paths:
           type: integer
           format: int64
       responses:
-        "200":
-          description: OK
+        "204":
+          description: Operation successful
+        "403":
+          description: Operation only allowed to admins or the user itself
+          content:
+            application/json: {}
+        "404":
+          description: Profile not found
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/UserE'
-  /api/users/{id}/rejected/state:
-    put:
-      tags:
-      - user-rest
-      operationId: rejectManager
-      parameters:
-      - name: rejected
-        in: query
-        required: true
-        schema:
-          type: boolean
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/UserE_UserDetails'
-  /api/users/{id}/applied:
-    put:
-      tags:
-      - user-rest
-      operationId: managerApplication
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-      - name: state
-        in: query
-        required: true
-        schema:
-          type: boolean
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/UserE_UserDetails'
   /api/rooms/{roomId}/hotels/{hotelId}:
     put:
       tags:
       - room-rest
+      summary: Edit a room
+      description: Edit a room by room ID and hotel ID.
       operationId: editRoom
       parameters:
       - name: roomId
@@ -142,16 +127,28 @@ paths:
           additionalProperties:
             type: object
       responses:
-        "200":
-          description: OK
+        "404":
+          description: Room or hotel not found
           content:
             '*/*':
+              schema:
+                $ref: '#/components/schemas/Room_RoomDetails'
+        "403":
+          description: Forbidden operation
+          content:
+            application/json: {}
+        "200":
+          description: Room edited successfully
+          content:
+            application/json:
               schema:
                 $ref: '#/components/schemas/Room_RoomDetails'
   /api/reviews/{reviewId}/users/{userId}:
     put:
       tags:
       - review-rest
+      summary: Edit a review
+      description: Edit a review by review ID and user ID.
       operationId: editReview
       parameters:
       - name: reviewId
@@ -174,16 +171,28 @@ paths:
           additionalProperties:
             type: object
       responses:
-        "200":
-          description: OK
+        "404":
+          description: User or review not found
           content:
             '*/*':
+              schema:
+                $ref: '#/components/schemas/Review_ReviewDetails'
+        "403":
+          description: Forbidden operation
+          content:
+            application/json: {}
+        "200":
+          description: Review edited successfully
+          content:
+            application/json:
               schema:
                 $ref: '#/components/schemas/Review_ReviewDetails'
   /api/reservations/{reservationId}:
     put:
       tags:
       - reservation-rest
+      summary: Edit a reservation
+      description: Edit an existing reservation by its ID.
       operationId: editReservation
       parameters:
       - name: reservationId
@@ -200,15 +209,27 @@ paths:
           additionalProperties:
             type: object
       responses:
-        "200":
-          description: OK
+        "403":
+          description: Forbidden operation
+          content:
+            application/json: {}
+        "404":
+          description: Reservation not found
           content:
             '*/*':
+              schema:
+                $ref: '#/components/schemas/Reservation_ReservationDetails'
+        "200":
+          description: Reservation edited successfully
+          content:
+            application/json:
               schema:
                 $ref: '#/components/schemas/Reservation_ReservationDetails'
     delete:
       tags:
       - reservation-rest
+      summary: Delete a reservation
+      description: Delete an existing reservation by its ID.
       operationId: deleteReservation
       parameters:
       - name: reservationId
@@ -218,16 +239,97 @@ paths:
           type: integer
           format: int64
       responses:
-        "200":
-          description: OK
+        "403":
+          description: Forbidden operation
+          content:
+            application/json: {}
+        "404":
+          description: Reservation not found
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/Reservation'
+        "204":
+          description: Reservation deleted successfully
+          content:
+            application/json: {}
+  /api/managers/{id}/rejected/state:
+    put:
+      tags:
+      - user-rest
+      summary: Validates or rejects a manager
+      operationId: rejectManager
+      parameters:
+      - name: rejected
+        in: query
+        required: true
+        schema:
+          type: boolean
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "403":
+          description: Operation only allowed for admin users
+          content:
+            application/json: {}
+        "200":
+          description: Manager rejected or validated correctly
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserE_UserDetails'
+        "404":
+          description: Manager not found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserE_UserDetails'
+  /api/managers/{id}/applied:
+    put:
+      tags:
+      - user-rest
+      summary: Validates or rejects a manager
+      operationId: managerApplication
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: state
+        in: query
+        required: true
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: Manager rejected or validated correctly
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserE_UserDetails'
+        "403":
+          description: Operation not allowed for the current user
+          content:
+            application/json: {}
+        "404":
+          description: User not found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserE_UserDetails'
   /api/hotels/{id}:
     get:
       tags:
       - hotel-rest
+      summary: Get hotel data
+      description: Fetches the hotel data for the given ID if the current user is
+        the manager of the hotel and the manager is validated.
       operationId: getHotelData
       parameters:
       - name: id
@@ -237,8 +339,18 @@ paths:
           type: integer
           format: int64
       responses:
+        "403":
+          description: "Forbidden, current user is not the manager of the hotel"
+          content:
+            application/json: {}
         "200":
-          description: OK
+          description: Found the hotel
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hotel_HotelDetails'
+        "404":
+          description: Hotel not found
           content:
             '*/*':
               schema:
@@ -248,6 +360,9 @@ paths:
     put:
       tags:
       - hotel-rest
+      summary: Edit a hotel
+      description: Edits the details of the hotel with the given ID if the current
+        user is the manager of the hotel.
       operationId: editHotel
       parameters:
       - name: id
@@ -264,8 +379,18 @@ paths:
           additionalProperties:
             type: object
       responses:
+        "403":
+          description: "Forbidden, current user is not the manager of the hotel"
+          content:
+            application/json: {}
         "200":
-          description: OK
+          description: Hotel edited successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hotel_HotelDetails'
+        "404":
+          description: Hotel not found
           content:
             '*/*':
               schema:
@@ -273,6 +398,9 @@ paths:
     delete:
       tags:
       - hotel-rest
+      summary: Delete a hotel
+      description: Deletes the hotel with the given ID if the current user is the
+        manager of the hotel.
       operationId: deleteHotel
       parameters:
       - name: id
@@ -282,8 +410,16 @@ paths:
           type: integer
           format: int64
       responses:
-        "200":
-          description: OK
+        "403":
+          description: "Forbidden, current user is not the manager of the hotel"
+          content:
+            application/json: {}
+        "204":
+          description: Hotel deleted successfully
+          content:
+            application/json: {}
+        "404":
+          description: Hotel not found
           content:
             '*/*':
               schema:
@@ -292,6 +428,7 @@ paths:
     get:
       tags:
       - user-rest
+      summary: Returns a list of all users
       operationId: loadAllUsers
       parameters:
       - name: pageable
@@ -300,15 +437,26 @@ paths:
         schema:
           $ref: '#/components/schemas/Pageable'
       responses:
-        "200":
-          description: OK
+        "403":
+          description: Operation only allowed for admin users
+          content:
+            application/json: {}
+        "404":
+          description: Users not found
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/PageResponseUserE_HotelDetails'
+        "200":
+          description: List of users returned correctly
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse_HotelDetails'
     post:
       tags:
       - user-rest
+      summary: Registers a new user
       operationId: registerClient
       parameters:
       - name: type
@@ -324,16 +472,26 @@ paths:
               $ref: '#/components/schemas/UserE'
         required: true
       responses:
-        "200":
-          description: OK
+        "409":
+          description: User already exists
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/UserE'
+        "400":
+          description: "Bad request, maybe one of the user attributes is missing or\
+            \ the type is not valid"
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserE'
+        "201":
+          description: User registered correctly
   /api/users/{id}/image:
     get:
       tags:
       - user-image-rest
+      summary: Download user profile image
       operationId: downloadProfileImage
       parameters:
       - name: id
@@ -344,7 +502,11 @@ paths:
           format: int64
       responses:
         "200":
-          description: OK
+          description: User profile image downloaded successfully
+          content:
+            image/*: {}
+        "404":
+          description: User not found
           content:
             '*/*':
               schema:
@@ -352,6 +514,7 @@ paths:
     post:
       tags:
       - user-image-rest
+      summary: Upload user profile image
       operationId: uploadImage
       parameters:
       - name: id
@@ -372,8 +535,16 @@ paths:
                   type: string
                   format: binary
       responses:
-        "200":
-          description: OK
+        "403":
+          description: Operation only allowed for the user or an admin
+          content:
+            application/json: {}
+        "201":
+          description: User profile image uploaded successfully
+          content:
+            application/json: {}
+        "404":
+          description: User not found
           content:
             '*/*':
               schema:
@@ -381,6 +552,7 @@ paths:
     delete:
       tags:
       - user-image-rest
+      summary: Delete user profile image
       operationId: deleteImage
       parameters:
       - name: id
@@ -390,8 +562,16 @@ paths:
           type: integer
           format: int64
       responses:
-        "200":
-          description: OK
+        "403":
+          description: Operation only allowed for the user or an admin
+          content:
+            application/json: {}
+        "204":
+          description: User profile image deleted successfully
+          content:
+            application/json: {}
+        "404":
+          description: User not found
           content:
             '*/*':
               schema:
@@ -400,6 +580,8 @@ paths:
     post:
       tags:
       - room-rest
+      summary: Create a room
+      description: Create a new room for a specific hotel.
       operationId: postRoom
       parameters:
       - name: hotelId
@@ -415,8 +597,18 @@ paths:
               $ref: '#/components/schemas/Room'
         required: true
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Room created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+        "403":
+          description: Forbidden operation
+          content:
+            application/json: {}
+        "404":
+          description: Hotel not found
           content:
             '*/*':
               schema:
@@ -425,6 +617,8 @@ paths:
     post:
       tags:
       - review-rest
+      summary: Post a hotel review
+      description: Post a review for a specific hotel by hotel ID.
       operationId: postReview
       parameters:
       - name: hotelId
@@ -440,8 +634,18 @@ paths:
               $ref: '#/components/schemas/Review'
         required: true
       responses:
-        "200":
-          description: OK
+        "400":
+          description: Invalid input
+          content:
+            application/json: {}
+        "201":
+          description: Review created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+        "404":
+          description: Hotel not found
           content:
             '*/*':
               schema:
@@ -450,6 +654,8 @@ paths:
     post:
       tags:
       - reservation-rest
+      summary: Add a reservation
+      description: "Add a new reservation for a specific user, hotel and room."
       operationId: addReservation
       parameters:
       - name: userId
@@ -477,8 +683,28 @@ paths:
               $ref: '#/components/schemas/Reservation'
         required: true
       responses:
-        "200":
-          description: OK
+        "409":
+          description: Conflict with existing data
+          content:
+            '*/*':
+              schema:
+                type: object
+        "400":
+          description: Invalid input data
+          content:
+            application/json: {}
+        "403":
+          description: Forbidden operation
+          content:
+            application/json: {}
+        "201":
+          description: Reservation created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        "404":
+          description: Resource not found
           content:
             '*/*':
               schema:
@@ -487,6 +713,7 @@ paths:
     post:
       tags:
       - login-controller
+      summary: Checks if the user logged in is the same as the user in the token
       operationId: refreshToken
       parameters:
       - name: refreshToken
@@ -495,28 +722,38 @@ paths:
         schema:
           type: string
       responses:
-        "200":
-          description: OK
+        "401":
+          description: Unauthorized
           content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/AuthResponse'
+            application/json: {}
+        "200":
+          description: User is logged in
+          content:
+            application/json: {}
+        "403":
+          description: Forbidden
+          content:
+            application/json: {}
+        "400":
+          description: Bad request
+          content:
+            application/json: {}
   /api/logout:
     post:
       tags:
       - login-controller
+      summary: Logs out the user
       operationId: logOut
       responses:
         "200":
-          description: OK
+          description: User is logged out
           content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/AuthResponse'
+            application/json: {}
   /api/login:
     post:
       tags:
       - login-controller
+      summary: User login through JSON
       operationId: loginForm_1
       parameters:
       - name: accessToken
@@ -542,15 +779,27 @@ paths:
         required: true
       responses:
         "200":
-          description: OK
+          description: User logged in successfully
           content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/AuthResponse'
+            application/json: {}
+        "401":
+          description: Unauthorized
+          content:
+            application/json: {}
+        "403":
+          description: Forbidden
+          content:
+            application/json: {}
+        "400":
+          description: Bad request
+          content:
+            application/json: {}
   /api/hotels:
     get:
       tags:
       - hotel-rest
+      summary: Load all hotels
+      description: Returns a page of all hotels.
       operationId: loadAllHotels
       parameters:
       - name: pageable
@@ -560,7 +809,18 @@ paths:
           $ref: '#/components/schemas/Pageable'
       responses:
         "200":
-          description: OK
+          description: Hotels retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse_HotelDetails'
+        "403":
+          description: "Forbidden, the user does not have permission to view these\
+            \ hotels"
+          content:
+            application/json: {}
+        "404":
+          description: User not found
           content:
             '*/*':
               schema:
@@ -568,6 +828,8 @@ paths:
     post:
       tags:
       - hotel-rest
+      summary: Create a hotel
+      description: Creates a new hotel with the given details.
       operationId: createHotel
       parameters:
       - name: name
@@ -635,7 +897,13 @@ paths:
           format: int32
       responses:
         "200":
-          description: OK
+          description: Hotel created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hotel'
+        "404":
+          description: Manager not found
           content:
             '*/*':
               schema:
@@ -644,6 +912,8 @@ paths:
     get:
       tags:
       - hotel-image-rest
+      summary: Download hotel image
+      description: Download the image of a specific hotel by hotel ID.
       operationId: downloadProfileImage_1
       parameters:
       - name: id
@@ -653,15 +923,21 @@ paths:
           type: integer
           format: int64
       responses:
-        "200":
-          description: OK
+        "404":
+          description: Hotel not found
           content:
             '*/*':
               schema:
                 type: object
+        "200":
+          description: Image retrieved successfully
+          content:
+            image/*: {}
     post:
       tags:
       - hotel-image-rest
+      summary: Upload hotel image
+      description: Upload an image for a specific hotel by hotel ID.
       operationId: uploadImage_1
       parameters:
       - name: id
@@ -682,8 +958,16 @@ paths:
                   type: string
                   format: binary
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Image uploaded successfully
+          content:
+            application/json: {}
+        "403":
+          description: Forbidden operation
+          content:
+            application/json: {}
+        "404":
+          description: Hotel not found
           content:
             '*/*':
               schema:
@@ -691,6 +975,8 @@ paths:
     delete:
       tags:
       - hotel-image-rest
+      summary: Delete hotel image
+      description: Delete the image of a specific hotel by hotel ID.
       operationId: deleteImage_1
       parameters:
       - name: id
@@ -700,8 +986,16 @@ paths:
           type: integer
           format: int64
       responses:
-        "200":
-          description: OK
+        "204":
+          description: Image deleted successfully
+          content:
+            application/json: {}
+        "403":
+          description: Forbidden operation
+          content:
+            application/json: {}
+        "404":
+          description: Hotel not found
           content:
             '*/*':
               schema:
@@ -710,67 +1004,8 @@ paths:
     get:
       tags:
       - user-rest
+      summary: Returns the type of user
       operationId: userType
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: string
-  /api/users/{id}/type/user:
-    get:
-      tags:
-      - user-rest
-      operationId: isUser
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: boolean
-  /api/users/{id}/type/manager:
-    get:
-      tags:
-      - user-rest
-      operationId: isManager
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: boolean
-  /api/users/{id}/type/client:
-    get:
-      tags:
-      - user-rest
-      operationId: isClient
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: boolean
-  /api/users/{id}/type/admin:
-    get:
-      tags:
-      - user-rest
-      operationId: isAdmin
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: boolean
-  /api/users/reviews/{id}:
-    get:
-      tags:
-      - user-rest
-      operationId: reviewUser
       parameters:
       - name: id
         in: path
@@ -780,15 +1015,151 @@ paths:
           format: int64
       responses:
         "200":
-          description: OK
+          description: User role returned correctly
+          content:
+            application/json:
+              schema:
+                type: string
+        "404":
+          description: User not found
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/users/{id}/type/user:
+    get:
+      tags:
+      - user-rest
+      summary: Returns if the user is a user or not
+      operationId: isUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Boolean matching user role returned correctly
+          content:
+            application/json:
+              schema:
+                type: boolean
+        "404":
+          description: User not found
+          content:
+            '*/*':
+              schema:
+                type: boolean
+  /api/users/{id}/type/manager:
+    get:
+      tags:
+      - user-rest
+      summary: Returns if the user is a manager or not
+      operationId: isManager
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Boolean matching user role returned correctly
+          content:
+            application/json:
+              schema:
+                type: boolean
+        "404":
+          description: User not found
+          content:
+            '*/*':
+              schema:
+                type: boolean
+  /api/users/{id}/type/client:
+    get:
+      tags:
+      - user-rest
+      summary: Returns if the user is a client or not
+      operationId: isClient
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Boolean matching user role returned correctly
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /api/users/{id}/type/admin:
+    get:
+      tags:
+      - user-rest
+      summary: Returns if the user is an admin or not
+      operationId: isAdmin
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: Boolean matching user role returned correctly
+          content:
+            application/json:
+              schema:
+                type: boolean
+        "404":
+          description: User not found
+          content:
+            '*/*':
+              schema:
+                type: boolean
+  /api/users/reviews/{id}:
+    get:
+      tags:
+      - user-rest
+      summary: Returns a specific user from a specific review
+      operationId: reviewUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Review not found
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/UserE_UserDetails'
+        "200":
+          description: User data returned correctly
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserE_UserDetails'
+        "403":
+          description: Operation only allowed for admins or the user that made the
+            review
+          content:
+            application/json: {}
   /api/users/reservations/{id}:
     get:
       tags:
       - user-rest
+      summary: Returns a specific user from a specific reservation
       operationId: reservationUser
       parameters:
       - name: id
@@ -799,33 +1170,28 @@ paths:
           format: int64
       responses:
         "200":
-          description: OK
+          description: User data returned correctly
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserE_UserDetails'
+        "403":
+          description: Operation only allowed for admins or the user that made the
+            reservation
+          content:
+            application/json: {}
+        "404":
+          description: Reservation not found
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/UserE_UserDetails'
-  /api/users/managers/list:
-    get:
-      tags:
-      - user-rest
-      operationId: managerList
-      parameters:
-      - name: pageable
-        in: query
-        required: true
-        schema:
-          $ref: '#/components/schemas/Pageable'
-      responses:
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/PageResponseUserE_UserDetails'
   /api/rooms:
     get:
       tags:
       - room-rest
+      summary: Load all rooms
+      description: Load all rooms with pagination.
       operationId: loadAllRooms
       parameters:
       - name: pageable
@@ -835,7 +1201,17 @@ paths:
           $ref: '#/components/schemas/Pageable'
       responses:
         "200":
-          description: OK
+          description: Rooms retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse_HotelDetails'
+        "403":
+          description: Forbidden operation
+          content:
+            application/json: {}
+        "404":
+          description: User not found
           content:
             '*/*':
               schema:
@@ -844,6 +1220,8 @@ paths:
     get:
       tags:
       - room-rest
+      summary: Get a room
+      description: Get a room by room ID.
       operationId: getRooms
       parameters:
       - name: id
@@ -853,16 +1231,28 @@ paths:
           type: integer
           format: int64
       responses:
-        "200":
-          description: OK
+        "404":
+          description: Room not found
           content:
             '*/*':
+              schema:
+                $ref: '#/components/schemas/Room_RoomDetails'
+        "403":
+          description: Forbidden operation
+          content:
+            application/json: {}
+        "200":
+          description: Room retrieved successfully
+          content:
+            application/json:
               schema:
                 $ref: '#/components/schemas/Room_RoomDetails'
   /api/rooms/reservations/{id}:
     get:
       tags:
       - room-rest
+      summary: Get reservation room
+      description: Get a room by reservation ID.
       operationId: reservationRoom
       parameters:
       - name: id
@@ -877,16 +1267,28 @@ paths:
         schema:
           $ref: '#/components/schemas/Pageable'
       responses:
-        "200":
-          description: OK
+        "403":
+          description: Forbidden operation
+          content:
+            application/json: {}
+        "404":
+          description: Reservation not found
           content:
             '*/*':
+              schema:
+                $ref: '#/components/schemas/Room_RoomDetails'
+        "200":
+          description: Room retrieved successfully
+          content:
+            application/json:
               schema:
                 $ref: '#/components/schemas/Room_RoomDetails'
   /api/rooms/hotels/{id}:
     get:
       tags:
       - room-rest
+      summary: Get hotel rooms
+      description: Get all rooms of a hotel by hotel ID.
       operationId: hotelRooms
       parameters:
       - name: id
@@ -902,7 +1304,17 @@ paths:
           $ref: '#/components/schemas/Pageable'
       responses:
         "200":
-          description: OK
+          description: Rooms retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse_RoomDetails'
+        "403":
+          description: Forbidden operation
+          content:
+            application/json: {}
+        "404":
+          description: Hotel not found
           content:
             '*/*':
               schema:
@@ -911,6 +1323,8 @@ paths:
     get:
       tags:
       - review-rest
+      summary: Load all reviews
+      description: Load all reviews with pagination.
       operationId: loadAllReviews
       parameters:
       - name: pageable
@@ -920,7 +1334,13 @@ paths:
           $ref: '#/components/schemas/Pageable'
       responses:
         "200":
-          description: OK
+          description: Reviews retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse_HotelDetails'
+        "404":
+          description: User not found
           content:
             '*/*':
               schema:
@@ -929,6 +1349,8 @@ paths:
     get:
       tags:
       - review-rest
+      summary: Get a review
+      description: Get a specific review by its ID.
       operationId: getReview
       parameters:
       - name: id
@@ -939,7 +1361,13 @@ paths:
           format: int64
       responses:
         "200":
-          description: OK
+          description: Review retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review_ReviewDetails'
+        "404":
+          description: Review  not found
           content:
             '*/*':
               schema:
@@ -948,6 +1376,8 @@ paths:
     get:
       tags:
       - review-rest
+      summary: Get user reviews
+      description: Get all reviews of a specific user by user ID.
       operationId: userReviews
       parameters:
       - name: id
@@ -963,7 +1393,13 @@ paths:
           $ref: '#/components/schemas/Pageable'
       responses:
         "200":
-          description: OK
+          description: Reviews retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse_ReviewDetails'
+        "404":
+          description: User not found
           content:
             '*/*':
               schema:
@@ -972,6 +1408,8 @@ paths:
     get:
       tags:
       - review-rest
+      summary: Get the number of hotel reviews
+      description: Get the number of reviews of a specific hotel by hotel ID.
       operationId: hotelReviews
       parameters:
       - name: id
@@ -981,8 +1419,19 @@ paths:
           type: integer
           format: int64
       responses:
+        "403":
+          description: Forbidden operation
+          content:
+            application/json: {}
         "200":
-          description: OK
+          description: Number of reviews retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        "404":
+          description: Hotel not found
           content:
             '*/*':
               schema:
@@ -992,6 +1441,8 @@ paths:
     get:
       tags:
       - review-rest
+      summary: Get the percentage of hotel reviews
+      description: Get the percentage of reviews of a specific hotel by hotel ID.
       operationId: hotelReviews_1
       parameters:
       - name: id
@@ -1002,7 +1453,17 @@ paths:
           format: int64
       responses:
         "200":
-          description: OK
+          description: Percentage of reviews retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: string
+        "403":
+          description: Forbidden operation
+          content:
+            application/json: {}
+        "404":
+          description: Hotel not found
           content:
             '*/*':
               schema:
@@ -1014,6 +1475,8 @@ paths:
     get:
       tags:
       - review-rest
+      summary: Get hotel reviews
+      description: Get all reviews of a specific hotel by hotel ID.
       operationId: hotelReviews_2
       parameters:
       - name: id
@@ -1029,7 +1492,13 @@ paths:
           $ref: '#/components/schemas/Pageable'
       responses:
         "200":
-          description: OK
+          description: Reviews retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse_ReviewDetails'
+        "404":
+          description: Hotel not found
           content:
             '*/*':
               schema:
@@ -1038,6 +1507,8 @@ paths:
     get:
       tags:
       - reservation-rest
+      summary: Load all reservations
+      description: Returns a page of all reservations.
       operationId: loadAllReservations
       parameters:
       - name: pageable
@@ -1047,7 +1518,18 @@ paths:
           $ref: '#/components/schemas/Pageable'
       responses:
         "200":
-          description: OK
+          description: Reservations retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse_HotelDetails'
+        "403":
+          description: "Forbidden, the user does not have permission to view these\
+            \ reservations"
+          content:
+            application/json: {}
+        "404":
+          description: User not found
           content:
             '*/*':
               schema:
@@ -1056,6 +1538,8 @@ paths:
     get:
       tags:
       - reservation-rest
+      summary: Get a reservation
+      description: Returns a specific reservation.
       operationId: getReservation
       parameters:
       - name: id
@@ -1065,16 +1549,29 @@ paths:
           type: integer
           format: int64
       responses:
-        "200":
-          description: OK
+        "403":
+          description: "Forbidden, the user does not have permission to view this\
+            \ reservation"
+          content:
+            application/json: {}
+        "404":
+          description: Reservation not found
           content:
             '*/*':
+              schema:
+                $ref: '#/components/schemas/Reservation_ReservationDetails'
+        "200":
+          description: Reservation retrieved successfully
+          content:
+            application/json:
               schema:
                 $ref: '#/components/schemas/Reservation_ReservationDetails'
   /api/reservations/users/{id}:
     get:
       tags:
       - reservation-rest
+      summary: Get user reservations
+      description: Returns a page of reservations for a specific user.
       operationId: getUserReservations
       parameters:
       - name: id
@@ -1090,7 +1587,18 @@ paths:
           $ref: '#/components/schemas/Pageable'
       responses:
         "200":
-          description: OK
+          description: Reservations retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse_ReservationDetails'
+        "403":
+          description: "Forbidden, the user does not have permission to view these\
+            \ reservations"
+          content:
+            application/json: {}
+        "404":
+          description: User not found
           content:
             '*/*':
               schema:
@@ -1099,6 +1607,8 @@ paths:
     get:
       tags:
       - reservation-rest
+      summary: Get room reservations
+      description: Returns a page of reservations for a specific room.
       operationId: getRoomReservations
       parameters:
       - name: id
@@ -1114,7 +1624,13 @@ paths:
           $ref: '#/components/schemas/Pageable'
       responses:
         "200":
-          description: OK
+          description: Reservations retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse_ReservationDetails'
+        "404":
+          description: Room not found
           content:
             '*/*':
               schema:
@@ -1123,6 +1639,8 @@ paths:
     get:
       tags:
       - reservation-rest
+      summary: Get hotel reservations
+      description: Returns a page of reservations for a specific hotel.
       operationId: getHotelReservations
       parameters:
       - name: id
@@ -1138,7 +1656,13 @@ paths:
           $ref: '#/components/schemas/Pageable'
       responses:
         "200":
-          description: OK
+          description: Reservations retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse_ReservationDetails'
+        "404":
+          description: Hotel not found
           content:
             '*/*':
               schema:
@@ -1147,18 +1671,20 @@ paths:
     get:
       tags:
       - user-rest
+      summary: Returns the path of the request
       operationId: getPath
       responses:
         "200":
-          description: OK
+          description: User data returned correctly
           content:
-            '*/*':
+            application/json:
               schema:
                 type: string
   /api/managers/validated:
     get:
       tags:
       - user-rest
+      summary: "Returns a list of all managers, validated or pending of validation"
       operationId: managerValidation
       parameters:
       - name: validated
@@ -1172,19 +1698,63 @@ paths:
         schema:
           $ref: '#/components/schemas/Pageable'
       responses:
-        "200":
-          description: OK
+        "400":
+          description: Bad request
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/PageResponseUserE_UserDetails'
-  /api/manager/hotels/{pageNumber}:
+        "200":
+          description: List of managers returned correctly
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse_UserDetails'
+        "404":
+          description: Managers not found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseUserE_UserDetails'
+  /api/managers/list:
+    get:
+      tags:
+      - user-rest
+      summary: Returns a list of all managers
+      operationId: managerList
+      parameters:
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "200":
+          description: List of managers returned correctly
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse_UserDetails'
+        "404":
+          description: Managers not found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageResponseUserE_UserDetails'
+  /api/hotels/{pageNumber}/manager/{id}:
     get:
       tags:
       - hotel-rest
-      summary: Gets the hotels from a certain manager in groups of up to 6
+      summary: Load more hotels for a manager
+      description: Returns a list of hotels for a specific manager.
       operationId: loadMoreHotelsManagerView
       parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       - name: pageNumber
         in: path
         required: true
@@ -1192,20 +1762,40 @@ paths:
           type: integer
           format: int64
       responses:
+        "400":
+          description: "Bad request, page number is out of bounds"
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hotel_HotelDetails'
         "200":
-          description: Hotels retrieved wothout errors
+          description: Hotels retrieved successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Hotel_HotelDetails'
-        "404":
-          description: Hotel not found
         "403":
-          description: Operation not allower for current user
+          description: "Forbidden, the user does not have permission to view these\
+            \ hotels"
+          content:
+            application/json: {}
+        "404":
+          description: Manager not found
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Hotel_HotelDetails'
   /api/hotels/{id}/clients:
     get:
       tags:
       - hotel-rest
+      summary: Get clients list
+      description: Fetches the list of clients for the given hotel ID if the current
+        user is the manager of the hotel.
       operationId: clientsList
       parameters:
       - name: id
@@ -1215,8 +1805,18 @@ paths:
           type: integer
           format: int64
       responses:
+        "403":
+          description: "Forbidden, current user is not the manager of the hotel"
+          content:
+            application/json: {}
         "200":
-          description: OK
+          description: Found the clients list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserE_HotelDetails'
+        "404":
+          description: Hotel not found
           content:
             '*/*':
               schema:
@@ -1227,6 +1827,8 @@ paths:
     get:
       tags:
       - hotel-rest
+      summary: Get rooms from a hotel
+      description: Returns a list of rooms for a specific hotel.
       operationId: getHotelFromRoom
       parameters:
       - name: id
@@ -1236,16 +1838,29 @@ paths:
           type: integer
           format: int64
       responses:
-        "200":
-          description: OK
+        "404":
+          description: Room not found
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/Hotel_HotelDetails'
+        "200":
+          description: Rooms retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room_HotelDetails'
+        "403":
+          description: "Forbidden, the user does not have permission to view these\
+            \ rooms"
+          content:
+            application/json: {}
   /api/hotels/reviews/{id}:
     get:
       tags:
       - hotel-rest
+      summary: Get reviews from a hotel
+      description: Returns a list of reviews for a specific hotel.
       operationId: getReviewsFromHotel
       parameters:
       - name: id
@@ -1255,16 +1870,29 @@ paths:
           type: integer
           format: int64
       responses:
-        "200":
-          description: OK
+        "403":
+          description: "Forbidden, the user does not have permission to view these\
+            \ reviews"
+          content:
+            application/json: {}
+        "404":
+          description: Review not found
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/Hotel_HotelDetails'
+        "200":
+          description: Reviews retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review_HotelDetails'
   /api/hotels/reservations/{id}:
     get:
       tags:
       - hotel-rest
+      summary: Get reservations from a hotel
+      description: Returns a list of reservations for a specific hotel.
       operationId: getReservationsFromHotel
       parameters:
       - name: id
@@ -1274,16 +1902,29 @@ paths:
           type: integer
           format: int64
       responses:
-        "200":
-          description: OK
+        "404":
+          description: Reservation not found
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/Hotel_HotelDetails'
+        "200":
+          description: Reservations retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation_HotelDetails'
+        "403":
+          description: "Forbidden, the user does not have permission to view these\
+            \ reservations"
+          content:
+            application/json: {}
   /api/hotels/manager/{id}:
     get:
       tags:
       - hotel-rest
+      summary: View hotels by manager
+      description: Returns a page of hotels managed by the specified user.
       operationId: viewHotelsManager
       parameters:
       - name: id
@@ -1299,15 +1940,28 @@ paths:
           $ref: '#/components/schemas/Pageable'
       responses:
         "200":
-          description: OK
+          description: Hotels found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse_HotelDetails'
+        "403":
+          description: "Forbidden, the user does not have permission to view these\
+            \ hotels"
+          content:
+            application/json: {}
+        "404":
+          description: Manager not found
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/PageResponseHotel_HotelDetails'
-  /api/hotels/index/search:
+  /api/hotels/index/specific:
     get:
       tags:
       - hotel-rest
+      summary: Search hotels
+      description: Returns a page of hotels that match the search value.
       operationId: indexSearch
       parameters:
       - name: searchValue
@@ -1321,30 +1975,38 @@ paths:
         schema:
           $ref: '#/components/schemas/Pageable'
       responses:
-        "200":
-          description: OK
+        "404":
+          description: Hotels not found
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/PageResponseHotel_HotelDetails'
+        "200":
+          description: Hotels found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse_HotelDetails'
   /api/hotels/index/recommended:
     get:
       tags:
       - hotel-rest
+      summary: Get recommended hotels
+      description: Returns a list of recommended hotels for the current user.
       operationId: index
       responses:
         "200":
-          description: OK
+          description: Recommended hotels retrieved successfully
           content:
-            '*/*':
+            application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Hotel_HotelDetails'
+                $ref: '#/components/schemas/Hotel_HotelDetails'
   /api/rooms/{roomId}:
     delete:
       tags:
       - room-rest
+      summary: Delete a room
+      description: Delete a room by room ID.
       operationId: deleteRoom
       parameters:
       - name: roomId
@@ -1354,16 +2016,26 @@ paths:
           type: integer
           format: int64
       responses:
-        "200":
-          description: OK
+        "204":
+          description: Room deleted successfully
+          content:
+            application/json: {}
+        "404":
+          description: Room not found
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/Room'
+        "403":
+          description: Forbidden operation
+          content:
+            application/json: {}
   /api/reviews/{reviewId}:
     delete:
       tags:
       - review-rest
+      summary: Delete a review
+      description: Delete a review by review ID.
       operationId: deleteReview
       parameters:
       - name: reviewId
@@ -1373,12 +2045,20 @@ paths:
           type: integer
           format: int64
       responses:
-        "200":
-          description: OK
+        "404":
+          description: Review not found
           content:
             '*/*':
               schema:
                 $ref: '#/components/schemas/Review'
+        "403":
+          description: Forbidden operation
+          content:
+            application/json: {}
+        "204":
+          description: Review deleted successfully
+          content:
+            application/json: {}
 components:
   schemas:
     Hotel_UserDetails:
@@ -1400,12 +2080,12 @@ components:
           type: boolean
         imagePath:
           type: string
-        numRooms:
-          type: integer
-          format: int32
         averageRating:
           type: number
           format: float
+        numRooms:
+          type: integer
+          format: int32
         imageBase64:
           type: string
     Reservation_UserDetails:
@@ -1532,12 +2212,12 @@ components:
           type: boolean
         imagePath:
           type: string
-        numRooms:
-          type: integer
-          format: int32
         averageRating:
           type: number
           format: float
+        numRooms:
+          type: integer
+          format: int32
         imageBase64:
           type: string
     Reservation_RoomDetails:
@@ -1597,12 +2277,12 @@ components:
           type: boolean
         imagePath:
           type: string
-        numRooms:
-          type: integer
-          format: int32
         averageRating:
           type: number
           format: float
+        numRooms:
+          type: integer
+          format: int32
         imageBase64:
           type: string
     Review_ReviewDetails:
@@ -1689,12 +2369,12 @@ components:
           type: boolean
         imagePath:
           type: string
-        numRooms:
-          type: integer
-          format: int32
         averageRating:
           type: number
           format: float
+        numRooms:
+          type: integer
+          format: int32
         imageBase64:
           type: string
     Reservation_ReservationDetails:
@@ -1812,12 +2492,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Review_HotelDetails'
-        numRooms:
-          type: integer
-          format: int32
         averageRating:
           type: number
           format: float
+        numRooms:
+          type: integer
+          format: int32
         imageBase64:
           type: string
     Reservation_HotelDetails:
@@ -1946,12 +2626,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Review'
-        numRooms:
-          type: integer
-          format: int32
         averageRating:
           type: number
           format: float
+        numRooms:
+          type: integer
+          format: int32
         imageBase64:
           type: string
     Reservation:
@@ -2075,18 +2755,6 @@ components:
             $ref: '#/components/schemas/Hotel'
         imageBase64:
           type: string
-    AuthResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - SUCCESS
-          - FAILURE
-        message:
-          type: string
-        error:
-          type: string
     LoginRequest:
       type: object
       properties:
@@ -2109,6 +2777,25 @@ components:
           type: array
           items:
             type: string
+    PageResponse_HotelDetails:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            type: object
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
     PageResponseUserE_HotelDetails:
       type: object
       properties:
@@ -2128,13 +2815,13 @@ components:
         totalPages:
           type: integer
           format: int32
-    PageResponseUserE_UserDetails:
+    PageResponseRoom_HotelDetails:
       type: object
       properties:
         content:
           type: array
           items:
-            $ref: '#/components/schemas/UserE_UserDetails'
+            $ref: '#/components/schemas/Room_HotelDetails'
         pageNumber:
           type: integer
           format: int32
@@ -2147,13 +2834,13 @@ components:
         totalPages:
           type: integer
           format: int32
-    PageResponseRoom_HotelDetails:
+    PageResponse_RoomDetails:
       type: object
       properties:
         content:
           type: array
           items:
-            $ref: '#/components/schemas/Room_HotelDetails'
+            type: object
         pageNumber:
           type: integer
           format: int32
@@ -2204,6 +2891,25 @@ components:
         totalPages:
           type: integer
           format: int32
+    PageResponse_ReviewDetails:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            type: object
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
     PageResponseReview_ReviewDetails:
       type: object
       properties:
@@ -2242,6 +2948,25 @@ components:
         totalPages:
           type: integer
           format: int32
+    PageResponse_ReservationDetails:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            type: object
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
     PageResponseReservation_ReservationDetails:
       type: object
       properties:
@@ -2249,6 +2974,44 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Reservation_ReservationDetails'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    PageResponse_UserDetails:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            type: object
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    PageResponseUserE_UserDetails:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserE_UserDetails'
         pageNumber:
           type: integer
           format: int32

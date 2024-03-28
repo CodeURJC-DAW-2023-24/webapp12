@@ -89,6 +89,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+                	<wait>70000</wait>
+            	</configuration>
 				<executions>
 					<execution>
 						<id>pre-integration-test</id>
@@ -121,7 +124,7 @@
 						</goals>
 						<configuration>
 							<apiDocsUrl>https://localhost:8443/v3/api-docs.yaml</apiDocsUrl>
-							<outputDir>${project.basedir}/api_docs</outputDir>
+							<outputDir>${project.basedir}/../api_docs</outputDir>
 							<outputFileName>api-docs.yaml</outputFileName>
 						</configuration>
 					</execution>
@@ -136,11 +139,11 @@
 						<phase>integration-test</phase>
 						<goals>
 							<goal>generate</goal>
-						</goals>
+						</goals> 
 						<configuration>
-							<inputSpec>${project.basedir}/api_docs/api-docs.yaml</inputSpec>
-							<generatorName>html5</generatorName>
-							<output>${project.basedir}/api_docs</output>
+							<inputSpec>${project.basedir}/../api_docs/api-docs-input.yaml</inputSpec>
+							<generatorName>html2</generatorName>
+							<output>${project.basedir}/../api_docs</output>
 							<configOptions>
 								<hideGenerationTimestamp>true</hideGenerationTimestamp>
 							</configOptions>

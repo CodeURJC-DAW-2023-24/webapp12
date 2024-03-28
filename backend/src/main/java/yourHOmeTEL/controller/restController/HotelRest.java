@@ -69,7 +69,7 @@ public class HotelRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Hotels retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden, the user does not have permission to view these hotels", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "User not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "User not found")
 	})
 	public ResponseEntity<PageResponse<Hotel>> loadAllHotels(
 			HttpServletRequest request,
@@ -105,7 +105,7 @@ public class HotelRest {
 	@Operation(summary = "Get hotel data", description = "Fetches the hotel data for the given ID if the current user is the manager of the hotel and the manager is validated.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Found the hotel", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hotel.class))),
-			@ApiResponse(responseCode = "404", description = "Hotel not found or manager not validated", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Hotel not found"),
 			@ApiResponse(responseCode = "403", description = "Forbidden, current user is not the manager of the hotel", content = @Content(mediaType = "application/json"))
 	})
 	public ResponseEntity<Map<String, Object>> getHotelData(
@@ -138,7 +138,7 @@ public class HotelRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Hotels found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden, the user does not have permission to view these hotels", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Hotels not found or manager not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Manager not found")
 	})
 	public ResponseEntity<PageResponse<Hotel>> viewHotelsManager(HttpServletRequest request, @PathVariable Long id,
 			Pageable pageable) {
@@ -174,7 +174,7 @@ public class HotelRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Reservations retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Reservation.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden, the user does not have permission to view these reservations", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Hotel not found or user not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Reservation not found")
 	})
 	public ResponseEntity<Hotel> getReservationsFromHotel(
 			HttpServletRequest request,
@@ -207,7 +207,7 @@ public class HotelRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Reviews retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Review.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden, the user does not have permission to view these reviews", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Hotel not found or user not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Review not found")
 	})
 	public ResponseEntity<Hotel> getReviewsFromHotel(
 			HttpServletRequest request,
@@ -238,7 +238,7 @@ public class HotelRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Rooms retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Room.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden, the user does not have permission to view these rooms", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Hotel not found or user not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Room not found")
 	})
 	public ResponseEntity<Hotel> getHotelFromRoom(
 			HttpServletRequest request,
@@ -269,7 +269,7 @@ public class HotelRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Found the clients list", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserE.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden, current user is not the manager of the hotel", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Hotel not found")
 	})
 	public ResponseEntity<List<UserE>> clientsList(HttpServletRequest request, @PathVariable Long id) {
 		try {
@@ -284,7 +284,7 @@ public class HotelRest {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			return ResponseEntity.notFound().build();
 		}
 	}
 
@@ -293,7 +293,7 @@ public class HotelRest {
 	@Operation(summary = "Create a hotel", description = "Creates a new hotel with the given details.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Hotel created successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hotel.class))),
-			@ApiResponse(responseCode = "404", description = "User not found", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "404", description = "Manager not found"),
 	})
 	public ResponseEntity<Hotel> createHotel(
 			HttpServletRequest request,
@@ -340,7 +340,7 @@ public class HotelRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Hotel edited successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hotel.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden, current user is not the manager of the hotel", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Hotel not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Hotel not found")
 	})
 	public ResponseEntity<Hotel> editHotel(
 			HttpServletRequest request,
@@ -375,7 +375,7 @@ public class HotelRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "204", description = "Hotel deleted successfully", content = @Content(mediaType = "application/json")),
 			@ApiResponse(responseCode = "403", description = "Forbidden, current user is not the manager of the hotel", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Hotel not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Hotel not found")
 	})
 	public ResponseEntity<Hotel> deleteHotel(HttpServletRequest request, @PathVariable Long id) {
 		try {
@@ -405,9 +405,9 @@ public class HotelRest {
 	@Operation(summary = "Load more hotels for a manager", description = "Returns a list of hotels for a specific manager.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Hotels retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hotel.class))),
-			@ApiResponse(responseCode = "400", description = "Bad request, page number is out of bounds", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "400", description = "Bad request, page number is out of bounds"),
 			@ApiResponse(responseCode = "403", description = "Forbidden, the user does not have permission to view these hotels", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Manager not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Manager not found")
 	})
 	public ResponseEntity<List<Hotel>> loadMoreHotelsManagerView(
 			HttpServletRequest request, @PathVariable Long id, @PathVariable Long pageNumber) {
@@ -450,8 +450,7 @@ public class HotelRest {
 	
 	@Operation(summary = "Get recommended hotels", description = "Returns a list of recommended hotels for the current user.")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Recommended hotels retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hotel.class))),
-			@ApiResponse(responseCode = "404", description = "User not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "200", description = "Recommended hotels retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hotel.class)))
 	})
 	
 	@JsonView(HotelDetails.class)
@@ -489,7 +488,7 @@ public class HotelRest {
 	@Operation(summary = "Search hotels", description = "Returns a page of hotels that match the search value.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Hotels found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
-			@ApiResponse(responseCode = "404", description = "Hotels not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Hotels not found")
 	})
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/index/specific")

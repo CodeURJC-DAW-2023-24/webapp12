@@ -80,7 +80,7 @@ public class ReservationRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Reservations retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden, the user does not have permission to view these reservations", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "User not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "User not found")
 	})
 	public ResponseEntity<PageResponse<Reservation>> loadAllReservations(
 			HttpServletRequest request,
@@ -118,7 +118,7 @@ public class ReservationRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Reservation retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Reservation.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden, the user does not have permission to view this reservation", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Reservation or user not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Reservation not found")
 	})
 	public ResponseEntity<Reservation> getReservation(HttpServletRequest request, @PathVariable Long id) {
 
@@ -146,7 +146,7 @@ public class ReservationRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Reservations retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden, the user does not have permission to view these reservations", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Reservations or user not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "User not found")
 	})
 	public ResponseEntity<PageResponse<Reservation>> getUserReservations(@PathVariable Long id,
 			HttpServletRequest request,
@@ -185,7 +185,7 @@ public class ReservationRest {
 	@Operation(summary = "Get hotel reservations", description = "Returns a page of reservations for a specific hotel.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Reservations retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
-			@ApiResponse(responseCode = "404", description = "Reservations, hotel or user not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Hotel not found")
 	})
 	public ResponseEntity<PageResponse<Reservation>> getHotelReservations(@PathVariable Long id,
 			HttpServletRequest request,
@@ -224,7 +224,7 @@ public class ReservationRest {
 	@Operation(summary = "Get room reservations", description = "Returns a page of reservations for a specific room.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Reservations retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
-			@ApiResponse(responseCode = "404", description = "Reservations, room or user not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Room not found")
 	})
 	public ResponseEntity<PageResponse<Reservation>> getRoomReservations(@PathVariable Long id,
 			HttpServletRequest request,
@@ -261,11 +261,11 @@ public class ReservationRest {
 	@PostMapping("/reservations/users/{userId}/hotels/{hotelId}/rooms/{roomId}")
 	@Operation(summary = "Add a reservation", description = "Add a new reservation for a specific user, hotel and room.")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "201", description = "Reservation created successfully", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "201", description = "Reservation created successfully", content = @Content(mediaType = "application/json",schema = @Schema(implementation = Reservation.class))),
 			@ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content(mediaType = "application/json")),
 			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "User, hotel or room not found", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "409", description = "Conflict with existing data", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Resource not found"),
+			@ApiResponse(responseCode = "409", description = "Conflict with existing data")
 	})
 	public ResponseEntity<Object> addReservation(HttpServletRequest request, @RequestBody Reservation reservation,
 			@PathVariable Long userId, @PathVariable Long hotelId, @PathVariable Long roomId) {
@@ -338,7 +338,7 @@ public class ReservationRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Reservation edited successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Reservation.class))),
 			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Reservation not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Reservation not found")
 	})
 	public ResponseEntity<Reservation> editReservation(HttpServletRequest request, @PathVariable Long reservationId,
 			@RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
@@ -372,7 +372,7 @@ public class ReservationRest {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "204", description = "Reservation deleted successfully", content = @Content(mediaType = "application/json")),
 			@ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "Reservation not found", content = @Content(mediaType = "application/json"))
+			@ApiResponse(responseCode = "404", description = "Reservation not found")
 	})
 	public ResponseEntity<Reservation> deleteReservation(HttpServletRequest request, @PathVariable Long reservationId) {
 

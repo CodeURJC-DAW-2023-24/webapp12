@@ -49,7 +49,7 @@ public class HotelImageRest {
     @Operation(summary = "Download hotel image", description = "Download the image of a specific hotel by hotel ID.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Image retrieved successfully", content = @Content(mediaType = "image/*")),
-            @ApiResponse(responseCode = "404", description = "Image not found", content = @Content(mediaType = "application/json"))
+            @ApiResponse(responseCode = "404", description = "Hotel not found")
     })
     public ResponseEntity<Object> downloadProfileImage(HttpServletRequest request, @PathVariable long id)
             throws MalformedURLException {
@@ -61,7 +61,7 @@ public class HotelImageRest {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Image uploaded successfully", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
-            @ApiResponse(responseCode = "404", description = "Hotel not found", content = @Content(mediaType = "application/json"))
+            @ApiResponse(responseCode = "404", description = "Hotel not found")
     })
     public ResponseEntity<Object> uploadImage(HttpServletRequest request, @PathVariable long id,
             @RequestParam MultipartFile imageFile) throws IOException {
@@ -90,7 +90,7 @@ public class HotelImageRest {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Image deleted successfully", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
-            @ApiResponse(responseCode = "404", description = "Hotel not found", content = @Content(mediaType = "application/json"))
+            @ApiResponse(responseCode = "404", description = "Hotel not found")
     })
     public ResponseEntity<Object> deleteImage(HttpServletRequest request, @PathVariable long id)
             throws IOException {

@@ -8,6 +8,7 @@ import java.net.URI;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,15 +46,12 @@ public class UserImageRest {
             @ApiResponse(
                 responseCode = "200",
                 description = "User profile image downloaded successfully",
-                content = {@Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation=UserE.class)
-                )}
+                content = @Content(mediaType = "image/*")
             ),
             @ApiResponse(
-                responseCode = "404",
-                description = "User not found"
-            )
+            responseCode = "404",
+            description = "User not found"
+        )
     })
     @GetMapping("/users/{id}/image")
     public ResponseEntity<Object> downloadProfileImage(HttpServletRequest request, @PathVariable long id)
@@ -65,16 +63,18 @@ public class UserImageRest {
     @ApiResponses(value = {
             @ApiResponse(
                 responseCode = "201",
-                description = "User profile image uploaded successfully"
+                description = "User profile image uploaded successfully",
+                content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
                 responseCode = "403",
-                description = "Operation only allowed for the user or an admin"
+                description = "Operation only allowed for the user or an admin",
+                content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
-                responseCode = "404",
-                description = "User not found"
-            )
+            responseCode = "404",
+            description = "User not found"
+        )
     })
     @PostMapping("/users/{id}/image")
     public ResponseEntity<Object> uploadImage(HttpServletRequest request, @PathVariable long id,
@@ -101,16 +101,18 @@ public class UserImageRest {
     @ApiResponses(value = {
             @ApiResponse(
                 responseCode = "204",
-                description = "User profile image deleted successfully"
+                description = "User profile image deleted successfully",
+                content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
                 responseCode = "403",
-                description = "Operation only allowed for the user or an admin"
+                description = "Operation only allowed for the user or an admin",
+                content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
-                responseCode = "404",
-                description = "User not found"
-            )
+            responseCode = "404",
+            description = "User not found"
+        )
     })
     @DeleteMapping("/users/{id}/image")
     public ResponseEntity<Object> deleteImage(HttpServletRequest request, @PathVariable long id)

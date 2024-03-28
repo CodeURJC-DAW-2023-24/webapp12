@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,19 +32,23 @@ public class LoginController {
     @ApiResponses(value = {
             @ApiResponse(
                 responseCode = "200",
-                description = "User logged in successfully"
+                description = "User logged in successfully",
+                content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
                 responseCode = "400",
-                description = "Bad request"
+                description = "Bad request",
+                content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
                 responseCode = "401",
-                description = "Unauthorized"
+                description = "Unauthorized",
+                content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
                 responseCode = "403",
-                description = "Forbidden"
+                description = "Forbidden",
+                content = @Content(mediaType = "application/json")
             )
     })
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -58,19 +63,23 @@ public class LoginController {
     @ApiResponses(value = {
             @ApiResponse(
                 responseCode = "200",
-                description = "User logged in successfully"
+                description = "User logged in successfully",
+                content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
                 responseCode = "400",
-                description = "Bad request"
+                description = "Bad request",
+                content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
                 responseCode = "401",
-                description = "Unauthorized"
+                description = "Unauthorized",
+                content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
                 responseCode = "403",
-                description = "Forbidden"
+                description = "Forbidden",
+                content = @Content(mediaType = "application/json")
             )
     })
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -85,21 +94,26 @@ public class LoginController {
     @ApiResponses(value = {
             @ApiResponse(
                 responseCode = "200",
-                description = "User is logged in"
+                description = "User is logged in",
+                content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
                 responseCode = "400",
-                description = "Bad request"
+                description = "Bad request",
+                content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
                 responseCode = "401",
-                description = "Unauthorized"
+                description = "Unauthorized",
+                content = @Content(mediaType = "application/json")
             ),
             @ApiResponse(
                 responseCode = "403",
-                description = "Forbidden"
+                description = "Forbidden",
+                content = @Content(mediaType = "application/json")
             )
     })
+    
     @PostMapping("/refresh")
     public ResponseEntity<AuthResponse> refreshToken(
             @CookieValue(name = "refreshToken", required = false) String refreshToken) {
@@ -107,6 +121,11 @@ public class LoginController {
     }
 
     @Operation(summary = "Logs out the user")
+    @ApiResponse(
+        responseCode = "200",
+        description = "User is logged out",
+        content = @Content(mediaType = "application/json")
+    )
     @PostMapping("/logout")
     public ResponseEntity<AuthResponse> logOut(HttpServletRequest request, HttpServletResponse response) {
         return ResponseEntity.ok(new AuthResponse(Status.SUCCESS, userService.logout(request, response)));
