@@ -494,8 +494,8 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
 
 # Phase 3: API REST and Docker images
   ## 1. API REST documentation
-  ### 1.1. OpenAPI:
-  ### 1.2. HTML:
+  ### 1.1. OpenAPI: (https://github.com/CodeURJC-DAW-2023-24/webapp12/blob/main/api_docs/api-docs-input.yaml)
+  ### 1.2. HTML: (https://rawcdn.githack.com/CodeURJC-DAW-2023-24/webapp12/797c0bae3126d5584d9ef2e2cca7778a04a40f8b/api_docs/index.html)
     
   ## 2. Class and templates diagram 
   ![REST DIAGRAM](https://github.com/CodeURJC-DAW-2023-24/webapp12/blob/7a6ecfc4698ca8a85c34dae51c09af332d429d72/assets/diagramaRest.jpeg)
