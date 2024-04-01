@@ -59,7 +59,7 @@ public class LoginController {
         return userService.login(loginRequest, accessToken, refreshToken);
     }
 
-    @Operation(summary = "User login through JSON")
+    @Operation(summary = "User login through form")
     @ApiResponses(value = {
             @ApiResponse(
                 responseCode = "200",

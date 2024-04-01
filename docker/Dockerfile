@@ -15,7 +15,7 @@ RUN mvn package -DskipTests
 
 #COPY AND RUN ON APP CONTAINER
 
-FROM eclipse-temurin:21-jdk
+FROM eclipse-temurin:17-jdk
 
 WORKDIR /usr/src/app
 
