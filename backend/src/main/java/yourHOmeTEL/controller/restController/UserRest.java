@@ -255,7 +255,7 @@ public class UserRest {
         )
     })
     @JsonView(UserDetails.class)
-    @GetMapping("/managers/list")
+    @GetMapping("/managers")
     public ResponseEntity<PageResponse<UserE>> managerList(HttpServletRequest request, Pageable pageable) {
         try {
             Page<UserE> managersList = userService.findByCollectionRolsContains("MANAGER", pageable);

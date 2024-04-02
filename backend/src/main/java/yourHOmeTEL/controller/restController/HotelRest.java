@@ -454,7 +454,7 @@ public class HotelRest {
 	})
 	
 	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/index/recommended")
+	@GetMapping("/hotels/recommended")
 	public ResponseEntity<List<Hotel>> index(HttpServletRequest request) {
 		List<Hotel> recomendedHotels = new ArrayList<>();
 		try {
@@ -491,7 +491,7 @@ public class HotelRest {
 			@ApiResponse(responseCode = "404", description = "Hotels not found")
 	})
 	@JsonView(HotelDetails.class)
-	@GetMapping("/hotels/index/specific")
+	@GetMapping("/hotels/specific")
 	public ResponseEntity<PageResponse<Hotel>> indexSearch(@RequestParam String searchValue, Pageable pageable) {
 		try {
 			Page<Hotel> hotels = hotelService.findAllByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(

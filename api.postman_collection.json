@@ -211,7 +211,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/managers/list?page=0&size=2",
+							"raw": "https://localhost:8443/api/managers?page=0&size=2",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -219,8 +219,7 @@
 							"port": "8443",
 							"path": [
 								"api",
-								"managers",
-								"list"
+								"managers"
 							],
 							"query": [
 								{
@@ -1106,7 +1105,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/hotels/index/recommended?page=0&size=6",
+							"raw": "https://localhost:8443/api/hotels/recommended?page=0&size=6",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1115,7 +1114,6 @@
 							"path": [
 								"api",
 								"hotels",
-								"index",
 								"recommended"
 							],
 							"query": [
@@ -1161,7 +1159,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/hotels/index/specific?searchValue=2&page=0&size=6",
+							"raw": "https://localhost:8443/api/hotels/specific?searchValue=2&page=0&size=6",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -1170,7 +1168,6 @@
 							"path": [
 								"api",
 								"hotels",
-								"index",
 								"specific"
 							],
 							"query": [

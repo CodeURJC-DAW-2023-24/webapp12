@@ -66,7 +66,7 @@ public class SecurityConfiguration {
                     
                     //ADMIN AND MANAGER ENDPOINTS
                     .requestMatchers(HttpMethod.GET,"/api/hotels/manager/{id}").hasAnyRole("MANAGER", "ADMIN")
-                    .requestMatchers(HttpMethod.GET,"/api/managers/list").hasAnyRole("MANAGER","ADMIN")
+                    .requestMatchers(HttpMethod.GET,"/api/managers").hasAnyRole("MANAGER","ADMIN")
 
                     .requestMatchers(HttpMethod.GET,"/api/hotels/{pageNumber}/manager/{id}").hasAnyRole("MANAGER","ADMIN")
                     .requestMatchers(HttpMethod.POST,"/api/hotels/{id}").hasAnyRole("MANAGER","ADMIN")
@@ -151,8 +151,8 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET,"/api/reviews/{id}").permitAll()
                     .requestMatchers(HttpMethod.GET,"/api/reviews/users/{id}").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/reviews/hotels/{id}").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/hotels/index/recommended").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/hotels/index/specific").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/hotels/recommended").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/hotels/specific").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/rooms/{id}").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/rooms/hotels/{id}").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/reviews/size/hotels/{id}").permitAll()
