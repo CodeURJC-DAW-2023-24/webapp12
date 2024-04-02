@@ -9,7 +9,7 @@ public interface GeneralService<GenericObject> {
 
     public Optional<GenericObject> findById(Long id);
 
-    public void save(GenericObject go);
+    public GenericObject save(GenericObject go);
 
     public void delete(GenericObject go);
 

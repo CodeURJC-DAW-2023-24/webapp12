@@ -1,5 +1,6 @@
 package yourHOmeTEL.controller.restController;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -324,14 +325,14 @@ public class HotelRest {
 				}
 			}
 
-			hotelService.save(newHotel);
-
+			Hotel savedHotel = hotelService.save(newHotel);
+			String loc = "https://localhost:8443/api/hotels/"+ savedHotel.getId();
+        	URI uriLocation = URI.create(loc);
+			return ResponseEntity.created(uriLocation).build();
+			
 		} catch (NoSuchElementException e) {
 			return ResponseEntity.notFound().build();
-		}
-
-		return ResponseEntity.ok().build();
-
+		}	
 	}
 
 	@JsonView(HotelDetails.class)

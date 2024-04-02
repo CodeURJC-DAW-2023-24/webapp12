@@ -22,8 +22,8 @@ public class ReviewService implements GeneralService<Review> {
 
 
     @Override
-    public void save(Review review) {
-        reviewRepository.save(review);
+    public Review save(Review review) {
+        return reviewRepository.save(review);
 
     }
 

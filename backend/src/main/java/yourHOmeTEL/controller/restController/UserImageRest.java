@@ -1,7 +1,5 @@
 package yourHOmeTEL.controller.restController;
 
-import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -83,10 +81,12 @@ public class UserImageRest {
             UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
             UserE foundUser = userService.findById(id).orElseThrow();
             if (requestUser.getRols().contains("ADMIN") || foundUser.equals(requestUser)) {          
-                URI location = fromCurrentRequest().build().toUri();
+                String loc = "https://localhost:8443/api/hotels/"+ id + "/image";
+                URI location = URI.create(loc);
                 foundUser.setImagePath(location.toString());
                 userService.save(foundUser);
                 imgService.saveImage(imgService.getFilesFolder(), foundUser.getId(), imageFile);
+                
                 return ResponseEntity.created(location).build();
 
             } else {

@@ -30,8 +30,8 @@ public class UserService implements GeneralService<UserE> {
     }
 
     @Override
-    public void save(UserE user) {
-        userRepository.save(user);
+    public UserE save(UserE user) {
+        return userRepository.save(user);
     }
 
     @Override

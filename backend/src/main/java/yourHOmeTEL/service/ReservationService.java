@@ -20,8 +20,8 @@ public class ReservationService implements GeneralService<Reservation> {
     private ReservationRepository reservationRepository;
 
     @Override
-    public void save(Reservation reservation) {
-        reservationRepository.save(reservation);
+    public Reservation save(Reservation reservation) {
+        return reservationRepository.save(reservation);
     }
 
     @Override

@@ -37,9 +37,7 @@ import yourHOmeTEL.service.ReservationService;
 import yourHOmeTEL.service.RoomService;
 import yourHOmeTEL.service.UserService;
 
-import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -312,8 +310,10 @@ public class ReservationRest {
 							targetUser.getReservations().add(reservation);
 							userService.save(targetUser);
 
-							URI location = fromCurrentRequest().build().toUri();
-							return ResponseEntity.created(location).build();
+							Reservation savedReservation = reservationService.save(reservation);
+							String loc = "https://localhost:8443/api/reservations/"+ savedReservation.getId();
+							URI uriLocation = URI.create(loc);
+							return ResponseEntity.created(uriLocation).build();
 
 						} else {
 							return ResponseEntity.notFound().build();

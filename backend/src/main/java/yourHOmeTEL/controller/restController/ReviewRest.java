@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
-
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -275,8 +273,10 @@ public class ReviewRest {
 					authorUser.getReviews().add(newReview);
 					userService.save(authorUser);
 
-					URI location = fromCurrentRequest().build().toUri();
-					return ResponseEntity.created(location).build();
+					Review savedReview = reviewService.save(newReview);
+					String loc = "https://localhost:8443/api/reviews/"+ savedReview.getId();
+					URI uriLocation = URI.create(loc);
+					return ResponseEntity.created(uriLocation).build();
 
 				} else {
 					return ResponseEntity.notFound().build();

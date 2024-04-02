@@ -34,8 +34,8 @@ public class HotelService implements GeneralService<Hotel> {
     private static final Logger log = LoggerFactory.getLogger(HotelService.class);
 
     @Override
-    public void save(Hotel hotel) {
-        hotelRepository.save(hotel);
+    public Hotel save(Hotel hotel) {
+        return hotelRepository.save(hotel);
     }
 
     @Override

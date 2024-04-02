@@ -1,6 +1,5 @@
 package yourHOmeTEL.controller.restController;
 
-import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
@@ -494,16 +493,14 @@ public class UserRest {
             newUser.setPhone("");
             newUser.setOrganization("");
 
-            userService.save(newUser);
-
             Resource image = new ClassPathResource("/static/images/default-hotel.jpg");
             newUser.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
             newUser.setImage(true);
 
-            userService.save(newUser);
-
-            URI location = fromCurrentRequest().build().toUri();
-            return ResponseEntity.created(location).build();
+            UserE savedUser = userService.save(newUser);
+			String loc = "https://localhost:8443/api/users/"+ savedUser.getId();
+			URI uriLocation = URI.create(loc);
+            return ResponseEntity.created(uriLocation).build();
         }
     }
 

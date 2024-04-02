@@ -45,8 +45,8 @@ public class RoomService implements GeneralService<Room> {
     }
 
     @Override
-    public void save(Room room) {
-        roomRepository.save(room);
+    public Room save(Room room) {
+        return roomRepository.save(room);
     }
 
     @Override

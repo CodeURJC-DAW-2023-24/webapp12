@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
-
 import java.net.URI;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -227,8 +225,10 @@ public class RoomRest {
 					targetHotel.getRooms().add(newRoom);
 					hotelService.save(targetHotel);
 
-					URI location = fromCurrentRequest().build().toUri();
-					return ResponseEntity.created(location).build();
+					Room savedRoom = roomService.save(newRoom);
+					String loc = "https://localhost:8443/api/rooms/"+ savedRoom.getId();
+					URI uriLocation = URI.create(loc);
+					return ResponseEntity.created(uriLocation).build();
 				} else {
 					return ResponseEntity.notFound().build();
 				}
