@@ -462,24 +462,11 @@ public class HotelRest {
 			String nick = request.getUserPrincipal().getName();
 			UserE user = userService.findByNick(nick).orElseThrow();
 			List<Reservation> userReservations = user.getReservations();
-			recomendedHotels = userService.findRecomendedHotels(6, userReservations, user);
+			recomendedHotels = hotelService.findRecomendedHotels(6, userReservations, user);
 		} catch (NullPointerException e) {
 		} finally {
 			if (recomendedHotels.size() < 6) {
-				// size +1 to avoid looking for id = 0 if size = 0
-				int i = 1;
-				int sizeAllHotels = hotelService.findAll().size();
-				while (recomendedHotels.size() + 1 < 7 && i <= sizeAllHotels) {
-					// if there's a gap in the id sequence, it will throw an exception and continue
-					// the loop
-					try {
-						Hotel hotel = hotelService.findById((long) i).orElseThrow();
-						if (hotel != null && hotel.getManager().getvalidated())
-							recomendedHotels.add(hotel);
-					} catch (NoSuchElementException e) {
-					}
-					i++;
-				}
+				recomendedHotels = hotelService.addRemainingHotels(recomendedHotels);
 			}
 		}
 		return ResponseEntity.ok(recomendedHotels);

@@ -4,7 +4,7 @@ let timesRequested = 1;
 
 async function loadMoreHotels(){
 
-    const start = (timesRequested) * NUM_RESULTS;
+    const start = (timesRequested) * NUM_RESULTS + 1;
     const end = start + NUM_RESULTS;
     timesRequested++;
 

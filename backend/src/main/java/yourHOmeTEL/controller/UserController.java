@@ -53,18 +53,13 @@ public class UserController {
 			String nick = request.getUserPrincipal().getName();
 			UserE user = userService.findByNick(nick).orElseThrow();
 			List<Reservation> userReservations = user.getReservations();
-			recomendedHotels = userService.findRecomendedHotels(6, userReservations, user);
+			recomendedHotels = hotelService.findRecomendedHotels(6, userReservations, user);
 
 		} catch (NullPointerException e) {
 
 		} finally {
 			if (recomendedHotels.size() < 6) {
-				// size +1 to avoid looking for id = 0 if size = 0
-				for (int i = recomendedHotels.size() + 1; i < 7; i++) {
-					Hotel hotel = hotelService.findById((long) i).orElseThrow();
-					if (hotel != null && hotel.getManager().getvalidated())
-						recomendedHotels.add(hotel);
-				}
+				recomendedHotels = hotelService.addRemainingHotels(recomendedHotels);
 			}
 		}
 		model.addAttribute("hotels", recomendedHotels);
