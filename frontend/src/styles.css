@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+@import '../../backend/src/main/resources/static/css/all.css';
+@import '../../backend/src/main/resources/static/css/animate.css';
+@import '../../backend/src/main/resources/static/css/aos.css';
+@import '../../backend/src/main/resources/static/css/bootstrap-datepicker.css';
+@import '../../backend/src/main/resources/static/css/bootstrap.min.css';
+@import '../../backend/src/main/resources/static/css/flaticon.css';
+@import '../../backend/src/main/resources/static/css/icomoon.css';
+@import '../../backend/src/main/resources/static/css/ionicons.min.css';
+@import '../../backend/src/main/resources/static/css/jquery.timepicker.css';
+@import '../../backend/src/main/resources/static/css/magnific-popup.css';
+@import '../../backend/src/main/resources/static/css/open-iconic-bootstrap.min.css';
+@import '../../backend/src/main/resources/static/css/owl.carousel.min.css';
+@import '../../backend/src/main/resources/static/css/owl.theme.default.min.css';
+@import '../../backend/src/main/resources/static/css/photoButton.css';
+@import '../../backend/src/main/resources/static/css/sb-admin-2.css';
+@import '../../backend/src/main/resources/static/css/style.css';
+@import '../../backend/src/main/resources/static/css/bootstrap/bootstrap-grid.css';
+@import '../../backend/src/main/resources/static/css/bootstrap/bootstrap-reboot.css';
+@import '../../backend/src/main/resources/static/css/css/captcha.css';
+@import '../../backend/src/main/resources/static/css/css/mixins/_text-hide.css';
+
