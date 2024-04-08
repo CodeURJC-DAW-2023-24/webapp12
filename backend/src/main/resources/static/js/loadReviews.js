@@ -1,12 +1,12 @@
-const NUM_RESULTS = 6;
+const NUM_RESULTS_REVIEWS = 6;
 
-let timesRequested = 1;
+let timesRequestedReviews = 1;
 
 async function loadMoreReviews(id){
 
-    const start = (timesRequested) * NUM_RESULTS;
-    const end = start + NUM_RESULTS;
-    timesRequested++;
+    const start = (timesRequestedReviews) * NUM_RESULTS_REVIEWS;
+    const end = start + NUM_RESULTS_REVIEWS;
+    timesRequestedReviews++;
 
     const response = await fetch(`/loadMoreReviews/${id}/${start}/${end}`);
     const newReviews = await response.text();

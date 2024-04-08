@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'Footer',
-  templateUrl: './footer.component.html',
+  selector: 'Profile',
+  templateUrl: './profile.component.html',
   //styleUrl: ''
 })
-export class Footer {
+export class Profile {
   title = 'frontend';
 }

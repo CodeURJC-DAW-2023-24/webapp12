@@ -1,12 +1,12 @@
-const NUM_RESULTS = 6;
+const NUM_RESULTS_HOTELS = 6;
 
-let timesRequested = 1;
+let timesRequestedHotels = 1;
 
 async function loadMoreHotels(){
 
-    const start = (timesRequested) * NUM_RESULTS + 1;
-    const end = start + NUM_RESULTS;
-    timesRequested++;
+    const start = (timesRequestedHotels) * NUM_RESULTS_HOTELS + 1;
+    const end = start + NUM_RESULTS_HOTELS;
+    timesRequestedHotels++;
 
     const response = await fetch(`/loadMoreHotels/${start}/${end}`);
     const newHotels = await response.text();

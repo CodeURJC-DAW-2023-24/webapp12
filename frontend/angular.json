@@ -32,7 +32,8 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/webfonts"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -46,22 +47,19 @@
               "src/styles.css"
             ],
             "scripts": [
-              "https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js",
-              "https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js",
-              "https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js",
-              "https://code.jquery.com/jquery-1.10.2.min.js",
-              "https://canvasjs.com/assets/script/jquery-1.11.1.min.js",
-              "https://cdn.canvasjs.com/jquery.canvasjs.min.js",
               "../backend/src/main/resources/static/js/managerChart.js",
-              "../backend/src/main/resources/static/js/js/jquery.js",
-              "../backend/src/main/resources/static/js/js/bootstrap.bundle.js",
-              "../backend/src/main/resources/static/js/js/jquery.easing.js",
-              "../backend/src/main/resources/static/js/js/sb-admin-2.js",
-              "../backend/src/main/resources/static/js/vendor/jquery/jquery.min.js",
-              "../backend/src/main/resources/static/js/vendor/bootstrap/js/bootstrap.bundle.min.js",
-              "../backend/src/main/resources/static/js/vendor/jquery-easing/jquery.easing.min.js",
-              "../backend/src/main/resources/static/js/js/sb-admin-2.min.js",
-              "../backend/src/main/resources/static/js/js/loadMoreReservations.js",
+              "../backend/src/main/resources/static/js/popper.min.js",
+              "../backend/src/main/resources/static/js/range.js",
+              "../backend/src/main/resources/static/js/managerChart.js",
+              "../backend/src/main/resources/static/js/main.js",
+              "../backend/src/main/resources/static/js/jquery.js",
+              "../backend/src/main/resources/static/js/bootstrap.bundle.js",
+              "../backend/src/main/resources/static/js/jquery.easing.js",
+              "../backend/src/main/resources/static/js/sb-admin-2.js",
+              "../backend/src/main/resources/static/vendor/jquery/jquery.min.js",
+              "../backend/src/main/resources/static/vendor/bootstrap/js/bootstrap.bundle.min.js",
+              "../backend/src/main/resources/static/vendor/jquery-easing/jquery.easing.min.js",
+              "../backend/src/main/resources/static/js/loadMoreReservations.js",
               "../backend/src/main/resources/static/js/jquery.min.js",
               "../backend/src/main/resources/static/js/jquery-migrate-3.0.1.min.js",
               "../backend/src/main/resources/static/js/popper.min.js",
@@ -80,9 +78,10 @@
               "../backend/src/main/resources/static/js/loadReviews.js",
               "../backend/src/main/resources/static/js/loadHotels.js",
               "../backend/src/main/resources/static/js/captcha.js",
-              "../backend/src/main/resources/static/js/testChart.js",
+              "../backend/src/main/resources/static/js/Chart.js",
               "../backend/src/main/resources/static/js/loadMoreHotelsviewHotelsManager.js"
-            ]
+            ],
+            "baseHref": "/new/"
           },
           "configurations": {
             "production": {
