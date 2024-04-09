@@ -18,7 +18,7 @@ import { Profile } from './profileScreens/profile.component';
     Header,
     Login,
     Footer,
-    Profile, 
+    Profile,
   ],
   imports: [
     BrowserModule,
