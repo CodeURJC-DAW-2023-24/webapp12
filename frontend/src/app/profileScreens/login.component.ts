@@ -1,5 +1,7 @@
 import { Component,OnInit, Renderer2, ElementRef } from '@angular/core';
 import { UserService } from '../service/UserService';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 
 @Component({
@@ -13,7 +15,9 @@ export class Login {
   public nickname: string;
   public pass: string;
 
-  constructor(private userService: UserService, private renderer: Renderer2, private el: ElementRef) {
+  constructor(private userService: UserService, private renderer: Renderer2, private el: ElementRef,
+    private router: Router, private route: ActivatedRoute
+  ) {
     this.nickname = '';
     this.pass = '';
   }
@@ -32,7 +36,9 @@ export class Login {
   }
 
   submitCredentials(){
-    //ENCODE PASSWORD HERE
-    this.userService.getUser(this.nickname, this.pass)
+    this.userService.Login(this.nickname, this.pass).subscribe({
+      next: user =>{this.router.navigate(['/profile']);},
+      error: err => {this.router.navigate(['']);}
+    });
   }
 }
