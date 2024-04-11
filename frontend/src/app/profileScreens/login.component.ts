@@ -1,4 +1,4 @@
-import { Component,OnInit, Renderer2, ElementRef } from '@angular/core';
+import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
 import { UserService } from '../service/UserService';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -12,14 +12,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class Login {
   title = 'frontend';
 
-  public nickname: string;
-  public pass: string;
+  public username: string;
+  public password: string;
 
   constructor(private userService: UserService, private renderer: Renderer2, private el: ElementRef,
     private router: Router, private route: ActivatedRoute
   ) {
-    this.nickname = '';
-    this.pass = '';
+    this.username = '';
+    this.password = '';
   }
 
   ngOnInit() {
@@ -36,7 +36,7 @@ export class Login {
   }
 
   submitCredentials(){
-    this.userService.Login(this.nickname, this.pass).subscribe({
+    this.userService.Login(this.username, this.password).subscribe({
       next: user =>{this.router.navigate(['/profile']);},
       error: err => {this.router.navigate(['']);}
     });

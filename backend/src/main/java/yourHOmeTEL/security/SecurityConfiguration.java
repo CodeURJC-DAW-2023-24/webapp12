@@ -1,5 +1,8 @@
 package yourHOmeTEL.security;
 
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,16 +25,25 @@ import yourHOmeTEL.service.UserSecurityService;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration {
+public class SecurityConfiguration implements WebMvcConfigurer {
 
     @Autowired
     private UserSecurityService userDetailService;
 
     @Autowired
-	private JwtRequestFilter jwtRequestFilter;
-    
+    private JwtRequestFilter jwtRequestFilter;
+
     @Autowired
-  	private UnauthorizedHandlerJwt unauthorizedHandlerJwt;
+    private UnauthorizedHandlerJwt unauthorizedHandlerJwt;
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("https://localhost:8444")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true);
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -47,124 +59,135 @@ public class SecurityConfiguration {
     }
 
     @Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-		return authConfig.getAuthenticationManager();
-	}
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
+
+    /*@Bean
+    @Order(1)
+    public SecurityFilterChain SPAFilterChain(HttpSecurity http) throws Exception {
+        http.authenticationProvider(authenticationProvider());
+
+        http.csrf(csrf -> csrf.disable());
+        http.formLogin(formLogin -> formLogin.disable());
+        http
+                .authorizeRequests(authorize -> authorize   
+                .requestMatchers("/new/**").permitAll())
+                
+        return http.build();
+    }*/
 
     @Bean
-	@Order(1)
-	public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
-		
-		http.authenticationProvider(authenticationProvider());
-		
-		http
-			.securityMatcher("/api/**")
-			.exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandlerJwt));
+    @Order(2)
+    public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
+
+        http.authenticationProvider(authenticationProvider());
 
         http
-			.authorizeHttpRequests(authorize -> authorize
-                    
-                    //ADMIN AND MANAGER ENDPOINTS
-                    .requestMatchers(HttpMethod.GET,"/api/hotels/manager/{id}").hasAnyRole("MANAGER", "ADMIN")
-                    .requestMatchers(HttpMethod.GET,"/api/managers").hasAnyRole("MANAGER","ADMIN")
+                .securityMatcher("/api/**")
+                .exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandlerJwt));
 
-                    .requestMatchers(HttpMethod.GET,"/api/hotels/{pageNumber}/manager/{id}").hasAnyRole("MANAGER","ADMIN")
-                    .requestMatchers(HttpMethod.POST,"/api/hotels/{id}").hasAnyRole("MANAGER","ADMIN")
-                    .requestMatchers(HttpMethod.PUT,"/api/rooms/{roomId}/hotels/{hotelId}").hasAnyRole("MANAGER","ADMIN")
-                    .requestMatchers(HttpMethod.DELETE,"/api/rooms/{roomId}").hasAnyRole("MANAGER","ADMIN")
-                    .requestMatchers(HttpMethod.GET,"/api/hotels/{id}/clients").hasAnyRole("MANAGER","ADMIN")
-                    .requestMatchers(HttpMethod.POST, "/api/hotels").hasAnyRole("MANAGER","ADMIN")
-                    .requestMatchers(HttpMethod.DELETE,"/api/hotels/{id}").hasAnyRole("MANAGER","ADMIN")
-                    .requestMatchers(HttpMethod.GET,"/api/rooms/{roomId}/hotels/{hotelId}").hasAnyRole("MANAGER","ADMIN")
-                    .requestMatchers(HttpMethod.POST,"/api/rooms/hotels/{hotelId}").hasAnyRole("MANAGER","ADMIN")
-                    .requestMatchers(HttpMethod.DELETE,"/api/rooms/{roomId}").hasAnyRole("MANAGER","ADMIN")
+        http
+                .authorizeHttpRequests(authorize -> authorize
 
-                    
-                    //ADMIN AND CLIENT ENDPOINTS
-                                       
-                    .requestMatchers(HttpMethod.GET,"/api/reservations/{id}").hasAnyRole("CLIENT","ADMIN")
-                    .requestMatchers(HttpMethod.PUT,"/api/reservations/{reservationId}").hasAnyRole("CLIENT","ADMIN")
-                    .requestMatchers(HttpMethod.DELETE,"/api/reservations/{reservationId}").hasAnyRole("CLIENT","ADMIN")
+                        // ADMIN AND MANAGER ENDPOINTS
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/manager/{id}").hasAnyRole("MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/managers").hasAnyRole("MANAGER", "ADMIN")
 
-                    .requestMatchers(HttpMethod.GET,"/api/hotels/reservations/{id}").hasAnyRole("CLIENT","ADMIN")
-                    
-                    .requestMatchers(HttpMethod.GET,"/api/rooms/reservations/{id}").hasAnyRole("CLIENT","ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/{pageNumber}/manager/{id}")
+                        .hasAnyRole("MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/hotels/{id}").hasAnyRole("MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/rooms/{roomId}/hotels/{hotelId}")
+                        .hasAnyRole("MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/rooms/{roomId}").hasAnyRole("MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/{id}/clients").hasAnyRole("MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/hotels").hasAnyRole("MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/hotels/{id}").hasAnyRole("MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/rooms/{roomId}/hotels/{hotelId}")
+                        .hasAnyRole("MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/rooms/hotels/{hotelId}").hasAnyRole("MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/rooms/{roomId}").hasAnyRole("MANAGER", "ADMIN")
 
-                    //ADMIN ENDPOINTS
-                    .requestMatchers(HttpMethod.GET,"/api/managers/validated").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.PUT,"/api/managers/{id}/rejected/state").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET,"/api/users").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET,"/api/hotels").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET,"/api/reservations").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET,"/api/rooms").hasRole("ADMIN")
+                        // ADMIN AND CLIENT ENDPOINTS
 
-                
-                    //MANAGER ENDPOINTS                 
-                    .requestMatchers(HttpMethod.PUT,"/api/managers/{id}/applied").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.GET, "/api/reservations/{id}").hasAnyRole("CLIENT", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/reservations/{reservationId}")
+                        .hasAnyRole("CLIENT", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/reservations/{reservationId}")
+                        .hasAnyRole("CLIENT", "ADMIN")
 
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/reservations/{id}").hasAnyRole("CLIENT", "ADMIN")
 
-                    //MANAGER AND CLIENT ENDPOINTS
-                    
-                                
-					//USER ENDPOINTS
-                    .requestMatchers(HttpMethod.GET,"/api/users/{id}").hasRole("USER")
-                    .requestMatchers(HttpMethod.PUT,"/api/users/{id}").hasRole("USER")
-                    .requestMatchers(HttpMethod.DELETE,"/api/users/{id}").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/rooms/reservations/{id}").hasAnyRole("CLIENT", "ADMIN")
 
-                    .requestMatchers(HttpMethod.GET,"/api/hotels/{id}").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/hotels/reviews/{id}").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/hotels/rooms/{id}").hasRole("USER")
-                    
+                        // ADMIN ENDPOINTS
+                        .requestMatchers(HttpMethod.GET, "/api/managers/validated").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/managers/{id}/rejected/state").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/hotels").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/reservations").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/rooms").hasRole("ADMIN")
 
-                    .requestMatchers(HttpMethod.GET,"/api/reservations/users/{id}").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/reservations/hotels/{id}").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/reservations/rooms/{id}").hasRole("USER")
+                        // MANAGER ENDPOINTS
+                        .requestMatchers(HttpMethod.PUT, "/api/managers/{id}/applied").hasRole("MANAGER")
 
-                    .requestMatchers(HttpMethod.GET,"/api/rooms/{id}").hasRole("USER")
+                        // MANAGER AND CLIENT ENDPOINTS
 
-                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/type").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/type/admin").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/type/manager").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/type/client").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/type/user").hasRole("USER")
-                    .requestMatchers(HttpMethod.GET,"/api/request/path").hasRole("USER")
-                    
+                        // USER ENDPOINTS
+                        .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT, "/api/users/{id}").hasRole("USER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasRole("USER")
 
-                    //USER IMAGE ENDPOINTS
-                    .requestMatchers(HttpMethod.GET,"/api/users/{id}/image").hasAnyRole("USER", "ADMIN")
-                    .requestMatchers(HttpMethod.POST,"/api/users/{id}/image").hasAnyRole("USER", "ADMIN")
-                    .requestMatchers(HttpMethod.DELETE,"/api/users/{id}/image").hasAnyRole("USER", "ADMIN")
-                    
-                    
-                    //HOTEL IMAGE ENDPOINTS
-                    .requestMatchers(HttpMethod.GET,"/api/hotels/{id}/image").hasAnyRole("USER","ADMIN")
-                    .requestMatchers(HttpMethod.POST,"/api/hotels/{id}/image").hasAnyRole("USER","ADMIN")
-                    .requestMatchers(HttpMethod.DELETE,"/api/hotels/{id}/image").hasAnyRole("USER","ADMIN")
-                    
-                    //CLIENT ENDPOINTS                  
-                    .requestMatchers(HttpMethod.POST,"/api/reservations/users/{userId}/hotels/{hotelId}/rooms/{roomId}").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/{id}").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/reviews/{id}").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/rooms/{id}").hasRole("USER")
 
-                    .requestMatchers(HttpMethod.POST,"/api/reviews/hotels/{hotelId}").hasRole("CLIENT")
-                    
-                    // PUBLIC ENDPOINTS
-                    .requestMatchers(HttpMethod.POST,"/api/users").permitAll()
-                    .requestMatchers(HttpMethod.GET,"/api/reviews/{id}").permitAll()
-                    .requestMatchers(HttpMethod.GET,"/api/reviews/users/{id}").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/reviews/hotels/{id}").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/hotels/recommended").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/hotels/specific").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/rooms/{id}").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/rooms/hotels/{id}").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/reviews/size/hotels/{id}").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/reviews/percentage/hotels/{id}").permitAll()
-                    .requestMatchers(HttpMethod.GET,"/api/reviews").permitAll()
-                    .anyRequest().permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/reservations/users/{id}").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/reservations/hotels/{id}").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/reservations/rooms/{id}").hasRole("USER")
 
-                    
+                        .requestMatchers(HttpMethod.GET, "/api/rooms/{id}").hasRole("USER")
 
-                    
-			);
-		
+                        .requestMatchers(HttpMethod.GET, "/api/users/{id}/type").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/users/{id}/type/admin").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/users/{id}/type/manager").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/users/{id}/type/client").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/users/{id}/type/user").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/request/path").hasRole("USER")
+
+                        // USER IMAGE ENDPOINTS
+                        .requestMatchers(HttpMethod.GET, "/api/users/{id}/image").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/users/{id}/image").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/{id}/image").hasAnyRole("USER", "ADMIN")
+
+                        // HOTEL IMAGE ENDPOINTS
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/{id}/image").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/hotels/{id}/image").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/hotels/{id}/image").hasAnyRole("USER", "ADMIN")
+
+                        // CLIENT ENDPOINTS
+                        .requestMatchers(HttpMethod.POST,
+                                "/api/reservations/users/{userId}/hotels/{hotelId}/rooms/{roomId}")
+                        .hasRole("CLIENT")
+
+                        .requestMatchers(HttpMethod.POST, "/api/reviews/hotels/{hotelId}").hasRole("CLIENT")
+
+                        // PUBLIC ENDPOINTS
+                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/reviews/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/reviews/users/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/reviews/hotels/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/recommended").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/specific").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/rooms/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/rooms/hotels/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/reviews/size/hotels/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/reviews/percentage/hotels/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/reviews").permitAll()
+                        .anyRequest().permitAll()
+
+                );
+
         // Disable Form login Authentication
         http.formLogin(formLogin -> formLogin.disable());
 
@@ -177,18 +200,21 @@ public class SecurityConfiguration {
         // Stateless session
         http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-		// Add JWT Token filter
-		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        // Add JWT Token filter
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
-		return http.build();
-	}
+        return http.build();
+    }
 
     @Bean
-    @Order(2)
+    @Order(3)
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authenticationProvider(authenticationProvider());
         http
                 .authorizeHttpRequests(authorize -> authorize
+                        //SPA
+                        .requestMatchers("/new/**").permitAll()
+                
                         // public pages
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/loginError").permitAll()
@@ -216,9 +242,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/index/*/images/**").permitAll()
                         .requestMatchers("/v3/**").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
-                        
 
-                        
                         // User pages
                         .requestMatchers("/profile/**").hasAnyRole("USER")
                         .requestMatchers("/editProfile/**").hasAnyRole("USER")
@@ -226,7 +250,6 @@ public class SecurityConfiguration {
                         .requestMatchers("/editProfileimage/**").hasAnyRole("USER")
                         .requestMatchers("/postHotelReviews/**").hasAnyRole("USER")
                         .requestMatchers("/replace/**").hasAnyRole("USER")
-                        
 
                         // Client pages
                         .requestMatchers("/clientReservations/**").hasAnyRole("CLIENT")
