@@ -3,28 +3,24 @@ import { UserService } from '../service/UserService';
 import { User } from '../entities/user.model';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
+  selector: 'app-error',
+  templateUrl: './error.component.html',
   //styleUrl: ''
 })
-export class ProfileComponent {
+export class ErrorComponent {
   title = 'frontend';
 
   public userType: string[];
   public isUser: boolean;
-  public isClient: boolean;
   public isManager: boolean;
   public isAdmin: boolean;
-  public isValidated: boolean;
   public user! : User;
 
 constructor(private userService: UserService) {
     this.userType = [""];
     this.isUser = false;
-    this.isClient = false;
     this.isManager = false;
-    this.isAdmin = false;
-    this.isValidated = false;
+    this.isAdmin = false; 
 }
 
   ngOnInit() {
@@ -33,10 +29,8 @@ constructor(private userService: UserService) {
       this.user = user;
       this.userType = user.rols;
       this.isUser = user.rols.includes("USER");
-      this.isClient = user.rols.includes("CLIENT");
       this.isManager = user.rols.includes("MANAGER");
       this.isAdmin = user.rols.includes("ADMIN");
-      this.isValidated = user.validated !== undefined ? user.validated : false;
     },
     error: err => {
       // Handle error here

@@ -7,18 +7,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { Header } from './profileScreens/header.component';
-import { Footer } from './profileScreens/footer.component';
-import { Login } from './profileScreens/login.component'; 
-import { Profile } from './profileScreens/profile.component';  
+import { HeaderComponent } from './globalComponents/header.component';
+import { FooterComponent } from './globalComponents/footer.component';
+import { LoginComponent } from './profileScreens/login.component'; 
+import { ProfileComponent } from './profileScreens/profile.component';  
+import { SidebarComponent } from './globalComponents/sidebar.component'; 
+import { ErrorComponent} from './globalComponents/error.component';  
 
 @NgModule({
   declarations: [
     AppComponent,
-    Header,
-    Login,
-    Footer,
-    Profile,
+    HeaderComponent,
+    LoginComponent,
+    FooterComponent,
+    ProfileComponent,
+    SidebarComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,

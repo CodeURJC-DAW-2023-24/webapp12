@@ -8,6 +8,7 @@ import { Review } from "./review.model";
     lastName: string;
     bio?: string;
     location?: string;
+    language?: string;
     phone: string;
     email: string;
     imageFile?: any; // Blob type doesn't exist in TypeScript, use any or create a custom type

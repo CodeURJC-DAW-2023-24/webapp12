@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './login.component.html',
   //styleUrl: ''
 })
-export class Login {
+export class LoginComponent {
   title = 'frontend';
 
   public username: string;

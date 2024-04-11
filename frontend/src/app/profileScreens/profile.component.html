@@ -1,0 +1,115 @@
+<body class="bg-gradient-primary">
+    <!-- Content Wrapper -->
+    <div id="wrapper">
+        <app-sidebar></app-sidebar>
+        <div class="container">
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div class="row content-border">
+                    <div class="col-xl-2"></div>
+                    <div class="col-xl-7">
+                        <div class="card mt-4">
+                            <div class="card-body pb-0">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="text-center border-end">
+                                            <ng-container *ngIf="isManager">
+                                                <img src="/profile/{{user.id}}/images"
+                                                    class="img-fluid avatar-xxl rounded-circle" alt="">
+                                                <h4 class="text-primary font-size-20 mt-3 mb-2">{{user.username}}</h4>
+                                                <h5 class="text-muted font-size-13 mb-0 p-1">{{user.organization}}</h5>
+                                                <p class="text-validated font-size-15 mb-0 p-1" *ngIf="isValidated">
+                                                    Validated manager</p>
+                                            </ng-container>
+                                        </div>
+                                    </div><!-- end col -->
+                                    <div class="col-md-8">
+                                        <div class="ms-3">
+                                            <div>
+                                                <h4 class="card-title mb-2">Biography</h4>
+                                                <p class="mb-0 text-muted">{{user.bio}}</p>
+                                            </div>
+                                            <div class="row my-4">
+                                                <div class="col-md-12">
+                                                    <div>
+                                                        <p class="text-muted mb-2 fw-medium"><i
+                                                                class="mdi mdi-email-outline me-2"></i>{{user.email}}
+                                                        </p>
+                                                        <p class="text-muted fw-medium mb-0"><i
+                                                                class="mdi mdi-phone-in-talk-outline me-2"></i>{{user.phone}}
+                                                        </p>
+                                                    </div>
+                                                </div><!-- end col -->
+                                            </div><!-- end row -->
+
+                                            <ul class="nav nav-tabs nav-tabs-custom border-bottom-0 mt-3 nav-justfied"
+                                                role="tablist">
+                                                <li class="nav-item mt-3 mb-3 mr-3" role="presentation">
+                                                    <a href="/editProfile/{{user.id}}">
+                                                        <button class="btn btn-primary btn-user btn-block">Edit
+                                                            profile</button>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item mt-3 mb-3 mr-3">
+                                                    <form action="/logout" method="post">
+                                                        <input type="submit" value="Sign Out"
+                                                            class="btn btn-primary btn-user btn-block" id="logout" />
+                                                        <!--<input type="hidden" name="_csrf" value="{{token}}"/>-->
+                                                    </form>
+                                                </li>
+
+                                                <ng-container *ngIf="!user.validated && user.rejected ">
+                                                    <li class="nav-item mt-3 mb-3 ">
+                                                        <form action="/application/{{user.id}}" method="post">
+                                                            <input type="submit" value="Apply for validation"
+                                                                class="btn btn-primary btn-user btn-block" id="apply" />
+                                                            <!--<input type="hidden" name="_csrf" value="{{token}}"/>-->
+                                                        </form>
+                                                    </li><!-- end li -->
+                                                </ng-container>
+
+                                            </ul><!-- end ul -->
+                                        </div>
+                                    </div><!-- end col -->
+                                </div><!-- end row -->
+                            </div><!-- end card body -->
+                        </div><!-- end card -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div>
+                                    <h4 class="card-title mb-4">Personal Details</h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">Name</th>
+                                                    <td>{{user.name}}</td>
+                                                </tr><!-- end tr -->
+                                                <tr>
+                                                    <th scope="row">Location</th>
+                                                    <td>{{user.location}}</td>
+                                                </tr><!-- end tr -->
+                                                <tr>
+                                                    <th scope="row">Language</th>
+                                                    <td>{{user.language}}</td>
+                                                </tr><!-- end tr -->
+                                                <tr>
+                                                    <th scope="row">Phone number</th>
+                                                    <td>{{user.phone}}</td>
+                                                </tr><!-- end tr -->
+                                                <tr>
+                                                    <th scope="row">Email</th>
+                                                    <td>{{user.email}}</td>
+                                                </tr><!-- end tr -->
+                                            </tbody><!-- end tbody -->
+                                        </table><!-- end table -->
+                                    </div>
+                                </div>
+                            </div><!-- end card body -->
+                        </div><!-- end card -->
+                    </div><!-- end col -->
+                </div>
+            </div>
+            <!-- End of Wrapper -->
+        </div>
+    </div>
+</body>

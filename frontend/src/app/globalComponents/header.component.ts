@@ -5,6 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './header.component.html',
   //styleUrl: ''
 })
-export class Header {
+export class HeaderComponent {
   title = 'frontend';
 }

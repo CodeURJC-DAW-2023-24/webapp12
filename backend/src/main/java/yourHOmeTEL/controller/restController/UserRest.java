@@ -330,6 +330,35 @@ public class UserRest {
 		}
 	}
 
+    @Operation (summary = "Returns the currently logged user")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "User data returned correctly",
+            content = {@Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation=UserE.class)
+            )}
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "No user logged in"
+        )
+    })
+
+    @JsonView(UserDetails.class)
+    @GetMapping("/currentUser")
+    public ResponseEntity<UserE> currentUser(HttpServletRequest request) {
+        try {
+			UserE currentUser = userService.findByNick( request.getUserPrincipal().getName()).orElseThrow();
+            return ResponseEntity.ok(currentUser);
+
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+
+        }
+    }
+
     @Operation (summary = "Returns a specific user")
     @ApiResponses(value = {
         @ApiResponse(
