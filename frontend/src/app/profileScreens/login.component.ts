@@ -38,7 +38,7 @@ export class LoginComponent {
   submitCredentials(){
     this.userService.Login(this.username, this.password).subscribe({
       next: user =>{this.router.navigate(['/profile']);},
-      error: err => {this.router.navigate(['']);}
+      error: err => {this.router.navigate(['/loginError']);}
     });
   }
 }

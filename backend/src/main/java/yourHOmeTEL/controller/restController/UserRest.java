@@ -350,7 +350,7 @@ public class UserRest {
     @GetMapping("/currentUser")
     public ResponseEntity<UserE> currentUser(HttpServletRequest request) {
         try {
-			UserE currentUser = userService.findByNick( request.getUserPrincipal().getName()).orElseThrow();
+			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
             return ResponseEntity.ok(currentUser);
 
         } catch (NoSuchElementException e) {

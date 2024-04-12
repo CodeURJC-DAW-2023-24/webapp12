@@ -17,6 +17,7 @@ export class ProfileComponent {
   public isAdmin: boolean;
   public isValidated: boolean;
   public user! : User;
+  public imageUrl!: string;
 
 constructor(private userService: UserService) {
     this.userType = [""];
@@ -25,6 +26,7 @@ constructor(private userService: UserService) {
     this.isManager = false;
     this.isAdmin = false;
     this.isValidated = false;
+    
 }
 
   ngOnInit() {
@@ -37,9 +39,10 @@ constructor(private userService: UserService) {
       this.isManager = user.rols.includes("MANAGER");
       this.isAdmin = user.rols.includes("ADMIN");
       this.isValidated = user.validated !== undefined ? user.validated : false;
+      this.imageUrl = `/api/users/${user.id}/image`;
     },
     error: err => {
-      // Handle error here
+      console.log(err);
     }
     });
   }

@@ -10,12 +10,11 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   Login(username: string, password: string) : Observable<string>{
-    return this.http.post<string>('/api/login', {username, password});
-
-    
+    return this.http.post<string>('/api/login', {username, password});  
   } 
 
   GetCurrentUser(): Observable<User>{
     return this.http.get<User>('/api/currentUser');
+    
   }
 }

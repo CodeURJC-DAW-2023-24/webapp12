@@ -63,20 +63,56 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         return authConfig.getAuthenticationManager();
     }
 
-    /*@Bean
-    @Order(1)
-    public SecurityFilterChain SPAFilterChain(HttpSecurity http) throws Exception {
+    /*@Order(1)
+    public SecurityFilterChain angularFilterChain(HttpSecurity http) throws Exception {
         http.authenticationProvider(authenticationProvider());
-
-        http.csrf(csrf -> csrf.disable());
-        http.formLogin(formLogin -> formLogin.disable());
         http
-                .authorizeRequests(authorize -> authorize   
-                .requestMatchers("/new/**").permitAll())
+                .authorizeHttpRequests(authorize -> authorize
+                //SPA
+                .requestMatchers("/new/profile").hasAnyRole("USER")
+                .requestMatchers("/new/**").permitAll()
                 
+        )
+        .formLogin(formLogin -> formLogin
+            .loginPage("/new/login")
+            .failureUrl("/new/loginError")
+            .defaultSuccessUrl("/new/profile")
+            .permitAll()
+        );
         return http.build();
     }*/
 
+    @Bean
+    @Order(1)
+    public SecurityFilterChain angularFilterChain(HttpSecurity http) throws Exception {
+        http.authenticationProvider(authenticationProvider());
+        
+        http
+                .securityMatcher("/new/**");
+
+        http
+                .authorizeHttpRequests(authorize -> authorize
+
+                        //SPA
+                        .requestMatchers("/new/profile").hasAnyRole("USER")
+                        .anyRequest().permitAll()
+
+
+                )
+                .formLogin(formLogin -> formLogin
+                    .loginPage("/new/login")
+                    .failureUrl("/new/loginError")
+                    .defaultSuccessUrl("/new/profile")
+                    .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/new/logout")
+                        .logoutSuccessUrl("/new/login")
+                        .permitAll());
+
+        return http.build();
+    }
+    
     @Bean
     @Order(2)
     public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
@@ -212,8 +248,6 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         http.authenticationProvider(authenticationProvider());
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        //SPA
-                        .requestMatchers("/new/**").permitAll()
                 
                         // public pages
                         .requestMatchers("/login").permitAll()
@@ -244,7 +278,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                         .requestMatchers("/swagger-ui/**").permitAll()
 
                         // User pages
-                        .requestMatchers("/profile/**").hasAnyRole("USER")
+                        .requestMatchers("/profile").hasAnyRole("USER")
                         .requestMatchers("/editProfile/**").hasAnyRole("USER")
                         .requestMatchers("/editProfile/*/images").hasAnyRole("USER")
                         .requestMatchers("/editProfileimage/**").hasAnyRole("USER")

@@ -13,6 +13,8 @@ import { LoginComponent } from './profileScreens/login.component';
 import { ProfileComponent } from './profileScreens/profile.component';  
 import { SidebarComponent } from './globalComponents/sidebar.component'; 
 import { ErrorComponent} from './globalComponents/error.component';  
+import { LoginErrorComponent } from './profileScreens/loginError.component';
+import { RegisterComponent } from './profileScreens/register.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { ErrorComponent} from './globalComponents/error.component';
     ProfileComponent,
     SidebarComponent,
     ErrorComponent,
+    LoginErrorComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
