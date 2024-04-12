@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './profileScreens/login.component';
-import { ProfileComponent } from './profileScreens/profile.component';
-import { RegisterComponent } from './profileScreens/register.component';
-import { LoginErrorComponent } from './profileScreens/loginError.component';
+import { LoginComponent } from './profile/screens/login.component';
+import { ProfileComponent } from './profile/screens/profile.component';
+import { RegisterComponent } from './profile/screens/register.component';
+import { LoginErrorComponent } from './profile/errors/loginError.component';
 import { ErrorComponent } from './globalComponents/error.component';
 
 

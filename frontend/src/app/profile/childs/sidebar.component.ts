@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { UserService } from '../service/UserService';
-import { User } from '../entities/user.model';
+import { UserService } from '../../service/UserService';
+import { User } from '../../entities/user.model';
 
 @Component({
   selector: 'app-sidebar',

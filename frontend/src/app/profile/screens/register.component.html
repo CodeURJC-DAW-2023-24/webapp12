@@ -30,38 +30,38 @@
                             <form class="user" action="/register" method="post" >
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" name="nick" placeholder="Username">
+                                        <input [(ngModel)]="nick" type="text" class="form-control form-control-user" name="nick" placeholder="Username">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" name="name" placeholder="First Name">
+                                        <input [(ngModel)]="name" type="text" class="form-control form-control-user" name="name" placeholder="First Name">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" name="lastname" placeholder="Last Name">
+                                        <input [(ngModel)]="lastname" type="text" class="form-control form-control-user" name="lastname" placeholder="Last Name">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" name="email" placeholder="Email">
+                                    <input [(ngModel)]="email" type="email" class="form-control form-control-user" name="email" placeholder="Email">
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user" id="exampleInputPassword" name="pass"  placeholder="Password">
+                                        <input [(ngModel)]="pass" type="password" class="form-control form-control-user" id="exampleInputPassword" name="pass"  placeholder="Password">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="radio" checked name="type" value=0>Register as Client
+                                        <input [(ngModel)]="userType" type="radio" checked name="type" value=0>Register as Client
                                     </div>
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="radio" name="type" value=1>Register as Manager
+                                        <input [(ngModel)]="userType" type="radio" name="type" value=1>Register as Manager
                                     </div>
                                 </div>
                                 <input type="submit" value="Register Account" class="btn btn-primary btn-user btn-block"/>
                                 <!--<input type="hidden" name="_csrf" value="{{token}}"/>-->
                             </form>
                             <div class="text-center">
-                                <a class="small" href="/login">Already have an account? Login!</a>
+                                <a [routerLink]="['/login']" class="small" >Already have an account? Login!</a>
                             </div>
                         </div>
                     </div>

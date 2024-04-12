@@ -6,15 +6,17 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { RecaptchaModule } from 'ng-recaptcha';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HeaderComponent } from './globalComponents/header.component';
-import { FooterComponent } from './globalComponents/footer.component';
-import { LoginComponent } from './profileScreens/login.component'; 
-import { ProfileComponent } from './profileScreens/profile.component';  
-import { SidebarComponent } from './globalComponents/sidebar.component'; 
+import { HeaderComponent } from './profile/childs/header.component';
+import { FooterComponent } from './profile/childs/footer.component';
+import { LoginComponent } from './profile/screens/login.component'; 
+import { ProfileComponent } from './profile/screens/profile.component';  
+import { SidebarComponent } from './profile/childs/sidebar.component'; 
 import { ErrorComponent} from './globalComponents/error.component';  
-import { LoginErrorComponent } from './profileScreens/loginError.component';
-import { RegisterComponent } from './profileScreens/register.component';
+import { LoginErrorComponent } from './profile/errors/loginError.component';
+import { RegisterComponent } from './profile/screens/register.component';
+import { NickTakenComponent } from './profile/errors/nickTaken.component';
 
 @NgModule({
   declarations: [
@@ -26,9 +28,11 @@ import { RegisterComponent } from './profileScreens/register.component';
     SidebarComponent,
     ErrorComponent,
     LoginErrorComponent,
-    RegisterComponent
+    RegisterComponent,
+    NickTakenComponent
   ],
   imports: [
+    RecaptchaModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

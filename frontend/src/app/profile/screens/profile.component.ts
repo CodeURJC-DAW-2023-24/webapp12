@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { UserService } from '../service/UserService';
-import { User } from '../entities/user.model';
+import { UserService } from '../../service/UserService';
+import { User } from '../../entities/user.model';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -19,7 +20,7 @@ export class ProfileComponent {
   public user! : User;
   public imageUrl!: string;
 
-constructor(private userService: UserService) {
+constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) {
     this.userType = [""];
     this.isUser = false;
     this.isClient = false;
@@ -42,7 +43,14 @@ constructor(private userService: UserService) {
       this.imageUrl = `/api/users/${user.id}/image`;
     },
     error: err => {
-      console.log(err);
+      if (err.status === 403) {
+        console.log('Forbidden error');
+        this.router.navigate(['/error']);
+        
+      }else {
+        console.log('Unknown error');
+        this.router.navigate(['/error']);
+      }
     }
     });
   }

@@ -1,5 +1,6 @@
-<body>
+<body class="bg-gradient-primary">
     <div class="container">
+
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
@@ -13,11 +14,11 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Invalid Credentials</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">This username is alredeady in use!</h1>
                                     </div>
                                     <a [routerLink]="['/login']" class="btn btn-primary btn-user btn-block">Log In</a>
                                     <div class="text-center mt-3">
-                                        <a [routerLink]="['/register']" class="mt-3" >Create an Account!</a>
+                                        <a [routerLink]="['/register']" class="btn btn-primary btn-user btn-block">Register</a>
                                     </div>
                                 </div>
                             </div>
@@ -28,5 +29,4 @@
             </div>
         </div>
     </div>
-
 </body>

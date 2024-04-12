@@ -363,45 +363,49 @@ public class UserController {
 
 	@PostMapping("/register")
 	public String registerClient(Model model, UserE user, Integer type) throws IOException {
-		if (!userService.existNick(user.getNick())) {
-			user.setPass(passwordEncoder.encode(user.getPass()));
-			List<String> rols = new ArrayList<>();
-			rols.add("USER");
-			if (type == 0) {
-				rols.add("CLIENT");
-				user.setvalidated(null);
-				user.setRejected(null);
-			} else {
-				rols.add("MANAGER");
-				user.setvalidated(false);
-				user.setRejected(false);
+		if(user.getNick() != "" && user.getPass() != "" && user.getEmail() != "" && user.getName() != "" && user.getLastname() != "" && type != null){
+			if (!userService.existNick(user.getNick())) {
+				user.setPass(passwordEncoder.encode(user.getPass()));
+				List<String> rols = new ArrayList<>();
+				rols.add("USER");
+				if (type == 0) {
+					rols.add("CLIENT");
+					user.setvalidated(null);
+					user.setRejected(null);
+				} else {
+					rols.add("MANAGER");
+					user.setvalidated(false);
+					user.setRejected(false);
+				}
+				user.setRols(rols);
+				user.setCollectionRols(rols);
+				List<Reservation> reservations = new ArrayList<>();
+				user.setReservations(reservations);
+				List<Hotel> hotels = new ArrayList<>();
+				user.setHotels(hotels);
+				List<Review> reviews = new ArrayList<>();
+				user.setReviews(reviews);
+
+				user.setLanguage("");
+				user.setLocation("");
+				user.setBio("");
+				user.setPhone("");
+				user.setOrganization("");
+
+				userService.save(user);
+
+				Resource image = new ClassPathResource("/static/images/default-hotel.jpg");
+				user.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
+				user.setImage(true);
+
+				userService.save(user);
+
+				return "redirect:/login";
+			}else {
+				return "redirect:/nickTaken";
 			}
-			user.setRols(rols);
-			user.setCollectionRols(rols);
-			List<Reservation> reservations = new ArrayList<>();
-			user.setReservations(reservations);
-			List<Hotel> hotels = new ArrayList<>();
-			user.setHotels(hotels);
-			List<Review> reviews = new ArrayList<>();
-			user.setReviews(reviews);
-
-			user.setLanguage("");
-			user.setLocation("");
-			user.setBio("");
-			user.setPhone("");
-			user.setOrganization("");
-
-			userService.save(user);
-
-			Resource image = new ClassPathResource("/static/images/default-hotel.jpg");
-			user.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
-			user.setImage(true);
-
-			userService.save(user);
-
-			return "redirect:/login";
-		} else {
-			return "redirect:/nickTaken";
+		}else{
+			return "redirect:/register";
 		}
 	}
 

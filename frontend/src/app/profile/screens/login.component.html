@@ -46,14 +46,16 @@
                                                 class="form-control form-control-user" id="exampleInputPassword"
                                                 placeholder="Password">
                                         </div>
-                                        <input (click) = "submitCredentials()" id="loginButton" value= "Log in"
-                                            class="btn btn-primary btn-user btn-block mb-4" />
+                                        <input (click) = "submitCredentials()" [disabled]="!captchaIsResolved"
+                                        id="loginButton" value= "Log in" class="btn btn-primary btn-user btn-block mb-4" />
                                         <!--<input type="hidden" name="_csrf" value="{{token}}" />-->
-                                        <div id="divRecaptcha" class="g-recaptcha ml-3"></div>
+                                        <div class ="ml-3">
+                                            <re-captcha siteKey="6LcYmIYpAAAAABssFnlPyL7CD1pRU0I0CxO_BVMK" (resolved)="handleResolved($event)" (expired)="handleExpired()"></re-captcha>
+                                        </div>
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a  [routerLink]="['/register']">Create an Account!</a>
+                                        <a [routerLink]="['/register']">Create an Account!</a>
                                     </div>
                                 </div>
                             </div>
