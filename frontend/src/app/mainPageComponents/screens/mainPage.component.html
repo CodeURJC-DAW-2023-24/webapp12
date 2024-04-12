@@ -1,0 +1,71 @@
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <div class="container">
+            <a [routerLink]="['/mainPage']" class="navbar-brand">Your<span>HOmeTEL</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="oi oi-menu"></span> Menu
+            </button>
+            <ul class="navbar-nav ml-auto">
+                <!--Search bar-->
+                <div class="collapse navbar-collapse" id="ftco-nav">
+                    <div class="sidebar-box mt-3">
+                        <form method="get" class="search-form">
+                            <div class="form-group">
+                                <input type="search" class="form-control" placeholder="Type..." name="searchValue">
+                                <button (click)="getHotelsBySearch($event)" class="icon ion-ios-search"></button>
+                                <!--<input type="hidden" name="_csrf" value="{{token}}"/>-->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <li class="nav-item active"><a [routerLink]="['/mainPage']" class="nav-link font-size-20">Home</a></li>
+                <li *ngIf="!isUser" class="nav-item"><a [routerLink]="['/login']" class="nav-link font-size-20">Log
+                        In</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- END nav -->
+    <div class="hero-wrap" style="background-image: url('../../../assets/images/bg_3.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
+                <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+                    <div class="text">
+                        <p class="breadcrumbs mb-2"><span class="mr-2"><a [routerLink]="['/mainPage']">Home</a></span>
+                        </p>
+                        <h1 class="mb-4 bread">Our Hotels</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row d-flex" id="hotelsList">
+                <ng-container *ngFor="let hotel of hotels">
+                    <div class="col-md-4 d-flex ftco-animate">
+                        <div class="blog-entry align-self-stretch">
+                            <img [src]="hotel.imageFile" id="indexHotelImg" class="block-20 rounded" alt="">
+                            <div class="text mt-3">
+                                <h3 class="heading">{{hotel.name}}</h3>
+                                <p>{{hotel.description}}</p>
+                                <a *ngIf="isClient" [routerLink]="['/hotelInformation', hotel.id]"
+                                    class="btn btn-secondary rounded">Book now</a>
+                                <a *ngIf="!isClient" [routerLink]="['/hotelInformation', hotel.id]"
+                                    class="btn btn-secondary rounded">View information</a>
+                                <a [routerLink]="['/hotelReviews', hotel.id]"
+                                    class="btn btn-secondary rounded">Reviews</a>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="mt-5">
+                <a onclick='loadMoreHotels()' class="btn btn-secondary rounded" id="moreHotels">More hotels</a>
+            </div>
+        </div>
+    </section>
+    <app-footerMain></app-footerMain>
+</body>

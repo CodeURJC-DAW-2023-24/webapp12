@@ -20,7 +20,10 @@ export class UserService {
 
   CreateUser(nick: string, name:string, lastname: string,
     email: string, pass: string, userType: number): Observable<HttpResponse<any>>{
-      const typeParam = new HttpParams().set('type', userType.toString());
-      return this.http.post<HttpResponse<any>>('/api/users', {nick, name, lastname, email, pass}, {params: typeParam});
+      return this.http.post<HttpResponse<any>>('/api/users', {nick, name, lastname, email, pass}, {params: {typeParam: userType.toString()}});
+  }
+
+  ApplyManager(id: number): Observable<User>{
+    return this.http.put<User>(`api/managers/${id}/applied`, {params: {state: true}});
   }
 }

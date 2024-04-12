@@ -330,7 +330,7 @@ public class initDataBaseService {
                 hotel6.setImagePath("/api/hotels/" + hotel6.getId() + "/image");
                 hotel7.generateImage("/static/images/hotel6.jpg");
                 hotel7.setImagePath("/api/hotels/" + hotel7.getId() + "/image");
-                hotel8.generateImage("/static/images/hortel5.jpg");
+                hotel8.generateImage("/static/images/hotel5.jpg");
                 hotel8.setImagePath("/api/hotels/" + hotel8.getId() + "/image");
                 hotel9.generateImage("/static/images/hotel6.jpg");
                 hotel9.setImagePath("/api/hotels/" + hotel9.getId() + "/image");

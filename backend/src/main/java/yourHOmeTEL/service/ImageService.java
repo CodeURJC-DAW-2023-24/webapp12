@@ -47,11 +47,6 @@ public class ImageService {
 
 		Resource file;
 
-		System.out.println("FILES_FOLDER: " + FILES_FOLDER);
-		System.out.println("Folder path: " + folder);
-		System.out.println("Image path: " + imagePath);
-		System.out.println("Working Directory = " + System.getProperty("user.dir"));
-
 		if (!Files.exists(imagePath)) {
 			Path defaultImagePath = FILES_FOLDER.resolve("default-user.jpg");
         	file = new UrlResource(defaultImagePath.toUri());

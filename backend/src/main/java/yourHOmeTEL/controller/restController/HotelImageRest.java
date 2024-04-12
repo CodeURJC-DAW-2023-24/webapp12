@@ -70,7 +70,7 @@ public class HotelImageRest {
             if (requestUser.getRols().contains("ADMIN") ||
                     (hotelManager.equals(requestUser) && hotelManager.getRols().contains("MANAGER"))) {
                 
-                String loc = "https://localhost:8443/api/hotels/"+ id + "/image";
+                String loc = "/api/hotels/"+ id + "/image";
                 URI location = URI.create(loc);
                 targetHotel.setImagePath(location.toString());
                 hotelService.save(targetHotel);

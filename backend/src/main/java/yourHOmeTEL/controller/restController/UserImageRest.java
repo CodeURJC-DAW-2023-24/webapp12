@@ -81,7 +81,7 @@ public class UserImageRest {
             UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
             UserE foundUser = userService.findById(id).orElseThrow();
             if (requestUser.getRols().contains("ADMIN") || foundUser.equals(requestUser)) {          
-                String loc = "https://localhost:8443/api/hotels/"+ id + "/image";
+                String loc = "/api/users/"+ id + "/image";
                 URI location = URI.create(loc);
                 foundUser.setImagePath(location.toString());
                 userService.save(foundUser);

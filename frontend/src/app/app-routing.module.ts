@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './profile/screens/login.component';
-import { ProfileComponent } from './profile/screens/profile.component';
-import { RegisterComponent } from './profile/screens/register.component';
-import { LoginErrorComponent } from './profile/errors/loginError.component';
+import { LoginComponent } from './profileComponents/screens/login.component';
+import { ProfileComponent } from './profileComponents/screens/profile.component';
+import { RegisterComponent } from './profileComponents/screens/register.component';
+import { LoginErrorComponent } from './profileComponents/errors/loginError.component';
+import { NickTakenComponent } from './profileComponents/errors/nickTaken.component';
+
 import { ErrorComponent } from './globalComponents/error.component';
+
+import { MainPageComponent } from './mainPageComponents/screens/mainPage.component';
+
 
 
 const routes: Routes = [
@@ -13,6 +18,8 @@ const routes: Routes = [
   { path: 'error', component: ErrorComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'loginError', component: LoginErrorComponent },
+  { path: 'nickTaken', component: NickTakenComponent },
+  {path: 'mainPage', component: MainPageComponent},
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 

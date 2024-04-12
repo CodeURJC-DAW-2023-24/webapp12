@@ -189,11 +189,10 @@ public class HotelService implements GeneralService<Hotel> {
         int startingSize = recomendedHotels.size();
         
         while (recomendedHotels.size() + 1 < 7 && i <= sizeAllHotels) {
-            // if there's a gap in the id sequence, it will throw an exception and continue
-            // the loop
+            // if there's a gap in the id sequence, it will throw an exception and continue the loop
             try {
                 Hotel hotel = findById((long) startingSize + i).orElseThrow();
-                if (hotel != null && hotel.getManager().getvalidated())
+                if (hotel != null && hotel.getManager().getvalidated() && !recomendedHotels.contains(hotel))
                     recomendedHotels.add(hotel);
             } catch (NoSuchElementException e) {
             }
