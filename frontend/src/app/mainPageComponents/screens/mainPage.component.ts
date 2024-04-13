@@ -9,7 +9,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 @Component({
   selector: 'app-mainPage',
   templateUrl: './mainPage.component.html',
-  styleUrls: ["./mainPage.component.css"]
+  styleUrls: ["./mainPageButtons.component.css"]
 })
 export class MainPageComponent {
   title = 'frontend';

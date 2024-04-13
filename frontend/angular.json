@@ -39,7 +39,6 @@
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/bootstrap/scss/bootstrap.scss",
-              "../backend/src/main/resources/static/css/style.css",
               "src/styles.css",
               "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css",
               "https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css",
@@ -90,13 +89,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "3mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "6mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
                 }
               ],
               "outputHashing": "all"
