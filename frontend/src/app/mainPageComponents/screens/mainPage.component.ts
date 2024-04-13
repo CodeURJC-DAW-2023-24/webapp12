@@ -17,11 +17,7 @@ export class MainPageComponent {
   public userType: string[];
   public isUser: boolean;
   public isClient: boolean;
-  public isManager: boolean;
-  public isAdmin: boolean;
-  public isValidated: boolean;
   public user! : User;
-  public imageUrl!: string;
   public hotels: Hotel[];
   public searchValue: string;
 
@@ -30,9 +26,6 @@ constructor(private userService: UserService, private hotelService: HotelService
     this.userType = [""];
     this.isUser = false;
     this.isClient = false;
-    this.isManager = false;
-    this.isAdmin = false;
-    this.isValidated = false;
     this.searchValue = '';
     this.hotels = []; 
 }
@@ -45,21 +38,23 @@ ngOnInit() {
 getCurrentUser() {
   this.userService.GetCurrentUser().subscribe({
     next: user => {
-      this.user = user;
-      this.userType = user.rols;
-      this.isUser = user.rols.includes("USER");
-      this.isClient = user.rols.includes("CLIENT");
-      this.isManager = user.rols.includes("MANAGER");
-      this.isAdmin = user.rols.includes("ADMIN");
-      this.isValidated = user.validated !== undefined ? user.validated : false;
-      this.imageUrl = `/api/users/${user.id}/image`;
+      if (user && user.username){
+        this.user = user;
+        this.userType = user.rols;
+        this.isUser = user.rols.includes("USER");
+        this.isClient = user.rols.includes("CLIENT");
+      }
+      else{
+        this.isUser = false;
+        this.isClient = false;
+      }
     },
     error: err => {
       if (err.status === 403) {
         console.log('Forbidden error');
         this.router.navigate(['/error']);
       } else {
-        console.log('Unknown error');
+        console.log('No user logged in');
         this.router.navigate(['/error']);
       }
     }
@@ -96,5 +91,9 @@ getCurrentUser() {
           this.router.navigate(['/error']);
       }
     });
+  }
+
+  getHotelImageUrl(hotelId: number): string {
+    return `/api/hotels/${hotelId}/image`;
   }
 }

@@ -266,7 +266,7 @@ public class UserController {
 		} else
 			return "/error";
 	}
-
+/*/api/profile/{id}/images */
 	@GetMapping("/profile/{id}/images")
 	public ResponseEntity<Object> downloadImage(HttpServletRequest request, @PathVariable Long id) throws SQLException {
 

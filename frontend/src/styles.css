@@ -17,5 +17,4 @@
 @import '../../backend/src/main/resources/static/css/bootstrap/bootstrap-reboot.css';
 @import '../../backend/src/main/resources/static/css/css/captcha.css';
 @import '../../backend/src/main/resources/static/css/css/mixins/_text-hide.css';
-
-
+@import '../../backend/src/main/resources/static/css/reviewButton.css';

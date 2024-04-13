@@ -10,7 +10,7 @@ import { User } from '../../entities/user.model';
 export class SidebarComponent {
   title = 'frontend';
 
-  public userType: string[];
+  public userType: string;
   public isUser: boolean;
   public isClient: boolean;
   public isManager: boolean;
@@ -18,7 +18,7 @@ export class SidebarComponent {
   public user! : User;
 
 constructor(private userService: UserService) {
-    this.userType = [""];
+    this.userType = "";
     this.isUser = false;
     this.isClient = false;
     this.isManager = false;
@@ -29,7 +29,13 @@ constructor(private userService: UserService) {
     this.userService.GetCurrentUser().subscribe({
     next: user =>{
       this.user = user;
-      this.userType = user.rols;
+      if (user.rols.includes('CLIENT')) {
+        this.userType = 'CLIENT';
+      } else if (user.rols.includes('MANAGER')) {
+        this.userType = 'MANAGER';
+      } else if (user.rols.includes('ADMIN')) {
+        this.userType = 'ADMIN';
+      }
       this.isUser = user.rols.includes("USER");
       this.isClient = user.rols.includes("CLIENT");
       this.isManager = user.rols.includes("MANAGER");

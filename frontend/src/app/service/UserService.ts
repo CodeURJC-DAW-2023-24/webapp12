@@ -26,4 +26,8 @@ export class UserService {
   ApplyManager(id: number): Observable<User>{
     return this.http.put<User>(`api/managers/${id}/applied`, {params: {state: true}});
   }
+
+  LogOut(): Observable<HttpResponse<any>>{  
+    return this.http.post<HttpResponse<any>>('/api/logout', {});
+  }
 }

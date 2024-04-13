@@ -3,8 +3,15 @@ package yourHOmeTEL.controller.restController;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.sql.SQLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.util.NoSuchElementException;
 
+import javax.sql.rowset.serial.SerialException;
+
+import java.sql.Blob;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -37,56 +44,50 @@ public class UserImageRest {
     @Autowired
     private UserService userService;
 
-    //USER IMAGE CONTROLLERS
+    // USER IMAGE CONTROLLERS
 
     @Operation(summary = "Download user profile image")
     @ApiResponses(value = {
-            @ApiResponse(
-                responseCode = "200",
-                description = "User profile image downloaded successfully",
-                content = @Content(mediaType = "image/*")
-            ),
-            @ApiResponse(
-            responseCode = "404",
-            description = "User not found"
-        )
+            @ApiResponse(responseCode = "200", description = "User profile image downloaded successfully", content = @Content(mediaType = "image/*")),
+            @ApiResponse(responseCode = "404", description = "User not found")
+    })
+    @GetMapping("/users/{id}/images")
+    public ResponseEntity<Object> downloadProfileImage(HttpServletRequest request, @PathVariable long id)
+            throws MalformedURLException, SQLException {
+        return imgService.createDownlaodResponseFromUserImage(id);
+    }
+
+    @Operation(summary = "Returns user profile image")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User profile image downloaded successfully", content = @Content(mediaType = "image/*")),
+            @ApiResponse(responseCode = "404", description = "User not found")
     })
     @GetMapping("/users/{id}/image")
-    public ResponseEntity<Object> downloadProfileImage(HttpServletRequest request, @PathVariable long id)
-            throws MalformedURLException {
-        return imgService.createResponseFromImage(imgService.getFilesFolder(), id);
+    public ResponseEntity<Object> getProfileImage(HttpServletRequest request, @PathVariable long id)
+            throws MalformedURLException, SQLException {
+        return imgService.createResponseFromUserImage(id);
     }
 
     @Operation(summary = "Upload user profile image")
     @ApiResponses(value = {
-            @ApiResponse(
-                responseCode = "201",
-                description = "User profile image uploaded successfully",
-                content = @Content(mediaType = "application/json")
-            ),
-            @ApiResponse(
-                responseCode = "403",
-                description = "Operation only allowed for the user or an admin",
-                content = @Content(mediaType = "application/json")
-            ),
-            @ApiResponse(
-            responseCode = "404",
-            description = "User not found"
-        )
+            @ApiResponse(responseCode = "201", description = "User profile image uploaded successfully", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "403", description = "Operation only allowed for the user or an admin", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "User not found")
     })
     @PostMapping("/users/{id}/image")
     public ResponseEntity<Object> uploadImage(HttpServletRequest request, @PathVariable long id,
-            @RequestParam MultipartFile imageFile) throws IOException {
+            @RequestParam MultipartFile imageFile) throws IOException, SQLException, SerialException {
         try {
             UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
             UserE foundUser = userService.findById(id).orElseThrow();
-            if (requestUser.getRols().contains("ADMIN") || foundUser.equals(requestUser)) {          
-                String loc = "/api/users/"+ id + "/image";
+            if (requestUser.getRols().contains("ADMIN") || foundUser.equals(requestUser)) {
+                String loc = "/api/users/" + id + "/image";
                 URI location = URI.create(loc);
-                foundUser.setImagePath(location.toString());
-                userService.save(foundUser);
-                imgService.saveImage(imgService.getFilesFolder(), foundUser.getId(), imageFile);
-                
+                Blob blob = new javax.sql.rowset.serial.SerialBlob(imageFile.getBytes());
+                foundUser.setImageFile(blob);
+                Path newFilePath = imgService.saveUserImage(foundUser.getId(), imageFile);
+                foundUser.setImagePath(newFilePath.toString());
+                userService.save(foundUser);              
                 return ResponseEntity.created(location).build();
 
             } else {
@@ -99,31 +100,25 @@ public class UserImageRest {
 
     @Operation(summary = "Delete user profile image")
     @ApiResponses(value = {
-            @ApiResponse(
-                responseCode = "204",
-                description = "User profile image deleted successfully",
-                content = @Content(mediaType = "application/json")
-            ),
-            @ApiResponse(
-                responseCode = "403",
-                description = "Operation only allowed for the user or an admin",
-                content = @Content(mediaType = "application/json")
-            ),
-            @ApiResponse(
-            responseCode = "404",
-            description = "User not found"
-        )
+            @ApiResponse(responseCode = "204", description = "User profile image deleted successfully", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "403", description = "Operation only allowed for the user or an admin", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "User not found")
     })
     @DeleteMapping("/users/{id}/image")
     public ResponseEntity<Object> deleteImage(HttpServletRequest request, @PathVariable long id)
-            throws IOException {
+            throws IOException, SQLException, SerialException {
         try {
             UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
             UserE foundUser = userService.findById(id).orElseThrow();
-            if(requestUser.getRols().contains("ADMIN") || requestUser.equals(foundUser)){
-                foundUser.setImagePath(null);
+            if (requestUser.getRols().contains("ADMIN") || requestUser.equals(foundUser)) {
+                Path defaultImagePath = Paths.get(imgService.getFilesFolder(), "default-user.jpg");
+                byte[] defaultImageBytes = Files.readAllBytes(defaultImagePath);
+                Blob defaultImageBlob = new javax.sql.rowset.serial.SerialBlob(defaultImageBytes);
+                foundUser.setImageFile(defaultImageBlob);
+                Path newFilePath = imgService.deleteUserImage(imgService.getFilesFolder(), foundUser);
+                foundUser.setImagePath(newFilePath.toString());
                 userService.save(foundUser);
-                this.imgService.deleteImage(imgService.getFilesFolder(), id);
+                
                 return ResponseEntity.noContent().build();
             } else {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -133,5 +128,5 @@ public class UserImageRest {
             return ResponseEntity.notFound().build();
         }
     }
-    
+
 }

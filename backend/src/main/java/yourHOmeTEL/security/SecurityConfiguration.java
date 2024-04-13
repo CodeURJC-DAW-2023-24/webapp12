@@ -63,25 +63,6 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         return authConfig.getAuthenticationManager();
     }
 
-    /*@Order(1)
-    public SecurityFilterChain angularFilterChain(HttpSecurity http) throws Exception {
-        http.authenticationProvider(authenticationProvider());
-        http
-                .authorizeHttpRequests(authorize -> authorize
-                //SPA
-                .requestMatchers("/new/profile").hasAnyRole("USER")
-                .requestMatchers("/new/**").permitAll()
-                
-        )
-        .formLogin(formLogin -> formLogin
-            .loginPage("/new/login")
-            .failureUrl("/new/loginError")
-            .defaultSuccessUrl("/new/profile")
-            .permitAll()
-        );
-        return http.build();
-    }*/
-
     @Bean
     @Order(1)
     public SecurityFilterChain angularFilterChain(HttpSecurity http) throws Exception {
@@ -256,6 +237,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/fonts/**").permitAll()
                         .requestMatchers("/images/**").permitAll()
+                        .requestMatchers("/assets/**").permitAll()
                         .requestMatchers("/img/**").permitAll()
                         .requestMatchers("/index").permitAll()
                         .requestMatchers("/register").permitAll()

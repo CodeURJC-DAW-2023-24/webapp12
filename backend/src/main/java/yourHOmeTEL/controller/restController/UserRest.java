@@ -269,7 +269,6 @@ public class UserRest {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User data returned correctly", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = UserE.class)) }),
-            @ApiResponse(responseCode = "404", description = "No user logged in")
     })
 
     @JsonView(UserDetails.class)
@@ -280,7 +279,7 @@ public class UserRest {
             return ResponseEntity.ok(currentUser);
 
         } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok(new UserE());
 
         }
     }

@@ -148,8 +148,11 @@ public class HotelController {
 		if (hotel.isPresent() && hotel.get().getImageFile() != null) {
 
 			Resource file = new InputStreamResource(hotel.get().getImageFile().getBinaryStream());
-			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpg")
-					.contentLength(hotel.get().getImageFile().length()).body(file);
+			return ResponseEntity.ok().
+			header(HttpHeaders.CONTENT_TYPE, "image/jpg")
+			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=image.jpg")		
+			.contentLength(hotel.get().getImageFile().length())
+			.body(file);
 
 		} else {
 			return ResponseEntity.notFound().build();

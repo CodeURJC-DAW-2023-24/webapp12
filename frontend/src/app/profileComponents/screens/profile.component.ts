@@ -79,4 +79,16 @@ constructor(private userService: UserService, private router: Router, private ro
       }
     });
   }
+
+  LogOut(){
+    this.userService.LogOut().subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log('Unknown error');
+        this.router.navigate(['/error']);
+      }
+    });
+  }
 }

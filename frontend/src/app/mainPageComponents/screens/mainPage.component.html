@@ -26,7 +26,7 @@
         </div>
     </nav>
     <!-- END nav -->
-    <div class="hero-wrap" style="background-image: url('../../../assets/images/bg_3.jpg');">
+    <div class="hero-wrap" style="background-image: url('../images/bg_3.jpg');">
         <div class="overlay"></div>
         <div class="container">
             <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
@@ -47,7 +47,7 @@
                 <ng-container *ngFor="let hotel of hotels">
                     <div class="col-md-4 d-flex ftco-animate">
                         <div class="blog-entry align-self-stretch">
-                            <img [src]="hotel.imageFile" id="indexHotelImg" class="block-20 rounded" alt="">
+                            <img [src]="getHotelImageUrl(hotel.id)" id="indexHotelImg" class="block-20 rounded" alt="">
                             <div class="text mt-3">
                                 <h3 class="heading">{{hotel.name}}</h3>
                                 <p>{{hotel.description}}</p>

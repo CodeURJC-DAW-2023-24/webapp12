@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import jakarta.annotation.PostConstruct;
 import yourHOmeTEL.model.Hotel;
@@ -20,7 +22,6 @@ import yourHOmeTEL.repository.ReservationRepository;
 import yourHOmeTEL.repository.ReviewRepository;
 import yourHOmeTEL.repository.RoomRepository;
 import yourHOmeTEL.repository.UserRepository;
-
 
 import java.util.Random;
 
@@ -66,7 +67,7 @@ public class initDataBaseService {
                 // init users
                 UserE client1 = new UserE("Jack1", "Wells1", "Bio", "loc", "lan", "phone",
                                 "mail", "org", null, "user", passwordEncoder.encode("pass"), null, null, rolesUser,
-                                rolesUser,new ArrayList<>(),
+                                rolesUser, new ArrayList<>(),
                                 new ArrayList<>(), new ArrayList<>());
 
                 UserE client2 = new UserE("Jack4", "Wells4", "Bio", "loc", "lan", "phone",
@@ -176,7 +177,7 @@ public class initDataBaseService {
                 room2.setHotel(hotel2);
                 room3.setHotel(hotel3);
 
-                //add room to hotel
+                // add room to hotel
                 hotel1.getRooms().add(room1);
                 hotel2.getRooms().add(room2);
                 hotel3.getRooms().add(room3);
@@ -292,63 +293,98 @@ public class initDataBaseService {
                 userRepository.save(client2);
 
                 // images for all type of users that we created
-                client1.generateImage("/static/images/userPhoto.jpg");
-                client1.setImagePath(("/api/users/" + client1.getId() + "/image").toString());
-                client2.generateImage("/static/images/client2.jpg");
-                client2.setImagePath(("/api/users/" + client2.getId() + "/image").toString());
-                client3.generateImage("/static/images/client3.jpg");
-                client3.setImagePath(("/api/users/" + client3.getId() + "/image").toString());
-                manager1.generateImage("/static/images/manager.jpg");
-                manager1.setImagePath(("/api/users/" + manager1.getId() + "/image").toString());
-                manager2.generateImage("/static/images/manager2.jpg");
-                manager2.setImagePath(("/api/users/" + manager2.getId() + "/image").toString());
-                manager3.generateImage("/static/images/manager3.jpg");
-                manager3.setImagePath(("/api/users/" + manager3.getId() + "/image").toString());
-                admin.generateImage("/static/images/admin.jpg");
-                admin.setImagePath(("/api/users/" + admin.getId() + "/image").toString());
+
+                String imagePath = "/static/images/userPhoto.jpg";
+                Resource imageResource = new ClassPathResource(imagePath);
+                if (!imageResource.exists()) {
+                        imagePath = "/static/images/default-user.jpg";
+                }
+                client1.generateImage(imagePath);
+                client1.setImagePath(imagePath);
                 userRepository.save(client1);
+
+                imagePath = "/static/images/client2.jpg";
+                imageResource = new ClassPathResource(imagePath);
+                if (!imageResource.exists()) {
+                        imagePath = "/static/images/default-user.jpg";
+                }
+                client2.generateImage(imagePath);
+                client2.setImagePath(imagePath);
                 userRepository.save(client2);
+
+                imagePath = "/static/images/client3.jpg";
+                imageResource = new ClassPathResource(imagePath);
+                if (!imageResource.exists()) {
+                        imagePath = "/static/images/default-user.jpg";
+                }
+                client3.generateImage(imagePath);
+                client3.setImagePath(imagePath);
                 userRepository.save(client3);
+
+                imagePath = "/static/images/manager.jpg";
+                imageResource = new ClassPathResource(imagePath);
+                if (!imageResource.exists()) {
+                        imagePath = "/static/images/default-user.jpg";
+                }
+                manager1.generateImage(imagePath);
+                manager1.setImagePath(imagePath);
                 userRepository.save(manager1);
+
+                imagePath = "/static/images/manager2.jpg";
+                imageResource = new ClassPathResource(imagePath);
+                if (!imageResource.exists()) {
+                        imagePath = "/static/images/default-user.jpg";
+                }
+                manager2.generateImage(imagePath);
+                manager2.setImagePath(imagePath);
                 userRepository.save(manager2);
+
+                imagePath = "/static/images/manager3.jpg";
+                imageResource = new ClassPathResource(imagePath);
+                if (!imageResource.exists()) {
+                        imagePath = "/static/images/default-user.jpg";
+                }
+                manager3.generateImage(imagePath);
+                manager3.setImagePath(imagePath);
                 userRepository.save(manager3);
+
+                imagePath = "/static/images/admin.jpg";
+                imageResource = new ClassPathResource(imagePath);
+                if (!imageResource.exists()) {
+                        imagePath = "/static/images/default-user.jpg";
+                }
+                admin.generateImage(imagePath);
+                admin.setImagePath(imagePath);
                 userRepository.save(admin);
 
-                // images for hotels
+                // images for all type of hotels that we created
 
-                hotel1.generateImage("/static/images/hotel.jpg");
-                hotel1.setImagePath("/api/hotels/" + hotel1.getId() + "/image");
-                hotel2.generateImage("/static/images/hotel1.jpg");
-                hotel2.setImagePath("/api/hotels/" + hotel2.getId() + "/image");
-                hotel3.generateImage("/static/images/hotel2.jpg");
-                hotel3.setImagePath("/api/hotels/" + hotel3.getId() + "/image");
-                hotel4.generateImage("/static/images/hotel4.jpg");
-                hotel4.setImagePath("/api/hotels/" + hotel4.getId() + "/image");
-                hotel5.generateImage("/static/images/hotel3.jpg");
-                hotel5.setImagePath("/api/hotels/" + hotel5.getId() + "/image");
-                hotel6.generateImage("/static/images/hotel4.jpg");
-                hotel6.setImagePath("/api/hotels/" + hotel6.getId() + "/image");
-                hotel7.generateImage("/static/images/hotel6.jpg");
-                hotel7.setImagePath("/api/hotels/" + hotel7.getId() + "/image");
-                hotel8.generateImage("/static/images/hotel5.jpg");
-                hotel8.setImagePath("/api/hotels/" + hotel8.getId() + "/image");
-                hotel9.generateImage("/static/images/hotel6.jpg");
-                hotel9.setImagePath("/api/hotels/" + hotel9.getId() + "/image");
-                hotel10.generateImage("/static/images/hotel4.jpg");
-                hotel10.setImagePath("/api/hotels/" + hotel10.getId() + "/image");
-                hotel11.generateImage("/static/images/hotel.jpg");
-                hotel11.setImagePath("/api/hotels/" + hotel11.getId() + "/image");
-                hotelRepository.save(hotel1);
-                hotelRepository.save(hotel2);
-                hotelRepository.save(hotel3);
-                hotelRepository.save(hotel4);
-                hotelRepository.save(hotel5);
-                hotelRepository.save(hotel6);
-                hotelRepository.save(hotel7);
-                hotelRepository.save(hotel8);
-                hotelRepository.save(hotel9);
-                hotelRepository.save(hotel10);
-                hotelRepository.save(hotel11);
+                String[] imagePaths = {
+                                "/static/images/hotel.jpg",
+                                "/static/images/hotel1.jpg",
+                                "/static/images/hotel2.jpg",
+                                "/static/images/hotel4.jpg",
+                                "/static/images/hotel3.jpg",
+                                "/static/images/hotel4.jpg",
+                                "/static/images/hotel6.jpg",
+                                "/static/images/hotel5.jpg",
+                                "/static/images/hotel6.jpg",
+                                "/static/images/hotel4.jpg",
+                                "/static/images/hotel.jpg"
+                };
 
+                Hotel[] hotels = { hotel1, hotel2, hotel3, hotel4, hotel5, hotel6, hotel7, hotel8, hotel9, hotel10,
+                                hotel11 };
+
+                for (int i = 0; i < hotels.length; i++) {
+                        String imagesPath = imagePaths[i];
+                        Resource imagesResource = new ClassPathResource(imagesPath);
+                        if (!imagesResource.exists()) {
+                                imagesPath = "/static/images/default-hotel.jpg";
+                        }
+                        hotels[i].generateImage(imagesPath);
+                        hotels[i].setImagePath(imagesPath);
+                        hotelRepository.save(hotels[i]);
+                }
         }
 }
