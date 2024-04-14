@@ -426,7 +426,7 @@ public class UserRest {
     @JsonView(UserDetails.class)
     @PutMapping("/users/{id}")
     public ResponseEntity<UserE> editProfile(HttpServletRequest request, @PathVariable Long id,
-            @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
+            @RequestBody Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
 
         try {
             UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();

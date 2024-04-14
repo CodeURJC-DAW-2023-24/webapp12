@@ -9,6 +9,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 @Component({
   selector: 'app-mainPage',
   templateUrl: './mainPage.component.html',
+  //"../../../shared/styles/hotelsPage.component.css",
   styleUrls: ["./mainPageButtons.component.css"]
 })
 export class MainPageComponent {
@@ -36,7 +37,7 @@ ngOnInit() {
 }
 
 getCurrentUser() {
-  this.userService.GetCurrentUser().subscribe({
+  this.userService.getCurrentUser().subscribe({
     next: user => {
       if (user && user.username){
         this.user = user;
@@ -62,7 +63,7 @@ getCurrentUser() {
 }
 
   getFirstHotels(){
-    this.hotelService.GetRecommendedHotels(0, 6).subscribe({
+    this.hotelService.getRecommendedHotels(0, 6).subscribe({
       next: (recommendedhHotels: Hotel[]) => {
         recommendedhHotels.forEach(hotel => {
           this.hotels.push(hotel);
@@ -78,7 +79,7 @@ getCurrentUser() {
 
   getHotelsBySearch(event: Event){
     event.preventDefault();
-    this.hotelService.GetHotelsBySearch(0, 6, this.searchValue).subscribe({
+    this.hotelService.getHotelsBySearch(0, 6, this.searchValue).subscribe({
       next: (searchHotels: Hotel[]) => {
         this.hotels.length = 0;
         searchHotels.forEach(hotel => {

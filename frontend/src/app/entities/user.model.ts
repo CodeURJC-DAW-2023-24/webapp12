@@ -5,7 +5,7 @@ import { Review } from "./review.model";
   export interface User {
     id: number;
     name: string;
-    lastName: string;
+    lastname: string;
     bio?: string;
     location?: string;
     language?: string;

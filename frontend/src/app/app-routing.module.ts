@@ -9,6 +9,8 @@ import { NickTakenComponent } from './profileComponents/errors/nickTaken.compone
 import { ErrorComponent } from './globalComponents/error.component';
 
 import { MainPageComponent } from './mainPageComponents/screens/mainPage.component';
+import { EditProfileComponent } from './profileComponents/screens/editProfile.component';
+import { ClientReservationsComponent } from './profileComponents/screens/clientReservations.component';
 
 
 
@@ -19,8 +21,11 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'loginError', component: LoginErrorComponent },
   { path: 'nickTaken', component: NickTakenComponent },
-  {path: 'mainPage', component: MainPageComponent},
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
+  { path: 'mainPage', component: MainPageComponent},
+  { path: 'editProfile/:id', component: EditProfileComponent},
+  { path: 'clientReservations/:id', component: ClientReservationsComponent},  
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

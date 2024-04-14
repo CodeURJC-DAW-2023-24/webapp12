@@ -1,0 +1,64 @@
+<body>
+    <div id="wrapper">
+        <app-sidebar></app-sidebar>
+    <div class="container">
+      <div class="row flex-lg-nowrap">
+        <div class="col">
+          <div class="e-tabs mb-3 px-3">
+            <ul class="nav nav-tabs">
+              <li class="nav-item"><a class="nav-link active" href="#">Reservations</a></li>
+            </ul>
+          </div>
+  
+          <div class="row flex-lg-nowrap">
+            <div class="col mb-3">
+              <div class="e-panel card">
+                <div class="card-body">
+                  <div class="card-title">
+                    <h6 class="mr-2">Check your reservations</h6>
+                  </div>
+                  <div class="e-table">
+                    <div class="table-responsive table-lg mt-3">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th class="max-width">Hotel name</th>
+                            <th class="sortable">Check-In</th>
+                            <th class="sortable">Chech-Out</th>
+                            <th>People</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody id="reservationList">
+                          <ng-component *nfFor = "let reservation of reservations">
+                          <tr>
+                            <td class="text-nowrap align-middle">{{reservation.hotel.name}}</td>
+                            <td class="text-nowrap align-middle"><span>{{reservation.checkIn}}</span></td>
+                            <td class="text-nowrap align-middle"><span>{{reservation.checkOut}}</span></td>
+                            <td class="text-nowrap align-middle">{{reservation.numPeople}}</td>
+                            <td class="text-center align-middle">
+                              <div class="btn-group align-top">
+                                <a href="reservationInfo/{{reservation.id}}" class="btn btn-sm btn-outline-secondary badge"
+                                  type="button">More info</a>
+                              </div>
+                            </td>
+                          </tr>
+                        </ng-component>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+  
+                <div style="display: flex; justify-content: center; align-items: center; margin: 15px;">
+                  <button (click) = "getReservations()" class="btn btn-primary py-3 px-5">More
+                    reservations</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </body>

@@ -29,10 +29,9 @@ constructor(private userService: UserService, private router: Router, private ro
     this.pass = '';
 }
 
-  CreateUser(){
-    this.userService.CreateUser(this.nick, this.name, this.lastname, this.email, this.pass, this.userType).subscribe({
+  createUser(){
+    this.userService.createUser(this.nick, this.name, this.lastname, this.email, this.pass, this.userType).subscribe({
       next: _ => {
-        console.log('Bad Request error');
         {this.router.navigate(['/login']);}
       },
       error: (err: HttpErrorResponse) => {

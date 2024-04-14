@@ -10,11 +10,11 @@ import { Hotel } from '../entities/hotel.model';
 export class HotelService {
   constructor(private http: HttpClient) {}
 
-  GetRecommendedHotels(page: number, size: number): Observable<Hotel[]>{
+  getRecommendedHotels(page: number, size: number): Observable<Hotel[]>{
     return this.http.get<Hotel[]>('/api/hotels/recommended', {params: {page: page.toString(), size: size.toString()}});
   }
 
-  GetHotelsBySearch(page: number, size: number, searchValue: string){
+  getHotelsBySearch(page: number, size: number, searchValue: string){
     return this.http.get<Hotel[]>('/api/hotels/specific', {params: {page: page.toString(), size: size.toString(), searchValue: searchValue}});
   }
 

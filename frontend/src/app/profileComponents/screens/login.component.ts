@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
+import { Component, Renderer2, ElementRef } from '@angular/core';
 import { UserService } from '../../service/UserService';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -6,7 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
-  selector: 'Login',
+  selector: 'app-login',
   templateUrl: './login.component.html',
   //styleUrl: ''
 })
@@ -27,7 +27,7 @@ export class LoginComponent {
 
   submitCredentials(event: Event){
     event.preventDefault();
-    this.userService.Login(this.username, this.password).subscribe({
+    this.userService.login(this.username, this.password).subscribe({
       next: _ =>{this.router.navigate(['/profile']);},
       error: (err: HttpErrorResponse) => {
         if (err.status === 400) {

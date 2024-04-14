@@ -21,6 +21,8 @@ import { NickTakenComponent } from './profileComponents/errors/nickTaken.compone
 
 import { MainPageComponent } from './mainPageComponents/screens/mainPage.component';
 import { FooterMainComponent } from './mainPageComponents/childs/footerMain.component';
+import { EditProfileComponent } from './profileComponents/screens/editProfile.component';
+import { ClientReservationsComponent } from './profileComponents/screens/clientReservations.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { FooterMainComponent } from './mainPageComponents/childs/footerMain.comp
     FooterComponent,
     SidebarComponent,
     ProfileComponent,
+    EditProfileComponent,
+    ClientReservationsComponent,
     ErrorComponent,
     LoginErrorComponent,
     RegisterComponent,

@@ -32,7 +32,7 @@ constructor(private userService: UserService, private router: Router, private ro
 }
 
   ngOnInit() {
-    this.userService.GetCurrentUser().subscribe({
+    this.userService.getCurrentUser().subscribe({
     next: (user: User) =>{
       this.user = user;
       this.userType = user.rols;
@@ -56,9 +56,9 @@ constructor(private userService: UserService, private router: Router, private ro
     });
   }
 
-  ApplyManager(event: Event){
+  applyManager(event: Event){
     event.preventDefault();
-    this.userService.ApplyManager(this.user.id).subscribe({
+    this.userService.applyManager(this.user.id).subscribe({
       next: (newUser: User) =>{
         this.user = newUser;    
       },
@@ -80,8 +80,8 @@ constructor(private userService: UserService, private router: Router, private ro
     });
   }
 
-  LogOut(){
-    this.userService.LogOut().subscribe({
+  logOut(){
+    this.userService.logOut().subscribe({
       next: () => {
         this.router.navigate(['/login']);
       },

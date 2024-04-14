@@ -26,7 +26,7 @@ constructor(private userService: UserService) {
 }
 
   ngOnInit() {
-    this.userService.GetCurrentUser().subscribe({
+    this.userService.getCurrentUser().subscribe({
     next: user =>{
       this.user = user;
       if (user.rols.includes('CLIENT')) {
@@ -43,7 +43,7 @@ constructor(private userService: UserService) {
       console.log(this.user.rols);   
     },
     error: err => {
-      // Handle error here
+      console.log('No user logged in' + err);
     }
     });
   }
