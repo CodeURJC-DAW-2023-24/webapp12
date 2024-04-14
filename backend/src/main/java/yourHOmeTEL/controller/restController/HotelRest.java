@@ -326,13 +326,13 @@ public class HotelRest {
 			}
 
 			Hotel savedHotel = hotelService.save(newHotel);
-			String loc = "https://localhost:8443/api/hotels/"+ savedHotel.getId();
-        	URI uriLocation = URI.create(loc);
+			String loc = "https://localhost:8443/api/hotels/" + savedHotel.getId();
+			URI uriLocation = URI.create(loc);
 			return ResponseEntity.created(uriLocation).build();
-			
+
 		} catch (NoSuchElementException e) {
 			return ResponseEntity.notFound().build();
-		}	
+		}
 	}
 
 	@JsonView(HotelDetails.class)
@@ -448,15 +448,13 @@ public class HotelRest {
 
 	// ADVANCED RECOMMENDATION ALGORITHM
 
-	
 	@Operation(summary = "Get recommended hotels", description = "Returns a list of recommended hotels for the current user.")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Recommended hotels retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Hotel.class)))
+			@ApiResponse(responseCode = "200", description = "Recommended hotels retrieved successfully", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class)))
 	})
-	
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/recommended")
-	public ResponseEntity<List<Hotel>> index(HttpServletRequest request) {
+	public ResponseEntity<PageResponse<Hotel>> index(HttpServletRequest request, Pageable pageable) {
 		List<Hotel> recomendedHotels = new ArrayList<>();
 		try {
 			String nick = request.getUserPrincipal().getName();
@@ -469,10 +467,17 @@ public class HotelRest {
 				recomendedHotels = hotelService.addRemainingHotels(recomendedHotels);
 			}
 		}
-		return ResponseEntity.ok(recomendedHotels);
+
+		PageResponse<Hotel> response = new PageResponse<>();
+		response.setContent(recomendedHotels);
+		response.setPageNumber(pageable.getPageNumber());
+		response.setPageSize(pageable.getPageSize());
+		response.setTotalElements((long) recomendedHotels.size());
+		response.setTotalPages((int) Math.ceil((double) recomendedHotels.size() / pageable.getPageSize()));
+
+		return ResponseEntity.ok(response);
 	}
 
-	
 	@Operation(summary = "Search hotels", description = "Returns a page of hotels that match the search value.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Hotels found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),

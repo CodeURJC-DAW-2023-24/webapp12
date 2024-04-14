@@ -1,6 +1,6 @@
 <body>
-    <div id="wrapper">
-        <app-sidebar></app-sidebar>
+  <div id="wrapper">
+    <app-sidebar></app-sidebar>
     <div class="container">
       <div class="row flex-lg-nowrap">
         <div class="col">
@@ -9,7 +9,7 @@
               <li class="nav-item"><a class="nav-link active" href="#">Reservations</a></li>
             </ul>
           </div>
-  
+
           <div class="row flex-lg-nowrap">
             <div class="col mb-3">
               <div class="e-panel card">
@@ -30,28 +30,28 @@
                           </tr>
                         </thead>
                         <tbody id="reservationList">
-                          <ng-component *nfFor = "let reservation of reservations">
-                          <tr>
-                            <td class="text-nowrap align-middle">{{reservation.hotel.name}}</td>
-                            <td class="text-nowrap align-middle"><span>{{reservation.checkIn}}</span></td>
-                            <td class="text-nowrap align-middle"><span>{{reservation.checkOut}}</span></td>
-                            <td class="text-nowrap align-middle">{{reservation.numPeople}}</td>
-                            <td class="text-center align-middle">
-                              <div class="btn-group align-top">
-                                <a href="reservationInfo/{{reservation.id}}" class="btn btn-sm btn-outline-secondary badge"
-                                  type="button">More info</a>
-                              </div>
-                            </td>
-                          </tr>
-                        </ng-component>
+                          <ng-container *ngFor="let reservation of reservations">
+                            <tr>
+                              <td class="text-nowrap align-middle">{{reservation.hotel.name}}</td>
+                              <td class="text-nowrap align-middle"><span>{{reservation.checkIn}}</span></td>
+                              <td class="text-nowrap align-middle"><span>{{reservation.checkOut}}</span></td>
+                              <td class="text-nowrap align-middle">{{reservation.numPeople}}</td>
+                              <td class="text-center align-middle">
+                                <div class="btn-group align-top">
+                                  <a href="reservationInfo/{{reservation.id}}"
+                                    class="btn btn-sm btn-outline-secondary badge" type="button">More info</a>
+                                </div>
+                              </td>
+                            </tr>
+                          </ng-container>
                         </tbody>
                       </table>
                     </div>
                   </div>
                 </div>
-  
+
                 <div style="display: flex; justify-content: center; align-items: center; margin: 15px;">
-                  <button (click) = "getReservations()" class="btn btn-primary py-3 px-5">More
+                  <button (click)="getReservations()" class="btn btn-primary py-3 px-5">More
                     reservations</button>
                 </div>
               </div>
@@ -60,5 +60,5 @@
         </div>
       </div>
     </div>
-    </div>
-  </body>
+  </div>
+</body>

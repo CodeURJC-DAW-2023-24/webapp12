@@ -32,7 +32,7 @@
     </div>
     <!--Cliente-->
     <li class="nav-item" *ngIf="isClient">
-        <a class="nav-link" href="/clientReservations">
+        <a [routerLink]="['/clientReservations', user.id]" class="nav-link">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>My reservations</span></a>
     </li>

@@ -12,7 +12,7 @@
                     <div class="sidebar-box mt-3">
                         <form method="get" class="search-form">
                             <div class="form-group">
-                                <input type="search" class="form-control" placeholder="Type..." name="searchValue">
+                                <input [(ngModel)]="searchValue" type="search" class="form-control" placeholder="Type..." name="searchValue">
                                 <button (click)="getHotelsBySearch($event)" class="icon ion-ios-search"></button>
                                 <!--<input type="hidden" name="_csrf" value="{{token}}"/>-->
                             </div>
@@ -63,7 +63,7 @@
                 </ng-container>
             </div>
             <div class="mt-5">
-                <a onclick='loadMoreHotels()' class="btn btn-secondary rounded" id="moreHotels">More hotels</a>
+                <a (click) ='getHotels()' class="btn btn-secondary rounded" id="moreHotels">More hotels</a>
             </div>
         </div>
     </section>

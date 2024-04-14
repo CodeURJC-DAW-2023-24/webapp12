@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Reservation } from '../../entities/reservation.model';
 import { User } from '../../entities/user.model';
 import { ReservationService } from '../../service/ReservationService';
+import { PageResponse } from '../../interfaces/pageResponse.interface';
 
 
 
@@ -31,15 +32,13 @@ export class ClientReservationsComponent {
 
   ngOnInit() {
     this.getCurrentUser();
-    this.getReservations();
   }
   
   getCurrentUser() {
     this.userService.getCurrentUser().subscribe({
-      next: user => {
-        if (user && user.username){
-          this.user = user;
-        }
+      next: (user: User) => {
+        this.user = user;
+        this.getReservations();      
       },
       error: err => {
         if (err.status === 403) {
@@ -55,18 +54,17 @@ export class ClientReservationsComponent {
 
   getReservations(){
     this.reservationService.getReservations(this.user.id, this.page, 6).subscribe({
-      next: (returnedReservations: Reservation[]) => {
-        returnedReservations.forEach(reservation => {
+      next: (pageResponse: PageResponse<Reservation>) => {
+        pageResponse.content.forEach(reservation => {
           this.reservations.push(reservation);
-          this.page += 1;
         });
-      },
+        this.page += 1;      },
       error: (err: HttpErrorResponse) => {
-          console.log('Unknown error returning hotels');
+          console.log('Unknown error returning reservations');
           console.log(err);
           this.router.navigate(['/error']);
       }
     });
-  }
+}
 
 }
