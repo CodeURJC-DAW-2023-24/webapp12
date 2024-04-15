@@ -5,7 +5,7 @@ import { User } from '../../entities/user.model';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  //styleUrl: ''
+  styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
   title = 'frontend';

@@ -10,7 +10,7 @@ import { PageResponse } from '../../interfaces/pageResponse.interface';
 @Component({
   selector: 'app-mainPage',
   templateUrl: './mainPage.component.html',
-  //"../../../shared/styles/hotelsPage.component.css",
+//"../../../shared/styles/hotelsPage.component.css",
   styleUrls: ["./mainPageButtons.component.css"]
 })
 export class MainPageComponent {
@@ -23,6 +23,7 @@ export class MainPageComponent {
   public hotels: Hotel[];
   public searchValue: string;
   public page : number
+  public totalPages: number;
 
 constructor(private userService: UserService, private hotelService: HotelService,
   private router: Router, private route: ActivatedRoute) {
@@ -32,10 +33,12 @@ constructor(private userService: UserService, private hotelService: HotelService
     this.searchValue = '';
     this.hotels = [];
     this.page = 0;
+    this.totalPages = 1;
 }
 
 ngOnInit() {
   this.getCurrentUser();
+  this.getHotels();
 }
 
 getCurrentUser() {
@@ -51,7 +54,6 @@ getCurrentUser() {
         this.isUser = false;
         this.isClient = false;
       }
-      this.getHotels();
     },
     error: err => {
       if (err.status === 403) {
@@ -66,21 +68,26 @@ getCurrentUser() {
 }
 
 getHotels(){
-  console.log(this.page);
-  this.hotelService.getRecommendedHotels(this.page, 6).subscribe({
-    next: (pageResponse: PageResponse<Hotel>) => {
-      pageResponse.content.forEach(hotel => {
-        this.hotels.push(hotel);
-      });
-      this.page += 1;
-      console.log(this.page);
-    },
-    error: (err: HttpErrorResponse) => {
+  if(this.page < this.totalPages){
+    console.log("im in"); 
+    this.hotelService.getRecommendedHotels(this.page, 6).subscribe({
+      next: (pageResponse: PageResponse<Hotel>) => {
+        this.totalPages = pageResponse.totalPages;
+        console.log(this.totalPages);
+        console.log(this.page);    
+        pageResponse.content.forEach(hotel => {
+          this.hotels.push(hotel);
+        });
+        // Increment the page number after each successful API call
+        this.page += 1;
+      },
+      error: (err: HttpErrorResponse) => {
         console.log('Unknown error returning hotels');
         console.log(err);
         this.router.navigate(['/error']);
-    }
-  });
+      }
+    });
+  }
 }
 
 
@@ -94,7 +101,6 @@ getHotelsBySearch(event: Event){
       pageResponse.content.forEach(hotel => {
         this.hotels.push(hotel);
       });
-      this.page += 1;
     },
     error: (err: HttpErrorResponse) => {
         console.log('Unknown error returning hotels');

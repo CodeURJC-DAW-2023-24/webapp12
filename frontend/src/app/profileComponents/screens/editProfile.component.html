@@ -15,7 +15,7 @@
                                 <img *ngIf="imageUrl" [src]="imageUrl" class="img-fluid avatar-xxl rounded-circle"
                                     alt="">
                                 <form (ngSubmit)="selectedFile ? editProfileImage(user.id, selectedFile) : null"
-                                    enctype="multipart/form-data">
+                                   enctype="multipart/form-data">
                                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                                     <!-- Profile picture upload button-->
                                     <label for="file" class="btn btn-primary mt-4 mr-4">
@@ -25,7 +25,6 @@
                                     <input class="btn btn-primary mt-3" type="submit" value="Submit">
                                     <!--<input type="hidden" name="_csrf" value="{{token}}" />-->
                                 </form>
-
                             </div>
                         </div>
                     </div>

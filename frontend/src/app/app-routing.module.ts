@@ -11,6 +11,8 @@ import { ErrorComponent } from './globalComponents/error.component';
 import { MainPageComponent } from './mainPageComponents/screens/mainPage.component';
 import { EditProfileComponent } from './profileComponents/screens/editProfile.component';
 import { ClientReservationsComponent } from './profileComponents/screens/clientReservations.component';
+import { AddHotelComponent } from './profileComponents/screens/addHotel.component';
+import { ViewHotelsManagerComponent } from './profileComponents/screens/viewHotelsManager.component';
 
 
 
@@ -23,7 +25,9 @@ const routes: Routes = [
   { path: 'nickTaken', component: NickTakenComponent },
   { path: 'mainPage', component: MainPageComponent},
   { path: 'editProfile/:id', component: EditProfileComponent},
-  { path: 'clientReservations/:id', component: ClientReservationsComponent},  
+  { path: 'clientReservations/:id', component: ClientReservationsComponent},
+  { path: 'addHotel', component: AddHotelComponent},
+  { path: 'viewHotelsManager', component: ViewHotelsManagerComponent},
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' }
 ];

@@ -242,6 +242,7 @@ public class ReviewRest {
 
 	}
 
+	@JsonView(ReviewDetails.class)
 	@PostMapping("/reviews/hotels/{hotelId}")
 	@Operation(summary = "Post a hotel review", description = "Post a review for a specific hotel by hotel ID.")
 	@ApiResponses(value = {
@@ -276,7 +277,7 @@ public class ReviewRest {
 					Review savedReview = reviewService.save(newReview);
 					String loc = "https://localhost:8443/api/reviews/"+ savedReview.getId();
 					URI uriLocation = URI.create(loc);
-					return ResponseEntity.created(uriLocation).build();
+					return ResponseEntity.created(uriLocation).body(savedReview);
 
 				} else {
 					return ResponseEntity.notFound().build();

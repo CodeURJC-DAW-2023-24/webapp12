@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { Hotel } from '../entities/hotel.model';
@@ -17,6 +17,25 @@ export class HotelService {
 
   getHotelsBySearch(page: number, size: number, searchValue: string){
     return this.http.get<PageResponse<Hotel>>('/api/hotels/specific', {params: {page: page.toString(), size: size.toString(), searchValue: searchValue}});
+  }
+
+  createNewHotel(formData: FormData): Observable<Hotel>{
+    return this.http.post<Hotel>('/api/hotels', formData);
+  }
+
+  editHotelImage(id: number, file: File){
+    const formData = new FormData();
+    formData.append('imageFile', file);
+    return this.http.post<HttpResponse<any>>(`/api/hotels/${id}/image`, formData);
+
+  }
+
+  getManagerHotels(id: number, page: number, size: number){
+    return this.http.get<PageResponse<Hotel>>(`/api/hotels/manager/${id}`, {params: {page: page.toString(), size: size.toString()}});
+  }
+
+  deleteHotel(id: number){
+    return this.http.delete(`/api/hotels/${id}`);
   }
 
 }

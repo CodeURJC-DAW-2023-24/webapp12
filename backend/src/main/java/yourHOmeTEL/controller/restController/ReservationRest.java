@@ -256,6 +256,7 @@ public class ReservationRest {
 
 	}
 
+	@JsonView(ReservationDetails.class)
 	@PostMapping("/reservations/users/{userId}/hotels/{hotelId}/rooms/{roomId}")
 	@Operation(summary = "Add a reservation", description = "Add a new reservation for a specific user, hotel and room.")
 	@ApiResponses(value = {
@@ -313,7 +314,7 @@ public class ReservationRest {
 							Reservation savedReservation = reservationService.save(reservation);
 							String loc = "https://localhost:8443/api/reservations/"+ savedReservation.getId();
 							URI uriLocation = URI.create(loc);
-							return ResponseEntity.created(uriLocation).build();
+							return ResponseEntity.created(uriLocation).body(savedReservation);
 
 						} else {
 							return ResponseEntity.notFound().build();

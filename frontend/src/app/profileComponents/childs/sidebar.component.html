@@ -39,14 +39,14 @@
 
     <!--Managers-->
     <li class="nav-item" *ngIf="isManager">
-        <a class="nav-link" href="/viewHotelsManager">
+        <a [routerLink]="['/viewHotelsManager']" class="nav-link">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>My Hotels</span></a>
     </li>
 
     <!--Admin-->
     <li class="nav-item" *ngIf="isAdmin">
-        <a class="nav-link" href="/managerValidation">
+        <a [routerLink]="['/managerValidation']" class="nav-link">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Validate new managers</span></a>
     </li>

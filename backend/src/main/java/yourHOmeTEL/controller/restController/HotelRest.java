@@ -289,7 +289,8 @@ public class HotelRest {
 		}
 	}
 
-	// PENDIENTE -> Pasar las habitaciones y los costes como un array
+	// Pending -> Rooms and prices as array
+	@JsonView(HotelDetails.class)
 	@PostMapping("/hotels")
 	@Operation(summary = "Create a hotel", description = "Creates a new hotel with the given details.")
 	@ApiResponses(value = {
@@ -310,6 +311,9 @@ public class HotelRest {
 			newHotel.setManager(manager);
 			hotelService.save(newHotel);
 
+			manager.getHotels().add(newHotel);
+			userService.save(manager);
+
 			Integer[] roomsCapacities = { room1, room2, room3, room4 };
 			Integer[] roomCosts = { cost1, cost2, cost3, cost4 };
 
@@ -328,7 +332,7 @@ public class HotelRest {
 			Hotel savedHotel = hotelService.save(newHotel);
 			String loc = "https://localhost:8443/api/hotels/" + savedHotel.getId();
 			URI uriLocation = URI.create(loc);
-			return ResponseEntity.created(uriLocation).build();
+			return ResponseEntity.created(uriLocation).body(savedHotel);
 
 		} catch (NoSuchElementException e) {
 			return ResponseEntity.notFound().build();
@@ -472,8 +476,10 @@ public class HotelRest {
 		response.setContent(recomendedHotels);
 		response.setPageNumber(pageable.getPageNumber());
 		response.setPageSize(pageable.getPageSize());
-		response.setTotalElements((long) recomendedHotels.size());
-		response.setTotalPages((int) Math.ceil((double) recomendedHotels.size() / pageable.getPageSize()));
+		int totalElements = (int) hotelService.count();
+		response.setTotalElements(totalElements);
+		int totalPages = (int) Math.ceil((double) totalElements / pageable.getPageSize());
+		response.setTotalPages(totalPages);
 
 		return ResponseEntity.ok(response);
 	}

@@ -77,6 +77,8 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                         //SPA
                         .requestMatchers("/new/profile").hasAnyRole("USER")
                         .requestMatchers("/new/clientReservations/**").hasAnyRole("USER")
+                        //.requestMatchers("/new/addHotel").hasRole("MANAGER")
+                        //.requestMatchers("/new/viewHotelsManager").hasRole("MANAGER")
                         .anyRequest().permitAll()
 
 

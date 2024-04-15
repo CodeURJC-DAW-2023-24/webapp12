@@ -12,16 +12,22 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class EditProfileComponent {
     title = 'frontend';
     public user!: User;
+    public userId!: number;
     public imageUrl!: string;
     public selectedFile: File;
 
     constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) {
         this.selectedFile = new File([], '');
 
+        this.route.params.subscribe(params => {
+            // Save the id parameter in a variable
+            this.userId = params['id'];
+        });
+
     }
 
     ngOnInit() {
-        this.userService.getCurrentUser().subscribe({
+        this.userService.getUserById(this.userId).subscribe({
             next: (user: User) => {
                 this.user = user;
                 this.imageUrl = `/api/users/${user.id}/image`;

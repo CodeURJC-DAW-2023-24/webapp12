@@ -18,9 +18,13 @@ export class UserService {
     
   }
 
+  getUserById(id: number): Observable<User>{
+    return this.http.get<User>(`/api/users/${id}`);
+  }
+
   createUser(nick: string, name:string, lastname: string,
-    email: string, pass: string, userType: number): Observable<HttpResponse<any>>{
-      return this.http.post<HttpResponse<any>>('/api/users', {nick, name, lastname, email, pass}, {params: {typeParam: userType.toString()}});
+    email: string, pass: string, userType: number): Observable<User>{
+      return this.http.post<User>('/api/users', {nick, name, lastname, email, pass}, {params: {typeParam: userType.toString()}});
   }
 
   applyManager(id: number): Observable<User>{

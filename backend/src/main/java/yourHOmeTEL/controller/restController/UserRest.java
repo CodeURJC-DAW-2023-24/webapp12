@@ -411,7 +411,7 @@ public class UserRest {
             UserE savedUser = userService.save(newUser);
             String loc = "https://localhost:8443/api/users/" + savedUser.getId();
             URI uriLocation = URI.create(loc);
-            return ResponseEntity.created(uriLocation).build();
+            return ResponseEntity.created(uriLocation).body(savedUser);
         }
     }
 

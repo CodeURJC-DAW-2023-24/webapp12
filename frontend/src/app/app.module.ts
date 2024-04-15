@@ -23,6 +23,9 @@ import { MainPageComponent } from './mainPageComponents/screens/mainPage.compone
 import { FooterMainComponent } from './mainPageComponents/childs/footerMain.component';
 import { EditProfileComponent } from './profileComponents/screens/editProfile.component';
 import { ClientReservationsComponent } from './profileComponents/screens/clientReservations.component';
+import { AddHotelComponent } from './profileComponents/screens/addHotel.component';
+import { ViewHotelsManagerComponent } from './profileComponents/screens/viewHotelsManager.component';
+
 
 @NgModule({
   declarations: [
@@ -39,6 +42,8 @@ import { ClientReservationsComponent } from './profileComponents/screens/clientR
     LoginErrorComponent,
     RegisterComponent,
     NickTakenComponent,
+    AddHotelComponent,
+    ViewHotelsManagerComponent,
     //Hotel page
     MainPageComponent,
     FooterMainComponent,
