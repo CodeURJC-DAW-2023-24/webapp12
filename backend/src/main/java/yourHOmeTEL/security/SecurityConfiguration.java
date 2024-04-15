@@ -63,7 +63,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         return authConfig.getAuthenticationManager();
     }
 
-    @Bean
+    /*@Bean
     @Order(1)
     public SecurityFilterChain angularFilterChain(HttpSecurity http) throws Exception {
         http.authenticationProvider(authenticationProvider());
@@ -95,7 +95,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                         .permitAll());
 
         return http.build();
-    }
+    }*/
     
     @Bean
     @Order(2)
@@ -232,6 +232,8 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         http.authenticationProvider(authenticationProvider());
         http
                 .authorizeHttpRequests(authorize -> authorize
+
+                        .requestMatchers("/new/**").permitAll()
                 
                         // public pages
                         .requestMatchers("/login").permitAll()

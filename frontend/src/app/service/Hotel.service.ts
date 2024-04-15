@@ -30,6 +30,10 @@ export class HotelService {
 
   }
 
+  getHotelById(id: number): Observable<Hotel>{
+    return this.http.get<Hotel>(`/api/hotels/${id}`);
+  } 
+
   getManagerHotels(id: number, page: number, size: number){
     return this.http.get<PageResponse<Hotel>>(`/api/hotels/manager/${id}`, {params: {page: page.toString(), size: size.toString()}});
   }

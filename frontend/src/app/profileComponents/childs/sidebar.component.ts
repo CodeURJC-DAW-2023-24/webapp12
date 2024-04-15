@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { UserService } from '../../service/UserService';
+import { UserService } from '../../service/User.service';
 import { User } from '../../entities/user.model';
+import { LoginService } from '../../service/Login.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -17,7 +18,7 @@ export class SidebarComponent {
   public isAdmin: boolean;
   public user! : User;
 
-constructor(private userService: UserService) {
+constructor(private userService: UserService, public loginService: LoginService) {
     this.userType = "";
     this.isUser = false;
     this.isClient = false;

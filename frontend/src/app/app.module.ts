@@ -25,6 +25,7 @@ import { EditProfileComponent } from './profileComponents/screens/editProfile.co
 import { ClientReservationsComponent } from './profileComponents/screens/clientReservations.component';
 import { AddHotelComponent } from './profileComponents/screens/addHotel.component';
 import { ViewHotelsManagerComponent } from './profileComponents/screens/viewHotelsManager.component';
+import { HotelFormComponent } from './profileComponents/childs/hotelForm.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { ViewHotelsManagerComponent } from './profileComponents/screens/viewHote
     NickTakenComponent,
     AddHotelComponent,
     ViewHotelsManagerComponent,
+    HotelFormComponent,
     //Hotel page
     MainPageComponent,
     FooterMainComponent,

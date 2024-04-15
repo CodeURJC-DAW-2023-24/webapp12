@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
-import { UserService } from '../../service/UserService';
-import { HotelService } from '../../service/HotelService';
+import { UserService } from '../../service/User.service';
+import { HotelService } from '../../service/Hotel.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import{ User } from '../../entities/user.model';
 import{ Hotel } from '../../entities/hotel.model';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { PageResponse } from '../../interfaces/pageResponse.interface';
+import { LoginService } from '../../service/Login.service';
 
 @Component({
   selector: 'app-mainPage',
   templateUrl: './mainPage.component.html',
-//"../../../shared/styles/hotelsPage.component.css",
-  styleUrls: ["./mainPageButtons.component.css"]
+//"
+  styleUrls: ["../../../shared/styles/hotelsPage.component.css","./mainPageButtons.component.css"]
 })
 export class MainPageComponent {
   title = 'frontend';
@@ -26,7 +27,7 @@ export class MainPageComponent {
   public totalPages: number;
 
 constructor(private userService: UserService, private hotelService: HotelService,
-  private router: Router, private route: ActivatedRoute) {
+  private router: Router, private route: ActivatedRoute, public loginService: LoginService) {
     this.userType = [""];
     this.isUser = false;
     this.isClient = false;

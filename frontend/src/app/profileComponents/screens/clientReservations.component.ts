@@ -1,11 +1,12 @@
 import { Component, Renderer2, ElementRef } from '@angular/core';
-import { UserService } from '../../service/UserService';
+import { UserService } from '../../service/User.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Reservation } from '../../entities/reservation.model';
 import { User } from '../../entities/user.model';
-import { ReservationService } from '../../service/ReservationService';
+import { ReservationService } from '../../service/Reservation.service';
 import { PageResponse } from '../../interfaces/pageResponse.interface';
+import { LoginService } from '../../service/Login.service';
 
 
 
@@ -26,10 +27,10 @@ export class ClientReservationsComponent {
 
   constructor(private userService: UserService, private reservationService: ReservationService,
     private renderer: Renderer2, private el: ElementRef,
-    private router: Router, private route: ActivatedRoute
+    private router: Router, private route: ActivatedRoute, public loginService: LoginService
   ) {
     this.route.params.subscribe(param =>{
-      this.userId = param['id'];
+      this.userId = param['userId'];
     
     })
     this.reservations = [];

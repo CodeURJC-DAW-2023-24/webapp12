@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { UserService } from '../../service/UserService';
+import { UserService } from '../../service/User.service';
 import { User } from '../../entities/user.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LoginService } from '../../service/Login.service';
 
 @Component({
     selector: 'app-editProfile',
@@ -16,12 +17,13 @@ export class EditProfileComponent {
     public imageUrl!: string;
     public selectedFile: File;
 
-    constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) {
+    constructor(private userService: UserService, private router: Router, 
+        private route: ActivatedRoute, public loginService: LoginService) {
         this.selectedFile = new File([], '');
 
         this.route.params.subscribe(params => {
             // Save the id parameter in a variable
-            this.userId = params['id'];
+            this.userId = params['userId'];
         });
 
     }

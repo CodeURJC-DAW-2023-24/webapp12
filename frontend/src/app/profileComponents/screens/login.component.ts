@@ -1,7 +1,8 @@
 import { Component, Renderer2, ElementRef } from '@angular/core';
-import { UserService } from '../../service/UserService';
+import { UserService } from '../../service/User.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LoginService } from '../../service/Login.service';
 
 
 
@@ -18,7 +19,7 @@ export class LoginComponent {
   public captchaIsResolved: boolean;
 
   constructor(private userService: UserService, private renderer: Renderer2, private el: ElementRef,
-    private router: Router, private route: ActivatedRoute
+    private router: Router, private route: ActivatedRoute, public loginService: LoginService
   ) {
     this.username = '';
     this.password = '';

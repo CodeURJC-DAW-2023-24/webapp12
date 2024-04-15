@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { UserService } from '../../service/UserService';
+import { UserService } from '../../service/User.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LoginService } from '../../service/Login.service';
+
 
 @Component({
   selector: 'app-register',
@@ -19,7 +21,7 @@ export class RegisterComponent {
   public email: string;
   public pass: string;
 
-constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) {
+constructor(private userService: UserService, private router: Router, private route: ActivatedRoute, public loginService: LoginService) {
     this.userType = -1;
     this.isUser = false; 
     this.nick = '';

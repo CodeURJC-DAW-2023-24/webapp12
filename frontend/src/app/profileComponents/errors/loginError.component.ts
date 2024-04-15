@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { LoginService } from '../../service/Login.service';
 
 @Component({
   selector: 'app-loginError',
@@ -11,7 +11,7 @@ export class LoginErrorComponent {
 
 
 
-constructor() {
+constructor(public loginService: LoginService) {
 
 }
 

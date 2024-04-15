@@ -1,0 +1,110 @@
+<div class="tab-content pt-3">
+    <div class="tab-pane active">
+        <form (ngSubmit)="createHotel(name.value, location.value, desc.value, number1.value, price1.value, number2.value, price2.value, 
+       number3.value, price3.value, number4.value, price4.value)">
+            <div class="row"> 
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Hotel name</label>
+                                <input #name class="form-control" type="text"
+                                    name="name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input #location class="form-control" type="text"
+                                    name="location">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <div class="form-group">
+                                <label>Hotel description</label>
+                                <textarea class="form-control" rows="5"
+                                    #desc name="description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="mb-3">
+                                    <h3>Rooms Number</h3>
+                                </label>
+                                <div class="row">
+                                    <div class="col" class="addrooms">
+                                        <label>Rooms for 1</label>
+                                    </div>
+                                    <div class="col">
+                                        <input #number1 placeholder="Rooms Number"
+                                            class="form-control" type="number"
+                                            name="room1">
+                                    </div>
+                                    <div class="col">
+                                        <input #price1 placeholder="Room Price"
+                                            class="form-control" type="number"
+                                            name="cost1">
+                                    </div>
+                                    <div class="col" class="addrooms">
+                                        <label>Rooms for 2</label>
+                                    </div>
+                                    <div class="col">
+                                        <input #number2 placeholder="Rooms Number"
+                                            class="form-control" type="number"
+                                            name="room2">
+                                    </div>
+                                    <div class="col">
+                                        <input #price2 placeholder="Room Price"
+                                            class="form-control" type="number"
+                                            name="cost2">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mt-2" class="addrooms">
+                                        <label>Rooms for 3</label>
+                                    </div>
+                                    <div class="col">
+                                        <input #number3 placeholder="Rooms Number"
+                                            class="form-control mt-2"
+                                            type="number" name="room3">
+                                    </div>
+                                    <div class="col">
+                                        <input #price3 placeholder="Room Price"
+                                            class="form-control mt-2"
+                                            type="number" name="cost3">
+                                    </div>
+                                    <div class="col mt-2" class="addrooms">
+                                        <label>Rooms for 4</label>
+                                    </div>
+                                    <div class="col">
+                                        <input #number4 placeholder="Rooms Number"
+                                            class="form-control mt-2"
+                                            type="number" name="room4">
+                                    </div>
+                                    <div class="col">
+                                        <input #price4 placeholder="Room Price"
+                                            class="form-control mt-2"
+                                            type="number" name="cost4">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col d-flex justify-content-end">
+                    <button class="btn btn-primary" type="submit">Save
+                        Hotel</button>
+                    <!--<input type="hidden" name="_csrf" value="{{token}}" />-->
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
