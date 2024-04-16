@@ -8,12 +8,15 @@ import { NickTakenComponent } from './profileComponents/errors/nickTaken.compone
 
 import { ErrorComponent } from './globalComponents/error.component';
 import { AuthGuardService } from './service/AuthGuard.service';
+import { AuthGuardWithUserIdService } from './service/AuthGuardWithUserId.service';
+import { AuthGuardWithHotelIdService } from './service/AuthGuardWithHotelId.service';
 
 import { MainPageComponent } from './mainPageComponents/screens/mainPage.component';
 import { EditProfileComponent } from './profileComponents/screens/editProfile.component';
 import { ClientReservationsComponent } from './profileComponents/screens/clientReservations.component';
 import { AddHotelComponent } from './profileComponents/screens/addHotel.component';
 import { ViewHotelsManagerComponent } from './profileComponents/screens/viewHotelsManager.component';
+import { EditHotelComponent } from './profileComponents/screens/editHotel.component';
 
 
 
@@ -27,20 +30,18 @@ const routes: Routes = [
   { path: 'mainPage', component: MainPageComponent},
   { path: 'addHotel', component: AddHotelComponent, canActivate: [AuthGuardService], data: { role: 'MANAGER' } },
   { path: 'viewHotelsManager', component: ViewHotelsManagerComponent, canActivate: [AuthGuardService], data: { role: 'MANAGER' } },
+
+  { path: 'editProfile/:userId', component: EditProfileComponent, canActivate: [AuthGuardWithUserIdService], 
+  data: { role: 'USER'} },
+
+  { path: 'clientReservations/:userId', component: ClientReservationsComponent, canActivate: [AuthGuardWithUserIdService], 
+  data: { role: 'CLIENT'}},
+  
+  { path: 'editHotel/:hotelId', component: EditHotelComponent, canActivate: [AuthGuardWithHotelIdService], 
+  data: { role: 'MANAGER'}},
+
   { path: '**', redirectTo: 'error' },
 
-
-  { path: 'editProfile/:userId', component: EditProfileComponent },
-
-  { path: 'editProfile/:userId', component: EditProfileComponent, canActivate: [AuthGuardService], 
-  data: { role: 'USER', method: 'canActivateWithUserId' } },
-
-  { path: 'clientReservations/:userId', component: ClientReservationsComponent, canActivate: [AuthGuardService], 
-  data: { role: 'CLIENT', method: 'canActivateWithUserId' } },
-  
-
-  { path: 'editHotel/:hotelId', component: ViewHotelsManagerComponent, canActivate: [AuthGuardService], 
-  data: { role: 'MANAGER', method: 'canActivateWithHotelId' } },
 
 ];
 

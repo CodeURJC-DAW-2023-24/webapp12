@@ -14,6 +14,7 @@ export class UserService {
   } 
 
   getCurrentUser(): Observable<User>{
+    console.log('Getting current user');
     return this.http.get<User>('/api/currentUser');
     
   }
@@ -35,7 +36,7 @@ export class UserService {
     return this.http.post<HttpResponse<any>>('/api/logout', {});
   }
 
-  updateUserDetails(id:number, updates: any): Observable<User> {
+  updateUserDetails(id:number, updates: FormData): Observable<User> {
     return this.http.put<User>(`/api/users/${id}`, updates);
   }
 

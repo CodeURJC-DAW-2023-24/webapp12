@@ -19,7 +19,7 @@
                         </form>
                     </div>
                 </div>
-                <li class="nav-item active"><a [routerLink]="['/mainPage']" class="nav-link font-size-20">Home</a></li>
+                <li *ngIf="isUser" class="nav-item active"><a [routerLink]="['/profile']" class="nav-link font-size-20">Profile</a></li>
                 <li *ngIf="!isUser" class="nav-item"><a [routerLink]="['/login']" class="nav-link font-size-20">Log
                         In</a></li>
             </ul>
@@ -63,7 +63,7 @@
                 </ng-container>
             </div>
             <div class="mt-5">
-                <a (click)='getHotels()' class="btn btn-secondary rounded" id="moreHotels">More hotels</a>
+                <a (click)='getRecommendedHotels()' class="btn btn-secondary rounded" id="moreHotels">More hotels</a>
             </div>
         </div>
     </section>

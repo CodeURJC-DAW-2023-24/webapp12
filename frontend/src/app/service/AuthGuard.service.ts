@@ -1,6 +1,6 @@
 import { Injectable, InjectionToken } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable, catchError, map, of, switchMap } from 'rxjs';
+import { Observable, catchError, from, map, of, switchMap } from 'rxjs';
 import { UserService } from './User.service';
 import { HotelService } from './Hotel.service';
 import { Router } from '@angular/router';
@@ -12,59 +12,36 @@ export const AUTH_GUARD = new InjectionToken<((route: ActivatedRouteSnapshot, st
 @Injectable({
     providedIn: 'root',
     useFactory: (userService: UserService, hotelService: HotelService, router: Router) => new AuthGuardService(userService, hotelService, router),
-    deps: [UserService, Router],
+    deps: [UserService, HotelService, Router],
 })
 export class AuthGuardService {
 
-    constructor(private userService: UserService, private hotelService: HotelService, 
+    constructor(private userService: UserService, private hotelService: HotelService,
         private router: Router) { }
 
-        getCurrentUser(): Observable<User | null> {
-            return this.userService.getCurrentUser().pipe(
-                map((user: User) => user),
-                catchError(err => {
-                    if (err.status === 403) {
-                        console.log('Forbidden error');
-                    } else {
-                        console.log('No user logged in');
-                    }
-                    this.router.navigate(['/error']);
-                    return of(null);
-                })
-            );
-        }
+    getCurrentUser(): Observable<User | null> {
+        return this.userService.getCurrentUser().pipe(
+            map((user: User) => user),
+            catchError(err => {
+                if (err.status === 403) {
+                    console.log('Forbidden error');
+                } else {
+                    console.log('No user logged in');
+                }
+                this.router.navigate(['/error']);
+                return of(null);
+            })
+        );
+    }
 
     canActivate(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean> {
+        console.log("canActivate");
         const roleFromRoute = next.data['role'];
         return this.userService.getCurrentUser().pipe(
             map(user => {
                 if (user.rols.includes(roleFromRoute)) {
-                    return true;
-                } else {
-                    this.router.navigate(['/error']);
-                    return false;
-                }
-            }),
-            catchError(err => {
-                this.router.navigate(['/error']);
-                return of(false);
-            })
-        );
-    }
-    
-    canActivateWithUserId(
-        next: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot): Observable<boolean> {
-        const idFromRoute = next.params['userId'];
-        const roleFromRoute = next.data['role'];
-        console.log("1");
-        return this.userService.getUserById(idFromRoute).pipe(
-            map(user => {
-                console.log("2");
-                if (user.rols.includes(roleFromRoute) && user.id === idFromRoute) {
-                    console.log("true");
                     return true;
                 } else {
                     console.log("false");
@@ -74,40 +51,23 @@ export class AuthGuardService {
             }),
             catchError(err => {
                 console.log("error");
-                this.router.navigate(['/error']);
-                return of(false);
+                return from(this.router.navigate(['/error'])).pipe(
+                    map(() => false)
+                );
             })
         );
     }
 
-    /*canActivateWithUserI2d(
-        next: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot): Observable<boolean> {
-        const idFromRoute = next.params['userId'];
-        const roleFromRoute = next.data['role'];
-        let loggedUser: User = this.getCurrentUser();
 
-        return this.hotelService.getHotelById(idFromRoute).pipe(
-            map(hotel => {
-                let hotelManager: User = hotel.manager;
-                if (loggedUser.id = hotelManager.id && loggedUser.rols.includes(roleFromRoute) && user.id === idFromRoute) {
-                    return true;
-                } else {
-                    this.router.navigate(['/error']);
-                    return false;
-                }
-            }),
-            catchError(err => {
-                this.router.navigate(['/error']);
-                return of(false);
-            })
-        );
-    }*/
-    
-    canActivateWithHotelId(
+
+
+
+    //NEEDS TO IMPLEMENT METHODS TO WORK 
+
+    /*canActivateWithReservationId(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean> {
-            const idFromRoute = next.params['hotelId'];
+            const idFromRoute = next.params['reservationId'];
             const roleFromRoute = next.data['role'];
     
             return this.getCurrentUser().pipe(
@@ -116,8 +76,46 @@ export class AuthGuardService {
                         this.router.navigate(['/error']);
                         return of(false);
                     } else {
-                        return this.hotelService.getHotelById(idFromRoute).pipe(
-                            map(hotel => {     
+                        return this.reservationService.getReservationById(idFromRoute).pipe(
+                            map(reservation => {     
+                                if (reservation.user.id === loggedUser.id && loggedUser.rols.includes(roleFromRoute)) {
+                                    return true;
+                                } else {
+                                    this.router.navigate(['/error']);
+                                    return false;
+                                }
+                            }),
+                            catchError(err => {
+                                console.log("error");
+                                return from(this.router.navigate(['/error'])).pipe(
+                                    map(() => false)
+                                );
+                            })
+                        );
+                    }
+                })
+            );
+        }*/
+
+
+
+
+    //THIS MIGHT NOT BE NEEDED
+
+    /*canActivateWithReviewId(
+        next: ActivatedRouteSnapshot,
+        state: RouterStateSnapshot): Observable<boolean> {
+            const idFromRoute = next.params['reviewId'];
+            const roleFromRoute = next.data['role'];
+    
+            return this.getCurrentUser().pipe(
+                switchMap((loggedUser: User | null) => {
+                    if (!loggedUser) {
+                        this.router.navigate(['/error']);
+                        return of(false);
+                    } else {
+                        return this.reviewService.getReviewById(idFromRoute).pipe(
+                            map(review => {     
                                 if (hotel.manager.id === loggedUser.id && loggedUser.rols.includes(roleFromRoute)) {
                                     return true;
                                 } else {
@@ -126,12 +124,48 @@ export class AuthGuardService {
                                 }
                             }),
                             catchError(err => {
-                                this.router.navigate(['/error']);
-                                return of(false);
+                                console.log("error");
+                                return from(this.router.navigate(['/error'])).pipe(
+                                    map(() => false)
+                                );
                             })
                         );
                     }
                 })
             );
-        }
+        }*/
+
+    //THIS MIGHT NOT BE NEEDED
+    /*canActivateWithRoomlId(
+            next: ActivatedRouteSnapshot,
+            state: RouterStateSnapshot): Observable<boolean> {
+                const idFromRoute = next.params['roomlId'];
+                const roleFromRoute = next.data['role'];
+        
+                return this.getCurrentUser().pipe(
+                    switchMap((loggedUser: User | null) => {
+                        if (!loggedUser) {
+                            this.router.navigate(['/error']);
+                            return of(false);
+                        } else {
+                            return this.roomService.getRoomById(idFromRoute).pipe(
+                                map(hotel => {     
+                                    if (hotel.manager.id === loggedUser.id && loggedUser.rols.includes(roleFromRoute)) {
+                                        return true;
+                                    } else {
+                                        this.router.navigate(['/error']);
+                                        return false;
+                                    }
+                                }),
+                                catchError(err => {
+                                    console.log("error");
+                                    return from(this.router.navigate(['/error'])).pipe(
+                                        map(() => false)
+                                    );
+                                })
+                            );
+                        }
+                    })
+                );
+            }*/
 }

@@ -26,6 +26,7 @@ import { ClientReservationsComponent } from './profileComponents/screens/clientR
 import { AddHotelComponent } from './profileComponents/screens/addHotel.component';
 import { ViewHotelsManagerComponent } from './profileComponents/screens/viewHotelsManager.component';
 import { HotelFormComponent } from './profileComponents/childs/hotelForm.component';
+import { EditHotelComponent } from './profileComponents/screens/editHotel.component';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { HotelFormComponent } from './profileComponents/childs/hotelForm.compone
     AddHotelComponent,
     ViewHotelsManagerComponent,
     HotelFormComponent,
+    EditHotelComponent,
     //Hotel page
     MainPageComponent,
     FooterMainComponent,

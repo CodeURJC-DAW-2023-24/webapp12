@@ -1,6 +1,7 @@
 package yourHOmeTEL.controller.restController;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -358,7 +359,7 @@ public class HotelRest {
 
 			Hotel originalHotel = hotelService.findById(id).orElseThrow();
 
-			if (currentUser.equals(foundUser)) {
+			if (currentUser.getRols().contains("ADMIN") ||currentUser.equals(foundUser)) {
 
 				originalHotel = objectMapper.readerForUpdating(originalHotel)
 						.readValue(objectMapper.writeValueAsString(updates)); // exists
@@ -461,10 +462,16 @@ public class HotelRest {
 	public ResponseEntity<PageResponse<Hotel>> index(HttpServletRequest request, Pageable pageable) {
 		List<Hotel> recomendedHotels = new ArrayList<>();
 		try {
-			String nick = request.getUserPrincipal().getName();
-			UserE user = userService.findByNick(nick).orElseThrow();
-			List<Reservation> userReservations = user.getReservations();
-			recomendedHotels = hotelService.findRecomendedHotels(6, userReservations, user);
+			Principal principal = request.getUserPrincipal();
+			if (principal != null) {
+				String nick = principal.getName();
+				UserE user = userService.findByNick(nick).orElseThrow();
+				List<Reservation> userReservations = user.getReservations();
+				recomendedHotels = hotelService.findRecomendedHotels(6, userReservations, user);
+			} else {
+				// Call another method if principal is null
+				recomendedHotels = hotelService.findAll(pageable).getContent();
+			}
 		} catch (NullPointerException e) {
 		} finally {
 			if (recomendedHotels.size() < 6) {

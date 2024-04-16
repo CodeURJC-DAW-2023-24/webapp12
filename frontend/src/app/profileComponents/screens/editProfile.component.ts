@@ -23,7 +23,9 @@ export class EditProfileComponent {
 
         this.route.params.subscribe(params => {
             // Save the id parameter in a variable
+            console.log( params['userId']);
             this.userId = params['userId'];
+            console.log('userId:', this.userId);
         });
 
     }
@@ -47,7 +49,7 @@ export class EditProfileComponent {
         });
     }
 
-    onFileSelected(event: Event) {
+    fileSelected(event: Event) {
         event.preventDefault();
         const inputElement = event.target as HTMLInputElement;
         if (inputElement.files && inputElement.files.length > 0) {
@@ -90,7 +92,7 @@ export class EditProfileComponent {
             }
         }
 
-        this.userService.updateUserDetails(this.user.id, updates).subscribe({
+        this.userService.updateUserDetails(this.user.id, formData).subscribe({
             next: (user: User) => {
                 this.router.navigate(['/profile']);
 

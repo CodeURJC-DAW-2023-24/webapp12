@@ -63,42 +63,9 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         return authConfig.getAuthenticationManager();
     }
 
-    /*@Bean
-    @Order(1)
-    public SecurityFilterChain angularFilterChain(HttpSecurity http) throws Exception {
-        http.authenticationProvider(authenticationProvider());
-        
-        http
-                .securityMatcher("/new/**");
-
-        http
-                .authorizeHttpRequests(authorize -> authorize
-
-                        //SPA
-                        .requestMatchers("/new/profile").hasAnyRole("USER")
-                        .requestMatchers("/new/clientReservations/**").hasAnyRole("USER")
-                        //.requestMatchers("/new/addHotel").hasRole("MANAGER")
-                        //.requestMatchers("/new/viewHotelsManager").hasRole("MANAGER")
-                        .anyRequest().permitAll()
-
-
-                )
-                .formLogin(formLogin -> formLogin
-                    .loginPage("/new/login")
-                    .failureUrl("/new/loginError")
-                    .defaultSuccessUrl("/new/profile")
-                    .permitAll()
-                )
-                .logout(logout -> logout
-                        .logoutUrl("/new/logout")
-                        .logoutSuccessUrl("/new/login")
-                        .permitAll());
-
-        return http.build();
-    }*/
     
     @Bean
-    @Order(2)
+    @Order(1)
     public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
 
         http.authenticationProvider(authenticationProvider());
@@ -110,6 +77,8 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         http
                 .authorizeHttpRequests(authorize -> authorize
 
+                        
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/recommended").permitAll()
                         // ADMIN AND MANAGER ENDPOINTS
                         .requestMatchers(HttpMethod.GET, "/api/hotels/manager/{id}").hasAnyRole("MANAGER", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/managers").hasAnyRole("MANAGER", "ADMIN")
@@ -176,12 +145,12 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                         .requestMatchers(HttpMethod.GET, "/api/request/path").hasRole("USER")
 
                         // USER IMAGE ENDPOINTS
-                        .requestMatchers(HttpMethod.GET, "/api/users/{id}/image").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/users/{id}/image").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/{id}/image").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/users/{id}/image").hasAnyRole("USER", "ADMIN")
 
                         // HOTEL IMAGE ENDPOINTS
-                        .requestMatchers(HttpMethod.GET, "/api/hotels/{id}/image").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/{id}/image").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/hotels/{id}/image").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/hotels/{id}/image").hasAnyRole("USER", "ADMIN")
 
@@ -227,7 +196,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
-    @Order(3)
+    @Order(2)
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authenticationProvider(authenticationProvider());
         http
@@ -258,7 +227,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                         .requestMatchers("/captcha").permitAll()
                         .requestMatchers("/loadMoreHotels/**").permitAll()
                         .requestMatchers("/loadMoreReviews/**").permitAll()
-                        .requestMatchers("/profile/*/images/").permitAll()
+                        .requestMatchers("/profile/*/images").permitAll()
                         .requestMatchers("/static/images/**").permitAll()
                         .requestMatchers("/index/*/images/**").permitAll()
                         .requestMatchers("/v3/**").permitAll()

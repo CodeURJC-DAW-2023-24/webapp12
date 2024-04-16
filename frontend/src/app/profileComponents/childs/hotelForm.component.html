@@ -1,6 +1,6 @@
 <div class="tab-content pt-3">
     <div class="tab-pane active">
-        <form (ngSubmit)="createHotel(name.value, location.value, desc.value, number1.value, price1.value, number2.value, price2.value, 
+        <form (ngSubmit)="onSubmitHotel(name.value, location.value, desc.value, number1.value, price1.value, number2.value, price2.value, 
        number3.value, price3.value, number4.value, price4.value)">
             <div class="row"> 
                 <div class="col">
@@ -8,7 +8,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label>Hotel name</label>
-                                <input #name class="form-control" type="text"
+                                <input #name [placeholder]="childNew ? '' : childHotel?.name" class="form-control" type="text"
                                     name="name">
                             </div>
                         </div>
@@ -17,7 +17,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label>Location</label>
-                                <input #location class="form-control" type="text"
+                                <input #location [placeholder]="childNew ? '' : childHotel?.location" class="form-control" type="text"
                                     name="location">
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                             <div class="form-group">
                                 <label>Hotel description</label>
                                 <textarea class="form-control" rows="5"
-                                    #desc name="description"></textarea>
+                                    #desc [placeholder]="childNew ? '' : childHotel?.description" name="description"></textarea>
                             </div>
                         </div>
                     </div>

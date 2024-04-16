@@ -1,0 +1,78 @@
+<body>
+    <div id="wrapper">
+        <app-sidebar></app-sidebar>
+        <div class="container">
+            <div id="content-wrapper" class="d-flex flex-column"></div>
+            <div class="row flex-lg-nowrap mt-4">
+                <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
+                    <div class="card p-2">
+                        <div class="e-navlist e-navlist--active-bg">
+                            <ul class="nav">
+                                <li class="nav-item"><a class="nav-link px-1 active"
+                                        [routerLink]="['viewHotelsManager']"><i
+                                            class="fa fa-fw fa-bar-chart mr-1"></i><span>Go to hotel list</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="e-profile">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-auto mb-3">
+                                                <div class="mx-auto" style="width: 140px;">
+                                                    <div class="d-flex justify-content-center align-items-center rounded"
+                                                        style="height: 140px; background-color: rgb(233, 236, 239);">
+                                                        <img *ngIf="imageUrl" [src]="imageUrl"
+                                                            class="hotel-preview-image">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                                                <form (ngSubmit)="selectedFile ? editHotelImage(selectedFile) : null"
+                                                        enctype="multipart/form-data">
+                                                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{hotel.name}}</h4>
+                                                    <div class="text-center text-sm-left mb-2 mb-sm-0">
+                                                        <div class="mt-2">
+                                                            <label for="file" class="btn btn-primary mt-4 mr-4">
+                                                                Upload new image
+                                                            </label>
+                                                            <input (change)="fileSelected($event)" type="file" id="file"
+                                                                name="imageFile">
+                                                            <button class="btn btn-primary mt-3" type="submit">
+                                                                <i class="fa fa-fw fa-camera"></i>
+                                                                Change Photo
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <!--<input type="hidden" name="_csrf" value="{{token}}" />-->
+                                                </form>
+                                                <div class="text-center text-sm-right">
+                                                    <span class="badge badge-secondary">Managed by:
+                                                        {{hotel.manager.name}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item"><a href="" class="active nav-link">Hotel data</a></li>
+                                        </ul>
+                                        <app-hotelForm [childSelectedFile]="selectedFile" 
+                                        [childNew]="new"
+                                        [childHotel] = "hotel">
+
+                                        </app-hotelForm>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

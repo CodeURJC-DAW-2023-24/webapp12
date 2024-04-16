@@ -8,6 +8,8 @@ import java.util.NoSuchElementException;
 
 import java.io.IOException;
 import java.net.URI;
+import java.security.Principal;
+
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -274,13 +276,16 @@ public class UserRest {
     @JsonView(UserDetails.class)
     @GetMapping("/currentUser")
     public ResponseEntity<UserE> currentUser(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        if (principal == null) {
+            return ResponseEntity.notFound().build();
+        }
+    
         try {
-            UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+            UserE currentUser = userService.findByNick(principal.getName()).orElseThrow();
             return ResponseEntity.ok(currentUser);
-
         } catch (NoSuchElementException e) {
-            return ResponseEntity.ok(new UserE());
-
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -426,7 +431,7 @@ public class UserRest {
     @JsonView(UserDetails.class)
     @PutMapping("/users/{id}")
     public ResponseEntity<UserE> editProfile(HttpServletRequest request, @PathVariable Long id,
-            @RequestBody Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
+            @RequestParam Map<String, Object> updates) throws JsonMappingException, JsonProcessingException {
 
         try {
             UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();

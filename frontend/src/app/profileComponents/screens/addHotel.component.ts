@@ -23,6 +23,7 @@ export class AddHotelComponent {
     public user!: User;
     public hotelImageUrl!: string;
     public selectedFile: File;
+    public new: boolean;
 
 
     constructor(private userService: UserService,
@@ -31,6 +32,7 @@ export class AddHotelComponent {
         private hotelService: HotelService, public loginService: LoginService) {
 
         this.selectedFile = new File([], '');
+        this.new = true;
 
     }
 

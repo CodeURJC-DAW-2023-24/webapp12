@@ -38,6 +38,10 @@ export class HotelService {
     return this.http.get<PageResponse<Hotel>>(`/api/hotels/manager/${id}`, {params: {page: page.toString(), size: size.toString()}});
   }
 
+  updateHotelDetails(id: number, updates: FormData){
+    return this.http.put<Hotel>(`/api/hotels/${id}`, updates);
+  }
+
   deleteHotel(id: number){
     return this.http.delete(`/api/hotels/${id}`);
   }

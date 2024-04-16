@@ -7,6 +7,7 @@ import{ Hotel } from '../../entities/hotel.model';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { PageResponse } from '../../interfaces/pageResponse.interface';
 import { LoginService } from '../../service/Login.service';
+import { computeStyles } from '@popperjs/core';
 
 @Component({
   selector: 'app-mainPage',
@@ -39,43 +40,41 @@ constructor(private userService: UserService, private hotelService: HotelService
 
 ngOnInit() {
   this.getCurrentUser();
-  this.getHotels();
+  
 }
 
 getCurrentUser() {
   this.userService.getCurrentUser().subscribe({
     next: user => {
-      if (user && user.username){
+      console.log("returned");
         this.user = user;
         this.userType = user.rols;
         this.isUser = user.rols.includes("USER");
         this.isClient = user.rols.includes("CLIENT");
-      }
-      else{
-        this.isUser = false;
-        this.isClient = false;
-      }
+        this.getRecommendedHotels();
     },
     error: err => {
       if (err.status === 403) {
         console.log('Forbidden error');
         this.router.navigate(['/error']);
-      } else {
-        console.log('No user logged in');
-        this.router.navigate(['/error']);
+      } else if (err.status === 404) {
+        console.log('User not logged in');
+        this.isUser = false;
+        this.isClient = false;
+        this.userType = [];
+        this.getRecommendedHotels();
       }
     }
   });
 }
 
-getHotels(){
+getRecommendedHotels(){
   if(this.page < this.totalPages){
     console.log("im in"); 
     this.hotelService.getRecommendedHotels(this.page, 6).subscribe({
       next: (pageResponse: PageResponse<Hotel>) => {
-        this.totalPages = pageResponse.totalPages;
-        console.log(this.totalPages);
-        console.log(this.page);    
+        console.log("good");
+        this.totalPages = pageResponse.totalPages;  
         pageResponse.content.forEach(hotel => {
           this.hotels.push(hotel);
         });
