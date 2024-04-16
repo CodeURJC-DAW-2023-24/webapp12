@@ -39,24 +39,35 @@ export class AuthGuardWithHotelIdService {
         console.log("canActivateWithHotelId");
         const idFromRoute = next.params['hotelId'];
         const roleFromRoute = next.data['role'];
+        console.log(idFromRoute);
 
         return this.getCurrentUser().pipe(
             switchMap((loggedUser: User | null) => {
                 if (!loggedUser) {
+                    console.log("login error");
                     this.router.navigate(['/error']);
                     return of(false);
                 } else {
                     return this.hotelService.getHotelById(idFromRoute).pipe(
                         map(hotel => {
+                            console.log("aaaaaaaa");
+                            console.log(hotel);
+                            console.log("aaaaaaaa");
+                            console.log(hotel.manager);
+                            console.log("aaaaaaaa");
+                            console.log(hotel.manager.id);
+
+                            console.log(loggedUser.id);
                             if (hotel.manager.id === loggedUser.id && loggedUser.rols.includes(roleFromRoute)) {
                                 return true;
                             } else {
+                                console.log("Unauthorized");
                                 this.router.navigate(['/error']);
                                 return false;
                             }
                         }),
                         catchError(err => {
-                            console.log("error");
+                            console.log("error", err);
                             return from(this.router.navigate(['/error'])).pipe(
                                 map(() => false)
                             );

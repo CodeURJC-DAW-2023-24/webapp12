@@ -110,7 +110,7 @@ public class HotelRest {
 			@ApiResponse(responseCode = "404", description = "Hotel not found"),
 			@ApiResponse(responseCode = "403", description = "Forbidden, current user is not the manager of the hotel", content = @Content(mediaType = "application/json"))
 	})
-	public ResponseEntity<Map<String, Object>> getHotelData(
+	public ResponseEntity<Hotel> getHotelData(
 			HttpServletRequest request,
 			@PathVariable Long id) {
 
@@ -120,10 +120,7 @@ public class HotelRest {
 
 			if (hotelManager.getvalidated() || currentUser.getRols().contains("ADMIN")) {
 				Hotel hotel = hotelService.findById(id).orElseThrow();
-				Map<String, Object> hotelInformation = new HashMap<>();
-				hotelInformation.put("hotel", hotel);
-				hotelInformation.put("numRooms", hotel.getRooms().size());
-				return ResponseEntity.ok(hotelInformation);
+				return ResponseEntity.ok(hotel);
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}

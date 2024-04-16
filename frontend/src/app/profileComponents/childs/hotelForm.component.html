@@ -8,7 +8,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label>Hotel name</label>
-                                <input #name [placeholder]="childNew ? '' : childHotel?.name" class="form-control" type="text"
+                                <input #name [value]="childNew ? '' : childHotel?.name" class="form-control" type="text"
                                     name="name">
                             </div>
                         </div>
@@ -17,7 +17,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label>Location</label>
-                                <input #location [placeholder]="childNew ? '' : childHotel?.location" class="form-control" type="text"
+                                <input #location [value]="childNew ? '' : childHotel?.location" class="form-control" type="text"
                                     name="location">
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                             <div class="form-group">
                                 <label>Hotel description</label>
                                 <textarea class="form-control" rows="5"
-                                    #desc [placeholder]="childNew ? '' : childHotel?.description" name="description"></textarea>
+                                    #desc [value]="childNew ? '' : childHotel?.description" name="description"></textarea>
                             </div>
                         </div>
                     </div>
