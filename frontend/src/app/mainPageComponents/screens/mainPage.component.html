@@ -1,4 +1,4 @@
-<body>
+
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
             <a [routerLink]="['/mainPage']" class="navbar-brand">Your<span>HOmeTEL</span></a>
@@ -30,7 +30,7 @@
         <div class="overlay"></div>
         <div class="container">
             <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
-                <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+                <div class="col-md-9 text-center d-flex align-items-end justify-content-center">
                     <div class="text">
                         <p class="breadcrumbs mb-2"><span class="mr-2"><a [routerLink]="['/mainPage']">Home</a></span>
                         </p>
@@ -43,20 +43,20 @@
 
     <section class="ftco-section">
         <div class="container">
-            <div class="row d-flex" id="hotelsList">
+            <div class="row d-flex" id="hotelsList" style>
                 <ng-container *ngFor="let hotel of hotels">
-                    <div class="col-md-4 d-flex ftco-animate">
+                    <div class="col-md-4 d-flex">
                         <div class="blog-entry align-self-stretch">
                             <img [src]="getHotelImageUrl(hotel.id)" id="indexHotelImg" class="block-20 rounded" alt="">
                             <div class="text mt-3">
                                 <h3 class="heading">{{hotel.name}}</h3>
                                 <p>{{hotel.description}}</p>
                                 <a *ngIf="isClient" [routerLink]="['/hotelInformation', hotel.id]"
-                                    class="btn btn-secondary rounded">Book now</a>
+                                    class="btn btn-secondary rounded mr-3">Book now</a>
                                 <a *ngIf="!isClient" [routerLink]="['/hotelInformation', hotel.id]"
-                                    class="btn btn-secondary rounded">View information</a>
+                                    class="btn btn-secondary rounded mr-3">View information</a>
                                 <a [routerLink]="['/hotelReviews', hotel.id]"
-                                    class="btn btn-secondary rounded">Reviews</a>
+                                    class="btn btn-secondary rounded mr-3">Reviews</a>
                             </div>
                         </div>
                     </div>
@@ -68,4 +68,4 @@
         </div>
     </section>
     <app-footerMain></app-footerMain>
-</body>
+
