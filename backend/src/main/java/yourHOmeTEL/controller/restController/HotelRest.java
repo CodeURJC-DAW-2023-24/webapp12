@@ -1,9 +1,7 @@
 package yourHOmeTEL.controller.restController;
 
 import java.net.URI;
-import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -456,31 +454,37 @@ public class HotelRest {
 	})
 	@JsonView(HotelDetails.class)
 	@GetMapping("/hotels/recommended")
-	public ResponseEntity<PageResponse<Hotel>> index(HttpServletRequest request, Pageable pageable) {
+	public ResponseEntity<PageResponse<Hotel>> indexSPA(HttpServletRequest request, Pageable pageable) {
 		List<Hotel> recomendedHotels = new ArrayList<>();
+		List<Hotel> allHotels = new ArrayList<>();
 		try {
-			Principal principal = request.getUserPrincipal();
-			if (principal != null) {
-				String nick = principal.getName();
-				UserE user = userService.findByNick(nick).orElseThrow();
-				List<Reservation> userReservations = user.getReservations();
-				recomendedHotels = hotelService.findRecomendedHotels(6, userReservations, user);
+			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+			if (currentUser != null && currentUser.getRols().contains("CLIENT")) {
+				List<Reservation> userReservations = currentUser.getReservations();
+				recomendedHotels = hotelService.findRecomendedHotelsSPA(userReservations, currentUser);
 			} else {
-				// Call another method if principal is null
 				recomendedHotels = hotelService.findAll(pageable).getContent();
 			}
 		} catch (NullPointerException e) {
-		} finally {
-			if (recomendedHotels.size() < 6) {
-				recomendedHotels = hotelService.addRemainingHotels(recomendedHotels);
+		}
+
+		finally {
+			allHotels = new ArrayList<>(recomendedHotels);
+			if (recomendedHotels.size() < hotelService.count()) {
+				List<Hotel> remainingHotels = hotelService.findHotelsNotInList(recomendedHotels);
+				allHotels.addAll(remainingHotels);
 			}
 		}
 
+		int start = pageable.getPageNumber() * pageable.getPageSize();
+		int end = Math.min(start + pageable.getPageSize(), allHotels.size());
+		List<Hotel> paginatedHotels = allHotels.subList(start, end);
+
 		PageResponse<Hotel> response = new PageResponse<>();
-		response.setContent(recomendedHotels);
+		response.setContent(paginatedHotels);
 		response.setPageNumber(pageable.getPageNumber());
 		response.setPageSize(pageable.getPageSize());
-		int totalElements = (int) hotelService.count();
+		int totalElements = allHotels.size();
 		response.setTotalElements(totalElements);
 		int totalPages = (int) Math.ceil((double) totalElements / pageable.getPageSize());
 		response.setTotalPages(totalPages);

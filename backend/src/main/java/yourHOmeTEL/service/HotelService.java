@@ -183,6 +183,29 @@ public class HotelService implements GeneralService<Hotel> {
         return recomendedHotels;
     }
 
+    public List<Hotel> findRecomendedHotelsSPA(List<Reservation> userReservations, UserE targetUser) {
+        List<UserE> recomendedUsers = new ArrayList<>();
+        List<Hotel> recomendedHotels = new ArrayList<>();
+
+        for (Reservation reservation : userReservations) {
+            Hotel reservedHotel = reservation.getHotel();
+            recomendedUsers = userService.findByHotelInReservations(reservedHotel);
+            if (recomendedUsers.contains(targetUser)) // removes self from recommendations
+                recomendedUsers.remove(targetUser);
+            for (UserE recommendedUser : recomendedUsers) {
+                for (Reservation recommendedUserReservation : recommendedUser.getReservations()) {
+                    Hotel recommendedHotel = recommendedUserReservation.getHotel();
+                    Boolean validHotel = recommendedHotel.getManager().getvalidated();
+
+                    if ((!recomendedHotels.contains(recommendedHotel)) && validHotel) {
+                        recomendedHotels.add(recommendedHotel);
+                    }
+                }
+            }
+        }
+        return recomendedHotels;
+    }
+
     public List<Hotel> addRemainingHotels(List<Hotel> recomendedHotels) {
         int i = 1;
         int sizeAllHotels = findAll().size();
@@ -209,6 +232,10 @@ public class HotelService implements GeneralService<Hotel> {
     public Blob generateImage(Resource imageResource) throws IOException {
         byte[] imageBytes = StreamUtils.copyToByteArray(imageResource.getInputStream());
         return BlobProxy.generateProxy(imageBytes);
+    }
+
+    public List<Hotel> findHotelsNotInList(List<Hotel> hotels) {
+        return hotelRepository.findHotelsNotInList(hotels);
     }
 
 }

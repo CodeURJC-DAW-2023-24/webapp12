@@ -44,13 +44,19 @@
     <section class="ftco-section">
         <div class="container">
             <div class="row d-flex" id="hotelsList" style>
-                <ng-container *ngFor="let hotel of hotels">
+                <ng-container *ngFor="let hotel of hotels; trackBy: trackByHotelId">
                     <div class="col-md-4 d-flex">
                         <div class="blog-entry align-self-stretch">
                             <img [src]="getHotelImageUrl(hotel.id)" id="indexHotelImg" class="block-20 rounded" alt="">
                             <div class="text mt-3">
-                                <h3 class="heading">{{hotel.name}}</h3>
-                                <p>{{hotel.description}}</p>
+                                <h3 *ngIf="hotel.name; else noName"class="heading">{{hotel.name}}</h3>
+                                <ng-template #noName>
+                                    <h3>&nbsp;</h3>
+                                </ng-template>
+                                <p *ngIf="hotel.description; else noDescription">{{hotel.description}}</p>
+                                <ng-template #noDescription>
+                                    <p>&nbsp;</p>
+                                </ng-template>
                                 <a *ngIf="isClient" [routerLink]="['/hotelInformation', hotel.id]"
                                     class="btn btn-secondary rounded mr-3">Book now</a>
                                 <a *ngIf="!isClient" [routerLink]="['/hotelInformation', hotel.id]"
@@ -67,5 +73,4 @@
             </div>
         </div>
     </section>
-    <app-footerMain></app-footerMain>
 

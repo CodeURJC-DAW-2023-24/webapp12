@@ -9161,7 +9161,7 @@ textarea.form-control {
 
 .ftco-animate {
   opacity: 0;
-  visibility: ; }
+  visibility: hidden; }
 
 .bg-primary {
   background: #21cc7a !important; }

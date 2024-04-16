@@ -67,7 +67,8 @@ export class AddHotelComponent {
     }
 
     addHotelImage(file: File) {
-        if (file) {
+        console.log(file.size);
+        if (file && file.size > 0) {
             this.hotelImageUrl = URL.createObjectURL(file);
         }
     }

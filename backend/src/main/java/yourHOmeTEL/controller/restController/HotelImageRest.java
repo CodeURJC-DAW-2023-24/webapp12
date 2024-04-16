@@ -11,6 +11,9 @@ import java.util.NoSuchElementException;
 
 import javax.sql.rowset.serial.SerialException;
 
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.sql.Blob;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -49,6 +53,33 @@ public class HotelImageRest {
     private HotelService hotelService;
 
     // USER IMAGE CONTROLLERS
+
+    @GetMapping("/hotels/{id}/imagePath")
+    @Operation(summary = "Get hotel image path", description = "Get the image path for a specific hotel by hotel ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Image path retrieved successfully", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "403", description = "Forbidden operation", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "Hotel not found")
+    })
+    public ResponseEntity<String> getImagePath(HttpServletRequest request, @PathVariable long id) {
+        try {
+            UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+            Hotel targetHotel = hotelService.findById(id).orElseThrow();
+            UserE hotelManager = targetHotel.getManager();
+            if (requestUser.getRols().contains("ADMIN") ||
+                    (hotelManager.equals(requestUser) && hotelManager.getRols().contains("MANAGER"))) {
+
+                String imagePath = "/api/hotels/" + id + "/image";
+                return ResponseEntity.ok(imagePath);
+
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @Operation(summary = "Download hotel image", description = "Download the image of a specific hotel by hotel ID.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Image retrieved successfully", content = @Content(mediaType = "image/*")),
@@ -81,20 +112,28 @@ public class HotelImageRest {
             @ApiResponse(responseCode = "404", description = "Hotel not found")
     })
     public ResponseEntity<Object> uploadImage(HttpServletRequest request, @PathVariable long id,
-            @RequestParam MultipartFile imageFile) throws IOException, SQLException, SerialException {
+            @RequestParam  MultipartFile imageFile)
+            throws IOException, SQLException, SerialException {
         try {
             UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
             Hotel targetHotel = hotelService.findById(id).orElseThrow();
             UserE hotelManager = targetHotel.getManager();
             if (requestUser.getRols().contains("ADMIN") ||
                     (hotelManager.equals(requestUser) && hotelManager.getRols().contains("MANAGER"))) {
-                
-                String loc = "/api/hotels/"+ id + "/image";
+
+                String loc = "/api/hotels/" + id + "/image";
                 URI location = URI.create(loc);
-                Blob blob = new javax.sql.rowset.serial.SerialBlob(imageFile.getBytes());
-                targetHotel.setImageFile(blob);
-                Path newFilePath = imgService.saveHotelImage(targetHotel.getId(), imageFile);
-                targetHotel.setImagePath(newFilePath.toString());
+                if(!imageFile.isEmpty()){
+                    Blob blob = new javax.sql.rowset.serial.SerialBlob(imageFile.getBytes());
+                    targetHotel.setImageFile(blob);
+                    Path newFilePath = imgService.saveHotelImage(targetHotel.getId(), imageFile);
+                    targetHotel.setImagePath(newFilePath.toString());
+                }else{
+                    Resource image = new ClassPathResource("/static/images/default-hotel.jpg");
+                    targetHotel.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
+                    targetHotel.setImage(true);
+
+                }
                 hotelService.save(targetHotel);
                 return ResponseEntity.created(location).build();
 
@@ -114,21 +153,21 @@ public class HotelImageRest {
             @ApiResponse(responseCode = "404", description = "Hotel not found")
     })
     public ResponseEntity<Object> deleteImage(HttpServletRequest request, @PathVariable long id)
-    throws IOException, SQLException, SerialException {
+            throws IOException, SQLException, SerialException {
         try {
             UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
             Hotel targetHotel = hotelService.findById(id).orElseThrow();
             UserE hotelManager = targetHotel.getManager();
             if (requestUser.getRols().contains("ADMIN") ||
                     (hotelManager.equals(requestUser) && hotelManager.getRols().contains("MANAGER"))) {
-                        Path defaultImagePath = Paths.get(imgService.getFilesFolder(), "default-hotel.jpg");
-                        byte[] defaultImageBytes = Files.readAllBytes(defaultImagePath);
-                        Blob defaultImageBlob = new javax.sql.rowset.serial.SerialBlob(defaultImageBytes);
-                        targetHotel.setImageFile(defaultImageBlob);
-                        Path newFilePath = imgService.deleteHotelImage(imgService.getFilesFolder(), targetHotel);
-                        targetHotel.setImagePath(newFilePath.toString());
-                        hotelService.save(targetHotel);              
-                        return ResponseEntity.noContent().build();
+                Path defaultImagePath = Paths.get(imgService.getFilesFolder(), "default-hotel.jpg");
+                byte[] defaultImageBytes = Files.readAllBytes(defaultImagePath);
+                Blob defaultImageBlob = new javax.sql.rowset.serial.SerialBlob(defaultImageBytes);
+                targetHotel.setImageFile(defaultImageBlob);
+                Path newFilePath = imgService.deleteHotelImage(imgService.getFilesFolder(), targetHotel);
+                targetHotel.setImagePath(newFilePath.toString());
+                hotelService.save(targetHotel);
+                return ResponseEntity.noContent().build();
             } else {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }

@@ -47,4 +47,8 @@ export class HotelService {
     return this.http.delete(`/api/hotels/${id}`);
   }
 
+  getImagePath(id: number){
+    return this.http.get(`/api/hotels/${id}/imagePath`);
+  }
+
 }

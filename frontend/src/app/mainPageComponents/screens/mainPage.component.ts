@@ -13,7 +13,7 @@ import { computeStyles } from '@popperjs/core';
   selector: 'app-mainPage',
   templateUrl: './mainPage.component.html',
 //"
-  styleUrls: ["../../../shared/styles/hotelsPage.component.css","./mainPageButtons.component.css"]
+  styleUrls: ["../../../shared/styles/hotelsPage.component.css","./mainPage.component.css"]
 })
 export class MainPageComponent {
   title = 'frontend';
@@ -70,11 +70,13 @@ getCurrentUser() {
 
 getRecommendedHotels(){
   if(this.page < this.totalPages){
-    console.log("im in"); 
+    console.log("im in");
+    console.log("page",this.page);  
     this.hotelService.getRecommendedHotels(this.page, 6).subscribe({
       next: (pageResponse: PageResponse<Hotel>) => {
         console.log("good");
-        this.totalPages = pageResponse.totalPages;  
+        this.totalPages = pageResponse.totalPages;
+        console.log("totalPages",this.totalPages);  
         pageResponse.content.forEach(hotel => {
           this.hotels.push(hotel);
         });
@@ -112,5 +114,9 @@ getHotelsBySearch(event: Event){
 
   getHotelImageUrl(hotelId: number): string {
     return `/api/hotels/${hotelId}/image`;
+  }
+
+  trackByHotelId(index: number, hotel: Hotel): number {
+    return hotel.id;
   }
 }

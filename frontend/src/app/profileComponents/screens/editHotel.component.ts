@@ -36,7 +36,6 @@ export class EditHotelComponent {
     ngOnInit() {
         this.getCurrentUser();
         this.getHotel();
-        
     }
 
     getCurrentUser() {
@@ -60,7 +59,13 @@ export class EditHotelComponent {
         this.hotelService.getHotelById(this.hotelId).subscribe({
             next: (hotel: Hotel) => {
                 this.hotel = hotel;
-                this.imageUrl = `/api/hotels/${hotel.id}/image`;
+                this.imageUrl = `/api/hotels/${hotel.id}/image`
+                if(this.hotel.imageFile.size()===0){
+                    this.router.navigate(['/error']);
+                }
+                else{
+                    console.log('Hotel image found');
+                }
             },
             error: (err: HttpErrorResponse) => {
                 if (err.status === 403) {
@@ -87,7 +92,7 @@ export class EditHotelComponent {
     
 
     editHotelImage(file: File) {
-        if (file) {
+        if (file && file.size > 0) {
             this.hotelService.editHotelImage(this.hotelId, file).subscribe({
             next: _ => {
                 console.log('Image updated');

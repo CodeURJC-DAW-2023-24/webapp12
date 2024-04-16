@@ -21,24 +21,32 @@ import { EditHotelComponent } from './profileComponents/screens/editHotel.compon
 
 
 const routes: Routes = [
+  //PUBLIC PAGES
   { path: 'login', component: LoginComponent},
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService], data: { role: 'USER' } },
   { path: 'error', component: ErrorComponent},
   { path: 'register', component: RegisterComponent },
   { path: 'loginError', component: LoginErrorComponent },
   { path: 'nickTaken', component: NickTakenComponent },
   { path: 'mainPage', component: MainPageComponent},
-  { path: 'addHotel', component: AddHotelComponent, canActivate: [AuthGuardService], data: { role: 'MANAGER' } },
-  { path: 'viewHotelsManager', component: ViewHotelsManagerComponent, canActivate: [AuthGuardService], data: { role: 'MANAGER' } },
-
+  
+  //USER PAGES
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService], data: { role: 'USER' } },
   { path: 'editProfile/:userId', component: EditProfileComponent, canActivate: [AuthGuardWithUserIdService], 
   data: { role: 'USER'} },
 
+  //CLIENT PAGES
   { path: 'clientReservations/:userId', component: ClientReservationsComponent, canActivate: [AuthGuardWithUserIdService], 
   data: { role: 'CLIENT'}},
   
+  //MANAGER PAGES
   { path: 'editHotel/:hotelId', component: EditHotelComponent, canActivate: [AuthGuardWithHotelIdService], 
   data: { role: 'MANAGER'}},
+
+  { path: 'addHotel', component: AddHotelComponent, canActivate: [AuthGuardService], 
+  data: { role: 'MANAGER'}},
+
+  { path: 'viewHotelsManager', component: ViewHotelsManagerComponent, canActivate: [AuthGuardService], 
+  data: { role: 'MANAGER' } },
 
   { path: '**', redirectTo: 'error' },
 
