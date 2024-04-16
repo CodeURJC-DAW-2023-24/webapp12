@@ -31,6 +31,7 @@ export class HotelService {
   }
 
   getHotelById(id: number): Observable<Hotel>{
+    console.log("Getting hotel by id: ", id);
     return this.http.get<Hotel>(`/api/hotels/${id}`);
   } 
 
