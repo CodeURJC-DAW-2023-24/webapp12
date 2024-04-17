@@ -456,35 +456,35 @@ public class HotelRest {
 	@GetMapping("/hotels/recommended")
 	public ResponseEntity<PageResponse<Hotel>> indexSPA(HttpServletRequest request, Pageable pageable) {
 		List<Hotel> recomendedHotels = new ArrayList<>();
-		List<Hotel> allHotels = new ArrayList<>();
+		List<Hotel> allValidHotels = new ArrayList<>();
 		try {
 			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			if (currentUser != null && currentUser.getRols().contains("CLIENT")) {
 				List<Reservation> userReservations = currentUser.getReservations();
 				recomendedHotels = hotelService.findRecomendedHotelsSPA(userReservations, currentUser);
 			} else {
-				recomendedHotels = hotelService.findAll(pageable).getContent();
+				recomendedHotels = hotelService.findAllByManager_Validated(true);
 			}
 		} catch (NullPointerException e) {
 		}
 
 		finally {
-			allHotels = new ArrayList<>(recomendedHotels);
+			allValidHotels = new ArrayList<>(recomendedHotels);
 			if (recomendedHotels.size() < hotelService.count()) {
-				List<Hotel> remainingHotels = hotelService.findHotelsNotInList(recomendedHotels);
-				allHotels.addAll(remainingHotels);
+				List<Hotel> remainingHotels = hotelService.findValidHotelsNotInList(recomendedHotels);
+				allValidHotels.addAll(remainingHotels);
 			}
 		}
 
 		int start = pageable.getPageNumber() * pageable.getPageSize();
-		int end = Math.min(start + pageable.getPageSize(), allHotels.size());
-		List<Hotel> paginatedHotels = allHotels.subList(start, end);
+		int end = Math.min(start + pageable.getPageSize(), allValidHotels.size());
+		List<Hotel> paginatedHotels = allValidHotels.subList(start, end);
 
 		PageResponse<Hotel> response = new PageResponse<>();
 		response.setContent(paginatedHotels);
 		response.setPageNumber(pageable.getPageNumber());
 		response.setPageSize(pageable.getPageSize());
-		int totalElements = allHotels.size();
+		int totalElements = allValidHotels.size();
 		response.setTotalElements(totalElements);
 		int totalPages = (int) Math.ceil((double) totalElements / pageable.getPageSize());
 		response.setTotalPages(totalPages);
@@ -520,4 +520,35 @@ public class HotelRest {
 			return ResponseEntity.notFound().build();
 		}
 	}
+
+	@Operation(summary = "Search hotels", description = "Returns a page of hotels that match the search value.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Hotels found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PageResponse.class))),
+			@ApiResponse(responseCode = "404", description = "Hotels not found")
+	})
+	@JsonView(HotelDetails.class)
+	@GetMapping("/hotels/specific/all")
+	public ResponseEntity<List <Hotel>> indexSearchAll(@RequestParam String searchValue) {
+		try {
+			List<Hotel> hotels = hotelService.findAllByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(
+					true,
+					searchValue);
+				return ResponseEntity.ok(hotels);
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	/*@JsonView(HotelDetails.class)
+	@GetMapping("/hotels/size")
+	public ResponseEntity<Integer> hotelsSize() {
+		try {
+			Integer size = hotelService.findAll().size();	
+			return ResponseEntity.ok(size);
+
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}*/
 }

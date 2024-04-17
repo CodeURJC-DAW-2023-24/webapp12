@@ -15,8 +15,8 @@ export class HotelService {
     return this.http.get<PageResponse<Hotel>>('/api/hotels/recommended', {params: {page: page.toString(), size: size.toString()}});
 }
 
-  getHotelsBySearch(page: number, size: number, searchValue: string){
-    return this.http.get<PageResponse<Hotel>>('/api/hotels/specific', {params: {page: page.toString(), size: size.toString(), searchValue: searchValue}});
+  getAllHotelsBySearch(searchValue: string): Observable<Hotel[]>{
+    return this.http.get<Hotel[]>('/api/hotels/specific/all', {params: {searchValue: searchValue}});
   }
 
   createNewHotel(formData: FormData): Observable<Hotel>{
@@ -49,6 +49,10 @@ export class HotelService {
 
   getImagePath(id: number){
     return this.http.get(`/api/hotels/${id}/imagePath`);
+  }
+
+  getAllHotelsSize(){
+    return this.http.get<number>('/api/hotels/size');
   }
 
 }

@@ -76,8 +76,10 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 
         http
                 .authorizeHttpRequests(authorize -> authorize
-                
                         
+                
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/specific/all").permitAll() 
+                        //.requestMatchers(HttpMethod.GET, "/api/hotels/size").permitAll()        
                         .requestMatchers(HttpMethod.GET, "/api/hotels/{id}/imagePath").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/hotels/recommended").permitAll()
                         // ADMIN AND MANAGER ENDPOINTS

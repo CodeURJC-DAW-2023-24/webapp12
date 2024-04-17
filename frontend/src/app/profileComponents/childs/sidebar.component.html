@@ -15,7 +15,7 @@
     </div>
 
     <!-- For all users -->
-    <li class="nav-item">
+    <li *ngIf="isUser" class="nav-item">
         <a [routerLink]="['/profile']" class="nav-link collapsed">
             <i class="fas fa-fw fa-cog"></i>
             <span>Personal Data</span>

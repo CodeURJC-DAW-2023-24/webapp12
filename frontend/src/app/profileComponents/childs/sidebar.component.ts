@@ -18,7 +18,7 @@ export class SidebarComponent {
   public isAdmin: boolean;
   public user! : User;
 
-constructor(private userService: UserService, public loginService: LoginService) {
+constructor(private userService: UserService) {
     this.userType = "";
     this.isUser = false;
     this.isClient = false;

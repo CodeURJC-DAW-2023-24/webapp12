@@ -83,8 +83,18 @@ public class HotelService implements GeneralService<Hotel> {
                 searchValue, pageable);
     }
 
+    public List<Hotel> findAllByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(Boolean validated,
+            String searchValue) {
+        return hotelRepository.findAllByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(validated,
+                searchValue);
+    }
+
     public List<Hotel> findTop6ByManager_Validated(Boolean validated) {
         return hotelRepository.findTop6ByManager_Validated(validated);
+    }
+
+    public List<Hotel> findAllByManager_Validated(Boolean validated){
+        return hotelRepository.findAllByManager_Validated(validated);
     }
 
     public List<Hotel> findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(Boolean validated,
@@ -234,8 +244,8 @@ public class HotelService implements GeneralService<Hotel> {
         return BlobProxy.generateProxy(imageBytes);
     }
 
-    public List<Hotel> findHotelsNotInList(List<Hotel> hotels) {
-        return hotelRepository.findHotelsNotInList(hotels);
+    public List<Hotel> findValidHotelsNotInList(List<Hotel> hotels) {
+        return hotelRepository.findValidHotelsNotInList(hotels);
     }
 
 }

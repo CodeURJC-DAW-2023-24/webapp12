@@ -71,7 +71,7 @@ getCurrentUser() {
 getRecommendedHotels(){
   if(this.page < this.totalPages){
     console.log("im in");
-    console.log("page",this.page);  
+    console.log("page",this.page);
     this.hotelService.getRecommendedHotels(this.page, 6).subscribe({
       next: (pageResponse: PageResponse<Hotel>) => {
         console.log("good");
@@ -93,14 +93,14 @@ getRecommendedHotels(){
 }
 
 
-getHotelsBySearch(event: Event){
+getAllHotelsBySearch(event: Event){
   event.preventDefault();
   console.log(this.searchValue);
   this.page = 0;
-  this.hotelService.getHotelsBySearch(this.page, 6, this.searchValue).subscribe({
-    next: (pageResponse: PageResponse<Hotel>) => {
+  this.hotelService.getAllHotelsBySearch(this.searchValue).subscribe({
+    next: (hotelsResponse: Hotel[]) => {
       this.hotels.length = 0;
-      pageResponse.content.forEach(hotel => {
+      hotelsResponse.forEach(hotel => {
         this.hotels.push(hotel);
       });
     },
@@ -114,6 +114,20 @@ getHotelsBySearch(event: Event){
 
   getHotelImageUrl(hotelId: number): string {
     return `/api/hotels/${hotelId}/image`;
+  }
+
+  getAllHotelsSize(){
+    this.hotelService.getAllHotelsSize().subscribe({
+      next: (size: number) => {
+        return size;
+      },
+      error: (err: HttpErrorResponse) => {
+          console.log('Unknown error returning hotels size');
+          console.log(err);
+          this.router.navigate(['/error']);
+      }
+    });
+    return ;
   }
 
   trackByHotelId(index: number, hotel: Hotel): number {

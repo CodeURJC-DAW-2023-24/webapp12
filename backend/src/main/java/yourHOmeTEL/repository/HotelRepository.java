@@ -23,13 +23,18 @@ public interface HotelRepository extends JpaRepository<Hotel, Long> {
         Page<Hotel> findTop6ByManager_Validated(Boolean validated, Pageable pageable);
 
         Page<Hotel> findAllByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(Boolean validated,
-                        String searchValue, Pageable pageable);
+        String searchValue, Pageable pageable);
+
+        List<Hotel> findAllByManager_Validated(Boolean validated);
+        
+        List<Hotel> findAllByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(Boolean validated,
+        String searchValue);
 
         List<Hotel> findTop6ByManager_Validated(Boolean validated);
 
         List<Hotel> findTop6ByManager_ValidatedAndNameContainingIgnoreCaseOrderByNameDesc(Boolean validated,
                         String searchValue);
 
-        @Query("SELECT h FROM Hotel h WHERE h NOT IN :hotels")
-        List<Hotel> findHotelsNotInList(@Param("hotels") List<Hotel> hotels);
+        @Query("SELECT h FROM Hotel h WHERE h.manager.validated = true AND h NOT IN :hotels")
+        List<Hotel> findValidHotelsNotInList(@Param("hotels") List<Hotel> hotels);
 }
