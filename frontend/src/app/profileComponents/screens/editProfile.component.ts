@@ -114,7 +114,7 @@ export class EditProfileComponent {
     }
 
     editProfileImage(id: number, file: File) {
-        if (file) {
+        if (file && file.size > 0) {
             this.userService.editProfileImage(id, file).subscribe({
             next: _ => {
                 console.log('Image updated');
@@ -134,6 +134,8 @@ export class EditProfileComponent {
                 this.router.navigate(['/error']);
             }
       });
+    }else{
+        console.error('No image selected');
     }
     }
 }

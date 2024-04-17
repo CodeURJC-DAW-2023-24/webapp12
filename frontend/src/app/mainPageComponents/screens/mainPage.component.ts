@@ -7,13 +7,12 @@ import{ Hotel } from '../../entities/hotel.model';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { PageResponse } from '../../interfaces/pageResponse.interface';
 import { LoginService } from '../../service/Login.service';
-import { computeStyles } from '@popperjs/core';
 
 @Component({
   selector: 'app-mainPage',
   templateUrl: './mainPage.component.html',
 //"
-  styleUrls: ["../../../shared/styles/hotelsPage.component.css","./mainPage.component.css"]
+  styleUrls: ["../../../assets/css/hotelPages.component.css","./mainPage.component.css"]
 })
 export class MainPageComponent {
   title = 'frontend';

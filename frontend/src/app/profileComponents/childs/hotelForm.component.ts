@@ -151,8 +151,6 @@ export class HotelFormComponent {
                 updates['cost4'] = cost4;
             }
     
-
-
         let formData = new FormData();
         for (const key in updates) {
             if (updates.hasOwnProperty(key)) {
