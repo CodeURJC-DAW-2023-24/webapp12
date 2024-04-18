@@ -21,7 +21,7 @@
   - Configuration
   - Database Entity diagram
   - Class and templates diagram
-  - Group Members Participation
+  - Group members participation
 
 - Phase 3
   - 1.API REST documentation
@@ -32,7 +32,13 @@
   - 4.Docker image documentation
   - 5.Virtual Machine deployment
   - 6.URL to Virtual Machine
-  - 7.Group Members Participation
+  - 7.Group members participation
+
+- Phase 4
+  - Angular requirements and dependencies
+  - Class and templates diagram
+  - Group members participation
+  - Demonstration video  
 
 # Phase 0: Team creation and definition of website functionalities
 ### App name: yourHOmeTEL
@@ -713,6 +719,7 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
 
 
 # Phase 4: SPA implementation with Angular
+
 ## 1. Angular requirements and dependencies
 To be able to execute angular projects, you first need to install the following:
   ### 1.1 Install Angular command-line tool
@@ -747,4 +754,109 @@ To be able to execute angular projects, you first need to install the following:
   npm start
   ```
   And access the main page with: https://localhost:8444/new/mainPage
+
+## 2. Class and templates diagram 
+  ![SPA DIAGRAM](https://github.com/CodeURJC-DAW-2023-24/webapp12/blob/7a6ecfc4698ca8a85c34dae51c09af332d429d72/assets/diagramaRest.jpeg)
+
+## 3. Group Members Participation
+
+  ### MARIO RECIO MONTERO
+
+  - Description: Implemented various rest controllers for all entities, created docker files and functionality and configurated Virtual Machine deployment, alongside images and controllers adaptations for Linux environment, bug fixes and testing.
+
+
+  - Five most important commits
+
+| Commit Number | Description | Link |
+|:--:|:----------------------------------------:|:------------------------------------------------------------------------------------------------:|
+| #1 | JSON view and multiple REST controllers  | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/2ec3897df735bec20d0d53c9e9b544edd2fc7a8f |
+| #2 | Impelemented User REST controllers       | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0bcb19efcd5c70da1dd49a7b2723eb3cd4c78c75 |
+| #3 | Docker implementation                    | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0f916430fa90e97931845863ac2eacdd5d7d7401 |
+| #4 | Implemented Reservation REST controllers | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/8dcde4fbd9569384269039e40f3ad90e59c21950 |
+| #5 | Hotel image REST implementation          | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/00757925520e0064bf1fc109c974afb74f3bbda1 |
+
+- Five highest participation files
+
+| File number | File |
+|:--:|:------------------------:|
+| #1 | UserRest.java            |
+| #2 | ReviewRest.java          |
+| #3 | Dockerfile               |
+| #4 | docker-compose.yml       |
+| #5 | HotelImageRest.java      |
+
+### PAULA MONROBEL UGIDOS
+  - Description: Implemented various rest controllers for review and review entities, help with the names of the urls and bug fixes and testing.
+
+
+  - Five most important commits
+
+| Commit Number | Description | Link |
+|:--:|:-------------------------------:|:------------------------------------------------------------------------------------------------:|
+| #1 | User Rest Index                 | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/ee368a2f4c392700b8d493210b3f34c636418b10 |
+| #2 | Review Rest Size and Pertentage | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/594342fbdcfb97ce6f015c2f318831b41e7629ec |
+| #3 | Room Rest Put and Delete        | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/595b3f491a7680742d5e05c8d795bd72daa6bfb4 |
+| #4 | Room Rest Getters and Post      | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/d1606e41aa795a823633df9cc4b5abde8e4c2eb4 |
+| #5 | User Rest Getters and Put       | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/c3d660e06b47728791538e2ec4cebd5d27588683 |
+
+- Five highest participation files
+
+| File number | File |
+|:--:|:------------------------:|
+| #1 | UserRest.java               |
+| #2 | ReviewRest.java             |
+| #3 | Security Configuration.java |
+| #4 | InitDataBase.java           |
+| #5 | UserImageRest.java          |
+
+
+### Laila El Khattabi El Hassnaoui
+  - Description: Implemented various rest controllers for Hotel entity, I have fixed the urls names and added annotations to the rest controllers in order to generate the documentation with OpenApi.
+
+  - Five most important commits
+
+| Commit Number | Description | Link |
+|:--:|:-------------------------------:|:------------------------------------------------------------------------------------------------:|
+| #1 | Hotel Rest Getters              | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/d9d24f1510eeb46d5e2f2d03a2d8c94eb8dbec62 |
+| #2 | Annotations OpenApi             | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/dd5d499d76046e318552c24213f179f2d3725a33 |
+| #3 | Hotel Rest Delete               | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/9da374f1634c6109369c3849ad64c8304f91c869 |
+| #4 | Hotel Rest Getters              |  https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/79b15040e5884aac4e66bb60a2cae1a637f1b93e|
+| #5 | File .yaml and swagger          | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/d5abbd93a95df135fd68914b10012d8b77899615  |
+
+- Five highest participation files
+
+| File number | File |
+|:--:|:------------------------:|
+| #1 | HoteRest.java               |
+| #2 | ReviewRest.java             |
+| #3 | Security Configuration.java |
+| #4 | RoomRest.java               |
+| #5 | ReservationRest.java        |
+
+
+### Carlos Hermán Andrés Andrés
+  - Description: Implemented various rest controllers for Hotel entity, discussed about the structure and organization of the REST controllers, and added documentation with OpenAPI to the project.
+
+  - Five most important commits
+
+| Commit Number | Description | Link |
+|:--:|:-------------------------------:|:------------------------------------------------------------------------------------------------:|
+| #1 | Added OpenAPI doc to UserImageRest | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0029c5ff5d0805537a86aa07603129a72a2debbd |
+| #2 | Added edit controllers to HotelRest | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/f06b6441d3a93645adc1b15eb41c2c53333eea7c |
+| #3 | Controller that gets all Hotel | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/20556ed7de87294d856d74a6e4b2134843323c3a |
+| #4 | Several fixes to the hotelRest controllers | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0d779c284a3f252782eb1c1b307dc93dd441964f |
+| #5 | Added OpenAPI documentation to userRest controller | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/1f198a3534e74d4cdd661fc8042298975bff4ab2 |
+
+- Five highest participation files
+
+| File number | File |
+|:--:|:------------------------:|
+| #1 | HoteRest.java               |
+| #2 | UserRest.java             |
+| #3 | SecurityConfiguration.java |
+| #4 | HotelService.java               |
+| #5 | ReviewRest.java        |
+
+
+## 4. Demonstration video
 
