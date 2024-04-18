@@ -48,7 +48,7 @@ const routes: Routes = [
   { path: 'viewHotelsManager', component: ViewHotelsManagerComponent, canActivate: [AuthGuardService], 
   data: { role: 'MANAGER' } },
 
-  { path: '**', redirectTo: 'error' },
+  { path: '**', redirectTo: 'mainPage' },
 
 
 ];

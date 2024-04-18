@@ -9,7 +9,7 @@ WORKDIR /angular
 COPY /frontend/package.json /frontend/package-lock.json /frontend/angular.json /frontend/tsconfig.json \
 /frontend/tsconfig.app.json /frontend/tsconfig.spec.json /angular/
 
-RUN npm install --legacy-peer-deps
+RUN npm install
 
 #COPY ANGULAR FRONTEND SRC FILES TO CONTAINER
 COPY /frontend/src /angular/src
