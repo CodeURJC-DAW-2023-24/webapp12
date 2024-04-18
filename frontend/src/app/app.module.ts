@@ -10,9 +10,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderComponent } from './profileComponents/childs/header.component';
 import { FooterComponent } from './profileComponents/childs/footer.component';
 import { SidebarComponent } from './profileComponents/childs/sidebar.component';
-import { LoginComponent } from './profileComponents/screens/login.component'; 
-import { ProfileComponent } from './profileComponents/screens/profile.component';  
- 
+import { LoginComponent } from './profileComponents/screens/login.component';
+import { ProfileComponent } from './profileComponents/screens/profile.component';
+
 import { ErrorComponent} from './globalComponents/error.component';
 
 import { LoginErrorComponent } from './profileComponents/errors/loginError.component';
@@ -27,7 +27,7 @@ import { AddHotelComponent } from './profileComponents/screens/addHotel.componen
 import { ViewHotelsManagerComponent } from './profileComponents/screens/viewHotelsManager.component';
 import { HotelFormComponent } from './profileComponents/childs/hotelForm.component';
 import { EditHotelComponent } from './profileComponents/screens/editHotel.component';
-
+import { hotelReviewsComponent } from './profileComponents/screens/hotelReviews.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +51,7 @@ import { EditHotelComponent } from './profileComponents/screens/editHotel.compon
     //Hotel page
     MainPageComponent,
     FooterMainComponent,
+    hotelReviewsComponent,
   ],
   imports: [
     RecaptchaModule,
