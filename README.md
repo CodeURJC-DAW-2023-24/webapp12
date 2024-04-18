@@ -710,3 +710,41 @@ Carlos was tasked to handle the reviews of the hotels, the implementation of som
 | #3 | SecurityConfiguration.java |
 | #4 | HotelService.java               |
 | #5 | ReviewRest.java        |
+
+
+# Phase 4: SPA implementation with Angular
+## 1. Angular requirements and dependencies
+To be able to execute angular projects, you first need to install the following:
+  ### 1.1 Install Angular command-line tool
+  -g option allows a global instalation, aviable for all your directories
+  ```
+  npm install -g @angular/cli
+  ```
+
+ ### 1.2 Clone or update the repository
+  If you havent cloned the repository yet, then run
+  ```
+  git clone https://github.com/CodeURJC-DAW-2023-24/webapp12.git
+  cd /webapp12/frontend
+  ```
+  If you have already cloned the repository, then you could try to pull for new changes.
+  Make sure to execute the command on the root of the cloned project
+  ```
+  git pull
+  cd frontend
+  ```
+
+### 1.3 Install Angular modules
+  Once you are on the frontend folder, you can install the Angular modules defined on the 
+  Angular project with:
+  ```
+  npm install
+  ```
+
+### 1.4 Serve Angular project
+  Once finished, you can run the following
+  ```
+  npm start
+  ```
+  And access the main page with: https://localhost:8444/new/mainPage
+
