@@ -28,6 +28,7 @@ import { ViewHotelsManagerComponent } from './profileComponents/screens/viewHote
 import { HotelFormComponent } from './profileComponents/childs/hotelForm.component';
 import { EditHotelComponent } from './profileComponents/screens/editHotel.component';
 import { hotelReviewsComponent } from './profileComponents/screens/hotelReviews.component';
+import { ManagerValidationComponent } from './profileComponents/screens/managerValidation.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { hotelReviewsComponent } from './profileComponents/screens/hotelReviews.
     ViewHotelsManagerComponent,
     HotelFormComponent,
     EditHotelComponent,
+    ManagerValidationComponent,
     //Hotel page
     MainPageComponent,
     FooterMainComponent,
