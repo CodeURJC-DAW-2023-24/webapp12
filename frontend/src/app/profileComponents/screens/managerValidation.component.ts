@@ -12,4 +12,20 @@ import { LoginService } from '../../service/Login.service';
 })
 export class ManagerValidationComponent{
   title = 'frontend';
+
+  public unvalidatedManagers: User[];
+
+
+  constructor(private userService: UserService, private router: Router, private route: ActivatedRoute, public loginService: LoginService) {
+    this.unvalidatedManagers = [];
+  }
+
+  //Por hacer: en unvalidatedManagers poner el array de managers no validados
+  ngOnInit() {}
+
+  //Por hacer: marcar manager como validado
+  acceptManager(idManager: number) {}
+
+  //Por hacer: marcar manager como no validado
+  rejectManager(idManager: number) {}
 }
