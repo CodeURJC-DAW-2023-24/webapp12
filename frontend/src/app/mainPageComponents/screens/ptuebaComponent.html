@@ -312,7 +312,7 @@
 
             <div class="form-group">
               <label for="comment">Comment (optional)</label>
-              <textarea #comment name="comment" cols="30" rows="7" class="form-control"
+              <textarea  name="comment" cols="30" rows="7" class="form-control"
                 placeholder="Everything was so nice, a wonderful experience!"></textarea>
             </div>
 
@@ -325,9 +325,10 @@
 
 
       </div>
-          <!-- List of all the reviews -->
+    </div>
+    <!-- List of all the reviews -->
     <div class="review-list">
-      <ul>
+      <ul id="reviewList">
         <ng-container *ngFor="let review of hotelReviews">
 
         <!-- Here begins a review -->
@@ -336,10 +337,10 @@
           <div class="d-flex">
             <div class="left">
               <!-- Profile image -->
-              <!-- <span>
+              <span>
 
-                <i [src]="/profile/{{review.user.id}}/images" class="profile-pict-img img-fluid" alt="userProfileImage" />
-              </span> -->
+                <img [src]="/profile/{{review.user.id}}/images" class="profile-pict-img img-fluid" alt="userProfileImage" />
+              </span>
             </div>
             <div class="right">
               <!-- Poster's name -->
@@ -375,6 +376,4 @@
     <div style="display: flex; justify-content: center; align-items: center; margin: 15px;">
       <button (click)="getReviews()" class="btn btn-secondary py-3 px-5">More reviews</button>
   </div>
-    </div>
-
 </div>
