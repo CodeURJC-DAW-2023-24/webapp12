@@ -14,10 +14,10 @@ import { LoginService } from '../../service/Login.service';
 
 @Component({
     selector: 'app-hotelReviews',
-    templateUrl: './hotelReviews.component.html',
+    templateUrl: './HotelReviews.component.html',
     //styleUrl: ''
 })
-export class hotelReviewsComponent{
+export class HotelReviewsComponent{
     title = 'frontend';
 
     public user!: User;

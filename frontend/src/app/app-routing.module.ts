@@ -17,7 +17,7 @@ import { ClientReservationsComponent } from './profileComponents/screens/clientR
 import { AddHotelComponent } from './profileComponents/screens/addHotel.component';
 import { ViewHotelsManagerComponent } from './profileComponents/screens/viewHotelsManager.component';
 import { EditHotelComponent } from './profileComponents/screens/editHotel.component';
-import { hotelReviewsComponent } from './profileComponents/screens/hotelReviews.component';
+import { HotelReviewsComponent } from './mainPageComponents/screens/hotelReviews.component';
 
 
 
@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'loginError', component: LoginErrorComponent },
   { path: 'nickTaken', component: NickTakenComponent },
   { path: 'mainPage', component: MainPageComponent},
-  { path: 'hotelReviews', component: hotelReviewsComponent},
+  { path: 'hotelReviews', component: HotelReviewsComponent},
 
 
   //USER PAGES

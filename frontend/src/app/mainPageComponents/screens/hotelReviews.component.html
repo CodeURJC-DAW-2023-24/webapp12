@@ -1,8 +1,3 @@
-{{>headerReviews}}
-{{>navIndex}}
-
-<script src="/js/loadReviews.js"></script>
-
 <!-- END nav -->
 <div class="hero-wrap" style="background-image: url('/images/bg_3.jpg');">
   <div class="overlay"></div>
@@ -30,9 +25,9 @@
                   <div class="col-12 col-sm-auto mb-3">
                     <div class="mx-auto" style="width: 140px;">
                       <div class="d-flex justify-content-center align-items-center rounded"
-                        style="height: 140px; background-color: rgb(233, 236, 239);">
-                        <img src="/index/{{hotel.id}}/images" class="hotel-preview-image">
-                      </div>
+                      style="height: 140px; background-color: rgb(233, 236, 239);">
+                      <img [src]="hotelImageUrl" class="hotel-preview-image">
+                    </div>
                     </div>
                   </div>
                   <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
@@ -40,14 +35,15 @@
                       <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{hotel.name}}</h4>
                     </div>
                     <div class="text-center text-sm-right">
-                      <a href="https://es.wikipedia.org/wiki/Cadena_hotelera"><span
-                          class="badge badge-secondary">Managed by: {{hotel.manager.name}}</span></a>
+                      <a [routerLink]="https://es.wikipedia.org/wiki/Cadena_hotelera">
+                      <span class="badge badge-secondary">Managed by: {{hotel.manager.name}}</span>
+                      </a>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <a href="/hotelInformation/{{id}}">
+            <a [routerLink]="['/hotelInformation',hotel.id]">
               <button id="backButton" class="btn btn-primary mb-2 ml-2">Hotel's main page</button>
             </a>
           </div>
@@ -82,11 +78,11 @@
                 <td class="progress-bar-container">
                   <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                     <div class="fit-progressbar-background">
-                      <span class="progress-fill" style="width: {{percentageReview5}}%;"></span>
+                      <span class="progress-fill" [style.width.%]="percentageReview5"></span>
                     </div>
                   </div>
                 </td>
-                <td class="star-num">{{numreviews5}}</td>
+                <td class="star-num">{{numreviews5 | number}}</td>
               </tr>
               <tr>
                 <td>
@@ -99,11 +95,11 @@
                 <td class="progress-bar-container">
                   <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                     <div class="fit-progressbar-background">
-                      <span class="progress-fill" style="width: {{percentageReview4}}%;"></span>
+                      <span class="progress-fill" [style.width.%]="percentageReview4"></span>
                     </div>
                   </div>
                 </td>
-                <td class="star-num">{{numreviews4}}</td>
+                <td class="star-num">{{numreviews4 | number}}</td>
               </tr>
               <tr>
                 <td>
@@ -116,11 +112,11 @@
                 <td class="progress-bar-container">
                   <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                     <div class="fit-progressbar-background">
-                      <span class="progress-fill" style="width: {{percentageReview3}}%;"></span>
+                      <span class="progress-fill" [style.width.%]="percentageReview3"></span>
                     </div>
                   </div>
                 </td>
-                <td class="star-num">{{numreviews3}}</td>
+                <td class="star-num">{{numreviews3 | number}}</td>
               </tr>
               <tr>
                 <td>
@@ -133,11 +129,11 @@
                 <td class="progress-bar-container">
                   <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                     <div class="fit-progressbar-background">
-                      <span class="progress-fill" style="width: {{percentageReview2}}%;"></span>
+                      <span class="progress-fill" [style.width.%]="percentageReview2"></span>
                     </div>
                   </div>
                 </td>
-                <td class="star-num">{{numreviews2}}</td>
+                <td class="star-num">{{numreviews2 | number}}</td>
               </tr>
               <tr>
                 <td>
@@ -150,11 +146,11 @@
                 <td class="progress-bar-container">
                   <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                     <div class="fit-progressbar-background">
-                      <span class="progress-fill" style="width: {{percentageReview1}}%;"></span>
+                      <span class="progress-fill" [style.width.%]="percentageReview1"></span>
                     </div>
                   </div>
                 </td>
-                <td class="star-num">{{numreviews1}}</td>
+                <td class="star-num">{{numreviews1 | number}}</td>
               </tr>
             </tbody>
           </table>
@@ -164,14 +160,14 @@
       <div class="form-content">
         <h2>Leave your review!</h2>
         <div>
-          <form action="/postHotelReviews/{{hotel.id}}" class="bg-white p-5 contact-form" method="post">
+          <form (ngSubmit)="addReview(rating.value, comment.value)"class="bg-white p-5 contact-form" method="post">
 
             <div class="form-group">
               <label for="rating">Rating</label>
 
               <div class="rating">
                 <!-- 5 stars -->
-                <input type="radio" id="5stars" name="rating" value="5">
+                <input type="radio" id="5stars" name="rating" value="5" [checked]="user.rating === 5">
                 <label for="5stars">
                   <p class="rate">
                     <span>
@@ -205,7 +201,7 @@
                 </label><br>
 
                 <!-- 4 stars -->
-                <input type="radio" id="4stars" name="rating" value="4">
+                <input type="radio" id="4stars" name="rating" value="4" [checked]="user.rating === 4">
 
                 <label for="4stars">
                   <p class="rate">
@@ -235,7 +231,7 @@
                 </label><br>
 
                 <!-- 3 stars -->
-                <input type="radio" id="3stars" name="rating" value="3">
+                <input type="radio" id="3stars" name="rating" value="3" [checked]="user.rating === 3">
                 <label for="3stars">
                   <p class="rate">
                     <span>
@@ -259,7 +255,7 @@
                 </label><br>
 
                 <!-- 2 stars -->
-                <input type="radio" id="2stars" name="rating" value="2">
+                <input type="radio" id="2stars" name="rating" value="2" [checked]="user.rating === 2">
                 <label for="2stars">
                   <p class="rate">
                     <span>
@@ -278,7 +274,7 @@
                 </label><br>
 
                 <!-- 1 star -->
-                <input type="radio" id="1star" name="rating" value="1">
+                <input type="radio" id="1star" name="rating" value="1" [checked]="user.rating === 1">
                 <label for="1star">
                   <p class="rate">
                     <span>
@@ -297,12 +293,12 @@
 
             <div class="form-group">
               <label for="comment">Comment (optional)</label>
-              <textarea name="comment" cols="30" rows="7" class="form-control"
+              <textarea #comment name="comment" cols="30" rows="7" class="form-control"
                 placeholder="Everything was so nice, a wonderful experience!"></textarea>
             </div>
 
             <input type="submit" value="Send review!" id="sendButton" class="btn btn-primary py-3 px-5">
-            <input type="hidden" name="_csrf" value="{{token}}" />
+            <!-- <input type="hidden" name="_csrf" value="{{token}}" /> -->
           </form>
 
         </div>
@@ -314,7 +310,7 @@
     <!-- List of all the reviews -->
     <div class="review-list">
       <ul id="reviewList">
-        {{#hotelReviews}}
+        <div *ngFor="let review of hotelReviews">
 
         <!-- Here begins a review -->
         <li>
@@ -353,23 +349,14 @@
             </div>
           </div>
         </li>
-        {{/hotelReviews}}
-        {{^hotelReviews}}
-        <h2>No reviews for this hotel so far</h2>
-        {{/hotelReviews}}
+        </div>
+        <h2 *ngIf="!hotelReviews || hotelReviews.length === 0">No reviews for this hotel so far</h2>
       </ul>
     </div>
-
     <div style="display: flex; justify-content: center; align-items: center; margin: 15px;">
-      <button onclick="loadMoreReviews({{hotel.id}})" class="btn btn-secondary py-3 px-5">More reviews</button>
+      <button (click)="loadMoreReviews(hotel.id)" class="btn btn-secondary py-3 px-5">More reviews</button>
     </div>
   </div>
 </div>
 
 
-<!-- General scripts -->
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
-<script type="/text/javascript"></script>
-
-</html>

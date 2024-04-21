@@ -27,7 +27,7 @@ import { AddHotelComponent } from './profileComponents/screens/addHotel.componen
 import { ViewHotelsManagerComponent } from './profileComponents/screens/viewHotelsManager.component';
 import { HotelFormComponent } from './profileComponents/childs/hotelForm.component';
 import { EditHotelComponent } from './profileComponents/screens/editHotel.component';
-import { hotelReviewsComponent } from './profileComponents/screens/hotelReviews.component';
+import { HotelReviewsComponent } from './mainPageComponents/screens/hotelReviews.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +51,7 @@ import { hotelReviewsComponent } from './profileComponents/screens/hotelReviews.
     //Hotel page
     MainPageComponent,
     FooterMainComponent,
-    hotelReviewsComponent,
+    HotelReviewsComponent,
   ],
   imports: [
     RecaptchaModule,
