@@ -86,7 +86,7 @@ public class UserRest {
             @ApiResponse(responseCode = "404", description = "User not found")
     })
     @JsonView(UserDetails.class)
-    @PutMapping("/managers/{id}/applied")
+    @PutMapping("/managers/{id}/applied") 
     public ResponseEntity<UserE> managerApplication(HttpServletRequest request, @PathVariable Long id,
         @RequestBody UserE userWithState) {
         try {
@@ -94,9 +94,8 @@ public class UserRest {
             UserE foundManager = userService.findById(id).orElseThrow();
 
             if (currentUser.equals(foundManager) || currentUser.getRols().contains("ADMIN")) {
-                if (currentUser.getvalidated() == false) {
-                    Boolean state = userWithState.getvalidated();
-                    foundManager.setRejected(!state);
+                if (foundManager.getvalidated() == false) {
+                    foundManager.setRejected(false);
                     userService.save(foundManager);
                 }
                 return ResponseEntity.ok(foundManager);
@@ -179,7 +178,7 @@ public class UserRest {
                 manager.setRejected(true);
                 manager.setvalidated(false);
 
-            } else if (!rejected) {
+            } else if (manager.getRols().contains("MANAGER") && currentUser.getRols().contains("ADMIN") && !rejected) {
                 manager.setRejected(false);
                 manager.setvalidated(true);
 
