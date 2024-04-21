@@ -24,26 +24,26 @@
                   <th>Request State</th>
                 </tr>
               </thead>
-              <tbody>
-                <ng-component *ngFor="let manager of unvalidatedManagers">
-                <tr>
-                  <td>{{manager.name}}</td>
-                  <td>{{manager.language}}</td>
-                  <td>{{manager.location}}</td>
-                  <td>{{manager.organization}}</td>
-                  <td>{{manager.phone}}</td>
-                  <td>
-                    <form (ngSubmit)="acceptManager(manager.id)" method="post">
-                      <input type="submit" value="Accept" class="btn btn-primary btn-user btn-block mb-2" id="apply"/>
-                      <!--<input type="hidden" name="_csrf" value="{{token}}"/>-->
-                    </form>
-                    <form (ngSubmit)="rejectManager(manager.id)" method="post">
-                      <input type="submit" value="Reject" class="btn btn-primary btn-user btn-block" id="logout"/>
-                      <!--<input type="hidden" name="_csrf" value="{{token}}"/>-->
-                    </form>
-                  </td>
-                </tr>
-                </ng-component>
+              <tbody id="reservationList">
+                <ng-container *ngFor="let manager of unvalidatedManagers">
+                  <tr>
+                    <td class="text-nowrap align-middle">{{manager.name}}</td>
+                    <td class="text-nowrap align-middle"><span>{{manager.language}}</span></td>
+                    <td class="text-nowrap align-middle"><span>{{manager.location}}</span></td>
+                    <td class="text-nowrap align-middle">{{manager.organization}}</td>
+                    <td class="text-nowrap align-middle">{{manager.phone}}</td>
+                    <td>
+                      <form (ngSubmit)="acceptManager(manager.id)">
+                        <input type="submit" value="Accept" class="btn btn-primary btn-user btn-block mb-2" id="apply"/>
+                        <!--<input type="hidden" name="_csrf" value="{{token}}"/>-->
+                      </form>
+                      <form (ngSubmit)="rejectManager(manager.id)">
+                        <input type="submit" value="Reject" class="btn btn-primary btn-user btn-block" id="logout"/>
+                        <!--<input type="hidden" name="_csrf" value="{{token}}"/>-->
+                      </form>
+                    </td>
+                  </tr>
+                </ng-container>
               </tbody>
             </table>
           </div>

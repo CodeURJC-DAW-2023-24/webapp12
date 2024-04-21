@@ -31,7 +31,7 @@ export class ClientReservationsComponent {
   ) {
     this.route.params.subscribe(param =>{
       this.userId = param['userId'];
-    
+
     })
     this.reservations = [];
     this.page = 0;
@@ -41,12 +41,12 @@ export class ClientReservationsComponent {
   ngOnInit() {
     this.getCurrentUser();
   }
-  
+
   getCurrentUser() {
     this.userService.getUserById(this.userId).subscribe({
       next: (user: User) => {
         this.user = user;
-        this.getReservations();      
+        this.getReservations();
       },
       error: err => {
         if (err.status === 403) {
@@ -67,6 +67,7 @@ export class ClientReservationsComponent {
           this.totalPages = pageResponse.totalPages;
           pageResponse.content.forEach(reservation => {
             this.reservations.push(reservation);
+            console.log(this.reservations)
           });
           // Increment the page number after each successful API call
           this.page += 1;

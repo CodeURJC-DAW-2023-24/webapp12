@@ -47,7 +47,11 @@ export class UserService {
     return this.http.post<HttpResponse<any>>(`/api/users/${id}/image`, formData);
   }
 
-  getUnvalidatedManagers(page: number, size: number): Observable<User[]>{
-    return this.http.get<User[]>('/api/managers/unvalidated', {params: {page: page.toString(), size: size.toString()}});
+  getUnvalidatedManagers(page: number, size: number): Observable<PageResponse<User>>{
+    return this.http.get<PageResponse<User>>('/api/managers/validated', {params: {page: page.toString(), size: size.toString(), validated: 'false'}});
+  }
+
+  setManagerState(id: number, rejected: boolean): Observable<User> {
+    return this.http.put<User>(`/api/managers/${id}/rejected/state`, {rejected: rejected});
   }
 }

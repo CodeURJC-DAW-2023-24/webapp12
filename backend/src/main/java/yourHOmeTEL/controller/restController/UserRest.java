@@ -140,18 +140,15 @@ public class UserRest {
                 }
             } else if (validated == false) {
                 Page<UserE> requestedManagersList = userService.findByValidatedAndRejected(false, false, pageable);
+                PageResponse<UserE> response = new PageResponse<>();
                 if (requestedManagersList.hasContent()) {
-                    PageResponse<UserE> response = new PageResponse<>();
                     response.setContent(requestedManagersList.getContent());
                     response.setPageNumber(requestedManagersList.getNumber());
                     response.setPageSize(requestedManagersList.getSize());
                     response.setTotalElements(requestedManagersList.getTotalElements());
                     response.setTotalPages(requestedManagersList.getTotalPages());
-
-                    return ResponseEntity.ok(response);
-                } else {
-                    return ResponseEntity.notFound().build();
                 }
+                return ResponseEntity.ok(response);
             } else {
                 return ResponseEntity.badRequest().build();
             }
@@ -170,9 +167,10 @@ public class UserRest {
     })
     @PutMapping("/managers/{id}/rejected/state")
     @JsonView(UserDetails.class)
-    public ResponseEntity<UserE> rejectManager(HttpServletRequest request, @RequestParam("rejected") Boolean rejected,
+    public ResponseEntity<UserE> rejectManager(HttpServletRequest request, @RequestBody  Map<String, Boolean> body,
             @PathVariable Long id) {
         try {
+            Boolean rejected = body.get("rejected");
             UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
             UserE manager = userService.findById(id).orElseThrow();
             if (manager.getRols().contains("MANAGER") && currentUser.getRols().contains("ADMIN") && rejected) {
