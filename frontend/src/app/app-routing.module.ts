@@ -18,6 +18,7 @@ import { AddHotelComponent } from './profileComponents/screens/addHotel.componen
 import { ViewHotelsManagerComponent } from './profileComponents/screens/viewHotelsManager.component';
 import { EditHotelComponent } from './profileComponents/screens/editHotel.component';
 import { HotelReviewsComponent } from './mainPageComponents/screens/hotelReviews.component';
+import { ManagerValidationComponent } from './profileComponents/screens/managerValidation.component';
 
 
 
@@ -52,7 +53,10 @@ const routes: Routes = [
   { path: 'viewHotelsManager', component: ViewHotelsManagerComponent, canActivate: [AuthGuardService],
   data: { role: 'MANAGER' } },
 
-  { path: '**', redirectTo: 'error' },
+  { path: '**', redirectTo: 'mainPage' },
+
+  //ADMIN PAGES
+  { path: 'managerValidation', component: ManagerValidationComponent, canActivate: [AuthGuardService], data: { role: 'ADMIN' } },
 
 
 ];
