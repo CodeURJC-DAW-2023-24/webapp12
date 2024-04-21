@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'loginError', component: LoginErrorComponent },
   { path: 'nickTaken', component: NickTakenComponent },
   { path: 'mainPage', component: MainPageComponent},
-  { path: 'hotelReviews', component: HotelReviewsComponent},
+  { path: 'hotelReviews/:hotelId', component: HotelReviewsComponent},
 
 
   //USER PAGES

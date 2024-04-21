@@ -1,10 +1,11 @@
 import { Hotel } from "./hotel.model";
 import { Reservation } from "./reservation.model";
 import { Review } from "./review.model";
-  
+
   export interface User {
     id: number;
     name: string;
+    nick: string;
     lastname: string;
     bio?: string;
     location?: string;

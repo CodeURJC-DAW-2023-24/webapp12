@@ -1,4 +1,17 @@
-<!-- END nav -->
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+  <div class="container">
+      <a [routerLink]="['/mainPage']" class="navbar-brand">Your<span>HOmeTEL</span></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+          aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+      </button>
+      <ul class="navbar-nav ml-auto">
+          <!--Search bar-->
+          <li *ngIf="isUser" class="nav-item active"><a [routerLink]="['/profile']" class="nav-link font-size-20">Profile</a></li>
+          <li *ngIf="!isUser" class="nav-item"><a [routerLink]="['/login']" class="nav-link font-size-20">Log In</a></li>
+      </ul>
+  </div>
+</nav>
 <div class="hero-wrap" style="background-image: url('/images/bg_3.jpg');">
   <div class="overlay"></div>
   <div class="container">
@@ -35,7 +48,7 @@
                       <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{hotel.name}}</h4>
                     </div>
                     <div class="text-center text-sm-right">
-                      <a [routerLink]="https://es.wikipedia.org/wiki/Cadena_hotelera">
+                      <a href ="https://es.wikipedia.org/wiki/Cadena_hotelera">
                       <span class="badge badge-secondary">Managed by: {{hotel.manager.name}}</span>
                       </a>
                     </div>
@@ -51,7 +64,7 @@
       </div>
       <div id="reviews" class="review-section">
         <div class="d-flex align-items-center justify-content-between mb-4">
-          <h4 class="m-0">Total reviews: {{totalReviews}}</h4>
+          <h4 class="m-0">Total reviews: {{totalreviews}}</h4>
           <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2"
             style="width: 188px;">
             <span class="selection">
@@ -78,11 +91,11 @@
                 <td class="progress-bar-container">
                   <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                     <div class="fit-progressbar-background">
-                      <span class="progress-fill" [style.width.%]="percentageReview5"></span>
+                      <span class="progress-fill" [style.width.%]="percentageReview[4]"></span>
                     </div>
                   </div>
                 </td>
-                <td class="star-num">{{numreviews5 | number}}</td>
+                <td class="star-num">{{numReviewsForScore[4] | number}}</td>
               </tr>
               <tr>
                 <td>
@@ -95,11 +108,11 @@
                 <td class="progress-bar-container">
                   <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                     <div class="fit-progressbar-background">
-                      <span class="progress-fill" [style.width.%]="percentageReview4"></span>
+                      <span class="progress-fill" [style.width.%]="percentageReview[3]"></span>
                     </div>
                   </div>
                 </td>
-                <td class="star-num">{{numreviews4 | number}}</td>
+                <td class="star-num">{{numReviewsForScore[3] | number}}</td>
               </tr>
               <tr>
                 <td>
@@ -112,11 +125,11 @@
                 <td class="progress-bar-container">
                   <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                     <div class="fit-progressbar-background">
-                      <span class="progress-fill" [style.width.%]="percentageReview3"></span>
+                      <span class="progress-fill" [style.width.%]="percentageReview[2]"></span>
                     </div>
                   </div>
                 </td>
-                <td class="star-num">{{numreviews3 | number}}</td>
+                <td class="star-num">{{numReviewsForScore[2] | number}}</td>
               </tr>
               <tr>
                 <td>
@@ -129,11 +142,11 @@
                 <td class="progress-bar-container">
                   <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                     <div class="fit-progressbar-background">
-                      <span class="progress-fill" [style.width.%]="percentageReview2"></span>
+                      <span class="progress-fill" [style.width.%]="percentageReview[1]"></span>
                     </div>
                   </div>
                 </td>
-                <td class="star-num">{{numreviews2 | number}}</td>
+                <td class="star-num">{{numReviewsForScore[1] | number}}</td>
               </tr>
               <tr>
                 <td>
@@ -146,11 +159,11 @@
                 <td class="progress-bar-container">
                   <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                     <div class="fit-progressbar-background">
-                      <span class="progress-fill" [style.width.%]="percentageReview1"></span>
+                      <span class="progress-fill" [style.width.%]="percentageReview[0]"></span>
                     </div>
                   </div>
                 </td>
-                <td class="star-num">{{numreviews1 | number}}</td>
+                <td class="star-num">{{numReviewsForScore[0] | number}}</td>
               </tr>
             </tbody>
           </table>
@@ -160,14 +173,14 @@
       <div class="form-content">
         <h2>Leave your review!</h2>
         <div>
-          <form (ngSubmit)="addReview(rating.value, comment.value)"class="bg-white p-5 contact-form" method="post">
+          <form (ngSubmit)="addReview(rating, comment.value)"class="bg-white p-5 contact-form" method="post">
 
             <div class="form-group">
               <label for="rating">Rating</label>
 
               <div class="rating">
                 <!-- 5 stars -->
-                <input type="radio" id="5stars" name="rating" value="5" [checked]="user.rating === 5">
+                <input type="radio" id="5stars" name="rating" value="5" [checked]="rating === 5">
                 <label for="5stars">
                   <p class="rate">
                     <span>
@@ -201,7 +214,7 @@
                 </label><br>
 
                 <!-- 4 stars -->
-                <input type="radio" id="4stars" name="rating" value="4" [checked]="user.rating === 4">
+                <input type="radio" id="4stars" name="rating" value="4" [checked]="rating === 4">
 
                 <label for="4stars">
                   <p class="rate">
@@ -231,7 +244,7 @@
                 </label><br>
 
                 <!-- 3 stars -->
-                <input type="radio" id="3stars" name="rating" value="3" [checked]="user.rating === 3">
+                <input type="radio" id="3stars" name="rating" value="3" [checked]="rating === 3">
                 <label for="3stars">
                   <p class="rate">
                     <span>
@@ -255,7 +268,7 @@
                 </label><br>
 
                 <!-- 2 stars -->
-                <input type="radio" id="2stars" name="rating" value="2" [checked]="user.rating === 2">
+                <input type="radio" id="2stars" name="rating" value="2" [checked]="rating === 2">
                 <label for="2stars">
                   <p class="rate">
                     <span>
@@ -274,7 +287,7 @@
                 </label><br>
 
                 <!-- 1 star -->
-                <input type="radio" id="1star" name="rating" value="1" [checked]="user.rating === 1">
+                <input type="radio" id="1star" name="rating" value="1" [checked]="rating === 1">
                 <label for="1star">
                   <p class="rate">
                     <span>
@@ -320,13 +333,13 @@
               <!-- Profile image -->
               <span>
 
-                <img src="/profile/{{user.id}}/images" class="profile-pict-img img-fluid" alt="userProfileImage" />
+                <img src="/profile/{{review.user.id}}/images" class="profile-pict-img img-fluid" alt="userProfileImage" />
               </span>
             </div>
             <div class="right">
               <!-- Poster's name -->
               <h4>
-                {{user.nick}}
+                {{review.user.nick}}
                 <span class="gig-rating text-body-2">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15" height="15">
                     <path fill="currentColor"
@@ -334,18 +347,18 @@
                     </path>
                   </svg>
                   <!-- Rating -->
-                  {{score}}
+                  {{review.score}}
                 </span>
               </h4>
 
               <!-- Comment -->
               <div class="review-description">
                 <p>
-                  {{comment}}
+                  {{review.comment}}
                 </p>
               </div>
               <!-- Time passed since posting -->
-              <span class="publish py-3 d-inline-block w-100">{{date}}</span>
+              <span class="publish py-3 d-inline-block w-100">{{review.date}}</span>
             </div>
           </div>
         </li>
@@ -354,9 +367,7 @@
       </ul>
     </div>
     <div style="display: flex; justify-content: center; align-items: center; margin: 15px;">
-      <button (click)="loadMoreReviews(hotel.id)" class="btn btn-secondary py-3 px-5">More reviews</button>
+      <button (click)="getReviews()" class="btn btn-secondary py-3 px-5">More reviews</button>
     </div>
   </div>
 </div>
-
-
