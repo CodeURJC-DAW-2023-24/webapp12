@@ -53,10 +53,11 @@ const routes: Routes = [
   { path: 'viewHotelsManager', component: ViewHotelsManagerComponent, canActivate: [AuthGuardService],
   data: { role: 'MANAGER' } },
 
-  { path: '**', redirectTo: 'mainPage' },
-
   //ADMIN PAGES
   { path: 'managerValidation', component: ManagerValidationComponent, canActivate: [AuthGuardService], data: { role: 'ADMIN' } },
+
+  //DEFAULT
+  { path: '**', redirectTo: 'mainPage' },
 
 
 ];

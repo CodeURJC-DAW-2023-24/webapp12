@@ -32,7 +32,6 @@ export class HotelReviewsComponent{
     public numReviewsForScore!: number[];
     public page!: number;
     public totalPages!: number;
-    public imageUrl!: string;
     public rating!: number;
     public comment!: string;
     public isUser!: boolean;
@@ -57,8 +56,6 @@ export class HotelReviewsComponent{
     ngOnInit() {
       this.getCurrentUser();
       this.getHotel();
-      this.getReviews();
-      this.setNumReviewsForScore();
       this.setReviewPercentages();
 
     }
@@ -86,7 +83,9 @@ export class HotelReviewsComponent{
       this.hotelService.getHotelById(this.hotelId).subscribe({
           next: (hotel: Hotel) => {
               this.hotel = hotel;
-              this.imageUrl = `/api/hotels/${hotel.id}/image`
+              this.hotelImageUrl = `/api/hotels/${hotel.id}/image`
+              this.getReviews();
+              this.setNumReviewsForScore();
               if(this.hotel.imageFile.size()===0){
                   this.router.navigate(['/error']);
               }
@@ -109,26 +108,17 @@ export class HotelReviewsComponent{
 
     setNumReviewsForScore(){
       this.numReviewsForScore = [0, 0, 0, 0, 0];
-      for (let review of this.hotelReviews) {
-        this.numReviewsForScore[review.score - 1]++;
+      if (this.hotel?.reviews) {
+        this.hotel.reviews.forEach(review => {
+          this.numReviewsForScore[review.score - 1] += 1;
+        });
       }
     }
 
     setReviewPercentages(){
       this.reviewService.getPercentageOfReviewsByScore(this.hotelId).subscribe((percentages: number[]) => {
         this.percentageReview = percentages;
-      });
-    }
-
-    addReview(rating: number, comment: string): void {
-      this.reviewService.createReview(rating, comment, this.hotelId).subscribe({
-        next: _ => {
-          this.router.navigate(['/hotelReviews', this.hotelId]);
-        },
-        error: (err: HttpErrorResponse) => {
-          // Handle other errors
-          this.router.navigate(['/error']);
-        }
+        console.log(this.percentageReview);
       });
     }
 
@@ -150,6 +140,27 @@ export class HotelReviewsComponent{
           }
         });
       }
+      console.log("reviews cargados")
+    }
+
+    addReview(comment: string): void {
+      this.reviewService.createReview(this.rating, comment, this.hotelId).subscribe({
+        next: _ => {
+
+          // Guarda la URL actual
+          let currentUrl = this.router.url;
+
+          // Navega a una URL temporal
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+          // Navega de nuevo a la URL actual
+          this.router.navigate([currentUrl]);
+          });
+        },
+        error: (err: HttpErrorResponse) => {
+          // Handle other errors
+          this.router.navigate(['/error']);
+        }
+      });
     }
 }
 

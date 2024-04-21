@@ -19,7 +19,7 @@
 
 
 <!-- END nav -->
-<div class="hero-wrap" style="background-image: url('/images/bg_3.jpg');">
+<div class="hero-wrap" style="background-image: url('assets/images/bg_3.jpg');">
   <div class="overlay"></div>
   <div class="container">
     <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
@@ -34,7 +34,7 @@
 <!-- Page Wrapper -->
 <div class="container">
   <div id="content-wrapper" class="d-flex flex-column">
-    <div class="row flex-lg-nowrap mt-4"></div>
+    <div class="row flex-lg-nowrap mt-4">
     <div class="col">
       <div class="row">
         <div class="col mb-3 mt-4">
@@ -46,7 +46,7 @@
                     <div class="mx-auto" style="width: 140px;">
                       <div class="d-flex justify-content-center align-items-center rounded"
                         style="height: 140px; background-color: rgb(233, 236, 239);">
-                        <img [src]="hotelImageUrl" class="hotel-preview-image">
+                        <img *ngIf="hotelImageUrl" [src]="hotelImageUrl" class="hotel-preview-image">
                       </div>
                     </div>
                   </div>
@@ -97,7 +97,7 @@
                 <td class="progress-bar-container">
                   <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                     <div class="fit-progressbar-background">
-                      <span class="progress-fill" [style.width.%]="percentageReview[4]"></span>
+                      <span class="progress-fill" [style.width.%]="percentageReview[0]"></span>
                     </div>
                   </div>
                 </td>
@@ -114,7 +114,7 @@
                 <td class="progress-bar-container">
                   <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                     <div class="fit-progressbar-background">
-                      <span class="progress-fill" [style.width.%]="percentageReview[3]"></span>
+                      <span class="progress-fill" [style.width.%]="percentageReview[1]"></span>
                     </div>
                   </div>
                 </td>
@@ -148,7 +148,7 @@
                 <td class="progress-bar-container">
                   <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                     <div class="fit-progressbar-background">
-                      <span class="progress-fill" [style.width.%]="percentageReview[1]"></span>
+                      <span class="progress-fill" [style.width.%]="percentageReview[3]"></span>
                     </div>
                   </div>
                 </td>
@@ -165,7 +165,7 @@
                 <td class="progress-bar-container">
                   <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
                     <div class="fit-progressbar-background">
-                      <span class="progress-fill" [style.width.%]="percentageReview[0]"></span>
+                      <span class="progress-fill" [style.width.%]="percentageReview[4]"></span>
                     </div>
                   </div>
                 </td>
@@ -179,14 +179,14 @@
       <div class="form-content">
         <h2>Leave your review!</h2>
         <div>
-          <form (ngSubmit)="addReview(rating, comment.value)"class="bg-white p-5 contact-form" method="post">
+          <form (ngSubmit)="addReview(comment.value)"class="bg-white p-5 contact-form" method="post">
 
             <div class="form-group">
               <label for="rating">Rating</label>
 
               <div class="rating">
                 <!-- 5 stars -->
-                <input type="radio" id="5stars" name="rating" value="5" [checked]="rating === 5">
+                <input [(ngModel)]="rating" type="radio" id="5stars" name="rating" value="5">
                 <label for="5stars">
                   <p class="rate">
                     <span>
@@ -220,7 +220,7 @@
                 </label><br>
 
                 <!-- 4 stars -->
-                <input type="radio" id="5stars" name="rating" value="4" [checked]="rating === 4">
+                <input [(ngModel)]="rating" type="radio" id="5stars" name="rating" value="4">
 
                 <label for="4stars">
                   <p class="rate">
@@ -250,7 +250,7 @@
                 </label><br>
 
                 <!-- 3 stars -->
-                <input type="radio" id="5stars" name="rating" value="3" [checked]="rating === 3">
+                <input [(ngModel)]="rating" type="radio" id="5stars" name="rating" value="3">
                 <label for="3stars">
                   <p class="rate">
                     <span>
@@ -274,7 +274,7 @@
                 </label><br>
 
                 <!-- 2 stars -->
-                <input type="radio" id="5stars" name="rating" value="2" [checked]="rating === 2">
+                <input [(ngModel)]="rating" type="radio" id="5stars" name="rating" value="2">
                 <label for="2stars">
                   <p class="rate">
                     <span>
@@ -293,7 +293,7 @@
                 </label><br>
 
                 <!-- 1 star -->
-                <input type="radio" id="5stars" name="rating" value="1" [checked]="rating === 1">
+                <input [(ngModel)]="rating" type="radio" id="5stars" name="rating" value="1">
                 <label for="1star">
                   <p class="rate">
                     <span>
@@ -330,51 +330,53 @@
       <ul>
         <ng-container *ngFor="let review of hotelReviews">
 
-        <!-- Here begins a review -->
-        <li>
-          <!-- Here is the div for the original post, having image, name, valoration and comment -->
-          <div class="d-flex">
-            <div class="left">
-              <!-- Profile image -->
-              <!-- <span>
+          <!-- Here begins a review -->
+          <li>
+            <!-- Here is the div for the original post, having image, name, valoration and comment -->
+            <div class="d-flex">
+              <div class="left">
+                <!-- Profile image -->
+                <!-- <span>
 
-                <i [src]="/profile/{{review.user.id}}/images" class="profile-pict-img img-fluid" alt="userProfileImage" />
-              </span> -->
-            </div>
-            <div class="right">
-              <!-- Poster's name -->
-              <h4>
-                {{review.user.nick}}
-                <span class="gig-rating text-body-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15" height="15">
-                    <path fill="currentColor"
-                      d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
-                    </path>
-                  </svg>
-                  <!-- Rating -->
-                  {{review.score}}
-                </span>
-              </h4>
-
-              <!-- Comment -->
-              <div class="review-description">
-                <p>
-                  {{review.comment}}
-                </p>
+                  <i [src]="/profile/{{review.user.id}}/images" class="profile-pict-img img-fluid" alt="userProfileImage" />
+                </span> -->
               </div>
-              <!-- Time passed since posting -->
-              <span class="publish py-3 d-inline-block w-100">{{review.date}}</span>
+              <div class="right">
+                <!-- Poster's name -->
+                <h4>
+                  {{review.user.nick}}
+                  <span class="gig-rating text-body-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15" height="15">
+                      <path fill="currentColor"
+                        d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
+                      </path>
+                    </svg>
+                    <!-- Rating -->
+                    {{review.score}}
+                  </span>
+                </h4>
+
+                <!-- Comment -->
+                <div class="review-description">
+                  <p>
+                    {{review.comment}}
+                  </p>
+                </div>
+                <!-- Time passed since posting -->
+                <span class="publish py-3 d-inline-block w-100">{{review.date}}</span>
+              </div>
             </div>
-          </div>
-        </li>
-      </ng-container>
-      <h2 *ngIf="!hotelReviews || hotelReviews.length === 0">No reviews for this hotel so far</h2>
+          </li>
+        </ng-container>
+        <h2 *ngIf="!hotelReviews || hotelReviews.length === 0">No reviews for this hotel so far</h2>
       </ul>
     </div>
 
     <div style="display: flex; justify-content: center; align-items: center; margin: 15px;">
       <button (click)="getReviews()" class="btn btn-secondary py-3 px-5">More reviews</button>
-  </div>
     </div>
+    </div>
+  </div>
 
+  </div>
 </div>
