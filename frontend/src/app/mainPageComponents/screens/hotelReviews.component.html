@@ -22,13 +22,14 @@
 <div class="hero-wrap" style="background-image: url('assets/images/bg_3.jpg');">
   <div class="overlay"></div>
   <div class="container">
-    <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
-      <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
-        <div class="text">
-          <h1 class="mb-4 bread">Hotel Reviews</h1>
-        </div>
+      <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
+          <div class="col-md-9 text-center d-flex align-items-end justify-content-center">
+              <div class="text">
+                  <p class="breadcrumbs mb-2"><span class="mr-2"><a [routerLink]="['/mainPage']">Home</a></span></p>
+                  <h1 class="mb-4 bread">Hotel Reviews</h1>
+              </div>
+          </div>
       </div>
-    </div>
   </div>
 </div>
 <!-- Page Wrapper -->
@@ -176,7 +177,7 @@
         </div>
       </div>
       <!-- Review form for the user -->
-      <div class="form-content">
+      <div *ngIf="isUser" class="form-content">
         <h2>Leave your review!</h2>
         <div>
           <form (ngSubmit)="addReview(comment.value)"class="bg-white p-5 contact-form" method="post">
@@ -327,7 +328,7 @@
       </div>
           <!-- List of all the reviews -->
     <div class="review-list">
-      <ul>
+      <ul class="mt-4">
         <ng-container *ngFor="let review of hotelReviews">
 
           <!-- Here begins a review -->
@@ -336,10 +337,9 @@
             <div class="d-flex">
               <div class="left">
                 <!-- Profile image -->
-                <!-- <span>
-
-                  <i [src]="/profile/{{review.user.id}}/images" class="profile-pict-img img-fluid" alt="userProfileImage" />
-                </span> -->
+                <span>
+                  <img [src]="getUserImg(review.user.id)" class="profile-pict-img img-fluid" alt="userProfileImage">
+                </span>
               </div>
               <div class="right">
                 <!-- Poster's name -->

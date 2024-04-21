@@ -162,6 +162,10 @@ export class HotelReviewsComponent{
         }
       });
     }
+
+    getUserImg(userId: number): string {
+        return `/api/users/${userId}/image`;
+        }
 }
 
 
