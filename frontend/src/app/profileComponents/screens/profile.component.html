@@ -55,7 +55,7 @@
                                                     </form>
                                                 </li>
 
-                                                <ng-container *ngIf="!user?.validated && user?.rejected ">
+                                                <ng-container *ngIf="!user?.validated && user?.rejected && isManager ">
                                                     <li class="nav-item mt-3 mb-3 ">
                                                         <form *ngIf="user" method="post">
                                                             <input (click)="applyManager($event)" type="submit" value="Apply for validation"

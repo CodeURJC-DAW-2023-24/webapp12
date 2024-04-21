@@ -56,7 +56,7 @@ const routes: Routes = [
   //ADMIN PAGES
   { path: 'managerValidation', component: ManagerValidationComponent, canActivate: [AuthGuardService], data: { role: 'ADMIN' } },
 
-  //DEFAULT
+  //DEFAULT. PUTH ALL ROUTES AVOBE THIS ONE
   { path: '**', redirectTo: 'mainPage' },
 
 

@@ -113,10 +113,9 @@ public class HotelRest {
 			@PathVariable Long id) {
 
 		try {
-			UserE currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
 
-			if (hotelManager.getvalidated() || currentUser.getRols().contains("ADMIN")) {
+			if (hotelManager.getvalidated()) {
 				Hotel hotel = hotelService.findById(id).orElseThrow();
 				return ResponseEntity.ok(hotel);
 			} else {

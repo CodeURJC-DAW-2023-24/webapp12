@@ -162,10 +162,9 @@ public class ReviewRest {
 			Pageable pageable) {
 
 		try {
-			UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 			UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
 
-			if (hotelManager.getvalidated() || requestUser.getRols().contains("ADMIN")) {
+			if (hotelManager.getvalidated()) {
 				Page<Review> targetReviews = reviewService.findByHotel_Id(id, pageable);
 				if (targetReviews.hasContent()) {
 					PageResponse<Review> response = new PageResponse<>();
@@ -187,7 +186,7 @@ public class ReviewRest {
 			return ResponseEntity.notFound().build();
 		}
 
-	}
+	} 
 
 	@GetMapping("reviews/size/hotels/{id}")
 	@Operation(summary = "Get the number of hotel reviews", description = "Get the number of reviews of a specific hotel by hotel ID.")

@@ -79,7 +79,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                         
                 
                         .requestMatchers(HttpMethod.GET, "/api/hotels/specific/all").permitAll() 
-                        //.requestMatchers(HttpMethod.GET, "/api/hotels/size").permitAll()        
+      
                         .requestMatchers(HttpMethod.GET, "/api/hotels/{id}/imagePath").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/hotels/recommended").permitAll()
                         // ADMIN AND MANAGER ENDPOINTS
@@ -130,8 +130,6 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                         .requestMatchers(HttpMethod.PUT, "/api/users/{id}").hasRole("USER")
                         .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasRole("USER")
 
-                        .requestMatchers(HttpMethod.GET, "/api/hotels/{id}").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/api/hotels/reviews/{id}").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/api/hotels/rooms/{id}").hasRole("USER")
 
                         .requestMatchers(HttpMethod.GET, "/api/reservations/users/{id}").hasRole("USER")
@@ -162,10 +160,10 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                                 "/api/reservations/users/{userId}/hotels/{hotelId}/rooms/{roomId}")
                         .hasRole("CLIENT")
 
-                        .requestMatchers(HttpMethod.POST, "/api/reviews/hotels/{hotelId}").hasRole("CLIENT")
-
                         // PUBLIC ENDPOINTS
                         .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/reviews/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/reviews/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/reviews/users/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/reviews/hotels/{id}").permitAll()

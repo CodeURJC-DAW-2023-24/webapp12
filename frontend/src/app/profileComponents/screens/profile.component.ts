@@ -37,12 +37,13 @@ constructor(private userService: UserService, private router: Router,
     this.userService.getCurrentUser().subscribe({
     next: (user: User) =>{
       this.user = user;
+      console.log("Validated: " + user.validated);
+      console.log("Rejected: " + user.rejected);
       this.userType = user.rols;
       this.isUser = user.rols.includes("USER");
       this.isClient = user.rols.includes("CLIENT");
       this.isManager = user.rols.includes("MANAGER");
       this.isAdmin = user.rols.includes("ADMIN");
-      this.isValidated = user.validated !== undefined ? user.validated : false;
       this.imageUrl = `/api/users/${user.id}/image`;
     },
     error: (err: HttpErrorResponse) => {
