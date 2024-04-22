@@ -13,6 +13,7 @@ import java.security.Principal;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,34 +124,31 @@ public class UserRest {
             Pageable pageable) {
 
         try {
-            if (validated == true) {
-                Page<UserE> requestedManagersList = userService.findByValidatedAndRejected(true, false, pageable);
-                if (requestedManagersList.hasContent()) {
-                    PageResponse<UserE> response = new PageResponse<>();
-                    response.setContent(requestedManagersList.getContent());
-                    response.setPageNumber(requestedManagersList.getNumber());
-                    response.setPageSize(requestedManagersList.getSize());
-                    response.setTotalElements(requestedManagersList.getTotalElements());
-                    response.setTotalPages(requestedManagersList.getTotalPages());
+            List<UserE> list = new ArrayList<>();
+            Page<UserE> requestedManagersList = new PageImpl<>(list);
 
-                    return ResponseEntity.ok(response);
-                } else {
-                    return ResponseEntity.notFound().build();
-                }
-            } else if (validated == false) {
-                Page<UserE> requestedManagersList = userService.findByValidatedAndRejected(false, false, pageable);
-                PageResponse<UserE> response = new PageResponse<>();
-                if (requestedManagersList.hasContent()) {
-                    response.setContent(requestedManagersList.getContent());
-                    response.setPageNumber(requestedManagersList.getNumber());
-                    response.setPageSize(requestedManagersList.getSize());
-                    response.setTotalElements(requestedManagersList.getTotalElements());
-                    response.setTotalPages(requestedManagersList.getTotalPages());
-                }
-                return ResponseEntity.ok(response);
-            } else {
+            if (validated) {
+                requestedManagersList = userService.findByValidatedAndRejected(true, false, pageable);
+
+            }else if (!validated){
+                requestedManagersList = userService.findByValidatedAndRejected(false, false, pageable);
+
+            }else{
                 return ResponseEntity.badRequest().build();
             }
+
+            PageResponse<UserE> response = new PageResponse<>();    
+            if (requestedManagersList.hasContent()) {
+                response.setContent(requestedManagersList.getContent());
+                               
+            } else {
+                response.setContent(new ArrayList<UserE>());   
+            }
+            response.setPageNumber(requestedManagersList.getNumber());
+            response.setPageSize(requestedManagersList.getSize());
+            response.setTotalElements(requestedManagersList.getTotalElements());
+            response.setTotalPages(requestedManagersList.getTotalPages());
+            return ResponseEntity.ok(response);
 
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
