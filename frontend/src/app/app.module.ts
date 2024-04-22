@@ -1,3 +1,4 @@
+import { Reservation } from './entities/reservation.model';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -29,8 +30,8 @@ import { HotelFormComponent } from './profileComponents/childs/hotelForm.compone
 import { EditHotelComponent } from './profileComponents/screens/editHotel.component';
 import { HotelReviewsComponent } from './mainPageComponents/screens/hotelReviews.component';
 import { ManagerValidationComponent } from './profileComponents/screens/managerValidation.component';
-import { ClientListComponentTsComponent } from './profileComponents/screens/client-list.component.ts/client-list.component.ts.component';
-import { ClientListComponent } from './profileComponents/screens/client-list/client-list.component';
+import { ReservationInfoComponent } from './profileComponents/screens/reservationInfo.component';
+import { ClientListComponent } from './profileComponents/screens/clientList.component';
 
 @NgModule({
   declarations: [
@@ -52,11 +53,11 @@ import { ClientListComponent } from './profileComponents/screens/client-list/cli
     HotelFormComponent,
     EditHotelComponent,
     ManagerValidationComponent,
+    ReservationInfoComponent,
     //Hotel page
     MainPageComponent,
     FooterMainComponent,
     HotelReviewsComponent,
-    ClientListComponentTsComponent,
     ClientListComponent,
   ],
   imports: [
