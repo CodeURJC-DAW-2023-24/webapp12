@@ -52,7 +52,6 @@ export class ClientListComponent{
     }
 
 
-
     getHotel(){
       this.hotelService.getHotelById(this.hotelId).subscribe({
           next: (hotel: Hotel) => {

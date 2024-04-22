@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -92,7 +93,12 @@ public class ReservationRest {
 				Page<Reservation> reservations = reservationService.findAll(pageable);
 
 				PageResponse<Reservation> response = new PageResponse<>();
-				response.setContent(reservations.getContent());
+				if (reservations.hasContent()) {
+					response.setContent(reservations.getContent());
+								   
+				} else {
+					response.setContent(new ArrayList<Reservation>());   
+				}
 				response.setPageNumber(reservations.getNumber());
 				response.setPageSize(reservations.getSize());
 				response.setTotalElements(reservations.getTotalElements());
@@ -156,18 +162,20 @@ public class ReservationRest {
 
 			if (requestUser.getRols().contains("ADMIN") || requestUser.equals(targetUser)) {
 				Page<Reservation> targetReservations = reservationService.findByUser_Id(id, pageable);
+				PageResponse<Reservation> response = new PageResponse<>();
 				if (targetReservations.hasContent()) {
-					PageResponse<Reservation> response = new PageResponse<>();
 					response.setContent(targetReservations.getContent());
+				}else{
+					response.setContent(new ArrayList<Reservation>());
+				}
+						
 					response.setPageNumber(targetReservations.getNumber());
 					response.setPageSize(targetReservations.getSize());
 					response.setTotalElements(targetReservations.getTotalElements());
 					response.setTotalPages(targetReservations.getTotalPages());
 
 					return ResponseEntity.ok(response);
-				} else {
-					return ResponseEntity.notFound().build();
-				}
+
 			} else {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
