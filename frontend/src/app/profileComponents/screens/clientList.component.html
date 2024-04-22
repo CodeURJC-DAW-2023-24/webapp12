@@ -21,17 +21,19 @@
                                   <tr class="candidates-list">
                                       <td class="title">
                                           <div class="thumb">
-                                              <img class="img-fluid" src="client.imgPath" alt="Client profile image">
+                                              <img class="img-fluid" [src]="getUserImg(client.id)" alt="Client profile image">
                                           </div>
                                           <div class="candidate-list-details">
                                               <div class="candidate-list-info">
                                                   <div class="candidate-list-title">
-                                                      <h5 class="mb-0"><a href="profile.html">Name: {{name}}</a></h5>
+                              <!-- PENDIENTE de llevar a una página de perfil de cliente, con menos permisos, o mostrar más información -->
+
+                                                      <h5 class="mb-0"><a [routerLink]="['/profile']">Name: {{client.name}}</a></h5>
                                                   </div>
                                                   <div class="candidate-list-option">
                                                       <ul class="list-unstyled">
-                                                          <li><i class="pr-1"></i>Language: {{language}}</li>
-                                                          <li><i class="pr-1"></i>Phone:{{phone}}</li>
+                                                          <li><i class="pr-1"></i>Language: {{client.language}}</li>
+                                                          <li><i class="pr-1"></i>Phone: {{client.phone}}</li>
                                                       </ul>
                                                   </div>
                                               </div>
@@ -50,10 +52,11 @@
                               </tbody>
                           </table>
                               <div>
-                                  <a class="back-button" href="/viewHotelsManager" >
+                                  <a class="back-button" [routerLink]="['/viewHotelsManager']" >
                                       <button class="btn btn-primary" type="button" onclick="" >Return</button>
                                   </a>
                               </div>
+                              <!-- PENDIENTE de hacer la paginación (un botón de cargar más) -->
                               <ul class="page-selector pagination justify-content-center mb-0">
                                   <li class="page-item disabled"> <span class="page-link">Prev</span> </li>
                                   <li class="page-item active" aria-current="page"><span class="page-link">1 </span> <span
