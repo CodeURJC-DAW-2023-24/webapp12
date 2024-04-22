@@ -54,11 +54,13 @@ import { ClientListComponent } from './profileComponents/screens/clientList.comp
     EditHotelComponent,
     ManagerValidationComponent,
     ReservationInfoComponent,
+    ClientListComponent,
+
     //Hotel page
     MainPageComponent,
     FooterMainComponent,
     HotelReviewsComponent,
-    ClientListComponent,
+
   ],
   imports: [
     RecaptchaModule,

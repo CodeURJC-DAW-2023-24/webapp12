@@ -20,6 +20,10 @@ export class UserService {
 
   }
 
+  getHotelClients(id : number) : Observable<User[]>{
+    return this.http.get<User[]>(`/api/hotels/${id}/clients`);
+  }
+
   getUserById(id: number): Observable<User>{
     return this.http.get<User>(`/api/users/${id}`);
   }

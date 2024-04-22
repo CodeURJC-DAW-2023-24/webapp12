@@ -18,25 +18,19 @@ import { LoginService } from '../../service/Login.service';
     selector: 'app-clientList',
     templateUrl: './clientList.component.html'
 })
-export class clientListComponent{
+export class ClientListComponent{
     title = 'frontend';
 
     // hotel attributes
-    public hotelImageUrl!: string;
-    public hotelId!: number;
+    public hotel!: Hotel;
+    public hotelId! : number;
 
     // client attributes
     public clients!: User[];
-    public totalreviews!: number;
-    public hotelReviews!: Review[];
-    public percentageReview!: number[];
-    public numReviewsForScore!: number[];
-    public page!: number;
-    public totalPages!: number;
-    public rating!: number;
-    public comment!: string;
-    public isUser!: boolean;
-    public user!: User;
+
+    // pageable attributes
+    public totalPages : number;
+    public page : number;
 
 
 
@@ -50,49 +44,29 @@ export class clientListComponent{
         });
         this.totalPages = 1;
         this.page = 0;
-        this.hotelReviews = [];
-        this.isUser = false;
+
     }
 
     ngOnInit() {
-      this.getCurrentUser();
       this.getHotel();
-      this.setReviewPercentages();
-
     }
 
-    getCurrentUser() {
-      this.userService.getCurrentUser().subscribe({
-        next: user => {
-          console.log("returned");
-            this.user = user;
-            this.isUser = true;
-        },
-        error: err => {
-          if (err.status === 403) {
-            console.log('Forbidden error');
-            this.router.navigate(['/error']);
-          } else if (err.status === 404) {
-            console.log('User not logged in');
-            this.isUser = false;
-          }
-        }
-      });
-    }
+
 
     getHotel(){
       this.hotelService.getHotelById(this.hotelId).subscribe({
           next: (hotel: Hotel) => {
               this.hotel = hotel;
-              this.hotelImageUrl = `/api/hotels/${hotel.id}/image`
-              this.getReviews();
-              this.setNumReviewsForScore();
+              this.getClients();
+
               if(this.hotel.imageFile.size()===0){
                   this.router.navigate(['/error']);
               }
               else{
                   console.log('Hotel image found');
               }
+
+
           },
           error: (err: HttpErrorResponse) => {
               if (err.status === 403) {
@@ -107,62 +81,27 @@ export class clientListComponent{
       });
     }
 
-    setNumReviewsForScore(){
-      this.numReviewsForScore = [0, 0, 0, 0, 0];
-      if (this.hotel?.reviews) {
-        this.hotel.reviews.forEach(review => {
-          this.numReviewsForScore[review.score - 1] += 1;
-        });
-      }
-    }
-
-    setReviewPercentages(){
-      this.reviewService.getPercentageOfReviewsByScore(this.hotelId).subscribe((percentages: number[]) => {
-        this.percentageReview = percentages;
-        console.log(this.percentageReview);
-      });
-    }
-
-    getReviews(){
-      if(this.page < this.totalPages){
-        this.reviewService.getReviews(this.hotelId, this.page, 6).subscribe({
-          next: (pageResponse: PageResponse<Review>) => {
-            this.totalPages = pageResponse.totalPages;
-            pageResponse.content.forEach(review => {
-              this.hotelReviews.push(review);
-            });
-            // Increment the page number after each successful API call
-            this.page += 1;
+    getClients(){
+      this.userService.getHotelClients(this.hotelId).subscribe({
+          next: (clients : User[]) => {
+              this.clients = clients;
           },
           error: (err: HttpErrorResponse) => {
-            console.log('Unknown error returning reservations');
-            console.log(err);
-            this.router.navigate(['/error']);
+              if (err.status === 403) {
+                  console.log('Forbidden error');
+                  this.router.navigate(['/error']);
+
+              } else {
+                  console.log('Unknown error');
+                  this.router.navigate(['/error']);
+              }
           }
-        });
-      }
-      console.log("reviews cargados")
-    }
-
-    addReview(comment: string): void {
-      this.reviewService.createReview(this.rating, comment, this.hotelId).subscribe({
-        next: _ => {
-
-          // Guarda la URL actual
-          let currentUrl = this.router.url;
-
-          // Navega a una URL temporal
-          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-          // Navega de nuevo a la URL actual
-          this.router.navigate([currentUrl]);
-          });
-        },
-        error: (err: HttpErrorResponse) => {
-          // Handle other errors
-          this.router.navigate(['/error']);
-        }
       });
     }
+
+
+
+
 
     getUserImg(userId: number): string {
         return `/api/users/${userId}/image`;
