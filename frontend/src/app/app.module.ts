@@ -31,8 +31,7 @@ import { EditHotelComponent } from './profileComponents/screens/editHotel.compon
 import { HotelReviewsComponent } from './mainPageComponents/screens/hotelReviews.component';
 import { ManagerValidationComponent } from './profileComponents/screens/managerValidation.component';
 import { ReservationInfoComponent } from './profileComponents/screens/reservationInfo.component';
-import { ClientListComponentTsComponent } from './profileComponents/screens/client-list.component.ts/client-list.component.ts.component';
-import { ClientListComponent } from './profileComponents/screens/client-list/client-list.component';
+import { ClientListComponent } from './profileComponents/screens/clientList.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +58,6 @@ import { ClientListComponent } from './profileComponents/screens/client-list/cli
     MainPageComponent,
     FooterMainComponent,
     HotelReviewsComponent,
-    ClientListComponentTsComponent,
     ClientListComponent,
   ],
   imports: [
