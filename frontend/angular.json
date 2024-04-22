@@ -42,7 +42,10 @@
               "https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css",
               "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css",
               "https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.2.96/css/materialdesignicons.min.css",
-              "https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+              "https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css",
+              "https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+
+
             ],
             "scripts": [
               "src/assets/js/popper.min.js",
@@ -74,7 +77,10 @@
               "src/assets/js/captcha.js",
               "src/assets/js/Chart.js",
               "src/assets/js/loadMoreHotelsViewHotelsManager.js",
-              "src/assets/js/jquery.mb.YTPlayer.min.js"
+              "src/assets/js/jquery.mb.YTPlayer.min.js",
+              "src=https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js",
+              "src=https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+
             ],
             "baseHref": "/new/"
           },

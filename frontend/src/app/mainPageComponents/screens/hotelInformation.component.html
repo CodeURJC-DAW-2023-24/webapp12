@@ -35,37 +35,33 @@
     <div class="container">
       <div class="row no-gutters">
         <div *ngIf="isClient" class="col-lg-12">
-
-          <form method="post" (ngSubmit)="addReservation(hotel.id)" class="form booking-form aside-stretch">
+          <form (ngSubmit)="addReservation(hotel.id)" class="form booking-form aside-stretch">
             <div class="row">
               <div class="col-md d-flex py-md-4">
                 <div class="form-group align-self-stretch d-flex align-items-end">
                   <div class="wrap align-self-stretch py-3 px-4">
-                    <label for="#">Check-in Date</label>
-                    <input  type="text" class="form-control checkin_date" placeholder="Check-in date" name="checkIn" [(ngModel)]="checkIn">
+                    <label for="checkIn">Check-in Date</label>
+                    <input type="text" class="form-control checkin_date" placeholder="Check-in date" name="checkIn" [(ngModel)]="checkIn">
                   </div>
                 </div>
               </div>
               <div class="col-md d-flex py-md-4">
                 <div class="form-group align-self-stretch d-flex align-items-end">
                   <div class="wrap align-self-stretch py-3 px-4">
-                    <label for="#">Check-out Date</label>
-                    <input #checkOut type="text" class="form-control checkout_date" placeholder="Check-out date" name="checkOut"  [(ngModel)]="checkOut">
+                    <label for="checkOut">Check-out Date</label>
+                    <input type="text" class="form-control checkout_date" placeholder="Check-out date" name="checkOut" [(ngModel)]="checkOut">
                   </div>
                 </div>
               </div>
               <div class="col-md d-flex py-md-4">
                 <div class="form-group align-self-stretch d-flex align-items-end">
                   <div class="wrap align-self-stretch py-3 px-4">
-                    <label for="#">Guests</label>
+                    <label for="numPeople">Guests</label>
                     <div class="form-field">
                       <div class="select-wrap">
                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                        <select name="numPeople" class="form-control">
-                          <option value=1>1 Adult</option>
-                          <option value=2>2 Adult</option>
-                          <option value=3>3 Adult</option>
-                          <option value=4>4 Adult</option>
+                        <select name="numPeople" class="form-control" [(ngModel)]="numPeople">
+                          <option *ngFor="let num of numPeopleOptions" [value]="num">{{num}} Adult</option>
                         </select>
                       </div>
                     </div>
@@ -74,11 +70,9 @@
               </div>
               <div class="col-md d-flex">
                 <div class="form-group d-flex align-self-stretch">
-                    <div class="btn-group align-top">
-                      <button class="btn btn-primary py-5 py-md-3 px-4 align-self-stretch d-block" type="submit">Book this room</button>
-                      <!-- <input type="hidden" name="_csrf" value="{{token}}"/> -->
-                    </div>
-                  </a>
+                  <div class="btn-group align-top">
+                    <button class="btn btn-primary py-5 py-md-3 px-4 align-self-stretch d-block" type="submit">Book this room</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -133,7 +127,7 @@
       </div> <!-- .col-md-8 -->
       <div class="col-lg-4 sidebar ftco-animate pl-md-5">
         <div class="mt-4">
-          <a href = "/hotelReviews/{{hotel.id}}">
+          <a  [routerLink]="['/hotelReviews', hotel.id]">
             <button id ="backButton" class="btn btn-primary" type="button">Go to reviews</button>
           </a>
         </div>

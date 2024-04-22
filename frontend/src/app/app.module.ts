@@ -32,6 +32,7 @@ import { HotelReviewsComponent } from './mainPageComponents/screens/hotelReviews
 import { ManagerValidationComponent } from './profileComponents/screens/managerValidation.component';
 import { ReservationInfoComponent } from './profileComponents/screens/reservationInfo.component';
 import { ClientListComponent } from './profileComponents/screens/clientList.component';
+import { HotelInformationComponent } from './mainPageComponents/screens/hotelInformation.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,7 @@ import { ClientListComponent } from './profileComponents/screens/clientList.comp
     MainPageComponent,
     FooterMainComponent,
     HotelReviewsComponent,
-
+    HotelInformationComponent,
   ],
   imports: [
     RecaptchaModule,

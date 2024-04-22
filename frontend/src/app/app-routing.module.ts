@@ -23,6 +23,7 @@ import { ReservationInfoComponent } from './profileComponents/screens/reservatio
 import { ClientListComponent } from './profileComponents/screens/clientList.component';
 
 
+import { HotelInformationComponent } from './mainPageComponents/screens/hotelInformation.component';
 
 
 
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'nickTaken', component: NickTakenComponent },
   { path: 'mainPage', component: MainPageComponent},
   { path: 'hotelReviews/:hotelId', component: HotelReviewsComponent},
+  { path: 'hotelInformation/:hotelId', component: HotelInformationComponent},
 
 
   //USER PAGES
