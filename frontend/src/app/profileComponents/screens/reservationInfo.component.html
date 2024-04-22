@@ -39,12 +39,8 @@
                       </div> <!-- .col-md-8 -->
                       <div class="col-lg-4 sidebar ftco-animate pl-md-5">
                         <div class="mt-4">
-                          <a href="/clientReservations">
-                            <button class="btn btn-primary" type="button">Go back</button>
-                          </a>
-                          <a href="/cancelReservation/{{reservation.id}}">
-                            <button class="btn btn-danger" type="button">Cancel Reservation</button>
-                          </a>
+                          <button (click)="goToClientReservations()" class="btn btn-primary" type="button">Go back</button>
+                          <button (click)= "cancelReservation()" class="btn btn-danger" type="button">Cancel Reservation</button>
                         </div>
                       </div>
                     </div>
