@@ -38,11 +38,12 @@ const routes: Routes = [
   //USER PAGES
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService], data: { role: 'USER' } },
   { path: 'editProfile/:userId', component: EditProfileComponent, canActivate: [AuthGuardWithUserIdService],data: { role: 'USER'} },
-  { path: 'reservationInfo/:reservationId', component: ReservationInfoComponent, canActivate: [AuthGuardService], data: { role: 'USER' } },
+
 
   //CLIENT PAGES
-  { path: 'clientReservations/:userId', component: ClientReservationsComponent, canActivate: [AuthGuardWithUserIdService],
-  data: { role: 'CLIENT'}},
+  { path: 'clientReservations/:userId', component: ClientReservationsComponent, canActivate: [AuthGuardWithUserIdService], data: { role: 'CLIENT'}},
+  { path: 'reservationInfo/:reservationId', component: ReservationInfoComponent, canActivate: [AuthGuardService], data: { role: 'CLIENT' } },
+
 
   //MANAGER PAGES
   { path: 'editHotel/:hotelId', component: EditHotelComponent, canActivate: [AuthGuardWithHotelIdService],

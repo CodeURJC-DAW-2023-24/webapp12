@@ -14,4 +14,12 @@ export class ReservationService {
     console.log("a");
     return this.http.get<PageResponse<Reservation>>(`/api/reservations/users/${id}`, {params: {page: page.toString(), size: size.toString()}});
   }
+
+  getReservationById(id: number): Observable<Reservation>{
+    return this.http.get<Reservation>(`/api/reservations/${id}`);
+  }
+
+  cancelReservation(id: number): Observable<Reservation>{
+    return this.http.delete<Reservation>(`/api/reservations/${id}`);
+  }
 }
