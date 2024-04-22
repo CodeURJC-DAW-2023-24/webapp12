@@ -19,6 +19,7 @@ import { ViewHotelsManagerComponent } from './profileComponents/screens/viewHote
 import { EditHotelComponent } from './profileComponents/screens/editHotel.component';
 import { HotelReviewsComponent } from './mainPageComponents/screens/hotelReviews.component';
 import { ManagerValidationComponent } from './profileComponents/screens/managerValidation.component';
+import { ReservationInfoComponent } from './profileComponents/screens/reservationInfo.component';
 
 
 
@@ -36,8 +37,8 @@ const routes: Routes = [
 
   //USER PAGES
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService], data: { role: 'USER' } },
-  { path: 'editProfile/:userId', component: EditProfileComponent, canActivate: [AuthGuardWithUserIdService],
-  data: { role: 'USER'} },
+  { path: 'editProfile/:userId', component: EditProfileComponent, canActivate: [AuthGuardWithUserIdService],data: { role: 'USER'} },
+  { path: 'reservationInfo/:reservationId', component: ReservationInfoComponent, canActivate: [AuthGuardService], data: { role: 'USER' } },
 
   //CLIENT PAGES
   { path: 'clientReservations/:userId', component: ClientReservationsComponent, canActivate: [AuthGuardWithUserIdService],
