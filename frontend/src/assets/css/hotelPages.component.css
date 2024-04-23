@@ -1,3 +1,4 @@
+@import './style.css';
 @import './open-iconic-bootstrap.min.css';
 @import './animate.css';
 @import './index.css';
@@ -11,4 +12,3 @@
 @import './jquery.timepicker.css';
 @import './flaticon.css';
 @import './icomoon.css';
-@import './style.css';

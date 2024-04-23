@@ -10,6 +10,10 @@ import { PageResponse } from '../interfaces/pageResponse.interface';
 export class ReservationService {
   constructor(private http: HttpClient) {}
 
+  createReservation(checkIn: string, checkOut: string, numPeople: number, hotelId: number): Observable<Reservation> {
+    return this.http.post<Reservation>(`/api/reservations/hotels/${hotelId}`, { checkIn, checkOut, numPeople });
+  }
+
   getReservations(id: number, page:number, size:number): Observable<PageResponse<Reservation>>{
     console.log("a");
     return this.http.get<PageResponse<Reservation>>(`/api/reservations/users/${id}`, {params: {page: page.toString(), size: size.toString()}});

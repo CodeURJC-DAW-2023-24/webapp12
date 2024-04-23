@@ -18,7 +18,7 @@ import { LoginService } from '../../service/Login.service';
     selector: 'app-hotelInformation',
     templateUrl: './hotelInformation.component.html',
     //styleUrl: ''
-    // styleUrls: ["../../../assets/css/hotelPages.component.css", "./hotelReviews.component.css"]
+    styleUrls: ["../../../assets/css/hotelPages.component.css", "./hotelReviews.component.css"]
 })
 export class HotelInformationComponent{
     title = 'frontend';
@@ -26,60 +26,54 @@ export class HotelInformationComponent{
     public hotelImageUrl!: string;
     public hotelId!: number;
     public hotel!: Hotel;
-    public totalreviews!: number;
-    public hotelReviews!: Review[];
-    public percentageReview!: number[];
-    public numReviewsForScore!: number[];
-    public page!: number;
-    public totalPages!: number;
-    public rating!: number;
-    public comment!: string;
     public isUser!: boolean;
     public user!: User;
   //los de hotelInformation
     public isClient!: boolean;
-    public checkIn!: String;
-    public checkOut!: String;
+    public checkIn!: string;
+    public checkOut!: string;
     public numPeople!: number;
-    numPeopleOptions: number[] = [1, 2, 3, 4];
+    public numPeopleOptions: number[] = [1, 2, 3, 4];
     public numRooms!: number;
+    public userId!: number;
+    public reservationId!: number;
+    public reservation! : Reservation;
 
 
-    constructor(private reviewService: ReviewService,
+    constructor(private reservationService: ReservationService,
       private userService: UserService,
       private renderer: Renderer2, private el: ElementRef,
       private router: Router, private route: ActivatedRoute,
       private hotelService: HotelService, public loginService: LoginService) {
         this.route.params.subscribe(params => {
           this.hotelId = params['hotelId'];
+          this.reservationId = params['reservationId'];
         });
-        this.totalPages = 1;
-        this.page = 0;
-        this.hotelReviews = [];
-        this.isUser = false;
     }
 
     ngOnInit() {
+      // this.getCurrentReservation();
       this.getCurrentUser();
-      this.getHotel();
-      this.setReviewPercentages();
-
     }
 
     getCurrentUser() {
       this.userService.getCurrentUser().subscribe({
-        next: user => {
-          console.log("returned");
+        next: (user: User) => {
+          if (user) {
             this.user = user;
-            this.isUser = true;
+            this.userId = user.id;
+            this.isClient = user.rols.includes('CLIENT');
+          } else {
+            console.log('User is undefined');
+          }
         },
         error: err => {
           if (err.status === 403) {
             console.log('Forbidden error');
             this.router.navigate(['/error']);
-          } else if (err.status === 404) {
-            console.log('User not logged in');
-            this.isUser = false;
+          } else {
+            console.log('No user logged in');
+            this.router.navigate(['/error']);
           }
         }
       });
@@ -90,8 +84,7 @@ export class HotelInformationComponent{
           next: (hotel: Hotel) => {
               this.hotel = hotel;
               this.hotelImageUrl = `/api/hotels/${hotel.id}/image`
-              this.getReviews();
-              this.setNumReviewsForScore();
+
               if(this.hotel.imageFile.size()===0){
                   this.router.navigate(['/error']);
               }
@@ -111,67 +104,41 @@ export class HotelInformationComponent{
           }
       });
     }
+    // getCurrentReservation() {
+    //   this.reservationService.getReservationById(this.reservationId).subscribe({
+    //     next: (reservation: Reservation) => {
+    //       this.reservation = reservation;
+    //     },
+    //     error: err => {
+    //       if (err.status === 403) {
+    //         console.log('Forbidden error');
+    //         this.router.navigate(['/error']);
+    //       } else {
+    //         console.log('No user logged in');
+    //         this.router.navigate(['/error']);
+    //       }
+    //     }
+    //   });
+    // }
 
-    setNumReviewsForScore(){
-      this.numReviewsForScore = [0, 0, 0, 0, 0];
-      if (this.hotel?.reviews) {
-        this.hotel.reviews.forEach(review => {
-          this.numReviewsForScore[review.score - 1] += 1;
-        });
-      }
-    }
-
-    setReviewPercentages(){
-      this.reviewService.getPercentageOfReviewsByScore(this.hotelId).subscribe((percentages: number[]) => {
-        this.percentageReview = percentages;
-        console.log(this.percentageReview);
-      });
-    }
-
-    getReviews(){
-      if(this.page < this.totalPages){
-        this.reviewService.getReviews(this.hotelId, this.page, 6).subscribe({
-          next: (pageResponse: PageResponse<Review>) => {
-            this.totalPages = pageResponse.totalPages;
-            pageResponse.content.forEach(review => {
-              this.hotelReviews.push(review);
-            });
-            // Increment the page number after each successful API call
-            this.page += 1;
-          },
-          error: (err: HttpErrorResponse) => {
-            console.log('Unknown error returning reservations');
-            console.log(err);
-            this.router.navigate(['/error']);
-          }
-        });
-      }
-      console.log("reviews cargados")
-    }
-
-    addReview(comment: string): void {
-      this.reviewService.createReview(this.rating, comment, this.hotelId).subscribe({
+    addReservation(hotelId: number): void {
+      this.reservationService.createReservation(this.checkIn, this.checkOut, this.numPeople, hotelId).subscribe({
         next: _ => {
+          // Store the current URL
+          const currentUrl = this.router.url;
 
-          // Guarda la URL actual
-          let currentUrl = this.router.url;
-
-          // Navega a una URL temporal
-          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-          // Navega de nuevo a la URL actual
-          this.router.navigate([currentUrl]);
+          // Navigate to a temporary URL
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            // Navigate back to the current URL
+            this.router.navigate([currentUrl]);
           });
         },
         error: (err: HttpErrorResponse) => {
-          // Handle other errors
+          // Handle errors
           this.router.navigate(['/error']);
         }
       });
     }
-
-    getUserImg(userId: number): string {
-        return `/api/users/${userId}/image`;
-        }
 }
 
 

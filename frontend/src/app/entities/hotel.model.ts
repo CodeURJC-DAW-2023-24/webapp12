@@ -16,4 +16,5 @@ export interface Hotel {
   rooms?: Room[];
   reservations?: Reservation[];
   reviews?: Review[];
+  rol:string;
 }
