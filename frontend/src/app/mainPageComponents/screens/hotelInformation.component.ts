@@ -56,6 +56,7 @@ export class HotelInformationComponent{
     ngOnInit() {
       // this.getCurrentReservation();
       this.getCurrentUser();
+      this.getHotel();
     }
 
     getCurrentUser() {
