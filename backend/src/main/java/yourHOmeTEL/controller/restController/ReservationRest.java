@@ -263,10 +263,9 @@ public class ReservationRest {
 		}
 
 	}
-
 	@JsonView(ReservationDetails.class)
-	@PostMapping("/reservations/users/{userId}/hotels/{hotelId}/rooms/{roomId}")
-	@Operation(summary = "Add a reservation", description = "Add a new reservation for a specific user, hotel and room.")
+	@PostMapping("/reservations/users/{userId}/hotels/{hotelId}")
+	@Operation(summary = "Add a reservation", description = "Add a new reservation for a specific user and hotel.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "Reservation created successfully", content = @Content(mediaType = "application/json",schema = @Schema(implementation = Reservation.class))),
 			@ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content(mediaType = "application/json")),
@@ -275,55 +274,45 @@ public class ReservationRest {
 			@ApiResponse(responseCode = "409", description = "Conflict with existing data")
 	})
 	public ResponseEntity<Object> addReservation(HttpServletRequest request, @RequestBody Reservation reservation,
-			@PathVariable Long userId, @PathVariable Long hotelId, @PathVariable Long roomId) {
-
-		Room targetRoom = new Room();
-		try {
-			targetRoom = roomService.findById(roomId).orElseThrow();
-
-		} catch (NoSuchElementException e) {
-			return ResponseEntity.notFound().build();
-		}
-
+			@PathVariable Long userId, @PathVariable Long hotelId) {
+	
 		if (reservation.getCheckIn().isAfter(reservation.getCheckOut()) || reservation.getNumPeople() <= 0 ||
-				(reservation.getCheckIn() == null || reservation.getCheckOut() == null)
-				|| reservation.getNumPeople() > targetRoom.getMaxClients()) {
+				(reservation.getCheckIn() == null || reservation.getCheckOut() == null)) {
 			return ResponseEntity.badRequest().build();
-
 		} else {
 			Room room = hotelService.checkRooms(hotelId, reservation.getCheckIn(), reservation.getCheckOut(),
 					reservation.getNumPeople());
 			if (room != null) {
 				UserE requestUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
 				UserE targetUser = userService.findById(userId).orElseThrow();
-
+	
 				if (requestUser.equals(targetUser)) {
 					try {
 						UserE hotelManager = hotelService.findById(hotelId).orElseThrow().getManager();
 						Hotel targetHotel = hotelService.findById(hotelId).orElseThrow();
-
-						if (hotelManager.getvalidated() && targetHotel.getRooms().contains(targetRoom)) {
+	
+						if (hotelManager.getvalidated() && targetHotel.getRooms().contains(room)) {
 							reservation.setCheckIn(reservation.getCheckIn().plusDays(1));
 							reservation.setCheckOut(reservation.getCheckOut().plusDays(1));
 							reservation.setHotel(targetHotel);
-							reservation.setRooms(targetRoom);
+							reservation.setRooms(room);
 							reservation.setUser(targetUser);
 							reservationService.save(reservation);
-
-							targetRoom.getReservations().add(reservation);
-							roomService.save(targetRoom);
-
+	
+							room.getReservations().add(reservation);
+							roomService.save(room);
+	
 							targetHotel.getReservations().add(reservation);
 							hotelService.save(targetHotel);
-
+	
 							targetUser.getReservations().add(reservation);
 							userService.save(targetUser);
-
+	
 							Reservation savedReservation = reservationService.save(reservation);
 							String loc = "https://localhost:8443/api/reservations/"+ savedReservation.getId();
 							URI uriLocation = URI.create(loc);
 							return ResponseEntity.created(uriLocation).body(savedReservation);
-
+	
 						} else {
 							return ResponseEntity.notFound().build();
 						}
