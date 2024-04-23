@@ -70,12 +70,8 @@ export class HotelInformationComponent{
           }
         },
         error: err => {
-          if (err.status === 403) {
-            console.log('Forbidden error');
-            this.router.navigate(['/error']);
-          } else {
+          if (err.status === 404) {
             console.log('No user logged in');
-            this.router.navigate(['/error']);
           }
         }
       });
@@ -123,18 +119,18 @@ export class HotelInformationComponent{
     //   });
     // }
 
-    addReservation(hotelId: number): void {
+    addReservation(): void {
       // Check for null values
       if (this.checkIn === null || this.checkOut === null || this.numPeople === null) {
         console.error('checkIn, checkOut, and numPeople must not be null');
         return;
       }
-    
-      this.reservationService.createReservation(this.checkIn, this.checkOut, this.numPeople, hotelId).subscribe({
+
+      this.reservationService.createReservation(this.checkIn, this.checkOut, this.numPeople, this.hotelId, this.userId).subscribe({
         next: _ => {
           // Store the current URL
           const currentUrl = this.router.url;
-    
+
           // Navigate to a temporary URL
           this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
             // Navigate back to the current URL
@@ -143,6 +139,7 @@ export class HotelInformationComponent{
         },
         error: (err: HttpErrorResponse) => {
           // Handle errors
+          console.log(err, HttpErrorResponse);
           this.router.navigate(['/error']);
         }
       });

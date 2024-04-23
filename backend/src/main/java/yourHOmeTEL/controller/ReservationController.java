@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.servlet.http.HttpServletRequest;
+import yourHOmeTEL.controller.restController.clases.ReservationRequest;
 import yourHOmeTEL.model.Hotel;
 import yourHOmeTEL.model.Reservation;
 import yourHOmeTEL.model.Room;
@@ -40,26 +44,28 @@ public class ReservationController {
 	@Autowired
 	private RoomService roomService;
 
-
-    @PostMapping("/addReservation/{id}")
-	public String addReservation(Model model, @PathVariable Long id, HttpServletRequest request, @RequestParam String checkIn,
-	@RequestParam String checkOut, @RequestParam Integer numPeople) {
-
+	@PostMapping("/reservations/users/{userId}/hotels/{hotelId}")
+	public ResponseEntity<?> addReservation(Model model, @PathVariable Long userId, @PathVariable Long hotelId, HttpServletRequest request, @RequestBody ReservationRequest reservationRequest) {
+	
+		String checkIn = reservationRequest.getCheckIn();
+		String checkOut = reservationRequest.getCheckOut();
+		Integer numPeople = reservationRequest.getNumPeople();
+	
 		if (checkIn.isEmpty() || checkOut.isEmpty() || numPeople == null)
-			return "redirect:/hotelInformation/{id}";
+			return ResponseEntity.badRequest().body("Missing parameters");
 		else{
-
+	
 			LocalDate checkInDate = reservationService.toLocalDate(checkIn);
 			LocalDate checkOutDate = reservationService.toLocalDate(checkOut);
-			Room room = hotelService.checkRooms(id, checkInDate, checkOutDate, numPeople);
+			Room room = hotelService.checkRooms(hotelId, checkInDate, checkOutDate, numPeople);
 			if (room != null) {
 				UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-				Hotel hotel = hotelService.findById(id).orElseThrow();
+				Hotel hotel = hotelService.findById(hotelId).orElseThrow();
 				Reservation newRe = new Reservation(checkInDate, checkOutDate, numPeople, hotel, room, user);
 				reservationService.save(newRe);
-				return "redirect:/clientReservations";
+				return ResponseEntity.ok(newRe);
 			} else
-				return "redirect:/notRooms/{id}";
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No rooms available");
 		}
 	}
 

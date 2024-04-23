@@ -10,4 +10,6 @@ export interface Reservation {
   hotel: Hotel;
   room: Room;
   user: User;
+
+
 }

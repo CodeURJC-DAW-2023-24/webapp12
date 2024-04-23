@@ -157,7 +157,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 
                         // CLIENT ENDPOINTS
                         .requestMatchers(HttpMethod.POST,
-                                "/api/reservations/users/{userId}/hotels/{hotelId}/rooms/{roomId}")
+                                "/api/reservations/users/{userId}/hotels/{hotelId}")
                         .hasRole("CLIENT")
 
                         // PUBLIC ENDPOINTS
