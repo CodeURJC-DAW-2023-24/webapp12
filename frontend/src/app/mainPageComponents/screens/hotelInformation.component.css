@@ -1,8 +1,8 @@
-.formBackground{
-    color: #fff;
-    background-color: #95999c;
-
+.form-background {
+  background-color: #f2f2f2; /* Light gray */
 }
+
+
 .carousel-item {
     position: absolute;
     width: 100%;
