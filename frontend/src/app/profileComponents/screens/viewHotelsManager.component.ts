@@ -24,7 +24,7 @@ export class ViewHotelsManagerComponent {
   public totalPages: number;
   public averageRating: number;
   public hotels: Hotel[];
-  
+
 
 
   constructor(private userService: UserService, private reservationService: ReservationService,
@@ -39,12 +39,12 @@ export class ViewHotelsManagerComponent {
   ngOnInit() {
     this.getCurrentUser();
   }
-  
+
   getCurrentUser() {
     this.userService.getCurrentUser().subscribe({
       next: (user: User) => {
         this.user = user;
-        this.getHotels(user.id);      
+        this.getHotels(user.id);
       },
       error: err => {
         if (err.status === 403) {
@@ -77,7 +77,7 @@ export class ViewHotelsManagerComponent {
       });
     }
   }
-  
+
 
   deleteHotel(hotel: Hotel) {
     this.hotelService.deleteHotel(hotel.id).subscribe({

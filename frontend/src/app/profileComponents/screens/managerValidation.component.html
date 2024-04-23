@@ -1,53 +1,87 @@
 <div id="wrapper">
-<app-sidebar></app-sidebar>
-    <div class="container-fluid">
-      <!-- Page Heading -->
-      <h1 class="h3 mb-2 text-gray-800 mt-4">Hotel Validation</h1>
-      <p class="mb-4">Validate new hotels and managers who want to collaborate with
-        your page.</p>
+  <app-sidebar></app-sidebar>
+  <div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800 mt-4">Hotel Validation</h1>
+    <p class="mb-4">
+      Validate new hotels and managers who want to collaborate with your page.
+    </p>
 
-      <!-- DataTales Example -->
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Recent requests</h6>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Recent requests</h6>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table
+            class="table table-bordered"
+            id="dataTable"
+            width="100%"
+            cellspacing="0"
+          >
+            <thead>
+              <tr>
+                <th>Manager Name</th>
+                <th>Language</th>
+                <th>Hotel Location</th>
+                <th>Organization</th>
+                <th>Phone</th>
+                <th>Request State</th>
+              </tr>
+            </thead>
+            <tbody id="reservationList">
+              <ng-container *ngFor="let manager of unvalidatedManagers">
                 <tr>
-                  <th>Manager Name</th>
-                  <th>Language</th>
-                  <th>Hotel Location</th>
-                  <th>Organization</th>
-                  <th>Phone</th>
-                  <th>Request State</th>
+                  <td class="text-nowrap align-middle">{{ manager.name }}</td>
+                  <td class="text-nowrap align-middle">
+                    <span>{{ manager.language }}</span>
+                  </td>
+                  <td class="text-nowrap align-middle">
+                    <span>{{ manager.location }}</span>
+                  </td>
+                  <td class="text-nowrap align-middle">
+                    {{ manager.organization }}
+                  </td>
+                  <td class="text-nowrap align-middle">{{ manager.phone }}</td>
+                  <td>
+                    <form (ngSubmit)="acceptManager(manager.id)">
+                      <input
+                        type="submit"
+                        value="Accept"
+                        class="btn btn-primary btn-user btn-block mb-2"
+                        id="apply"
+                      />
+                      <!--<input type="hidden" name="_csrf" value="{{token}}"/>-->
+                    </form>
+                    <form (ngSubmit)="rejectManager(manager.id)">
+                      <input
+                        type="submit"
+                        value="Reject"
+                        class="btn btn-primary btn-user btn-block"
+                        id="logout"
+                      />
+                      <!--<input type="hidden" name="_csrf" value="{{token}}"/>-->
+                    </form>
+                  </td>
                 </tr>
-              </thead>
-              <tbody id="reservationList">
-                <ng-container *ngFor="let manager of unvalidatedManagers">
-                  <tr>
-                    <td class="text-nowrap align-middle">{{manager.name}}</td>
-                    <td class="text-nowrap align-middle"><span>{{manager.language}}</span></td>
-                    <td class="text-nowrap align-middle"><span>{{manager.location}}</span></td>
-                    <td class="text-nowrap align-middle">{{manager.organization}}</td>
-                    <td class="text-nowrap align-middle">{{manager.phone}}</td>
-                    <td>
-                      <form (ngSubmit)="acceptManager(manager.id)">
-                        <input type="submit" value="Accept" class="btn btn-primary btn-user btn-block mb-2" id="apply"/>
-                        <!--<input type="hidden" name="_csrf" value="{{token}}"/>-->
-                      </form>
-                      <form (ngSubmit)="rejectManager(manager.id)">
-                        <input type="submit" value="Reject" class="btn btn-primary btn-user btn-block" id="logout"/>
-                        <!--<input type="hidden" name="_csrf" value="{{token}}"/>-->
-                      </form>
-                    </td>
-                  </tr>
-                </ng-container>
-              </tbody>
-            </table>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="row mt-4 ml-2 mr-2">
+          <div class="col-4"></div>
+          <div class="col-4">
+            <a (click)="getUnvalidatedManagers()">
+              <button class="btn btn-primary btn-user btn-block">
+                Load more appliants
+              </button>
+            </a>
           </div>
+          <div class="col-4"></div>
         </div>
       </div>
+    </div>
   </div>
 </div>
