@@ -44,31 +44,28 @@ public class ReservationController {
 	@Autowired
 	private RoomService roomService;
 
-	@PostMapping("/reservations/users/{userId}/hotels/{hotelId}")
-	public ResponseEntity<?> addReservation(Model model, @PathVariable Long userId, @PathVariable Long hotelId, HttpServletRequest request, @RequestBody ReservationRequest reservationRequest) {
-	
-		String checkIn = reservationRequest.getCheckIn();
-		String checkOut = reservationRequest.getCheckOut();
-		Integer numPeople = reservationRequest.getNumPeople();
-	
+
+    @PostMapping("/addReservation/{id}")
+	public String addReservation(Model model, @PathVariable Long id, HttpServletRequest request, @RequestParam String checkIn,
+	@RequestParam String checkOut, @RequestParam Integer numPeople) {
+
 		if (checkIn.isEmpty() || checkOut.isEmpty() || numPeople == null)
-			return ResponseEntity.badRequest().body("Missing parameters");
+			return "redirect:/hotelInformation/{id}";
 		else{
-	
+
 			LocalDate checkInDate = reservationService.toLocalDate(checkIn);
 			LocalDate checkOutDate = reservationService.toLocalDate(checkOut);
-			Room room = hotelService.checkRooms(hotelId, checkInDate, checkOutDate, numPeople);
+			Room room = hotelService.checkRooms(id, checkInDate, checkOutDate, numPeople);
 			if (room != null) {
 				UserE user = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
-				Hotel hotel = hotelService.findById(hotelId).orElseThrow();
+				Hotel hotel = hotelService.findById(id).orElseThrow();
 				Reservation newRe = new Reservation(checkInDate, checkOutDate, numPeople, hotel, room, user);
 				reservationService.save(newRe);
-				return ResponseEntity.ok(newRe);
+				return "redirect:/clientReservations";
 			} else
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No rooms available");
+				return "redirect:/notRooms/{id}";
 		}
 	}
-
 	@GetMapping("/notRooms/{id}")
 	public String notRooms(Model model, @PathVariable Long id) {
 		return "notRooms";
