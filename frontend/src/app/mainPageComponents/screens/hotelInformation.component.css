@@ -1,0 +1,19 @@
+.formBackground{
+    color: #fff;
+    background-color: #95999c;
+
+}
+.carousel-item {
+    position: absolute;
+    width: 100%;
+    animation: slide 1s ease-in-out;
+  }
+  
+  @keyframes slide {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }

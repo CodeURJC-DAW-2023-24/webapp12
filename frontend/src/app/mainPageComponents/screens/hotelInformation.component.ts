@@ -18,7 +18,7 @@ import { LoginService } from '../../service/Login.service';
     selector: 'app-hotelInformation',
     templateUrl: './hotelInformation.component.html',
     //styleUrl: ''
-    styleUrls: ["../../../assets/css/hotelPages.component.css", "./hotelReviews.component.css"]
+    styleUrls: ["../../../assets/css/hotelPages.component.css", "./hotelInformation.component.css"]
 })
 export class HotelInformationComponent{
     title = 'frontend';
@@ -32,7 +32,7 @@ export class HotelInformationComponent{
     public isClient!: boolean;
     public checkIn!: string;
     public checkOut!: string;
-    public numPeople!: number;
+    public numPeople!: number | null;
     public numPeopleOptions: number[] = [1, 2, 3, 4];
     public numRooms!: number;
     public userId!: number;
@@ -48,6 +48,8 @@ export class HotelInformationComponent{
         this.route.params.subscribe(params => {
           this.hotelId = params['hotelId'];
           this.reservationId = params['reservationId'];
+          this.numPeople = null;
+          this.numPeopleOptions = [1, 2, 3, 4];
         });
     }
 
@@ -122,11 +124,17 @@ export class HotelInformationComponent{
     // }
 
     addReservation(hotelId: number): void {
+      // Check for null values
+      if (this.checkIn === null || this.checkOut === null || this.numPeople === null) {
+        console.error('checkIn, checkOut, and numPeople must not be null');
+        return;
+      }
+    
       this.reservationService.createReservation(this.checkIn, this.checkOut, this.numPeople, hotelId).subscribe({
         next: _ => {
           // Store the current URL
           const currentUrl = this.router.url;
-
+    
           // Navigate to a temporary URL
           this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
             // Navigate back to the current URL
