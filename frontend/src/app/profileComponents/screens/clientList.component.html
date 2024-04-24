@@ -1,76 +1,76 @@
 
 
 <div id="wrapper">
-<app-sidebar></app-sidebar>
+  <app-sidebar></app-sidebar>
 
-  <div class="container mt-3 mb-4">
-      <div id="content-wrapper" class="d-flex flex-column">
-          <div class="col-lg-9 mt-4 mt-lg-0">
-              <div class="row">
-                  <div class="col-md-12 mt-4">
-                      <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
-                          <table class="table manage-candidates-top mb-0">
-                              <thead>
-                                  <tr>
-                                      <th>Clients</th>
-                                      <th class="action text-right">Actions</th>
-                                  </tr>
-                              </thead>
-                              <tbody>
-                                <ng-container *ngFor="let client of clients">
-                                  <tr class="candidates-list">
-                                      <td class="title">
-                                          <div class="thumb">
-                                              <img class="img-fluid" [src]="getUserImg(client.id)" alt="Client profile image">
-                                          </div>
-                                          <div class="candidate-list-details">
-                                              <div class="candidate-list-info">
-                                                  <div class="candidate-list-title">
-                              <!-- PENDIENTE de llevar a una página de perfil de cliente, con menos permisos, o mostrar más información -->
+    <div class="container mt-3 mb-4">
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div class="col-lg-9 mt-4 mt-lg-0">
+                <div class="row">
+                    <div class="col-md-12 mt-4">
+                        <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
+                            <table class="table manage-candidates-top mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Clients</th>
+                                        <th class="action text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  <ng-container *ngFor="let client of clients">
+                                    <tr class="candidates-list">
+                                        <td class="title">
+                                            <div class="thumb">
+                                                <img class="img-fluid" [src]="getUserImg(client.id)" alt="Client profile image">
+                                            </div>
+                                            <div class="candidate-list-details">
+                                                <div class="candidate-list-info">
+                                                    <div class="candidate-list-title">
+                                <!-- PENDIENTE de llevar a una página de perfil de cliente, con menos permisos, o mostrar más información -->
 
-                                                      <h5 class="mb-0"><a [routerLink]="['/profile']">Name: {{client.name}}</a></h5>
-                                                  </div>
-                                                  <div class="candidate-list-option">
-                                                      <ul class="list-unstyled">
-                                                          <li><i class="pr-1"></i>Language: {{client.language}}</li>
-                                                          <li><i class="pr-1"></i>Phone: {{client.phone}}</li>
-                                                      </ul>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </td>
-                                      <td>
-                                          <ul class="list-unstyled mb-0 d-flex justify-content-end">
-                                              <li><a href="#" class="text-primary" data-toggle="tooltip" title=""
-                                                      data-original-title="view"><i class="far fa-eye"></i></a></li>
-                                              <li><a class="text-danger" data-toggle="tooltip" title=""
-                                                      data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
-                                          </ul>
-                                      </td>
-                                  </tr>
-                                </ng-container>
-                              </tbody>
-                          </table>
-                              <div>
-                                  <a class="back-button" [routerLink]="['/viewHotelsManager']" >
-                                      <button class="btn btn-primary" type="button" onclick="" >Return</button>
-                                  </a>
-                              </div>
-                              <!-- PENDIENTE de hacer la paginación (un botón de cargar más) -->
-                              <ul class="page-selector pagination justify-content-center mb-0">
-                                  <li class="page-item disabled"> <span class="page-link">Prev</span> </li>
-                                  <li class="page-item active" aria-current="page"><span class="page-link">1 </span> <span
-                                          class="sr-only">(current)</span></li>
-                                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">...</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">25</a></li>
-                                  <li class="page-item"> <a class="page-link" href="#">Next</a> </li>
-                              </ul>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
+                                                        <h5 class="mb-0"><a [routerLink]="['/profile']">Name: {{client.name}}</a></h5>
+                                                    </div>
+                                                    <div class="candidate-list-option">
+                                                        <ul class="list-unstyled">
+                                                            <li><i class="pr-1"></i>Language: {{client.language}}</li>
+                                                            <li><i class="pr-1"></i>Phone: {{client.phone}}</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <ul class="list-unstyled mb-0 d-flex justify-content-end">
+                                                <li><a href="#" class="text-primary" data-toggle="tooltip" title=""
+                                                        data-original-title="view"><i class="far fa-eye"></i></a></li>
+                                                <li><a class="text-danger" data-toggle="tooltip" title=""
+                                                        data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                  </ng-container>
+                                </tbody>
+                            </table>
+                                <div>
+                                    <a class="back-button" [routerLink]="['/viewHotelsManager']" >
+                                        <button class="btn btn-primary" type="button"  >Return</button>
+                                    </a>
+                                </div>
+                                <!-- PENDIENTE de hacer la paginación (un botón de cargar más) -->
+                                <ul class="page-selector pagination justify-content-center mb-0">
+                                    <li class="page-item disabled"> <span class="page-link">Prev</span> </li>
+                                    <li class="page-item active" aria-current="page"><span class="page-link">1 </span> <span
+                                            class="sr-only">(current)</span></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">...</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">25</a></li>
+                                    <li class="page-item"> <a class="page-link" href="#">Next</a> </li>
+                                </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
   </div>
-</div>

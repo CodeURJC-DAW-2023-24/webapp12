@@ -149,10 +149,10 @@ export class HotelInformationComponent{
             this.router.navigate(['/notRooms']); // Redirect to 'notRooms' page
           } else if (err.status === 404) {
             console.log('Room or User not found');
-            this.router.navigate(['/error']);
+            this.router.navigate(['/notRooms']);
           } else {
             console.log(err, HttpErrorResponse);
-            this.router.navigate(['/error']);
+            this.router.navigate(['/notRooms']);
           }
         }
       });

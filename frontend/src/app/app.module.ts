@@ -31,7 +31,7 @@ import { EditHotelComponent } from './profileComponents/screens/editHotel.compon
 import { HotelReviewsComponent } from './mainPageComponents/screens/hotelReviews.component';
 import { ManagerValidationComponent } from './profileComponents/screens/managerValidation.component';
 import { ReservationInfoComponent } from './profileComponents/screens/reservationInfo.component';
-import { ClientListComponent } from './profileComponents/screens/clientList.component';
+  import { ClientListComponent } from './profileComponents/screens/clientList.component';
 import { HotelInformationComponent } from './mainPageComponents/screens/hotelInformation.component';
 import { NotRoomsComponent } from './profileComponents/errors/notRooms.component';
 
@@ -58,6 +58,7 @@ import { NotRoomsComponent } from './profileComponents/errors/notRooms.component
     ManagerValidationComponent,
     ReservationInfoComponent,
     NotRoomsComponent,
+    ClientListComponent,
     //Hotel page
     MainPageComponent,
     MainPageComponent,
