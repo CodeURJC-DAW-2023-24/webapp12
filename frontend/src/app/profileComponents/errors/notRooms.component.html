@@ -1,0 +1,44 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+  <div class="container">
+    <a [routerLink]="['/mainPage']" class="navbar-brand">Your<span>HOmeTEL</span></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="oi oi-menu"></span> Menu
+    </button>
+
+    <div class="collapse navbar-collapse" id="ftco-nav">
+      <ul class="navbar-nav ml-auto">
+        <!--Search bar-->
+        <li  class="nav-item active"><a [routerLink]="['/mainPage']" class="nav-link font-size-20">Home</a></li>
+        <li *ngIf="isUser" class="nav-item active"><a [routerLink]="['/profile']" class="nav-link font-size-20">Profile</a></li>
+        <li *ngIf="!isUser" class="nav-item"><a [routerLink]="['/login']" class="nav-link font-size-20">Log In</a></li>
+    </ul>
+    </div>
+  </div>
+</nav>
+    <!-- END nav -->
+<div class="hero-wrap" style="background-image: url('assets/images/bg_3.jpg');">
+  <div class="overlay"></div>
+  <div class="container">
+      <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
+          <div class="col-md-9 text-center d-flex align-items-end justify-content-center">
+              <div class="text">
+                  <p class="breadcrumbs mb-2"><span class="mr-2"><a [routerLink]="['/mainPage']">Home</a></span></p>
+                  <h1 class="mb-4 bread">No rooms</h1>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4 room-single mt-4 mb-5 ">
+          <h4>Sorry, we don't have any rooms available, or your reservation dates were not valid.</h4>
+          <h4>Try another date combination.</h4>
+      </div>
+      <div class="col-md-4">
+        <a [routerLink]="['/mainPage']">
+          <button class="btn btn-primary mt-4" type="button">Back to Home</button>
+        </a>
+      </div>
+    </div>

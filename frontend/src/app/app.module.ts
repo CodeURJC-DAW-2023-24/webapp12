@@ -33,6 +33,8 @@ import { ManagerValidationComponent } from './profileComponents/screens/managerV
 import { ReservationInfoComponent } from './profileComponents/screens/reservationInfo.component';
 import { ClientListComponent } from './profileComponents/screens/clientList.component';
 import { HotelInformationComponent } from './mainPageComponents/screens/hotelInformation.component';
+import { NotRoomsComponent } from './profileComponents/errors/notRooms.component';
+
 
 @NgModule({
   declarations: [
@@ -55,9 +57,9 @@ import { HotelInformationComponent } from './mainPageComponents/screens/hotelInf
     EditHotelComponent,
     ManagerValidationComponent,
     ReservationInfoComponent,
-    ClientListComponent,
-
+    NotRoomsComponent,
     //Hotel page
+    MainPageComponent,
     MainPageComponent,
     FooterMainComponent,
     HotelReviewsComponent,

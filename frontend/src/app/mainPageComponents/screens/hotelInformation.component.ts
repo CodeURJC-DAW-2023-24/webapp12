@@ -11,6 +11,7 @@ import { ReservationService } from '../../service/Reservation.service';
 import { PageResponse } from '../../interfaces/pageResponse.interface';
 import { Hotel } from '../../entities/hotel.model';
 import { LoginService } from '../../service/Login.service';
+import { RoomService } from '../../service/Room.service';
 
 
 
@@ -38,10 +39,11 @@ export class HotelInformationComponent{
     public userId!: number;
     public reservationId!: number;
     public reservation! : Reservation;
+    public roomId: number =0;
 
 
     constructor(private reservationService: ReservationService,
-      private userService: UserService,
+      private userService: UserService,private roomService: RoomService,
       private renderer: Renderer2, private el: ElementRef,
       private router: Router, private route: ActivatedRoute,
       private hotelService: HotelService, public loginService: LoginService) {
@@ -50,6 +52,7 @@ export class HotelInformationComponent{
           this.reservationId = params['reservationId'];
           this.numPeople = null;
           this.numPeopleOptions = [1, 2, 3, 4];
+
         });
     }
 
@@ -57,6 +60,7 @@ export class HotelInformationComponent{
       // this.getCurrentReservation();
       this.getCurrentUser();
       this.getHotel();
+      this.checkRoomReservation(this.roomId);
     }
 
     getCurrentUser() {
@@ -140,8 +144,24 @@ export class HotelInformationComponent{
         },
         error: (err: HttpErrorResponse) => {
           // Handle errors
-          console.log(err, HttpErrorResponse);
-          this.router.navigate(['/error']);
+          if (err.status === 409) { // Conflict with existing reservation
+            console.log('Conflict with existing reservation');
+            this.router.navigate(['/notRooms']); // Redirect to 'notRooms' page
+          } else if (err.status === 404) {
+            console.log('Room or User not found');
+            this.router.navigate(['/error']);
+          } else {
+            console.log(err, HttpErrorResponse);
+            this.router.navigate(['/error']);
+          }
+        }
+      });
+    }
+
+    checkRoomReservation(roomId: number) {
+      this.roomService.getRoomById(roomId).subscribe((room) => {
+        if (room.reservations && room.reservations.length > 0) {
+          this.router.navigate(['notRooms']);
         }
       });
     }

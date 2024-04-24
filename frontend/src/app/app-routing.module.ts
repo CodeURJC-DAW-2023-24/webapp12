@@ -5,6 +5,8 @@ import { ProfileComponent } from './profileComponents/screens/profile.component'
 import { RegisterComponent } from './profileComponents/screens/register.component';
 import { LoginErrorComponent } from './profileComponents/errors/loginError.component';
 import { NickTakenComponent } from './profileComponents/errors/nickTaken.component';
+import { NotRoomsComponent } from './profileComponents/errors/notRooms.component';
+
 
 import { ErrorComponent } from './globalComponents/error.component';
 import { AuthGuardService } from './service/AuthGuard.service';
@@ -47,6 +49,7 @@ const routes: Routes = [
   //CLIENT PAGES
   { path: 'clientReservations/:userId', component: ClientReservationsComponent, canActivate: [AuthGuardWithUserIdService], data: { role: 'CLIENT'}},
   { path: 'reservationInfo/:reservationId', component: ReservationInfoComponent, canActivate: [AuthGuardService], data: { role: 'CLIENT' } },
+  { path: 'notRooms', component: NotRoomsComponent, canActivate: [AuthGuardService], data: { role: 'CLIENT' } },
 
 
   //MANAGER PAGES
@@ -59,8 +62,8 @@ const routes: Routes = [
   { path: 'viewHotelsManager', component: ViewHotelsManagerComponent, canActivate: [AuthGuardService],
   data: { role: 'MANAGER' } },
 
-  { path: 'clientList/:hotelId', component: ClientListComponent, canActivate: [AuthGuardService],
-  data: { role: 'MANAGER' } },
+  // { path: 'clientList/:hotelId', component: ClientListComponent, canActivate: [AuthGuardService],
+  // data: { role: 'MANAGER' } },
 
   //ADMIN PAGES
   { path: 'managerValidation', component: ManagerValidationComponent, canActivate: [AuthGuardService], data: { role: 'ADMIN' } },
