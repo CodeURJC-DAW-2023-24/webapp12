@@ -4,6 +4,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Hotel } from '../entities/hotel.model';
 import { PageResponse } from '../interfaces/pageResponse.interface';
+import { User } from '../entities/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,7 @@ export class HotelService {
   getHotelById(id: number): Observable<Hotel>{
     console.log("Getting hotel by id: ", id);
     return this.http.get<Hotel>(`/api/hotels/${id}`);
-  } 
+  }
 
   getManagerHotels(id: number, page: number, size: number){
     return this.http.get<PageResponse<Hotel>>(`/api/hotels/manager/${id}`, {params: {page: page.toString(), size: size.toString()}});

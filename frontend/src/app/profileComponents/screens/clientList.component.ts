@@ -44,6 +44,7 @@ export class ClientListComponent{
         });
         this.totalPages = 1;
         this.page = 0;
+        this.clients = [];
 
     }
 
@@ -56,7 +57,7 @@ export class ClientListComponent{
       this.hotelService.getHotelById(this.hotelId).subscribe({
           next: (hotel: Hotel) => {
               this.hotel = hotel;
-              this.getClients();
+              this.getClients(2);
 
               if(this.hotel.imageFile.size()===0){
                   this.router.navigate(['/error']);
@@ -80,22 +81,29 @@ export class ClientListComponent{
       });
     }
 
-    getClients(){
-      this.userService.getHotelClients(this.hotelId).subscribe({
-          next: (clients : User[]) => {
-              this.clients = clients;
+
+
+    getClients(quantity: number){
+      if(this.page < this.totalPages){
+        this.userService.getHotelClients(this.hotelId, this.page, quantity).subscribe({
+          next: (pageResponse: PageResponse<User>) => {
+            // console.log("Tras el next");
+            this.totalPages = pageResponse.totalPages;
+            // console.log("Contenido de la pagina:", pageResponse.content);
+            pageResponse.content.forEach(client => {
+              this.clients.push(client);
+            });
+
+            // Increment the page number after each successful API call
+            this.page += 1;
           },
           error: (err: HttpErrorResponse) => {
-              if (err.status === 403) {
-                  console.log('Forbidden error');
-                  this.router.navigate(['/error']);
-
-              } else {
-                  console.log('Unknown error');
-                  this.router.navigate(['/error']);
-              }
+            console.log('Unknown error returning hotels');
+            console.log(err);
+            this.router.navigate(['/error']);
           }
-      });
+        });
+      }
     }
 
 
