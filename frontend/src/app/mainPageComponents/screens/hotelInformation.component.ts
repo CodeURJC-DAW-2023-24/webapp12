@@ -57,7 +57,6 @@ export class HotelInformationComponent{
     }
 
     ngOnInit() {
-      // this.getCurrentReservation();
       this.getCurrentUser();
       this.getHotel();
       this.checkRoomReservation(this.roomId);
@@ -69,7 +68,9 @@ export class HotelInformationComponent{
           if (user) {
             this.user = user;
             this.userId = user.id;
+            this.isUser = user.rols.includes('USER');
             this.isClient = user.rols.includes('CLIENT');
+
           } else {
             console.log('User is undefined');
           }
@@ -86,7 +87,8 @@ export class HotelInformationComponent{
       this.hotelService.getHotelById(this.hotelId).subscribe({
           next: (hotel: Hotel) => {
               this.hotel = hotel;
-              this.hotelImageUrl = `/api/hotels/${hotel.id}/image`
+              this.hotelImageUrl = `/api/hotels/${hotel.id}/image`;
+              this.numRooms = hotel.rooms? hotel.rooms.length : 0;
 
               if(this.hotel.imageFile.size()===0){
                   this.router.navigate(['/error']);
