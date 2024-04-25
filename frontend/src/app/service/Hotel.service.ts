@@ -4,6 +4,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Hotel } from '../entities/hotel.model';
 import { PageResponse } from '../interfaces/pageResponse.interface';
+import { User } from '../entities/user.model';
 
 @Injectable({
   providedIn: 'root',

@@ -14,6 +14,7 @@
         <li *ngIf="!isUser" class="nav-item"><a [routerLink]="['/login']" class="nav-link font-size-20">Log In</a></li>
     </ul>
     </div>
+
   </div>
 </nav>
 <!-- END nav -->
@@ -106,7 +107,7 @@
                 <li><span>Location: </span>{{hotel?.location}}</li>
               </ul>
               <ul class="list ml-md-5">
-                <li><span>Number of rooms: </span>{{numRooms}}</li>
+                <li><span>Number of rooms: </span>{{numRooms || 0}}</li>
                 <li><span>Managed by: </span>{{hotel?.manager?.name}}</li>
               </ul>
             </div>

@@ -1,9 +1,13 @@
+import { User } from './../../entities/user.model';
+import { UserService } from './../../service/User.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../../service/Login.service';
 import { RoomService } from '../../service/Room.service';
 import { Room } from '../../entities/room.model';
 import { HttpClient } from '@angular/common/http';
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-notrooms',
   templateUrl: './notRooms.component.html',
@@ -15,62 +19,51 @@ export class NotRoomsComponent  {
 
 
   public isUser: boolean;
-  public id: string;
+
   public allRoomsBooked: boolean;
+  public user!: User;
+
+
 
   constructor(
     private http: HttpClient,
     private loginService: LoginService,
     private router: Router,
-    private roomService: RoomService
+    private roomService: RoomService,
+    private userService: UserService,
+    private location: Location
   ) {
     this.isUser = false;
-    this.id = '';
+
     this.allRoomsBooked = false;
   }
 
   ngOnInit() {
     this.isUser = this.loginService.isUser();
-    this.id = this.loginService.currentUser()?.id.toString();
-    // Check if all rooms are booked when the component is initialized
-    this.roomService.getAllRooms().subscribe(rooms => {
-      this.allRoomsBooked = rooms.every(room => room.reservations && room.reservations.length > 0);
-    });
+    this.getCurrentUser();
   }
-  checkAllRoomsBooked() {
-    this.roomService.getAllRooms().subscribe(
-      (rooms: Room[]) => {
-        this.allRoomsBooked = rooms.every(room => room.reservations && room.reservations.length > 0);
-        if (this.allRoomsBooked) {
-          this.router.navigate(['notRooms']);
-        }
+
+  goBack() {
+    this.location.back();
+  }
+
+
+  getCurrentUser() {
+    this.userService.getCurrentUser().subscribe({
+      next: (user: User) => {
+        this.user = user;
       },
-      error => {
-        console.error('Error fetching rooms', error);
-      }
-    );
-  }
-  bookRoom(roomId: number) {
-    this.roomService.getRoomById(roomId).subscribe((room: Room) => {
-      if (room.reservations && room.reservations.length > 0) {
-        // The room is already booked, so navigate to 'notRooms' without trying to book it
-        this.router.navigate(['notRooms']);
-      } else {
-        // The room is not booked, so try to book it
-        const reservationDetails = {
-          // Fill this object with the details of the reservation
-        };
-        this.http.post(`https://localhost:8444/api/reservations/users/${this.id}/hotels/${roomId}`, reservationDetails)
-          .subscribe(
-            response => {
-              // Handle successful response
-              this.router.navigate(['rooms']);
-            },
-            error => {
-              // Handle other errors
-            }
-          );
+      error: err => {
+        if (err.status === 403) {
+          console.log('Forbidden error');
+          this.router.navigate(['/error']);
+        } else {
+          console.log('No user logged in');
+          this.router.navigate(['/error']);
+        }
       }
     });
   }
+
+
 }

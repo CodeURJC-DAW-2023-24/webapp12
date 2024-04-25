@@ -42,7 +42,7 @@ export class LoginComponent {
         } else if (err.status === 403) {
           console.log('Forbidden error');
           this.router.navigate(['/error']);
-          
+
         } else {
           console.log('Unknown error');
           this.router.navigate(['/error']);
