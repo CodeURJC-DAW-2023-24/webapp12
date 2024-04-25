@@ -33,13 +33,14 @@ export class HotelService {
   getHotelById(id: number): Observable<Hotel>{
     console.log("Getting hotel by id: ", id);
     return this.http.get<Hotel>(`/api/hotels/${id}`);
-  } 
+  }
 
   getManagerHotels(id: number, page: number, size: number){
     return this.http.get<PageResponse<Hotel>>(`/api/hotels/manager/${id}`, {params: {page: page.toString(), size: size.toString()}});
   }
 
   updateHotelDetails(id: number, updates: FormData){
+    console.log("Updating hotel with id: ", id);
     return this.http.put<Hotel>(`/api/hotels/${id}`, updates);
   }
 

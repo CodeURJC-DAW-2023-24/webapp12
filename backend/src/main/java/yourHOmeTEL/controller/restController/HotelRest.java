@@ -358,6 +358,25 @@ public class HotelRest {
 				originalHotel = objectMapper.readerForUpdating(originalHotel)
 						.readValue(objectMapper.writeValueAsString(updates)); // exists
 				hotelService.save(originalHotel);
+
+				for (int i = 0; i < 4; i++){
+					if(updates.containsKey("room"+(i+1))){
+						String roomCapacityStr = (String) updates.get("room"+(i+1));
+    					String roomCostStr = (String) updates.get("cost"+(i+1));
+    					if (!roomCapacityStr.equals("") || !roomCostStr.equals("")){
+      						Integer roomCapacity = Integer.parseInt(roomCapacityStr);
+      						Integer roomCost = Integer.parseInt(roomCostStr);
+							if(roomCapacity != null){
+								List<Room> hotelRooms = originalHotel.getRooms();
+								for (int j = 0; j < roomCapacity; j++) {
+									Room roomForJPeople = new Room(roomCapacity, roomCost, new ArrayList<>(), originalHotel);
+									hotelRooms.add(roomForJPeople);
+									roomService.save(roomForJPeople);
+								}
+							}
+						}
+					}
+				}
 				return ResponseEntity.ok(originalHotel);
 
 			} else {
