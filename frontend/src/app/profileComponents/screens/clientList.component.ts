@@ -57,7 +57,7 @@ export class ClientListComponent{
       this.hotelService.getHotelById(this.hotelId).subscribe({
           next: (hotel: Hotel) => {
               this.hotel = hotel;
-              this.getClients(2);
+              this.getClients(1);
 
               if(this.hotel.imageFile.size()===0){
                   this.router.navigate(['/error']);
