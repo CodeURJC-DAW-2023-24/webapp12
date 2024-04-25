@@ -62,8 +62,8 @@ const routes: Routes = [
   { path: 'viewHotelsManager', component: ViewHotelsManagerComponent, canActivate: [AuthGuardService],
   data: { role: 'MANAGER' } },
 
-  // { path: 'clientList/:hotelId', component: ClientListComponent, canActivate: [AuthGuardService],
-  // data: { role: 'MANAGER' } },
+   { path: 'clientList/:hotelId', component: ClientListComponent, canActivate: [AuthGuardService],
+   data: { role: 'MANAGER' } },
 
   //ADMIN PAGES
   { path: 'managerValidation', component: ManagerValidationComponent, canActivate: [AuthGuardService], data: { role: 'ADMIN' } },

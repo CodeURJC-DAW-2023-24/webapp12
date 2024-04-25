@@ -22,7 +22,7 @@ export class ProfileComponent {
   public user! : User;
   public imageUrl!: string;
 
-constructor(private userService: UserService, private router: Router, 
+constructor(private userService: UserService, private router: Router,
   private route: ActivatedRoute, public loginService: LoginService) {
     this.userType = [""];
     this.isUser = false;
@@ -30,27 +30,30 @@ constructor(private userService: UserService, private router: Router,
     this.isManager = false;
     this.isAdmin = false;
     this.isValidated = false;
-    
+
 }
 
   ngOnInit() {
     this.userService.getCurrentUser().subscribe({
     next: (user: User) =>{
       this.user = user;
-      console.log("Validated: " + user.validated);
-      console.log("Rejected: " + user.rejected);
+      console.log("Validated: " + this.isValidated);
+      console.log("Rejected: " + this.user.rejected);
+
       this.userType = user.rols;
       this.isUser = user.rols.includes("USER");
       this.isClient = user.rols.includes("CLIENT");
       this.isManager = user.rols.includes("MANAGER");
+      console.log("Is Manager: " + this.isManager);
       this.isAdmin = user.rols.includes("ADMIN");
       this.imageUrl = `/api/users/${user.id}/image`;
+      this.isValidated = user.validated? true : false;
     },
     error: (err: HttpErrorResponse) => {
       if (err.status === 403) {
         console.log('Forbidden error');
         this.router.navigate(['/error']);
-        
+
       }else {
         console.log('Unknown error');
         this.router.navigate(['/error']);
@@ -63,7 +66,7 @@ constructor(private userService: UserService, private router: Router,
     event.preventDefault();
     this.userService.applyManager(this.user.id).subscribe({
       next: (newUser: User) =>{
-        this.user = newUser;    
+        this.user = newUser;
       },
       error: (err: HttpErrorResponse) => {
         if (err.status === 400) {

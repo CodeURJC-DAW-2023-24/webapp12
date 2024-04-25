@@ -1,15 +1,15 @@
 <div class="tab-content pt-3">
     <div class="tab-pane active">
-        <form (ngSubmit)="onSubmitHotel(name.value, location.value, desc.value, number1.value, price1.value, number2.value, price2.value, 
+        <form (ngSubmit)="onSubmitHotel(name.value, location.value, desc.value, number1.value, price1.value, number2.value, price2.value,
        number3.value, price3.value, number4.value, price4.value)">
-            <div class="row"> 
+            <div class="row">
                 <div class="col">
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <label>Hotel name</label>
                                 <input #name [value]="childNew ? '' : childHotel?.name" class="form-control" type="text"
-                                    name="name">
+                                    name="name" required>
                             </div>
                         </div>
                     </div>
@@ -44,12 +44,12 @@
                                     <div class="col">
                                         <input #number1 placeholder="Rooms Number"
                                             class="form-control" type="number"
-                                            name="room1">
+                                            name="room1" required>
                                     </div>
                                     <div class="col">
                                         <input #price1 placeholder="Room Price"
                                             class="form-control" type="number"
-                                            name="cost1">
+                                            name="cost1" required>
                                     </div>
                                     <div class="col" class="addrooms">
                                         <label>Rooms for 2</label>
@@ -57,12 +57,12 @@
                                     <div class="col">
                                         <input #number2 placeholder="Rooms Number"
                                             class="form-control" type="number"
-                                            name="room2">
+                                            name="room2" required>
                                     </div>
                                     <div class="col">
                                         <input #price2 placeholder="Room Price"
                                             class="form-control" type="number"
-                                            name="cost2">
+                                            name="cost2" required>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -72,12 +72,12 @@
                                     <div class="col">
                                         <input #number3 placeholder="Rooms Number"
                                             class="form-control mt-2"
-                                            type="number" name="room3">
+                                            type="number" name="room3" required>
                                     </div>
                                     <div class="col">
                                         <input #price3 placeholder="Room Price"
                                             class="form-control mt-2"
-                                            type="number" name="cost3">
+                                            type="number" name="cost3" required>
                                     </div>
                                     <div class="col mt-2" class="addrooms">
                                         <label>Rooms for 4</label>
@@ -85,12 +85,12 @@
                                     <div class="col">
                                         <input #number4 placeholder="Rooms Number"
                                             class="form-control mt-2"
-                                            type="number" name="room4">
+                                            type="number" name="room4" required>
                                     </div>
                                     <div class="col">
                                         <input #price4 placeholder="Room Price"
                                             class="form-control mt-2"
-                                            type="number" name="cost4">
+                                            type="number" name="cost4" required>
                                     </div>
                                 </div>
                             </div>
