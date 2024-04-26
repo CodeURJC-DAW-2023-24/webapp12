@@ -783,7 +783,7 @@ To be able to execute angular projects, you first need to install the following:
 | #2 | EditHotel.component.ts   |
 | #3 | Dockerfile               |
 | #4 | MainPageComponent.ts     |
-| #5 |      |
+| #5 | App-routing.module.ts    |
 
 ### PAULA MONROBEL UGIDOS
   - Description: Implemented various rest controllers for review and review entities, help with the names of the urls and bug fixes and testing.
