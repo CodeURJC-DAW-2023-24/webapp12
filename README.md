@@ -762,7 +762,7 @@ To be able to execute angular projects, you first need to install the following:
 
   ### MARIO RECIO MONTERO
 
-  - Description: Implemented various rest controllers for all entities, created docker files and functionality and configurated Virtual Machine deployment, alongside images and controllers adaptations for Linux environment, bug fixes and testing.
+  - Description: Initialized and condifigurated angular project. Managed routing security and developed mutiple angular components for profile pages. Created new docker image containing Angular dependencies and launched the new angular app on the Virtual Machine.
 
 
   - Five most important commits
@@ -779,11 +779,11 @@ To be able to execute angular projects, you first need to install the following:
 
 | File number | File |
 |:--:|:------------------------:|
-| #1 | UserRest.java            |
-| #2 | ReviewRest.java          |
+| #1 | AddHotel.component.ts    |
+| #2 | EditHotel.component.ts   |
 | #3 | Dockerfile               |
-| #4 | docker-compose.yml       |
-| #5 | HotelImageRest.java      |
+| #4 | MainPageComponent.ts     |
+| #5 |      |
 
 ### PAULA MONROBEL UGIDOS
   - Description: Implemented various rest controllers for review and review entities, help with the names of the urls and bug fixes and testing.
