@@ -1,3 +1,4 @@
+## Demostration Video: https://youtu.be/AgHdY62ueg0
 
 ## Table of contents
 - Phase 0
@@ -769,11 +770,11 @@ To be able to execute angular projects, you first need to install the following:
 
 | Commit Number | Description | Link |
 |:--:|:----------------------------------------:|:------------------------------------------------------------------------------------------------:|
-| #1 | Edit profile and Client Reservation  |  https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/3a296c92defd290655b94b8035fccdebb047cf32 |
-| #2 | REST images and Main Page       | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/3a296c92defd290655b94b8035fccdebb047cf32 |
+| #1 | Edit profile and Client Reservation      | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/3a296c92defd290655b94b8035fccdebb047cf32 |
+| #2 | REST images and Main Page                | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/3a296c92defd290655b94b8035fccdebb047cf32 |
 | #3 | Docker implementation                    | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/571b3f68903a3ce38a34f89d9a14127e324dcda4 |
-| #4 | View Hotels Manager and Add Hotel| https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/d3a5df5c1fddc96f67326ebd0ea7d3dde9562837 |
-| #5 | Edit Hotel and routing security | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/c708ea2a042f21e9f62c973c7269b347932fbeef |
+| #4 | View Hotels Manager and Add Hotel        | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/d3a5df5c1fddc96f67326ebd0ea7d3dde9562837 |
+| #5 | Edit Hotel and routing security          | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/c708ea2a042f21e9f62c973c7269b347932fbeef |
 
 - Five highest participation files
 
@@ -786,28 +787,28 @@ To be able to execute angular projects, you first need to install the following:
 | #5 | App-routing.module.ts    |
 
 ### PAULA MONROBEL UGIDOS
-  - Description: Implemented various rest controllers for review and review entities, help with the names of the urls and bug fixes and testing.
+  - Description: Implements various angular components, fixed bugs and reformat and fixed little details.
 
 
   - Five most important commits
 
 | Commit Number | Description | Link |
 |:--:|:-------------------------------:|:------------------------------------------------------------------------------------------------:|
-| #1 | User Rest Index                 | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/ee368a2f4c392700b8d493210b3f34c636418b10 |
-| #2 | Review Rest Size and Pertentage | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/594342fbdcfb97ce6f015c2f318831b41e7629ec |
-| #3 | Room Rest Put and Delete        | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/595b3f491a7680742d5e05c8d795bd72daa6bfb4 |
-| #4 | Room Rest Getters and Post      | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/d1606e41aa795a823633df9cc4b5abde8e4c2eb4 |
-| #5 | User Rest Getters and Put       | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/c3d660e06b47728791538e2ec4cebd5d27588683 |
+| #1 | HotelReviews TypeScript and CSS | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/51cdc6135da0560f03e88138c2a2df0067499c9c |
+| #2 | HotelReviews Funcional          | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/447e977f009dae507d647266af5b7f48c1b532da |
+| #3 | ManagerValidation Funcional     | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/6a78b05d184522f7c4d9b188b943c0a21d5a77b4 |
+| #4 | ReservationInfo Funcional       | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/6adbf88a72c0ebf0da8b8ed1fdc8b770790e3d5a |
+| #5 | Pagination for hotelClientList  | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/2b12b91269c6acd5c792094e39e43a29a61c4b8f |
 
 - Five highest participation files
 
 | File number | File |
-|:--:|:------------------------:|
-| #1 | UserRest.java               |
-| #2 | ReviewRest.java             |
-| #3 | Security Configuration.java |
-| #4 | InitDataBase.java           |
-| #5 | UserImageRest.java          |
+|:--:|:--------------------------------:|
+| #1 | managerValidation.component.ts   |
+| #2 | managerValidation.component.html |
+| #3 | hotelReviewsl.component.ts       |
+| #4 | clientList.component.html        |
+| #5 | HotelRest.java                   |
 
 
 ### Laila El Khattabi El Hassnaoui
@@ -858,5 +859,5 @@ To be able to execute angular projects, you first need to install the following:
 | #5 | ReviewRest.java        |
 
 
-## 4. Demonstration video
+
 
