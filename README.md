@@ -757,7 +757,8 @@ To be able to execute angular projects, you first need to install the following:
   And access the main page with: https://localhost:8444/new/mainPage
 
 ## 2. Class and templates diagram 
-  ![SPA DIAGRAM](https://github.com/CodeURJC-DAW-2023-24/webapp12/blob/7a6ecfc4698ca8a85c34dae51c09af332d429d72/assets/diagramaRest.jpeg)
+  ![SPA DIAGRAM1](https://github.com/CodeURJC-DAW-2023-24/webapp12/blob/main/assets/Diagrama%20peque%C3%B1o.svg)
+  ![SPA DIAGRAM2](https://github.com/CodeURJC-DAW-2023-24/webapp12/blob/main/assets/Diagrama%20grande.svg)
 
 ## 3. Group Members Participation
 
