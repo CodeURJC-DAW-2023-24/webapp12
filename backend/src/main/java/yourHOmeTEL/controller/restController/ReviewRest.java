@@ -166,20 +166,24 @@ public class ReviewRest {
 
 			if (hotelManager.getvalidated()) {
 				Page<Review> targetReviews = reviewService.findByHotel_Id(id, pageable);
-				if (targetReviews.hasContent()) {
-					PageResponse<Review> response = new PageResponse<>();
-					response.setContent(targetReviews.getContent());
-					response.setPageNumber(targetReviews.getNumber());
-					response.setPageSize(targetReviews.getSize());
-					response.setTotalElements(targetReviews.getTotalElements());
-					response.setTotalPages(targetReviews.getTotalPages());
 
-					return ResponseEntity.ok(response);
+				PageResponse<Review> response = new PageResponse<>();
+				
+				if (targetReviews.hasContent()) {
+					response.setContent(targetReviews.getContent());
+
 				} else {
-					return ResponseEntity.notFound().build();
+					response.setContent(new ArrayList<>());
 				}
+
+				response.setPageNumber(targetReviews.getNumber());
+				response.setPageSize(targetReviews.getSize());
+				response.setTotalElements(targetReviews.getTotalElements());
+				response.setTotalPages(targetReviews.getTotalPages());
+				return ResponseEntity.ok(response);
+
 			} else {
-				return ResponseEntity.notFound().build();
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
 
 		} catch (Exception e) {
