@@ -836,27 +836,27 @@ To be able to execute angular projects, you first need to install the following:
 
 
 ### Carlos Hermán Andrés Andrés
-  - Description: Implemented various rest controllers for Hotel entity, discussed about the structure and organization of the REST controllers, and added documentation with OpenAPI to the project.
+  - Description: Implementation of several angular components, addition of pageable elements, bugfixer in late stages of sprint and designer of SPA diagram.
 
   - Five most important commits
 
 | Commit Number | Description | Link |
 |:--:|:-------------------------------:|:------------------------------------------------------------------------------------------------:|
-| #1 | Added OpenAPI doc to UserImageRest | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0029c5ff5d0805537a86aa07603129a72a2debbd |
-| #2 | Added edit controllers to HotelRest | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/f06b6441d3a93645adc1b15eb41c2c53333eea7c |
-| #3 | Controller that gets all Hotel | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/20556ed7de87294d856d74a6e4b2134843323c3a |
-| #4 | Several fixes to the hotelRest controllers | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0d779c284a3f252782eb1c1b307dc93dd441964f |
-| #5 | Added OpenAPI documentation to userRest controller | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/1f198a3534e74d4cdd661fc8042298975bff4ab2 |
+| #1 | Pagination for hotel clientList | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/2b12b91269c6acd5c792094e39e43a29a61c4b8f |
+| #2 | Load more clients working | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/918d3321571e562eb4f1e6c1e7d3816188f608cb |
+| #3 | Added empty list control to clientReservations | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/853a4137ef4d0be85e3ca2004fe4f1b00c6501a9 |
+| #4 | Added clientList component funcionality | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/8ce4f77158a404a79d2f92f91b3d27057f136bcf |
+| #5 | Created components for clientList | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/ce208bc7c9762de4d4c4d7807b51f6b755d77c2a |
 
 - Five highest participation files
 
 | File number | File |
 |:--:|:------------------------:|
-| #1 | HoteRest.java               |
-| #2 | UserRest.java             |
-| #3 | SecurityConfiguration.java |
-| #4 | HotelService.java               |
-| #5 | ReviewRest.java        |
+| #1 | index |
+| #2 | clientList.component.html |
+| #3 | clientList.component.ts |
+| #4 | managerValidation.component.ts |
+| #5 | clientReservations.component.ts |
 
 
 
