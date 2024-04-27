@@ -1,5 +1,4 @@
-import { Component, Renderer2, ElementRef } from '@angular/core';
-import { ReviewService } from '../../service/Review.service';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../service/User.service';

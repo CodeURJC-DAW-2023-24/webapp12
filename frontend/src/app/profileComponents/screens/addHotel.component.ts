@@ -1,8 +1,7 @@
-import { Component, Renderer2, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../../service/User.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { User } from '../../entities/user.model';
-import { HotelService } from '../../service/Hotel.service';
 import { LoginService } from '../../service/Login.service';
 
 

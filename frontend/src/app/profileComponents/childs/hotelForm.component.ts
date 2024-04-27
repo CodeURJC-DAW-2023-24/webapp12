@@ -1,6 +1,5 @@
-import { Component, Renderer2, ElementRef, Input } from '@angular/core';
-import { UserService } from '../../service/User.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { HotelService } from '../../service/Hotel.service';
 import { Hotel } from '../../entities/hotel.model';
 import { LoginService } from '../../service/Login.service';

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-
 import { Observable } from 'rxjs';
 import { Hotel } from '../entities/hotel.model';
 import { PageResponse } from '../interfaces/pageResponse.interface';

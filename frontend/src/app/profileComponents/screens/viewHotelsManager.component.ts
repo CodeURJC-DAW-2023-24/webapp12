@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../service/User.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from '../../entities/user.model';
-import { ReservationService } from '../../service/Reservation.service';
 import { PageResponse } from '../../interfaces/pageResponse.interface';
 import { Hotel } from '../../entities/hotel.model';
 import { HotelService } from '../../service/Hotel.service';
