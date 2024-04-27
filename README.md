@@ -812,27 +812,26 @@ To be able to execute angular projects, you first need to install the following:
 
 
 ### Laila El Khattabi El Hassnaoui
-  - Description: Implemented various rest controllers for Hotel entity, I have fixed the urls names and added annotations to the rest controllers in order to generate the documentation with OpenApi.
-
+  - Description: Implemented various angular components and fixed some details
   - Five most important commits
 
 | Commit Number | Description | Link |
 |:--:|:-------------------------------:|:------------------------------------------------------------------------------------------------:|
-| #1 | Hotel Rest Getters              | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/d9d24f1510eeb46d5e2f2d03a2d8c94eb8dbec62 |
-| #2 | Annotations OpenApi             | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/dd5d499d76046e318552c24213f179f2d3725a33 |
-| #3 | Hotel Rest Delete               | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/9da374f1634c6109369c3849ad64c8304f91c869 |
-| #4 | Hotel Rest Getters              |  https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/79b15040e5884aac4e66bb60a2cae1a637f1b93e|
-| #5 | File .yaml and swagger          | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/d5abbd93a95df135fd68914b10012d8b77899615  |
+| #1 | Not rooms funcional             | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/edafd43d4190da4991a9634f0696699a240e40cc |
+| #2 | Hotel information funcional     | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/e713d3897764808e06294d8fea34ffe94c9b99ae |
+| #3 | HotelReviews                    | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/f22a9cdcc090f03cdbcac9391d8cd0778763b9ef |
+| #4 | clientList component            | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/b8dcd081e7f8bab0a5ccf92a97cccdaacebf9409 |
+| #5 | Typescript hotelInformation      | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/e06a8ca935ca9237ddc31e69febe728de8c6a867|
 
 - Five highest participation files
 
 | File number | File |
-|:--:|:------------------------:|
-| #1 | HoteRest.java               |
-| #2 | ReviewRest.java             |
-| #3 | Security Configuration.java |
-| #4 | RoomRest.java               |
-| #5 | ReservationRest.java        |
+|:--:|:------------------------------:|
+| #1 | notRooms.component.html        |
+| #2 | notRooms.component.ts          |
+| #3 | hotelInformation.component.html|
+| #4 | hotelInformation.component.ts  |
+| #5 | hotelReviews.component.html    |
 
 
 ### Carlos Hermán Andrés Andrés
