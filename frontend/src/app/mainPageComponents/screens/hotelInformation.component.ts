@@ -1,14 +1,11 @@
 import { Component, Renderer2, ElementRef } from '@angular/core';
-import { ReviewService } from '../../service/Review.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../service/User.service';
 import { Reservation } from '../../entities/reservation.model';
-import { Review } from '../../entities/review.model';
 import { User } from '../../entities/user.model';
 import { HotelService } from '../../service/Hotel.service';
 import { ReservationService } from '../../service/Reservation.service';
-import { PageResponse } from '../../interfaces/pageResponse.interface';
 import { Hotel } from '../../entities/hotel.model';
 import { LoginService } from '../../service/Login.service';
 import { RoomService } from '../../service/Room.service';
@@ -18,7 +15,6 @@ import { RoomService } from '../../service/Room.service';
 @Component({
     selector: 'app-hotelInformation',
     templateUrl: './hotelInformation.component.html',
-    //styleUrl: ''
     styleUrls: ["../../../assets/css/hotelPages.component.css", "./hotelInformation.component.css"]
 })
 export class HotelInformationComponent{
@@ -29,7 +25,8 @@ export class HotelInformationComponent{
     public hotel!: Hotel;
     public isUser!: boolean;
     public user!: User;
-  //los de hotelInformation
+
+    //Hotel Information
     public isClient!: boolean;
     public checkIn!: string;
     public checkOut!: string;
@@ -44,7 +41,6 @@ export class HotelInformationComponent{
 
     constructor(private reservationService: ReservationService,
       private userService: UserService,private roomService: RoomService,
-      private renderer: Renderer2, private el: ElementRef,
       private router: Router, private route: ActivatedRoute,
       private hotelService: HotelService, public loginService: LoginService) {
         this.route.params.subscribe(params => {
@@ -109,22 +105,6 @@ export class HotelInformationComponent{
           }
       });
     }
-    // getCurrentReservation() {
-    //   this.reservationService.getReservationById(this.reservationId).subscribe({
-    //     next: (reservation: Reservation) => {
-    //       this.reservation = reservation;
-    //     },
-    //     error: err => {
-    //       if (err.status === 403) {
-    //         console.log('Forbidden error');
-    //         this.router.navigate(['/error']);
-    //       } else {
-    //         console.log('No user logged in');
-    //         this.router.navigate(['/error']);
-    //       }
-    //     }
-    //   });
-    // }
 
     addReservation(): void {
       // Check for null values
@@ -135,9 +115,8 @@ export class HotelInformationComponent{
 
       this.reservationService.createReservation(this.checkIn, this.checkOut, this.numPeople, this.hotelId, this.userId).subscribe({
         next: _ => {
-          // Store the current URL
+          //Store the current URL
           const currentUrl = this.router.url;
-
           // Navigate to a temporary URL
           this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
             // Navigate back to the current URL
@@ -145,7 +124,6 @@ export class HotelInformationComponent{
           });
         },
         error: (err: HttpErrorResponse) => {
-          // Handle errors
           if (err.status === 409) { // Conflict with existing reservation
             console.log('Conflict with existing reservation');
             this.router.navigate(['/notRooms']); // Redirect to 'notRooms' page

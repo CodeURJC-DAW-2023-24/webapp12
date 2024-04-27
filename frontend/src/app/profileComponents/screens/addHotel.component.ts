@@ -1,13 +1,8 @@
 import { Component, Renderer2, ElementRef } from '@angular/core';
 import { UserService } from '../../service/User.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Reservation } from '../../entities/reservation.model';
 import { User } from '../../entities/user.model';
 import { HotelService } from '../../service/Hotel.service';
-import { ReservationService } from '../../service/Reservation.service';
-import { PageResponse } from '../../interfaces/pageResponse.interface';
-import { Hotel } from '../../entities/hotel.model';
 import { LoginService } from '../../service/Login.service';
 
 
@@ -15,8 +10,8 @@ import { LoginService } from '../../service/Login.service';
 @Component({
     selector: 'app-addHotel',
     templateUrl: './addHotel.component.html',
-    //styleUrl: ''
 })
+
 export class AddHotelComponent {
     title = 'frontend';
 
@@ -27,9 +22,7 @@ export class AddHotelComponent {
 
 
     constructor(private userService: UserService,
-        private renderer: Renderer2, private el: ElementRef,
-        private router: Router, private route: ActivatedRoute, 
-        private hotelService: HotelService, public loginService: LoginService) {
+        private router: Router, public loginService: LoginService) {
 
         this.selectedFile = new File([], '');
         this.new = true;
@@ -67,13 +60,8 @@ export class AddHotelComponent {
     }
 
     addHotelImage(file: File) {
-        console.log(file.size);
         if (file && file.size > 0) {
             this.hotelImageUrl = URL.createObjectURL(file);
         }
     }
 }
-
-
-
-

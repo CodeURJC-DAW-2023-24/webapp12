@@ -1,7 +1,6 @@
 import { Component, Renderer2, ElementRef, Input } from '@angular/core';
 import { UserService } from '../../service/User.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { User } from '../../entities/user.model';
 import { HotelService } from '../../service/Hotel.service';
 import { Hotel } from '../../entities/hotel.model';
 import { LoginService } from '../../service/Login.service';
@@ -11,7 +10,6 @@ import { LoginService } from '../../service/Login.service';
 @Component({
     selector: 'app-hotelForm',
     templateUrl: './hotelForm.component.html',
-    //styleUrl: ''
 })
 export class HotelFormComponent {
     title = 'frontend';
@@ -21,17 +19,13 @@ export class HotelFormComponent {
     @Input() public childHotel: Hotel | undefined;
 
 
-    constructor(private userService: UserService,
-        private renderer: Renderer2, private el: ElementRef,
-        private router: Router, private route: ActivatedRoute,
-        private hotelService: HotelService, public loginService: LoginService) {
-
+    constructor(private router: Router, private hotelService: HotelService, public loginService: LoginService) {
         this.childSelectedFile = new File([], '');
         this.childNew = false;
-
     }
 
-    onSubmitHotel(name: string, location: string, desc: string, room1: string, cost1: string, room2: string, cost2: string,
+    onSubmitHotel(name: string, location: string, desc: string,
+        room1: string, cost1: string, room2: string, cost2: string,
         room3: string, cost3: string, room4: string, cost4: string) {
 
         if (this.childNew) {
@@ -41,7 +35,9 @@ export class HotelFormComponent {
         }
     }
 
-    createHotel(name: string, location: string, description: string, room1: string, cost1: string, room2: string, cost2: string, room3: string, cost3: string, room4: string, cost4: string) {
+    createHotel(name: string, location: string, description: string,
+                room1: string, cost1: string, room2: string, cost2: string,
+                room3: string, cost3: string, room4: string, cost4: string) {
         let formData = new FormData();
         formData.append('name', name);
         formData.append('location', location);
@@ -61,7 +57,6 @@ export class HotelFormComponent {
                 this.router.navigate(['/viewHotelsManager']);
             },
             error: err => {
-                // Handle error
                 if (err.status === 201) {
                     console.log('Hotel created successfully, but response could not be parsed', err);
                 } else if (err.status === 400) {
@@ -81,7 +76,7 @@ export class HotelFormComponent {
     getRoomDetails(hotel: Hotel) {
         let room1 = 0, room2 = 0, room3 = 0, room4 = 0;
         let cost1 = 0, cost2 = 0, cost3 = 0, cost4 = 0;
-    
+
         if (hotel.rooms) {
             for (let room of hotel.rooms) {
                 switch (room.maxClients) {
@@ -104,16 +99,16 @@ export class HotelFormComponent {
                 }
             }
         }
-    
+
         return { room1, cost1, room2, cost2, room3, cost3, room4, cost4 };
     }
 
     updateHotel(name: string, location: string, description: string, room1: string,
         cost1: string, room2: string, cost2: string, room3: string, cost3: string, room4: string, cost4: string): void {
-    
+
             let updates: { [key: string]: string } = {};
-            let { room1: currentRoom1 = '', cost1: currentCost1 = '', room2: currentRoom2 = '', cost2: currentCost2 = '', 
-                room3: currentRoom3 = '', cost3: currentCost3 = '', room4: currentRoom4 = '', cost4: currentCost4 = '' } = 
+            let { room1: currentRoom1 = '', cost1: currentCost1 = '', room2: currentRoom2 = '', cost2: currentCost2 = '',
+                room3: currentRoom3 = '', cost3: currentCost3 = '', room4: currentRoom4 = '', cost4: currentCost4 = '' } =
                 this.childHotel ? this.getRoomDetails(this.childHotel) : {};
 
             if (this.childHotel && name !== this.childHotel.name) {
@@ -125,7 +120,7 @@ export class HotelFormComponent {
             if (this.childHotel && description !== this.childHotel.description) {
                 updates['description'] = description;
             }
-            
+
             if (parseInt(room1) !== currentRoom1) {
                 updates['room1'] = room1;
             }
@@ -150,7 +145,7 @@ export class HotelFormComponent {
             if (parseInt(cost4) !== currentCost4) {
                 updates['cost4'] = cost4;
             }
-    
+
         let formData = new FormData();
         for (const key in updates) {
             if (updates.hasOwnProperty(key)) {
@@ -161,14 +156,12 @@ export class HotelFormComponent {
         if (!this.childHotel || !this.childHotel.id) {
             console.error('Error: childHotel or childHotel.id is not defined');
             this.router.navigate(['/error']);
-            return;
-        }else{   
+        }else{
             this.hotelService.updateHotelDetails(this.childHotel.id, formData).subscribe({
                 next: (_: Hotel) => {
                     this.router.navigate(['/viewHotelsManager']);
                 },
                 error: err => {
-                    // Handle error
                     if (err.status === 400) {
                         console.error('Error updating hotel details: Exception originated from JSON data processing or mapping', err);
                     } else if (err.status === 403) {
@@ -186,9 +179,6 @@ export class HotelFormComponent {
 
     addPhotoToHotel(id: number) {
         this.hotelService.editHotelImage(id, this.childSelectedFile).subscribe({
-            next: _ => {
-                console.log('Hotel image added');
-            },
             error: err => {
                 if (err.status === 400) {
                     console.error('Error updating user details: Exception originated from JSON data processing or mapping', err);

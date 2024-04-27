@@ -12,7 +12,7 @@ import { Review } from "./review.model";
     language?: string;
     phone: string;
     email: string;
-    imageFile?: any; // Blob type doesn't exist in TypeScript, use any or create a custom type
+    imageFile?: any;
     imagePath?: string;
     image?: boolean;
     organization?: string;

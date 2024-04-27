@@ -2,7 +2,6 @@
 <script src="https://www.google.com/recaptcha/api.js?onload=onLoadCallBack&render=explicit" async defer></script>
 <div class="bg-gradient-primary">
     <div class="container">
-
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
             <div class="container">
                 <a class="navbar-brand" [routerLink]="['/mainPage']">Your<span>HOmeTEL</span></a>
@@ -19,15 +18,12 @@
             </div>
         </nav>
         <!-- END nav -->
-
         <!-- Outer Row -->
         <div class="row justify-content-center">
             <div class="row flex-lg-nowrap mt-4"></div>
             <div class="col-xl-10 col-lg-12 col-md-9">
-
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
                         <div class="row">
                             <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
                             <div class="col-lg-6">
@@ -48,7 +44,6 @@
                                         </div>
                                         <input (click)="submitCredentials($event)" [disabled]="!captchaIsResolved"
                                         id="loginButton" value= "Log in" class="btn btn-primary btn-user btn-block mb-4" />
-                                        <!--<input type="hidden" name="_csrf" value="{{token}}" />-->
                                         <div class ="ml-3">
                                             <re-captcha siteKey="6LcYmIYpAAAAABssFnlPyL7CD1pRU0I0CxO_BVMK" (resolved)="handleResolved($event)" (expired)="handleExpired()"></re-captcha>
                                         </div>

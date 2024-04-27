@@ -19,7 +19,7 @@
                                                 <p *ngIf="isManager && isValidated" class="text-validated font-size-15 mb-0 p-1" >
                                                     Validated manager</p>
                                         </div>
-                                    </div><!-- end col -->
+                                    </div>
                                     <div class="col-md-8">
                                         <div class="ms-3">
                                             <div>
@@ -36,9 +36,8 @@
                                                                 class="mdi mdi-phone-in-talk-outline me-2"></i>{{user.phone}}
                                                         </p>
                                                     </div>
-                                                </div><!-- end col -->
-                                            </div><!-- end row -->
-
+                                                </div>
+                                            </div>
                                             <ul class="nav nav-tabs nav-tabs-custom border-bottom-0 mt-3 nav-justfied"
                                                 role="tablist">
                                                 <li class="nav-item mt-3 mb-3 mr-3" role="presentation">
@@ -51,7 +50,6 @@
                                                     <form (click) = "logOut()" method="post">
                                                         <input type="submit" value="Sign Out"
                                                             class="btn btn-primary btn-user btn-block" id="logout" />
-                                                        <!--<input type="hidden" name="_csrf" value="{{token}}"/>-->
                                                     </form>
                                                 </li>
 
@@ -60,17 +58,15 @@
                                                         <form *ngIf="user" method="post">
                                                             <input (click)="applyManager($event)" type="submit" value="Apply for validation"
                                                                 class="btn btn-primary btn-user btn-block" id="apply" />
-                                                            <!--<input type="hidden" name="_csrf" value="{{token}}"/>-->
                                                         </form>
-                                                    </li><!-- end li -->
+                                                    </li>
                                                 </ng-container>
-
-                                            </ul><!-- end ul -->
+                                            </ul>
                                         </div>
-                                    </div><!-- end col -->
-                                </div><!-- end row -->
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="card">
                             <div class="card-body">
                                 <div>
@@ -81,30 +77,30 @@
                                                 <tr>
                                                     <th scope="row">Name</th>
                                                     <td *ngIf="user">{{user.name}}</td>
-                                                </tr><!-- end tr -->
+                                                </tr>
                                                 <tr>
                                                     <th scope="row">Location</th>
                                                     <td *ngIf="user">{{user.location}}</td>
-                                                </tr><!-- end tr -->
+                                                </tr>
                                                 <tr>
                                                     <th scope="row">Language</th>
                                                     <td *ngIf="user">{{user.language}}</td>
-                                                </tr><!-- end tr -->
+                                                </tr>
                                                 <tr>
                                                     <th scope="row">Phone number</th>
                                                     <td *ngIf="user">{{user.phone}}</td>
-                                                </tr><!-- end tr -->
+                                                </tr>
                                                 <tr>
                                                     <th scope="row">Email</th>
                                                     <td *ngIf="user">{{user.email}}</td>
-                                                </tr><!-- end tr -->
-                                            </tbody><!-- end tbody -->
-                                        </table><!-- end table -->
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- End of Wrapper -->

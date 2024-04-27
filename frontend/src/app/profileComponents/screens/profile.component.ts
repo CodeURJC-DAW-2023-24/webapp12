@@ -8,7 +8,6 @@ import { LoginService } from '../../service/Login.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  //styleUrl: ''
 })
 export class ProfileComponent {
   title = 'frontend';
@@ -23,7 +22,7 @@ export class ProfileComponent {
   public imageUrl!: string;
 
 constructor(private userService: UserService, private router: Router,
-  private route: ActivatedRoute, public loginService: LoginService) {
+  public loginService: LoginService) {
     this.userType = [""];
     this.isUser = false;
     this.isClient = false;
@@ -37,14 +36,11 @@ constructor(private userService: UserService, private router: Router,
     this.userService.getCurrentUser().subscribe({
     next: (user: User) =>{
       this.user = user;
-      console.log("Validated: " + this.isValidated);
-      console.log("Rejected: " + this.user.rejected);
 
       this.userType = user.rols;
       this.isUser = user.rols.includes("USER");
       this.isClient = user.rols.includes("CLIENT");
       this.isManager = user.rols.includes("MANAGER");
-      console.log("Is Manager: " + this.isManager);
       this.isAdmin = user.rols.includes("ADMIN");
       this.imageUrl = `/api/users/${user.id}/image`;
       this.isValidated = user.validated? true : false;
@@ -92,7 +88,7 @@ constructor(private userService: UserService, private router: Router,
         this.router.navigate(['/login']);
       },
       error: (err: HttpErrorResponse) => {
-        console.log('Unknown error');
+        console.log(err);
         this.router.navigate(['/error']);
       }
     });

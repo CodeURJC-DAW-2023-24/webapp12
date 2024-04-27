@@ -1,4 +1,4 @@
-import { Component, Renderer2, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../../service/User.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -14,7 +14,6 @@ import { LoginService } from '../../service/Login.service';
 @Component({
   selector: 'app-viewHotelManager',
   templateUrl: './viewHotelsManager.component.html',
-  //styleUrl: ''
 })
 export class ViewHotelsManagerComponent {
   title = 'frontend';
@@ -27,9 +26,9 @@ export class ViewHotelsManagerComponent {
 
 
 
-  constructor(private userService: UserService, private reservationService: ReservationService,
-    private router: Router, private route: ActivatedRoute, private hotelService: HotelService
-    , public loginService: LoginService) {
+  constructor(private userService: UserService,
+    private router: Router, private hotelService: HotelService,
+    public loginService: LoginService) {
     this.page = 0;
     this.totalPages = 1;
     this.averageRating = 0;
@@ -66,7 +65,6 @@ export class ViewHotelsManagerComponent {
           pageResponse.content.forEach(hotel => {
             this.hotels.push(hotel);
           });
-          // Increment the page number after each successful API call
           this.page += 1;
         },
         error: (err: HttpErrorResponse) => {

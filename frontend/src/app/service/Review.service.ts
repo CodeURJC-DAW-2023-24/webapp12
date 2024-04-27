@@ -15,7 +15,6 @@ export class ReviewService {
   }
 
   getReviews(id: number, page:number, size:number): Observable<PageResponse<Review>>{
-    console.log("a");
     return this.http.get<PageResponse<Review>>(`/api/reviews/hotels/${id}`, {params: {page: page.toString(), size: size.toString()}});
   }
 

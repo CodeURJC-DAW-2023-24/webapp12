@@ -4,7 +4,6 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Hotel } from '../entities/hotel.model';
 import { PageResponse } from '../interfaces/pageResponse.interface';
-import { User } from '../entities/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +31,6 @@ export class HotelService {
   }
 
   getHotelById(id: number): Observable<Hotel>{
-    console.log("Getting hotel by id: ", id);
     return this.http.get<Hotel>(`/api/hotels/${id}`);
   }
 
@@ -41,7 +39,6 @@ export class HotelService {
   }
 
   updateHotelDetails(id: number, updates: FormData){
-    console.log("Updating hotel with id: ", id);
     return this.http.put<Hotel>(`/api/hotels/${id}`, updates);
   }
 

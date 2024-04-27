@@ -28,7 +28,7 @@
                                                     <div class="d-flex justify-content-center align-items-center rounded"
                                                         style="height: 140px; background-color: rgb(233, 236, 239);">
                                                         <img *ngIf="imageUrl" [src]="imageUrl"
-                                                            class="hotel-preview-image">
+                                                            class="hotel-preview-image" alt="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -50,7 +50,6 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <!--<input type="hidden" name="_csrf" value="{{token}}" />-->
                                                 </form>
                                                 <div class="text-center text-sm-right">
                                                     <span class="badge badge-secondary">Managed by:
@@ -61,7 +60,7 @@
                                         <ul class="nav nav-tabs">
                                             <li class="nav-item"><a href="" class="active nav-link">Hotel data</a></li>
                                         </ul>
-                                        <app-hotelForm [childSelectedFile]="selectedFile" 
+                                        <app-hotelForm [childSelectedFile]="selectedFile"
                                         [childNew]="new"
                                         [childHotel] = "hotel">
 

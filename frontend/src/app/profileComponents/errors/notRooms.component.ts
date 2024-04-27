@@ -4,14 +4,12 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../../service/Login.service';
 import { RoomService } from '../../service/Room.service';
-import { Room } from '../../entities/room.model';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-notrooms',
   templateUrl: './notRooms.component.html',
-  //styleUrl: ''
   styleUrls: ["../../../assets/css/hotelPages.component.css"]
 })
 export class NotRoomsComponent  {

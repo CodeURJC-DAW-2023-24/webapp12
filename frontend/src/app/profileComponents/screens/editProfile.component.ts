@@ -8,7 +8,6 @@ import { LoginService } from '../../service/Login.service';
 @Component({
     selector: 'app-editProfile',
     templateUrl: './editProfile.component.html',
-    //styleUrl: ''
 })
 export class EditProfileComponent {
     title = 'frontend';
@@ -17,15 +16,12 @@ export class EditProfileComponent {
     public imageUrl!: string;
     public selectedFile: File;
 
-    constructor(private userService: UserService, private router: Router, 
+    constructor(private userService: UserService, private router: Router,
         private route: ActivatedRoute, public loginService: LoginService) {
         this.selectedFile = new File([], '');
 
         this.route.params.subscribe(params => {
-            // Save the id parameter in a variable
-            console.log( params['userId']);
             this.userId = params['userId'];
-            console.log('userId:', this.userId);
         });
 
     }
@@ -56,8 +52,9 @@ export class EditProfileComponent {
             this.selectedFile = inputElement.files[0];
         }
     }
-    
-    updateUser(name: string, lastname: string, location: string, org: string, language: string, phone: string, mail: string, bio: string): void {
+
+    updateUser(name: string, lastname: string, location: string, org: string,
+        language: string, phone: string, mail: string, bio: string): void {
         let updates: { [key: string]: string } = {};
 
         if (name !== this.user.name) {
@@ -93,12 +90,10 @@ export class EditProfileComponent {
         }
 
         this.userService.updateUserDetails(this.user.id, formData).subscribe({
-            next: (user: User) => {
+            next: () => {
                 this.router.navigate(['/profile']);
-
             },
             error: err => {
-                // Handle error
                 if (err.status === 400) {
                     console.error('Error updating user details: Exception originated from JSON data processing or mapping', err);
                 } else if (err.status === 403) {
@@ -117,11 +112,9 @@ export class EditProfileComponent {
         if (file && file.size > 0) {
             this.userService.editProfileImage(id, file).subscribe({
             next: _ => {
-                console.log('Image updated');
                 this.imageUrl = `/api/users/${this.user.id}/image?${new Date().getTime()}`;
             },
             error: err => {
-                // Handle error
                 if (err.status === 400) {
                     console.error('Error updating user details: Exception originated from JSON data processing or mapping', err);
                 } else if (err.status === 403) {

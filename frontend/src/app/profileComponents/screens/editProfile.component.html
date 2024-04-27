@@ -6,89 +6,69 @@
                 <hr class="mt-0 mb-4">
                 <div class="row">
                     <div class="col-xl-4">
-                        <!-- Profile picture card-->
                         <div class="card mb-4 mb-xl-0">
                             <div class="card-header">Profile Picture</div>
-
                             <div class="card-body text-center">
-                                <!-- Profile picture image-->
                                 <img *ngIf="imageUrl" [src]="imageUrl" class="img-fluid avatar-xxl rounded-circle"
                                     alt="">
                                 <form (ngSubmit)="selectedFile ? editProfileImage(user.id, selectedFile) : null"
                                    enctype="multipart/form-data">
                                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                                    <!-- Profile picture upload button-->
                                     <label for="file" class="btn btn-primary mt-4 mr-4">
                                         Upload new image
                                     </label>
                                     <input type="file" id="file" name="imageFile" (change)="fileSelected($event)">
                                     <input class="btn btn-primary mt-3" type="submit" value="Submit">
-                                    <!--<input type="hidden" name="_csrf" value="{{token}}" />-->
                                 </form>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-8">
-                        <!-- Account details card-->
                         <div class="card mb-4">
                             <div class="card-header">Account Details</div>
                             <div class="card-body">
-
                                 <form method='post' (ngSubmit)="updateUser(name.value, lastname.value, location.value, org.value, language.value, phone.value, mail.value, bio.value)">
-                                    <!-- Form Group (username)-->
-                                    <!-- Form Row-->
                                     <div class="row gx-3 mb-3">
-                                        <!-- Form Group (first name)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputFirstName">Name</label>
                                             <input #name class="form-control" id="inputFirstName" type="text" name="name" [value]="user.name ? user.name: ''">
                                         </div>
-                                        <!-- Form Group (last name)-->
                                         <div class="col-md-6">
                                             <label *ngIf="user" class="small mb-1" for="inputLastName">Last name</label>
                                             <input #lastname class="form-control" id="inputLastName" type="text" name="lastname" [value]="user.lastname ? user.lastname : ''">
                                         </div>
                                     </div>
-                                    <!-- Form Row        -->
                                     <div class="row gx-3 mb-3">
-                                        <!-- Form Group (location)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputLocation">Location</label>
                                             <input #location class="form-control" id="inputLocation" type="text" name="location" [value]="user.location ? user.location : ''">
                                         </div>
-                                        <!-- Form Group (organization)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputLocation">Organization</label>
                                             <input #org class="form-control" id="inputLocation" type="text" name="org" [value]="user.organization ? user.organization : ''">
                                         </div>
-                                        <!-- Form Group (organization name)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputOrgName">Language</label>
                                             <input #language class="form-control" id="inputOrgName" type="text" name="language" [value]="user.language ? user.language: ''">
                                         </div>
                                     </div>
                                     <div class="row gx-3 mb-3">
-                                        <!-- Form Group (phone number)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputPhone">Phone number</label>
                                             <input #phone class="form-control" id="inputPhone" type="text" name="phone" [value]="user.phone ? user.phone: ''">
                                         </div>
-                                        <!-- Form Group (email address)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputEmailAddress">Email address</label>
                                             <input #mail class="form-control" id="inputEmailAddress" type="text" name="mail" [value]="user.email ? user.email: ''">
                                         </div>
                                     </div>
                                     <div class="row gx-3 mb-3">
-                                        <!-- Form Group (bio)-->
                                         <div class="col-md-6">
                                             <label>Biography</label>
                                             <textarea #bio class="form-control" rows="5" name="bio">{{user.bio ? user.bio: ''}}</textarea>
                                         </div>
                                     </div>
-                                    <!-- Save changes button-->
                                     <input class="btn btn-primary" type="submit" value="Save">
-                                    <!--<input type="hidden" name="_csrf" value="{{token}}" />-->
                                 </form>
                             </div>
                         </div>

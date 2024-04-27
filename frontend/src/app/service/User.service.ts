@@ -15,13 +15,10 @@ export class UserService {
   }
 
   getCurrentUser(): Observable<User>{
-    console.log('Getting current user');
     return this.http.get<User>('/api/currentUser');
-
   }
 
   getHotelClients(hotelId: number, page: number, size: number): Observable<PageResponse<User>>{
-    console.log("Page y number ", page, " ", size);
     return this.http.get<PageResponse<User>>(`/api/hotels/${hotelId}/clients`, {params: {page: page.toString(), size: size.toString()}});
   }
 

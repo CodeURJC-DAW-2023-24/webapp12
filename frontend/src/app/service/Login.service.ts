@@ -46,10 +46,8 @@ export class LoginService {
 
         return this.http.post(BASE_URL + '/logout', { withCredentials: true })
             .subscribe((resp: any) => {
-                console.log("LOGOUT: Successfully");
                 this.logged = false;
                 this.user = {} as User;
-                //this.user = undefined;
             });
 
     }

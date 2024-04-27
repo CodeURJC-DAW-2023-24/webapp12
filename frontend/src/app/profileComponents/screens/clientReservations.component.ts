@@ -13,8 +13,8 @@ import { LoginService } from '../../service/Login.service';
 @Component({
   selector: 'app-clientReservations',
   templateUrl: './clientReservations.component.html',
-  //styleUrl: ''
 })
+
 export class ClientReservationsComponent {
   title = 'frontend';
 
@@ -26,7 +26,6 @@ export class ClientReservationsComponent {
 
 
   constructor(private userService: UserService, private reservationService: ReservationService,
-    private renderer: Renderer2, private el: ElementRef,
     private router: Router, private route: ActivatedRoute, public loginService: LoginService
   ) {
     this.route.params.subscribe(param =>{
@@ -62,14 +61,12 @@ export class ClientReservationsComponent {
 
   getReservations(){
     if(this.page < this.totalPages){
-      this.reservationService.getReservations(this.user.id, this.page, 1).subscribe({ //size change to 1 for testing. normal size would be 6
+      this.reservationService.getReservations(this.user.id, this.page, 2).subscribe({
         next: (pageResponse: PageResponse<Reservation>) => {
           this.totalPages = pageResponse.totalPages;
           pageResponse.content.forEach(reservation => {
             this.reservations.push(reservation);
-            console.log(this.reservations)
           });
-          // Increment the page number after each successful API call
           this.page += 1;
         },
         error: (err: HttpErrorResponse) => {

@@ -1,22 +1,20 @@
 import { Injectable, InjectionToken } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable, catchError, from, map, of, switchMap } from 'rxjs';
 import { UserService } from './User.service';
 import { HotelService } from './Hotel.service';
-import { Router } from '@angular/router';
 import { User } from '../entities/user.model';
 
 export const AUTH_GUARD = new InjectionToken<((route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => Observable<boolean> | Promise<boolean> | boolean)>('AuthGuard');
 
 @Injectable({
     providedIn: 'root',
-    useFactory: (userService: UserService, hotelService: HotelService, router: Router) => new AuthGuardWithUserIdService(userService, hotelService, router),
+    useFactory: (userService: UserService, router: Router) => new AuthGuardWithUserIdService(userService, router),
     deps: [UserService, HotelService, Router],
 })
 export class AuthGuardWithUserIdService {
 
-    constructor(private userService: UserService, private hotelService: HotelService,
-        private router: Router) { }
+    constructor(private userService: UserService, private router: Router) { }
 
     getCurrentUser(): Observable<User | null> {
         return this.userService.getCurrentUser().pipe(
@@ -34,9 +32,7 @@ export class AuthGuardWithUserIdService {
     }
 
     canActivate(
-        next: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot): Observable<boolean> {
-        console.log("canActivateWithUserId");
+        next: ActivatedRouteSnapshot): Observable<boolean> {
         const idFromRoute = next.params['userId'];
         const roleFromRoute = next.data['role'];
 

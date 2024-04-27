@@ -1,9 +1,8 @@
 import { Injectable, InjectionToken } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
 import { Observable, catchError, from, map, of, switchMap } from 'rxjs';
 import { UserService } from './User.service';
 import { HotelService } from './Hotel.service';
-import { Router } from '@angular/router';
 import { User } from '../entities/user.model';
 
 export const AUTH_GUARD = new InjectionToken<((route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => Observable<boolean> | Promise<boolean> | boolean)>('AuthGuard');
@@ -34,12 +33,9 @@ export class AuthGuardWithHotelIdService {
     }
 
     canActivate(
-        next: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot): Observable<boolean> {
-        console.log("canActivateWithHotelId");
+        next: ActivatedRouteSnapshot): Observable<boolean> {
         const idFromRoute = next.params['hotelId'];
         const roleFromRoute = next.data['role'];
-        console.log(idFromRoute);
 
         return this.getCurrentUser().pipe(
             switchMap((loggedUser: User | null) => {
@@ -50,14 +46,6 @@ export class AuthGuardWithHotelIdService {
                 } else {
                     return this.hotelService.getHotelById(idFromRoute).pipe(
                         map(hotel => {
-                            console.log("aaaaaaaa");
-                            console.log(hotel);
-                            console.log("aaaaaaaa");
-                            console.log(hotel.manager);
-                            console.log("aaaaaaaa");
-                            console.log(hotel.manager.id);
-
-                            console.log(loggedUser.id);
                             if (hotel.manager.id === loggedUser.id && loggedUser.rols.includes(roleFromRoute)) {
                                 return true;
                             } else {

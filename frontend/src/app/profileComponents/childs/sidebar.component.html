@@ -30,7 +30,8 @@
     <div class="sidebar-heading">
         Administration
     </div>
-    <!--Cliente-->
+
+    <!--Client-->
     <li class="nav-item" *ngIf="isClient">
         <a [routerLink]="['/clientReservations', user.id]" class="nav-link">
             <i class="fas fa-fw fa-chart-area"></i>
@@ -50,8 +51,6 @@
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Validate new managers</span></a>
     </li>
-    <!--Admin-->
-
 
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -74,5 +73,5 @@
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
-    <!-- End of Sidebar -->
 </ul>
+<!-- End of Sidebar -->

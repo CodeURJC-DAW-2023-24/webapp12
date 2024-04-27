@@ -8,7 +8,6 @@ import { LoginService } from '../../service/Login.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  //styleUrl: ''
 })
 export class RegisterComponent {
   title = 'frontend';
@@ -21,9 +20,9 @@ export class RegisterComponent {
   public email: string;
   public pass: string;
 
-constructor(private userService: UserService, private router: Router, private route: ActivatedRoute, public loginService: LoginService) {
+constructor(private userService: UserService, private router: Router, public loginService: LoginService) {
     this.userType = -1;
-    this.isUser = false; 
+    this.isUser = false;
     this.nick = '';
     this.name = '';
     this.lastname = '';
@@ -34,7 +33,7 @@ constructor(private userService: UserService, private router: Router, private ro
   createUser(){
     this.userService.createUser(this.nick, this.name, this.lastname, this.email, this.pass, this.userType).subscribe({
       next: _ => {
-        {this.router.navigate(['/login']);}
+        this.router.navigate(['/login']);
       },
       error: (err: HttpErrorResponse) => {
         if(err.status === 400){
@@ -45,15 +44,14 @@ constructor(private userService: UserService, private router: Router, private ro
 
         }else if (err.status === 409){
           console.log('Conflict error');
-          {this.router.navigate(['/nickTaken']);}
-          
+          this.router.navigate(['/nickTaken']);
+
         }else{
-            // Handle other errors
             this.router.navigate(['/error']);
         }
       }
     });
   }
-    
+
 
 }

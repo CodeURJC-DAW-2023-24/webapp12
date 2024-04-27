@@ -10,7 +10,6 @@ import { Hotel } from '../../entities/hotel.model';
 @Component({
     selector: 'app-editHotel',
     templateUrl: './editHotel.component.html',
-    //styleUrl: ''
 })
 export class EditHotelComponent {
     title = 'frontend';
@@ -22,7 +21,7 @@ export class EditHotelComponent {
     public selectedFile: File;
     public new : boolean;
 
-    constructor(private userService: UserService, private hotelService: HotelService, private router: Router, 
+    constructor(private userService: UserService, private hotelService: HotelService, private router: Router,
         private route: ActivatedRoute, public loginService: LoginService) {
         this.selectedFile = new File([], '');
         this.new = false;
@@ -63,9 +62,6 @@ export class EditHotelComponent {
                 if(this.hotel.imageFile.size()===0){
                     this.router.navigate(['/error']);
                 }
-                else{
-                    console.log('Hotel image found');
-                }
             },
             error: (err: HttpErrorResponse) => {
                 if (err.status === 403) {
@@ -80,7 +76,7 @@ export class EditHotelComponent {
         });
       }
 
-    
+
 
     fileSelected(event: Event) {
         event.preventDefault();
@@ -89,17 +85,15 @@ export class EditHotelComponent {
             this.selectedFile = inputElement.files[0];
         }
     }
-    
+
 
     editHotelImage(file: File) {
         if (file && file.size > 0) {
             this.hotelService.editHotelImage(this.hotelId, file).subscribe({
             next: _ => {
-                console.log('Image updated');
                 this.imageUrl = `/api/hotels/${this.hotelId}/image?${new Date().getTime()}`;
             },
             error: err => {
-                // Handle error
                 if (err.status === 400) {
                     console.error('Error updating user details: Exception originated from JSON data processing or mapping', err);
                 } else if (err.status === 403) {

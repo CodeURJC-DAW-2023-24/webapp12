@@ -114,8 +114,15 @@ public class HotelRest {
 
     try {
       UserE hotelManager = hotelService.findById(id).orElseThrow().getManager();
+      UserE currentUser;
+      if (request.getUserPrincipal() == null) {
+        currentUser = null;
+      }
+      else{
+        currentUser = userService.findByNick(request.getUserPrincipal().getName()).orElseThrow();
+      }
 
-      if (hotelManager.getvalidated()) {
+      if (hotelManager.getvalidated() || currentUser.equals(hotelManager)) {
         Hotel hotel = hotelService.findById(id).orElseThrow();
         return ResponseEntity.ok(hotel);
       } else {
@@ -379,7 +386,7 @@ public class HotelRest {
       if (currentUser.getRols().contains("ADMIN") || currentUser.equals(foundUser)) {
 
 				originalHotel = objectMapper.readerForUpdating(originalHotel)
-						.readValue(objectMapper.writeValueAsString(updates)); // exists
+						.readValue(objectMapper.writeValueAsString(updates));
 				hotelService.save(originalHotel);
 
 				for (int i = 0; i < 4; i++){

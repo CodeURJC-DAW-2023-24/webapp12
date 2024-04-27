@@ -1,4 +1,3 @@
-import { Reservation } from './entities/reservation.model';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';

@@ -1,17 +1,14 @@
-import { Component, Renderer2, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../../service/User.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Reservation } from '../../entities/reservation.model';
 import { User } from '../../entities/user.model';
-import { ReservationService } from '../../service/Reservation.service';
 import { PageResponse } from '../../interfaces/pageResponse.interface';
 import { LoginService } from '../../service/Login.service';
 
 @Component({
   selector: 'app-managerValidation',
   templateUrl: './managerValidation.component.html',
-  //styleUrl: ''
 })
 export class ManagerValidationComponent{
   title = 'frontend';
@@ -26,7 +23,6 @@ export class ManagerValidationComponent{
     this.totalPages = 1;
   }
 
-  //Por hacer: en unvalidatedManagers poner el array de managers no validados
   ngOnInit() {
     this.getUnvalidatedManagers()
   }
@@ -38,9 +34,7 @@ export class ManagerValidationComponent{
           this.totalPages = pageResponse.totalPages;
           pageResponse.content.forEach(manager => {
             this.unvalidatedManagers.push(manager);
-            console.log(this.unvalidatedManagers)
           });
-          // Increment the page number after each successful API call
           this.page += 1;
         },
         error: (err: HttpErrorResponse) => {
@@ -56,18 +50,15 @@ export class ManagerValidationComponent{
   acceptManager(idManager: number) {
     this.userService.setManagerState(idManager, false).subscribe({
       next: _ => {
-
-        // Guarda la URL actual
+        //Store the current URL
         let currentUrl = this.router.url;
-
-        // Navega a una URL temporal
+        //Navigate to a temporary URL
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-        // Navega de nuevo a la URL actual
+        //Navigate back to the current URL
         this.router.navigate([currentUrl]);
         });
       },
       error: (err: HttpErrorResponse) => {
-        // Handle other errors
         this.router.navigate(['/error']);
       }
     });
@@ -76,21 +67,17 @@ export class ManagerValidationComponent{
   rejectManager(idManager: number) {
     this.userService.setManagerState(idManager, true).subscribe({
       next: _ => {
-
-        // Guarda la URL actual
+        //Store the current URL
         let currentUrl = this.router.url;
-
-        // Navega a una URL temporal
+        //Navigate to a temporary URL
         this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-        // Navega de nuevo a la URL actual
+        //Navigate back to the current URL
         this.router.navigate([currentUrl]);
         });
       },
       error: (err: HttpErrorResponse) => {
-        // Handle other errors
         this.router.navigate(['/error']);
       }
     });
   }
-
 }

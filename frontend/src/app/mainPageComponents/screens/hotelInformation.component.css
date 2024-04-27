@@ -1,5 +1,5 @@
 .form-background {
-  background-color: #f2f2f2; /* Light gray */
+  background-color: #f2f2f2;
 }
 
 
@@ -8,7 +8,7 @@
     width: 100%;
     animation: slide 1s ease-in-out;
   }
-  
+
   @keyframes slide {
     0% {
       transform: translateX(100%);

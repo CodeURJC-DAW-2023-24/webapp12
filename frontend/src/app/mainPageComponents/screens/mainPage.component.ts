@@ -4,14 +4,13 @@ import { HotelService } from '../../service/Hotel.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import{ User } from '../../entities/user.model';
 import{ Hotel } from '../../entities/hotel.model';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { PageResponse } from '../../interfaces/pageResponse.interface';
 import { LoginService } from '../../service/Login.service';
 
 @Component({
   selector: 'app-mainPage',
   templateUrl: './mainPage.component.html',
-//"
   styleUrls: ["../../../assets/css/hotelPages.component.css","./mainPage.component.css"]
 })
 export class MainPageComponent {
@@ -39,13 +38,12 @@ constructor(private userService: UserService, private hotelService: HotelService
 
 ngOnInit() {
   this.getCurrentUser();
-  
+
 }
 
 getCurrentUser() {
   this.userService.getCurrentUser().subscribe({
     next: user => {
-      console.log("returned");
         this.user = user;
         this.userType = user.rols;
         this.isUser = user.rols.includes("USER");
@@ -69,17 +67,12 @@ getCurrentUser() {
 
 getRecommendedHotels(){
   if(this.page < this.totalPages){
-    console.log("im in");
-    console.log("page",this.page);
     this.hotelService.getRecommendedHotels(this.page, 6).subscribe({
       next: (pageResponse: PageResponse<Hotel>) => {
-        console.log("good");
         this.totalPages = pageResponse.totalPages;
-        console.log("totalPages",this.totalPages);  
         pageResponse.content.forEach(hotel => {
           this.hotels.push(hotel);
         });
-        // Increment the page number after each successful API call
         this.page += 1;
       },
       error: (err: HttpErrorResponse) => {
@@ -94,7 +87,6 @@ getRecommendedHotels(){
 
 getAllHotelsBySearch(event: Event){
   event.preventDefault();
-  console.log(this.searchValue);
   this.page = 0;
   this.hotelService.getAllHotelsBySearch(this.searchValue).subscribe({
     next: (hotelsResponse: Hotel[]) => {
@@ -126,7 +118,6 @@ getAllHotelsBySearch(event: Event){
           this.router.navigate(['/error']);
       }
     });
-    return ;
   }
 
   trackByHotelId(index: number, hotel: Hotel): number {

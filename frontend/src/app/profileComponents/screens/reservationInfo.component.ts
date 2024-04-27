@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { UserService } from '../../service/User.service';
 import { User } from '../../entities/user.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 import { LoginService } from '../../service/Login.service';
 import { Reservation } from '../../entities/reservation.model';
 import { ReservationService } from '../../service/Reservation.service';
@@ -10,7 +9,6 @@ import { ReservationService } from '../../service/Reservation.service';
 @Component({
   selector: 'app-reservationinfo',
   templateUrl: './reservationInfo.component.html',
-  //styleUrl: ''
 })
 export class ReservationInfoComponent {
   title = 'frontend';
@@ -74,7 +72,7 @@ constructor(private userService: UserService, private reservationService: Reserv
 
   cancelReservation(){
     this.reservationService.cancelReservation(this.reservationId).subscribe({
-      next: (reservation: Reservation) => {
+      next: () => {
         this.router.navigate(['clientReservations/', this.userId]);
       },
       error: err => {

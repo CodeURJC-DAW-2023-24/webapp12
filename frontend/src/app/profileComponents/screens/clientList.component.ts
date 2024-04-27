@@ -3,11 +3,8 @@ import { ReviewService } from '../../service/Review.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../service/User.service';
-import { Reservation } from '../../entities/reservation.model';
-import { Review } from '../../entities/review.model';
 import { User } from '../../entities/user.model';
 import { HotelService } from '../../service/Hotel.service';
-import { ReservationService } from '../../service/Reservation.service';
 import { PageResponse } from '../../interfaces/pageResponse.interface';
 import { Hotel } from '../../entities/hotel.model';
 import { LoginService } from '../../service/Login.service';
@@ -34,9 +31,7 @@ export class ClientListComponent{
 
 
 
-    constructor(private reviewService: ReviewService,
-      private userService: UserService,
-      private renderer: Renderer2, private el: ElementRef,
+    constructor(private userService: UserService,
       private router: Router, private route: ActivatedRoute,
       private hotelService: HotelService, public loginService: LoginService) {
         this.route.params.subscribe(params => {
@@ -52,7 +47,6 @@ export class ClientListComponent{
       this.getHotel();
     }
 
-
     getHotel(){
       this.hotelService.getHotelById(this.hotelId).subscribe({
           next: (hotel: Hotel) => {
@@ -62,11 +56,6 @@ export class ClientListComponent{
               if(this.hotel.imageFile.size()===0){
                   this.router.navigate(['/error']);
               }
-              else{
-                  console.log('Hotel image found');
-              }
-
-
           },
           error: (err: HttpErrorResponse) => {
               if (err.status === 403) {
@@ -87,14 +76,11 @@ export class ClientListComponent{
       if(this.page < this.totalPages){
         this.userService.getHotelClients(this.hotelId, this.page, quantity).subscribe({
           next: (pageResponse: PageResponse<User>) => {
-            // console.log("Tras el next");
             this.totalPages = pageResponse.totalPages;
-            // console.log("Contenido de la pagina:", pageResponse.content);
             pageResponse.content.forEach(client => {
               this.clients.push(client);
             });
 
-            // Increment the page number after each successful API call
             this.page += 1;
           },
           error: (err: HttpErrorResponse) => {
@@ -105,10 +91,6 @@ export class ClientListComponent{
         });
       }
     }
-
-
-
-
 
     getUserImg(userId: number): string {
         return `/api/users/${userId}/image`;

@@ -9,7 +9,7 @@ export interface Hotel {
   description: string;
   location: string;
   rating: number;
-  imageFile?: any; // Blob type doesn't exist in TypeScript, use any or create a custom type
+  imageFile?: any;
   image: boolean;
   imagePath: string;
   manager: User;

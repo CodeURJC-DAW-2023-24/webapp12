@@ -3,11 +3,9 @@ import { ReviewService } from '../../service/Review.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../service/User.service';
-import { Reservation } from '../../entities/reservation.model';
 import { Review } from '../../entities/review.model';
 import { User } from '../../entities/user.model';
 import { HotelService } from '../../service/Hotel.service';
-import { ReservationService } from '../../service/Reservation.service';
 import { PageResponse } from '../../interfaces/pageResponse.interface';
 import { Hotel } from '../../entities/hotel.model';
 import { LoginService } from '../../service/Login.service';
@@ -17,7 +15,6 @@ import { LoginService } from '../../service/Login.service';
 @Component({
     selector: 'app-hotelReviews',
     templateUrl: './hotelReviews.component.html',
-    //styleUrl: ''
     styleUrls: ["../../../assets/css/hotelPages.component.css", "./hotelReviews.component.css"]
 })
 export class HotelReviewsComponent{
@@ -41,7 +38,6 @@ export class HotelReviewsComponent{
 
     constructor(private reviewService: ReviewService,
       private userService: UserService,
-      private renderer: Renderer2, private el: ElementRef,
       private router: Router, private route: ActivatedRoute,
       private hotelService: HotelService, public loginService: LoginService) {
         this.route.params.subscribe(params => {
@@ -63,7 +59,6 @@ export class HotelReviewsComponent{
     getCurrentUser() {
       this.userService.getCurrentUser().subscribe({
         next: user => {
-          console.log("returned");
             this.user = user;
             this.isUser = true;
         },
@@ -88,9 +83,6 @@ export class HotelReviewsComponent{
               this.setNumReviewsForScore();
               if(this.hotel.imageFile.size()===0){
                   this.router.navigate(['/error']);
-              }
-              else{
-                  console.log('Hotel image found');
               }
           },
           error: (err: HttpErrorResponse) => {
@@ -118,7 +110,6 @@ export class HotelReviewsComponent{
     setReviewPercentages(){
       this.reviewService.getPercentageOfReviewsByScore(this.hotelId).subscribe((percentages: number[]) => {
         this.percentageReview = percentages;
-        console.log(this.percentageReview);
       });
     }
 
@@ -130,7 +121,6 @@ export class HotelReviewsComponent{
             pageResponse.content.forEach(review => {
               this.hotelReviews.push(review);
             });
-            // Increment the page number after each successful API call
             this.page += 1;
           },
           error: (err: HttpErrorResponse) => {
@@ -140,24 +130,21 @@ export class HotelReviewsComponent{
           }
         });
       }
-      console.log("reviews cargados")
     }
 
     addReview(comment: string): void {
       this.reviewService.createReview(this.rating, comment, this.hotelId).subscribe({
         next: _ => {
-
-          // Guarda la URL actual
+          //Store the current URL
           let currentUrl = this.router.url;
-
-          // Navega a una URL temporal
+          //Navigate to a temporary URL
           this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-          // Navega de nuevo a la URL actual
+          //Navigate back to the current URL
           this.router.navigate([currentUrl]);
           });
         },
         error: (err: HttpErrorResponse) => {
-          // Handle other errors
+          console.log(err);
           this.router.navigate(['/error']);
         }
       });

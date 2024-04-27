@@ -9,7 +9,6 @@ import { LoginService } from '../../service/Login.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  //styleUrl: ''
 })
 export class LoginComponent {
   title = 'frontend';
@@ -18,8 +17,8 @@ export class LoginComponent {
   public password: string;
   public captchaIsResolved: boolean;
 
-  constructor(private userService: UserService, private renderer: Renderer2, private el: ElementRef,
-    private router: Router, private route: ActivatedRoute, public loginService: LoginService
+  constructor(private userService: UserService,
+    private router: Router, public loginService: LoginService
   ) {
     this.username = '';
     this.password = '';

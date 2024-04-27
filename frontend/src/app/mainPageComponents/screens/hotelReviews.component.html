@@ -8,7 +8,6 @@
 
     <div class="collapse navbar-collapse" id="ftco-nav">
       <ul class="navbar-nav ml-auto">
-        <!--Search bar-->
         <li  class="nav-item active"><a [routerLink]="['/mainPage']" class="nav-link font-size-20">Home</a></li>
         <li *ngIf="isUser" class="nav-item active"><a [routerLink]="['/profile']" class="nav-link font-size-20">Profile</a></li>
         <li *ngIf="!isUser" class="nav-item"><a [routerLink]="['/login']" class="nav-link font-size-20">Log In</a></li>
@@ -16,8 +15,6 @@
     </div>
   </div>
 </nav>
-
-
 <!-- END nav -->
 <div class="hero-wrap" style="background-image: url('assets/images/bg_3.jpg');">
   <div class="overlay"></div>
@@ -47,7 +44,7 @@
                     <div class="mx-auto" style="width: 140px;">
                       <div class="d-flex justify-content-center align-items-center rounded"
                         style="height: 140px; background-color: rgb(233, 236, 239);">
-                        <img *ngIf="hotelImageUrl" [src]="hotelImageUrl" class="hotel-preview-image">
+                        <img *ngIf="hotelImageUrl" [src]="hotelImageUrl" class="hotel-preview-image" alt="">
                       </div>
                     </div>
                   </div>
@@ -75,14 +72,12 @@
           <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2"
             style="width: 188px;">
             <span class="selection">
-              <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true"
-                aria-expanded="false" tabindex="0" aria-labelledby="select2-qd66-container">
+              <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-qd66-container">
               </span>
             </span>
             <span class="dropdown-wrapper" aria-hidden="true"></span>
           </span>
         </div>
-
         <div class="col-md-6">
           <table class="stars-counters">
             <tbody>
@@ -181,10 +176,8 @@
         <h2>Leave your review!</h2>
         <div>
           <form (ngSubmit)="addReview(comment.value)"class="bg-white p-5 contact-form" method="post">
-
             <div class="form-group">
               <label for="rating">Rating</label>
-
               <div class="rating">
                 <!-- 5 stars -->
                 <input [(ngModel)]="rating" type="radio" id="5stars" name="rating" value="5">
@@ -308,41 +301,30 @@
                 </label><br>
 
               </div>
-
             </div>
-
             <div class="form-group">
               <label for="comment">Comment (optional)</label>
               <textarea #comment name="comment" cols="30" rows="7" class="form-control"
                 placeholder="Everything was so nice, a wonderful experience!"></textarea>
             </div>
-
             <input type="submit" value="Send review!" id="sendButton" class="btn btn-primary py-3 px-5">
-            <!-- <input type="hidden" name="_csrf" value="{{token}}" /> -->
           </form>
-
         </div>
-
-
-
       </div>
-          <!-- List of all the reviews -->
+    <!-- List of all the reviews -->
     <div class="review-list">
       <ul class="mt-4">
         <ng-container *ngFor="let review of hotelReviews">
-
-          <!-- Here begins a review -->
+          <!-- Review -->
           <li>
-            <!-- Here is the div for the original post, having image, name, valoration and comment -->
             <div class="d-flex">
               <div class="left">
                 <!-- Profile image -->
                 <span>
-                  <img [src]="getUserImg(review.user.id)" class="profile-pict-img img-fluid" alt="userProfileImage">
+                  <img [src]="getUserImg(review.user.id)" class="profile-pict-img img-fluid" alt="userProfile">
                 </span>
               </div>
               <div class="right">
-                <!-- Poster's name -->
                 <h4>
                   {{review.user.nick}}
                   <span class="gig-rating text-body-2">
@@ -355,14 +337,11 @@
                     {{review.score}}
                   </span>
                 </h4>
-
-                <!-- Comment -->
                 <div class="review-description">
                   <p>
                     {{review.comment}}
                   </p>
                 </div>
-                <!-- Time passed since posting -->
                 <span class="publish py-3 d-inline-block w-100">{{review.date}}</span>
               </div>
             </div>
@@ -371,12 +350,10 @@
         <h2 *ngIf="!hotelReviews || hotelReviews.length === 0">No reviews for this hotel so far</h2>
       </ul>
     </div>
-
     <div style="display: flex; justify-content: center; align-items: center; margin: 15px;">
       <button (click)="getReviews()" class="btn btn-secondary py-3 px-5">More reviews</button>
     </div>
     </div>
-  </div>
-
+    </div>
   </div>
 </div>

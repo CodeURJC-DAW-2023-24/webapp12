@@ -6,9 +6,7 @@
       <div class="col-lg-9 mt-4 mt-lg-0">
         <div class="row">
           <div class="col-md-12 mt-4">
-            <div
-              class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm"
-            >
+            <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
               <table class="table manage-candidates-top mb-0">
                 <thead>
                   <tr>
@@ -21,28 +19,19 @@
                     <tr class="candidates-list">
                       <td class="title">
                         <div class="thumb">
-                          <img
-                            class="img-fluid"
-                            [src]="getUserImg(client.id)"
-                            alt="Client profile image"
-                          />
+                          <img class="img-fluid" [src]="getUserImg(client.id)" alt="Client profile"/>
                         </div>
                         <div class="candidate-list-details">
                           <div class="candidate-list-info">
                             <div class="candidate-list-title">
-                              <!-- PENDIENTE de llevar a una página de perfil de cliente, con menos permisos, o mostrar más información -->
-
                               <h5 class="mb-0">
-                                <a [routerLink]="['/profile']"
-                                  >Name: {{ client.name }}</a
-                                >
+                                <a [routerLink]="['/profile']">Name: {{ client.name }}</a>
                               </h5>
                             </div>
                             <div class="candidate-list-option">
                               <ul class="list-unstyled">
                                 <li>
-                                  <i class="pr-1"></i>Language:
-                                  {{ client.language }}
+                                  <i class="pr-1"></i>Language:{{ client.language }}
                                 </li>
                                 <li>
                                   <i class="pr-1"></i>Phone: {{ client.phone }}
@@ -53,27 +42,16 @@
                         </div>
                       </td>
                       <td>
-                        <ul
-                          class="list-unstyled mb-0 d-flex justify-content-end"
-                        >
+                        <ul class="list-unstyled mb-0 d-flex justify-content-end">
                           <li>
-                            <a
-                              href="#"
-                              class="text-primary"
-                              data-toggle="tooltip"
-                              title=""
-                              data-original-title="view"
-                              ><i class="far fa-eye"></i
-                            ></a>
+                            <a href="#" class="text-primary" data-toggle="tooltip" title="" data-original-title="view">
+                              <i class="far fa-eye"></i>
+                            </a>
                           </li>
                           <li>
-                            <a
-                              class="text-danger"
-                              data-toggle="tooltip"
-                              title=""
-                              data-original-title="Delete"
-                              ><i class="far fa-trash-alt"></i
-                            ></a>
+                            <a class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete">
+                              <i class="far fa-trash-alt"></i>
+                            </a>
                           </li>
                         </ul>
                       </td>
@@ -86,7 +64,6 @@
                   <button class="btn btn-primary" type="button">Return</button>
                 </a>
               </div>
-              <!-- PENDIENTE de hacer la paginación (un botón de cargar más) -->
               <ul class="page-selector pagination justify-content-center mb-0">
                 <li>
                   <a (click)="getClients(1)">
