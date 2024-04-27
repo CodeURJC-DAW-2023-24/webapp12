@@ -762,28 +762,28 @@ To be able to execute angular projects, you first need to install the following:
 
   ### MARIO RECIO MONTERO
 
-  - Description: Implemented various rest controllers for all entities, created docker files and functionality and configurated Virtual Machine deployment, alongside images and controllers adaptations for Linux environment, bug fixes and testing.
+  - Description: Initialized and condifigurated angular project. Managed routing security and developed mutiple angular components for profile pages. Created new docker image containing Angular dependencies and launched the new angular app on the Virtual Machine.
 
 
   - Five most important commits
 
 | Commit Number | Description | Link |
 |:--:|:----------------------------------------:|:------------------------------------------------------------------------------------------------:|
-| #1 | JSON view and multiple REST controllers  | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/2ec3897df735bec20d0d53c9e9b544edd2fc7a8f |
-| #2 | Impelemented User REST controllers       | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0bcb19efcd5c70da1dd49a7b2723eb3cd4c78c75 |
-| #3 | Docker implementation                    | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/0f916430fa90e97931845863ac2eacdd5d7d7401 |
-| #4 | Implemented Reservation REST controllers | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/8dcde4fbd9569384269039e40f3ad90e59c21950 |
-| #5 | Hotel image REST implementation          | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/00757925520e0064bf1fc109c974afb74f3bbda1 |
+| #1 | Edit profile and Client Reservation  |  https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/3a296c92defd290655b94b8035fccdebb047cf32 |
+| #2 | REST images and Main Page       | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/3a296c92defd290655b94b8035fccdebb047cf32 |
+| #3 | Docker implementation                    | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/571b3f68903a3ce38a34f89d9a14127e324dcda4 |
+| #4 | View Hotels Manager and Add Hotel| https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/d3a5df5c1fddc96f67326ebd0ea7d3dde9562837 |
+| #5 | Edit Hotel and routing security | https://github.com/CodeURJC-DAW-2023-24/webapp12/commit/c708ea2a042f21e9f62c973c7269b347932fbeef |
 
 - Five highest participation files
 
 | File number | File |
 |:--:|:------------------------:|
-| #1 | UserRest.java            |
-| #2 | ReviewRest.java          |
+| #1 | AddHotel.component.ts    |
+| #2 | EditHotel.component.ts   |
 | #3 | Dockerfile               |
-| #4 | docker-compose.yml       |
-| #5 | HotelImageRest.java      |
+| #4 | MainPageComponent.ts     |
+| #5 | App-routing.module.ts    |
 
 ### PAULA MONROBEL UGIDOS
   - Description: Implemented various rest controllers for review and review entities, help with the names of the urls and bug fixes and testing.
